@@ -1,0 +1,146 @@
+
+tiles.png
+size: 1024, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+base-tile
+  rotate: false
+  xy: 68, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+carrot-farm-tile
+  rotate: false
+  xy: 134, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+carrot2-farm-tile
+  rotate: false
+  xy: 200, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+carrot3-farm-tile
+  rotate: false
+  xy: 266, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+clay-tile
+  rotate: false
+  xy: 332, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+construction-tile
+  rotate: false
+  xy: 2, 4
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+dirt-tile
+  rotate: false
+  xy: 398, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+empty-tile
+  rotate: false
+  xy: 332, 18
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+farm-tile
+  rotate: false
+  xy: 464, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+flower-tile-1
+  rotate: false
+  xy: 530, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+sand-tile
+  rotate: false
+  xy: 596, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-1
+  rotate: false
+  xy: 662, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-2
+  rotate: false
+  xy: 728, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-3
+  rotate: false
+  xy: 794, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-4
+  rotate: false
+  xy: 860, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-5
+  rotate: false
+  xy: 926, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-6
+  rotate: false
+  xy: 68, 2
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-7
+  rotate: false
+  xy: 134, 2
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tiled-tile-8
+  rotate: false
+  xy: 200, 2
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+water-tile
+  rotate: false
+  xy: 266, 2
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
