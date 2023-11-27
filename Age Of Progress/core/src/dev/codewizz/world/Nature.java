@@ -21,7 +21,7 @@ public class Nature {
 	public static final float NIGHT_LIGHT = 0.2f;
 	
 	public World world;
-	public static final int ANIMAL_CAP = 20;
+	public static final int ANIMAL_CAP = 25;
 	
 	public List<Animal> animals = new CopyOnWriteArrayList<>();
 	public List<Herd> herds = new CopyOnWriteArrayList<>();
