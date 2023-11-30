@@ -10,6 +10,7 @@ import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.MainMenuLayer;
 import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
+import dev.codewizz.modding.ModHandler;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.World;
 
@@ -28,6 +29,7 @@ public class Main extends ApplicationAdapter {
 	public World world;
 	public MouseInput mouseInput;
 	public KeyInput keyInput;
+	public ModHandler handler;
 		
 	@Override
 	public void create () {
@@ -42,6 +44,9 @@ public class Main extends ApplicationAdapter {
 		
 		setInputMultiplexer();
 		
+		
+		handler = new ModHandler();
+		handler.register();
 	}
 	
 	public void setInputMultiplexer() {

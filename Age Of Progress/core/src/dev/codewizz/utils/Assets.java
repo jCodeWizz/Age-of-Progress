@@ -23,11 +23,11 @@ public class Assets {
 	public static HashMap<String, Texture> procuderal = new HashMap<>();
 
 	public static void create() {
-		atlasses.put("tiles", new TextureAtlas(Gdx.files.internal("../assets/packs/tiles.atlas")));
-		atlasses.put("entities", new TextureAtlas(Gdx.files.internal("../assets/packs/entities.atlas")));
-		atlasses.put("particles", new TextureAtlas(Gdx.files.internal("../assets/packs/particles.atlas")));
-		atlasses.put("items", new TextureAtlas(Gdx.files.internal("../assets/packs/items.atlas")));
-		atlasses.put("objects", new TextureAtlas(Gdx.files.internal("../assets/packs/objects.atlas")));
+		atlasses.put("tiles", new TextureAtlas(Gdx.files.internal("packs/tiles.atlas")));
+		atlasses.put("entities", new TextureAtlas(Gdx.files.internal("packs/entities.atlas")));
+		atlasses.put("particles", new TextureAtlas(Gdx.files.internal("packs/particles.atlas")));
+		atlasses.put("items", new TextureAtlas(Gdx.files.internal("packs/items.atlas")));
+		atlasses.put("objects", new TextureAtlas(Gdx.files.internal("packs/objects.atlas")));
 		atlasses.put("ui", new TextureAtlas(Gdx.files.internal("packs/ui.atlas")));
 		atlasses.put("paths", new TextureAtlas());
 		
@@ -109,8 +109,8 @@ public class Assets {
 		sprites.put("buyslot", atlasses.get("ui").createSprite("tile-background-buyslot"));
 		sprites.put("buyslot-pressed", atlasses.get("ui").createSprite("tile-background-buyslot-pressed"));
 		sprites.put("fade", atlasses.get("ui").createSprite("fade"));
-		sprites.put("main-menu", new Sprite(new Texture(Gdx.files.internal("../assets/textures/ui/icons/main-menu.png"))));
-		sprites.put("selected-background", new Sprite(new Texture(Gdx.files.internal("../assets/textures/ui/icons/selected-background.png"))));
+		sprites.put("main-menu", new Sprite(new Texture(Gdx.files.internal("textures/ui/icons/main-menu.png"))));
+		sprites.put("selected-background", new Sprite(new Texture(Gdx.files.internal("textures/ui/icons/selected-background.png"))));
 		sprites.put("tab-button", atlasses.get("ui").createSprite("tab-button"));
 		sprites.put("tab-button-pressed", atlasses.get("ui").createSprite("tab-button-pressed"));
 		sprites.put("tab-button-unavailable", atlasses.get("ui").createSprite("tab-button-unavailable"));
@@ -126,43 +126,47 @@ public class Assets {
 		sprites.put("item-carrot", atlasses.get("items").createSprite("item-carrot"));
 		
 		*/
-		addImage("../assets/textures/procuderal/path-tile.png", "t");
-		addImage("../assets/textures/procuderal/path-tile-TL.png", "tTL");
-		addImage("../assets/textures/procuderal/path-tile-TR.png", "tTR");
-		addImage("../assets/textures/procuderal/path-tile-BR.png", "tBR");
-		addImage("../assets/textures/procuderal/path-tile-BL.png", "tBL");
-		addImage("../assets/textures/tiles/base-tile.png", "grass");
-		addImage("../assets/textures/tiles/tiled-tile-1.png", "tiled-tile-1");
-		addImage("../assets/textures/tiles/tiled-tile-2.png", "tiled-tile-2");
-		addImage("../assets/textures/tiles/tiled-tile-3.png", "tiled-tile-3");
-		addImage("../assets/textures/tiles/tiled-tile-4.png", "tiled-tile-4");
-		addImage("../assets/textures/tiles/tiled-tile-5.png", "tiled-tile-5");
-		addImage("../assets/textures/tiles/tiled-tile-6.png", "tiled-tile-6");
-		addImage("../assets/textures/tiles/tiled-tile-7.png", "tiled-tile-7");
-		addImage("../assets/textures/tiles/tiled-tile-8.png", "tiled-tile-8");
-		
-		procuderal.put(TileType.Base.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/base-tile.png")));
-		procuderal.put(TileType.Dirt.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/dirt-tile.png")));
-		procuderal.put(TileType.Tiled_1.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-1.png")));
-		procuderal.put(TileType.Tiled_2.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-2.png")));
-		procuderal.put(TileType.Tiled_3.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-3.png")));
-		procuderal.put(TileType.Tiled_4.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-4.png")));
-		procuderal.put(TileType.Tiled_5.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-5.png")));
-		procuderal.put(TileType.Tiled_6.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-6.png")));
-		procuderal.put(TileType.Tiled_7.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-7.png")));
-		procuderal.put(TileType.Tiled_8.toString(), new Texture(Gdx.files.internal("../assets/textures/tiles/tiled-tile-8.png")));
+		addImage("textures/procuderal/path-tile.png", "t");
+		addImage("textures/procuderal/path-tile-TL.png", "tTL");
+		addImage("textures/procuderal/path-tile-TR.png", "tTR");
+		addImage("textures/procuderal/path-tile-BR.png", "tBR");
+		addImage("textures/procuderal/path-tile-BL.png", "tBL");
+		addImage("textures/tiles/base-tile.png", "grass");
+		addImage("textures/tiles/tiled-tile-1.png", "tiled-tile-1");
+		addImage("textures/tiles/tiled-tile-2.png", "tiled-tile-2");
+		addImage("textures/tiles/tiled-tile-3.png", "tiled-tile-3");
+		addImage("textures/tiles/tiled-tile-4.png", "tiled-tile-4");
+		addImage("textures/tiles/tiled-tile-5.png", "tiled-tile-5");
+		addImage("textures/tiles/tiled-tile-6.png", "tiled-tile-6");
+		addImage("textures/tiles/tiled-tile-7.png", "tiled-tile-7");
+		addImage("textures/tiles/tiled-tile-8.png", "tiled-tile-8");
+
+		procuderal.put(TileType.Base.toString(), new Texture(Gdx.files.internal("textures/tiles/base-tile.png")));
+		procuderal.put(TileType.Dirt.toString(), new Texture(Gdx.files.internal("textures/tiles/dirt-tile.png")));
+		procuderal.put(TileType.Tiled_1.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-1.png")));
+		procuderal.put(TileType.Tiled_2.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-2.png")));
+		procuderal.put(TileType.Tiled_3.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-3.png")));
+		procuderal.put(TileType.Tiled_4.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-4.png")));
+		procuderal.put(TileType.Tiled_5.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-5.png")));
+		procuderal.put(TileType.Tiled_6.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-6.png")));
+		procuderal.put(TileType.Tiled_7.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-7.png")));
+		procuderal.put(TileType.Tiled_8.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-8.png")));
 
 		
 	}
 	
 	private static void addImage(String path, String name) {
 		BufferedImage image = null;
+		FileHandle s = Gdx.files.internal(path);
+
 		try {
-			FileHandle s = Gdx.files.internal(path);
 			image = ImageIO.read(s.file());
+			
+			
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+		
 		images.put(name, image);
 	}
 	

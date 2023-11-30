@@ -268,8 +268,8 @@ public class World {
 	}
 
 	public void renderTiles(SpriteBatch b) {
-		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(-64, -64, 0));
-		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth() + 64, Gdx.graphics.getHeight() + 64, 0));
+		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(-64*4, -64*4, 0));
+		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth() + 64*4, Gdx.graphics.getHeight() + 64*4, 0));
 
 		Cell c1 = this.getCell(p1.x, p2.y);
 		Cell c2 = this.getCell(p2.x, p1.y);
