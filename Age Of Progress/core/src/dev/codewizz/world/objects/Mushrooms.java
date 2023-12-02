@@ -27,7 +27,7 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 		this.h = 16;
 		
 		this.name = "Mushrooms";
-		this.id = ID.Mushrooms;
+		this.id = "aop:mushrooms";
 		
 		this.sortHeight = 28;
 	}
@@ -58,7 +58,7 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 		int amount = Utils.getRandom(1, 3);
 		for(int i = 0; i < amount; i++) {
 			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.Mushrooms);
-			Main.inst.world.objects.add(item);
+			Main.inst.world.addItem(item);
 		}
 		
 		destroy();
@@ -76,7 +76,7 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override

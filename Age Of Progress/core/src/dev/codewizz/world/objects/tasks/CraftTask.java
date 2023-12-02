@@ -5,7 +5,6 @@ import dev.codewizz.main.Main;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.Recipe;
-import dev.codewizz.world.objects.ID;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
 
@@ -33,7 +32,7 @@ public class CraftTask extends Task {
 		if(pickup) {
 			for(Item i : hermit.getInventory().getItems()) {
 				Item item = new Item(hermit.getX(), hermit.getY(), i.getType(), i.getSize());
-				Main.inst.world.objects.add(item);
+				Main.inst.world.addItem(item);
 			}
 		}
 	}
@@ -74,10 +73,10 @@ public class CraftTask extends Task {
 				hermit.getInventory().addItem(recipe.getCosts()[i]);
 			}
 			
-			for(Renderable r : Main.inst.world.objects) {
+			for(Renderable r : Main.inst.world.getObjects()) {
 				if(r instanceof GameObject) {
 					GameObject object = (GameObject) r;
-					if(object.getID() == ID.Stump) {
+					if(object.getId().equals("aop:stump")) {
 						
 						hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25), hermit.getX(), hermit.getY());
 						if(hermit.getAgent().path.isEmpty())
@@ -114,7 +113,7 @@ public class CraftTask extends Task {
 		if(pickup) {
 			for(Item i : hermit.getInventory().getItems()) {
 				Item item = new Item(hermit.getX(), hermit.getY(), i.getType(), i.getSize());
-				Main.inst.world.objects.add(item);
+				Main.inst.world.addItem(item);
 			}
 			pickup = false;
 		}

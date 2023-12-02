@@ -32,7 +32,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 
 		this.sortHeight = 25f;
 
-		this.id = ID.Rock;
+		this.id = "aop:rock";
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 		int amount = Utils.getRandom(4, 8);
 		for(int i = 0; i < amount; i++) {
 			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.Stone);
-			Main.inst.world.objects.add(item);
+			Main.inst.world.addItem(item);
 		}
 		
 		if(broken) {

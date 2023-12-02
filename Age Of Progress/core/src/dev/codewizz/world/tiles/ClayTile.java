@@ -3,7 +3,6 @@ package dev.codewizz.world.tiles;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.Tile;
-import dev.codewizz.world.TileType;
 
 public class ClayTile extends Tile {
 
@@ -12,7 +11,7 @@ public class ClayTile extends Tile {
 
 		this.name = "Clay Tile";
 		this.texture = Assets.getSprite("clay-tile");
-		this.type = TileType.Clay;
+		this.id = "aop:clay-tile";
 		this.cost = 5;
 	}
 

@@ -12,7 +12,9 @@ import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.modding.ModHandler;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.world.Tiles;
 import dev.codewizz.world.World;
+import dev.codewizz.world.objects.GameObjects;
 
 public class Main extends ApplicationAdapter {
 		
@@ -44,9 +46,13 @@ public class Main extends ApplicationAdapter {
 		
 		setInputMultiplexer();
 		
+		Tiles.register();
+		GameObjects.register();
 		
 		handler = new ModHandler();
 		handler.register();
+		
+		handler.start();
 	}
 	
 	public void setInputMultiplexer() {
@@ -67,7 +73,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void render () {
 		ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
-		Gdx.graphics.setTitle("Age of Progress | HPG | FPS: " + Gdx.graphics.getFramesPerSecond());
+		Gdx.graphics.setTitle("Age of Progress | FPS: " + Gdx.graphics.getFramesPerSecond());
 		
 		
 		/*
@@ -120,6 +126,9 @@ public class Main extends ApplicationAdapter {
 	}
 	
 	public static void exit() {
+		
+		Main.inst.handler.stop();
+		
 		Gdx.app.exit();
 	}
 	

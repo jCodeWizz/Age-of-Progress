@@ -15,7 +15,6 @@ import dev.codewizz.utils.serialization.RCString;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
-import dev.codewizz.world.TileType;
 import dev.codewizz.world.World;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
@@ -28,7 +27,7 @@ public class WorldData {
 	public Settlement settlement;
 	public List<Renderable> objects;
 	public boolean showStartInfo;
-	public TileType[] tileTypes;
+	public String[] tiles;
 
 	public static WorldData load(RCDatabase db) {
 		
@@ -40,16 +39,16 @@ public class WorldData {
 		RCObject settlementData = db.findObject("settlementData");
 		RCObject tiles = db.findObject("tiles");
 		int size = World.WORLD_SIZE_H * World.WORLD_SIZE_W;
-		TileType[] tileTypes = new TileType[size];
+		String[] tileIds = new String[size];
 
-		for (int i = 0; i < tileTypes.length; i++) {
-			tileTypes[i] = TileType.valueOf(tiles.findString("" + i).getString());
+		for (int i = 0; i < tileIds.length; i++) {
+			tileIds[i] = tiles.findString("" + i).getString();
 		}
 
 		data.grid = new Cell[World.WORLD_SIZE_W][World.WORLD_SIZE_H];
 		data.tree = new QuadTree<Cell>(-World.WORLD_SIZE_WP / 2, -World.WORLD_SIZE_HP / 2, World.WORLD_SIZE_WP / 2, World.WORLD_SIZE_HP / 2);
 		data.cellGraph = new CellGraph();
-		data.tileTypes = tileTypes;
+		data.tiles = tileIds;
 		data.objects = new CopyOnWriteArrayList<Renderable>();
 
 		for (int i = 0; i < World.WORLD_SIZE_W; i++) {
@@ -100,16 +99,16 @@ public class WorldData {
 		RCObject tiles = new RCObject("tiles");
 		for (int i = 0; i < World.WORLD_SIZE_W; i++) {
 			for (int j = 0; j < World.WORLD_SIZE_H; j++) {
-				tiles.addString(RCString.Create("" + (int) (world.grid[i][j].indexX + (world.grid[i][j].indexY * World.WORLD_SIZE_W)), world.grid[i][j].tile.getType().toString()));
+				tiles.addString(RCString.Create("" + (int) (world.grid[i][j].indexX + (world.grid[i][j].indexY * World.WORLD_SIZE_W)), world.grid[i][j].tile.getId()));
 			}
 		}
 		
 		db.addObject(tiles);
 
-		for (Renderable object : world.objects) {
+		for (Renderable object : world.getObjects()) {
 			if (object instanceof Serializable) {
 				GameObject obj = (GameObject) object;
-				RCObject ro = new RCObject("$" + obj.getID());
+				RCObject ro = new RCObject("$" + obj.getId());
 
 				ro.addField(RCField.Float("x", obj.getX()));
 				ro.addField(RCField.Float("y", obj.getY()));

@@ -17,6 +17,12 @@ import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Shaders;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.Registers;
+import dev.codewizz.modding.events.AddObjectEvent;
+import dev.codewizz.modding.events.CreateWorldEvent;
+import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.LoadWorldEvent;
+import dev.codewizz.modding.events.RemoveObjectEvent;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
@@ -26,6 +32,7 @@ import dev.codewizz.utils.quadtree.QuadTree;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.WorldData;
 import dev.codewizz.utils.serialization.RCDatabase;
+import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
 import dev.codewizz.world.objects.Tree;
@@ -50,7 +57,7 @@ public class World {
 
 	public QuadTree<Cell> tree;
 	public Cell[][] grid;
-	public List<Renderable> objects = new CopyOnWriteArrayList<>();
+	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
 
 	public Settlement settlement;
@@ -93,6 +100,8 @@ public class World {
 
 		nature = new Nature(this);
 		init();
+		
+		Event.dispatch(new CreateWorldEvent());
 	}
 
 	public static World openWorld(String path) {
@@ -126,12 +135,14 @@ public class World {
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
 				try {
-					grid[i][j].setTile(Tile.getTileFromType(data.tileTypes[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
+					grid[i][j].setTile(Registers.createTile(data.tiles[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
+		
+		Event.dispatch(new LoadWorldEvent());
 	}
 
 	public void init() {
@@ -160,14 +171,14 @@ public class World {
 
 				Cell cell = grid[i][j];
 
-				if (cell.tile.getType() == TileType.Sand) {
+				if (cell.tile.getId().equals("aop:sand-tile")) {
 					float e = 1f;
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
 					if (n > 0.2f) {
 						cell.setTile(new ClayTile(cell));
 					}
-				} else if (cell.tile.getType() == TileType.Base) {
+				} else if (cell.tile.getId().equals("aop:grass-tile")) {
 					float e = 20f;
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
@@ -184,12 +195,12 @@ public class World {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
 
 				Cell cell = grid[i][j];
-				if (cell.tile.getType() == TileType.Base) {
+				if (cell.tile.getId().equals("aop:grass-tile")) {
 					float e = 21f;
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
 					if (n > 0.8f) {
-						List<Cell> cells = this.findCell(cell.x, cell.y, 3, false, TileType.Base);
+						List<Cell> cells = this.findCell(cell.x, cell.y, 3, false, "aop:grass-tile");
 
 						for (Cell c : cells) {
 							
@@ -254,7 +265,7 @@ public class World {
 
 				Cell cell = grid[i][j];
 
-				if (cell.tile.getType() == TileType.Base) {
+				if (cell.tile.getId().equals("aop:grass-tile")) {
 					float e = 5f;
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
@@ -304,7 +315,6 @@ public class World {
 					b.draw(Assets.getSprite("tile-highlight2"), MouseInput.hoveringOverCell.x,
 							MouseInput.hoveringOverCell.y);
 				}
-
 				/*
 				 * 
 				 * TODO: Need to add a good way to select a tile and place it. This will be
@@ -389,7 +399,7 @@ public class World {
 		return grid[x][y];
 	}
 
-	public List<GameObject> getObjects() {
+	public List<GameObject> getGameObjects() {
 		List<GameObject> list = new CopyOnWriteArrayList<>();
 
 		for (Renderable r : objects) {
@@ -403,18 +413,18 @@ public class World {
 
 	public void renderDebug() {
 
-		for (GameObject object : this.getObjects()) {
+		for (GameObject object : this.getGameObjects()) {
 			object.renderDebug();
 		}
 
 	}
 
-	public List<Cell> findCell(float x, float y, int r, boolean filter, TileType... types) {
+	public List<Cell> findCell(float x, float y, int r, boolean filter, String... ids) {
 		ArrayList<Cell> cells = new ArrayList<>();
-		ArrayList<TileType> t = new ArrayList<>();
+		ArrayList<String> t = new ArrayList<>();
 
-		for (int i = 0; i < types.length; i++) {
-			t.add(types[i]);
+		for (int i = 0; i < ids.length; i++) {
+			t.add(ids[i]);
 		}
 
 		Cell cell = getCell(x, y);
@@ -501,9 +511,41 @@ public class World {
 		
 		return null;
 	}
+	
+	public void addItem(Item item) {
+		objects.add(item);
+	}
+	
+	public boolean addObject(GameObject object) {
+		
+		boolean proceed = Event.dispatch(new AddObjectEvent(object));
+		
+		if(proceed)
+			objects.add(object);
+		
+		return proceed;
+	}
+	
+	public boolean removeObject(GameObject object) {
+		
+		boolean proceed = Event.dispatch(new RemoveObjectEvent(object));
+		
+		if(proceed)
+			objects.remove(object);
+		
+		return proceed;
+	}
+	
+	public void removeItem(Item item) {
+		objects.remove(item);
+	}
+	
+	public List<Renderable> getObjects() {
+		return objects;
+	}
 
-	private boolean evaluateTile(Cell cell, boolean filter, List<TileType> t) {
-		return (!filter && t.contains(cell.tile.type)) || filter && !t.contains(cell.tile.getType());
+	private boolean evaluateTile(Cell cell, boolean filter, List<String> t) {
+		return (!filter && t.contains(cell.tile.getId())) || filter && !t.contains(cell.tile.getId());
 	}
 
 	public Nature getNature() {

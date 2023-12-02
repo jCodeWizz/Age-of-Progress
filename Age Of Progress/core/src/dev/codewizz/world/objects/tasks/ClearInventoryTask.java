@@ -20,7 +20,7 @@ public class ClearInventoryTask extends Task {
 			i.setX(hermit.getX());
 			i.setY(hermit.getY());
 			i.setHauled(false);
-			Main.inst.world.objects.add(i);
+			Main.inst.world.addItem(i);
 			hermit.getInventory().removeItem(i);
 		}
 	}

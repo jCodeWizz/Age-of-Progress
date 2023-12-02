@@ -10,10 +10,12 @@ import com.badlogic.gdx.utils.Array;
 
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.pathfinding.Link;
-import dev.codewizz.world.tiles.BaseTile;
+import dev.codewizz.world.tiles.GrassTile;
 
 public class Cell {
 
@@ -30,7 +32,7 @@ public class Cell {
 		this.y = y;
 		this.indexX = indexX;
 		this.indexY = indexY;
-		this.tile = new BaseTile(this);
+		this.tile = new GrassTile(this);
 		this.odd = odd;
 	}
 	
@@ -45,13 +47,23 @@ public class Cell {
 		}
 	}
 
-	public void setTile(Tile tile) {
-		if(this.tile.type != tile.type) {
+	public boolean setTile(Tile tile) {
+		if(!this.tile.getId().equals(tile.getId())) {
+			
+			
+			boolean proceed = Event.dispatch(new SetTileEvent(this, tile));
+			
+			if(!proceed)
+				return false;
+			
 			this.tile.onDestroy();
 			this.tile = tile;
 			this.tile.cell = this;
 			this.tile.place();
+			
+			return true;
 		} else {
+			return true;
 		}
 	}
 
@@ -282,7 +294,7 @@ public class Cell {
 	public void setObject(GameObject object) {
 		if(object != null) {
 			object.setCell(this);
-			Main.inst.world.objects.add(object);
+			Main.inst.world.addObject(object);
 		}
 		
 		this.object = object;

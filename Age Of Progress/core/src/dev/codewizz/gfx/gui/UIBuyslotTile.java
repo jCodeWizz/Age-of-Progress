@@ -43,7 +43,7 @@ public class UIBuyslotTile extends UIElement {
 	@Override
 	protected void onClick() {
 		MouseInput.object = false;
-		MouseInput.currentlyDrawingType = tile.getType();
+		MouseInput.currentlyDrawingId = tile.getId();
 	}
 	
 	@Override

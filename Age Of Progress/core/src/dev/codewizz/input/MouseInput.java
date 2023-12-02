@@ -14,10 +14,10 @@ import dev.codewizz.gfx.gui.UIElement;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.Registers;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
-import dev.codewizz.world.TileType;
 import dev.codewizz.world.objects.IBuy;
 
 public class MouseInput implements InputProcessor {
@@ -27,7 +27,7 @@ public class MouseInput implements InputProcessor {
 	public static boolean[] dragging = new boolean[5];
 	public static Vector3 coords = new Vector3();
 	public static Cell hoveringOverCell;
-	public static TileType currentlyDrawingType = TileType.Water;
+	public static String currentlyDrawingId = "aop:base-tile";
 	public static GameObject currentlyDrawingObject = null;
 	public static AreaSelector area = null;
 	public static boolean clear = false;
@@ -62,7 +62,7 @@ public class MouseInput implements InputProcessor {
 
 						Tile tile = grid[i][j].tile;
 
-						if (tile.getType() == currentlyDrawingType || tile.getType() == TileType.Empty) {
+						if (tile.getId().equals(currentlyDrawingId) || tile.getId().equals("aop:empty-tile")) {
 							clear = false;
 						}
 					}
@@ -98,7 +98,7 @@ public class MouseInput implements InputProcessor {
 					} else {
 						Tile tile;
 						try {
-							tile = Tile.getTileFromType(currentlyDrawingType, hoveringOverCell);
+							tile = Registers.createTile(currentlyDrawingId, hoveringOverCell);
 							hoveringOverCell.setTile(tile);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -146,8 +146,8 @@ public class MouseInput implements InputProcessor {
 
 		if (Main.inst.world != null) {
 
-			Collections.sort(Main.inst.world.objects);
-			Collections.reverse(Main.inst.world.objects);
+			Collections.sort(Main.inst.world.getObjects());
+			Collections.reverse(Main.inst.world.getObjects());
 			
 			if(area != null) {
 				area.start(new Vector2(coords.x, coords.y));
@@ -156,7 +156,7 @@ public class MouseInput implements InputProcessor {
 
 			if(GameLayer.selectedObject != null) GameLayer.selectedObject.deselect();
 
-			for (Renderable o : Main.inst.world.objects) {
+			for (Renderable o : Main.inst.world.getObjects()) {
 				if(o instanceof GameObject) {
 					GameObject obj = (GameObject) o;
 					obj.setSelected(false);
@@ -228,7 +228,6 @@ public class MouseInput implements InputProcessor {
 
 	@Override
 	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

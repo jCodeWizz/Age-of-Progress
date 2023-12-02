@@ -17,7 +17,6 @@ import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Inventory;
-import dev.codewizz.world.objects.ID;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
 import dev.codewizz.world.objects.tasks.ClearInventoryTask;
@@ -56,7 +55,7 @@ public class Hermit extends TaskableObject implements Serializable {
 	
 	public Hermit(float x, float y) {
 		super(x, y);
-		this.id = ID.Hermit;
+		this.id = "aop:hermit";
 		this.name= Utils.getRandomName();
 		this.inventory = new Inventory(5);
 		
@@ -186,7 +185,7 @@ public class Hermit extends TaskableObject implements Serializable {
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
 		
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 		Main.inst.world.settlement.addHermit(this);
 	}
 	

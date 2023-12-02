@@ -18,7 +18,6 @@ import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.IBuy;
-import dev.codewizz.world.objects.ID;
 import dev.codewizz.world.objects.hermits.Hermit;
 
 public class Building extends GameObject implements IBuy, Serializable {
@@ -38,7 +37,7 @@ public class Building extends GameObject implements IBuy, Serializable {
 	public Building(float x, float y) {
 		super(x, y);
 
-		this.id = ID.Building;
+		this.id = "aop:building";
 		
 		if(Main.inst.world.settlement != null) 
 			Main.inst.world.settlement.buildings.add(this);
@@ -53,12 +52,12 @@ public class Building extends GameObject implements IBuy, Serializable {
 	
 	public void enter(Hermit hermit) {
 		inside.add(hermit);
-		Main.inst.world.objects.remove(hermit);
+		Main.inst.world.removeObject(hermit);
 	}
 	
 	public void leave(Hermit hermit) {
 		inside.remove(hermit);
-		Main.inst.world.objects.add(hermit);
+		Main.inst.world.addObject(hermit);
 		hermit.getCurrentTask().finish();
 	}
 
@@ -139,7 +138,7 @@ public class Building extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 	
 	public boolean isFull() {

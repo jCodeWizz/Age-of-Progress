@@ -4,37 +4,30 @@ size: 1024, 128
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-base-tile
+carrot-farm-tile
   rotate: false
   xy: 68, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-carrot-farm-tile
+carrot2-farm-tile
   rotate: false
   xy: 134, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-carrot2-farm-tile
+carrot3-farm-tile
   rotate: false
   xy: 200, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-carrot3-farm-tile
-  rotate: false
-  xy: 266, 52
-  size: 64, 48
-  orig: 64, 48
-  offset: 0, 0
-  index: -1
 clay-tile
   rotate: false
-  xy: 332, 52
+  xy: 266, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
@@ -48,7 +41,7 @@ construction-tile
   index: -1
 dirt-tile
   rotate: false
-  xy: 398, 52
+  xy: 332, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
@@ -62,12 +55,19 @@ empty-tile
   index: -1
 farm-tile
   rotate: false
-  xy: 464, 52
+  xy: 398, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
 flower-tile-1
+  rotate: false
+  xy: 464, 52
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+grass-tile
   rotate: false
   xy: 530, 52
   size: 64, 48

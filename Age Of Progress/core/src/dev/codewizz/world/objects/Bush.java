@@ -27,7 +27,7 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 
 		this.sortHeight = 25f;
 
-		this.id = ID.Bush;
+		this.id = "aop:berry-bush";
 		this.name = "Berry Bush";
 	}
 
@@ -63,7 +63,7 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override

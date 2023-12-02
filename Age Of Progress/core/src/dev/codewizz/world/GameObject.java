@@ -11,13 +11,14 @@ import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
-import dev.codewizz.world.objects.ID;
 
 public abstract class GameObject extends Renderable {
 
+	
+	protected String id;
+	
 	protected float x, y, sortHeight;
 	protected int w, h;
-	protected ID id;
 	protected boolean flip = false;
 	protected Cell cell;
 	
@@ -47,7 +48,7 @@ public abstract class GameObject extends Renderable {
 	
 	public void destroy() {
 		onDestroy();
-		Main.inst.world.objects.remove(this);
+		Main.inst.world.removeObject(this);
 		if(cell != null) cell.setObject(null);
 	}
 	
@@ -105,12 +106,8 @@ public abstract class GameObject extends Renderable {
 		this.h = h;
 	}
 	
-	public ID getID() {
+	public String getId() {
 		return id;
-	}
-	
-	public void setID(ID id) {
-		this.id = id;
 	}
 	
 	public int compareTo(GameObject other) {

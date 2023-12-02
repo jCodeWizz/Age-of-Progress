@@ -28,7 +28,7 @@ public class Cow extends Animal implements Serializable {
 	public Cow(float x, float y) {
 		super(x, y);
 		
-		this.id = ID.Cow;
+		this.id = "aop:cow";
 		this.name = "Cow";
 		
 		this.w = 32;
@@ -44,7 +44,7 @@ public class Cow extends Animal implements Serializable {
 	public Cow(float x, float y, Herd herd) {
 		super(x, y, herd);
 		
-		this.id = ID.Cow;
+		this.id = "aop:cow";
 		this.name = "Cow";
 		
 		this.w = 32;
@@ -131,6 +131,6 @@ public class Cow extends Animal implements Serializable {
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
 		
-		Main.inst.world.objects.add(this);		
+		Main.inst.world.addObject(this);		
 	}
 }

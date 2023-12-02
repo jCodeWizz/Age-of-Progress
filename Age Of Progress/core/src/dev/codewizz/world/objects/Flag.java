@@ -29,7 +29,7 @@ public class Flag extends GameObject implements IBuy, Serializable {
 	public Flag(float x, float y) {
 		super(x, y);
 
-		this.id = ID.Flag;
+		this.id = "aop:flag";
 		
 		this.sortHeight = 26;
 		
@@ -97,7 +97,7 @@ public class Flag extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);		
+		Main.inst.world.addObject(this);		
 	}
 
 	@Override

@@ -10,6 +10,8 @@ import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.gui.UINotification;
 import dev.codewizz.gfx.gui.menus.NotificationMenu;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.HermitJoinEvent;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Inventory;
@@ -66,22 +68,26 @@ public class Settlement {
 
 	public Hermit addHermit(float x, float y) {
 
+		
 		Hermit hermit = new Hermit(x, y);
 
 		hermit.setSettlement(this);
 		members.add(hermit);
-		Main.inst.world.objects.add(hermit);
+		Main.inst.world.addObject(hermit);
 
 		((NotificationMenu) Main.inst.renderer.ui.getElement("notification-menu")).addNotification(new UINotification(
 				"A new Hermit arrived!", "Give " + hermit.getName() + " a warm welcome! (And a meal!)", "people-icon"));
 		;
+		
+		Event.dispatch(new HermitJoinEvent(hermit, this));
+
 		return hermit;
 	}
 
 	private void checkHaulTask() {
 		List<Item> items = new CopyOnWriteArrayList<>();
 
-		for (Renderable r : Main.inst.world.objects) {
+		for (Renderable r : Main.inst.world.getObjects()) {
 			if (r instanceof Item) {
 				Item i = (Item) r;
 				if (!i.isHauled()) {

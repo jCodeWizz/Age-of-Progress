@@ -29,7 +29,7 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 
 		this.sortHeight = 25f;
 
-		this.id = ID.FencePost;
+		this.id = "aop:fence-post";
 		this.name = "Fence Post";
 	}
 
@@ -55,7 +55,7 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override

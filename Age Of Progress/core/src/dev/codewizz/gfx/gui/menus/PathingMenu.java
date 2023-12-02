@@ -12,7 +12,7 @@ import dev.codewizz.gfx.gui.UIScrollList;
 import dev.codewizz.gfx.gui.UITabButton;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.input.MouseInput;
-import dev.codewizz.world.tiles.BaseTile;
+import dev.codewizz.world.tiles.GrassTile;
 import dev.codewizz.world.tiles.ClayTile;
 import dev.codewizz.world.tiles.DirtPathTile;
 import dev.codewizz.world.tiles.DirtTile;
@@ -96,7 +96,7 @@ public class PathingMenu extends UIMenu {
 		elements.add(new UIText("text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - (6 + 5) * UILayer.SCALE + 1, "Pathing Menu", 8));
 
 		terrainList.slots.add(new UIBuyslotTile("slot-1", (8) * UILayer.SCALE + 4,
-				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new BaseTile(null)));
+				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new GrassTile(null)));
 		terrainList.slots.add(new UIBuyslotTile("slot-2", (8) * UILayer.SCALE + 4,
 				Gdx.graphics.getHeight() - (140 * UILayer.SCALE), 160 - 8, 52, new FlowerTile(null)));
 		terrainList.slots.add(new UIBuyslotTile("slot-3", (8) * UILayer.SCALE + 4,

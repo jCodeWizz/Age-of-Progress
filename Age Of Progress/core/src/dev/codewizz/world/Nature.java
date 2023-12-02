@@ -36,7 +36,7 @@ public class Nature {
 	public Nature(World world) {
 		this.world = world;
 		
-		for(Renderable object : world.objects) {
+		for(Renderable object : world.getObjects()) {
 			if(object instanceof Animal) {
 				animals.add((Animal)object);
 			}
@@ -106,7 +106,7 @@ public class Nature {
 	}
 	
 	public boolean addAnimal(Animal a) {
-		List<Cell> cells = world.findCell(a.getX(), a.getY(), 4, false, TileType.Base, TileType.Flower);
+		List<Cell> cells = world.findCell(a.getX(), a.getY(), 4, false, "aop:grass-tile", "aop:flower-tile");
 		if(!cells.isEmpty()) {
 			Cell cell = cells.get(cells.size()-1);
 			
@@ -115,7 +115,7 @@ public class Nature {
 			a.setX(cell.x);
 			a.setY(cell.y);
 			
-			world.objects.add(a);
+			world.addObject(a);
 			animals.add(a);
 			
 			return true;
@@ -133,7 +133,7 @@ public class Nature {
 	
 	public void removeAnimal(Animal a) {
 		animals.remove(a);
-		world.objects.remove(a);
+		world.removeObject(a);
 	}
 	
 	private void dayCycle(float dt) {

@@ -23,7 +23,7 @@ public class Wolf extends Animal implements Serializable {
 	public Wolf(float x, float y) {
 		super(x, y);
 
-		this.id = ID.Wolf;
+		this.id = "aop:wolf";
 		this.name = "Wolf";
 
 		this.w = 40;
@@ -38,7 +38,7 @@ public class Wolf extends Animal implements Serializable {
 	public Wolf(float x, float y, Herd herd) {
 		super(x, y, herd);
 
-		this.id = ID.Wolf;
+		this.id = "aop:wolf";
 		this.name = "Wolf";
 
 		this.w = 40;
@@ -79,9 +79,9 @@ public class Wolf extends Animal implements Serializable {
 		if (moving)
 			walkAnim.tick(d);
 
-		for (Renderable object : Main.inst.world.objects) {
+		for (Renderable object : Main.inst.world.getObjects()) {
 			if (object instanceof Entity) {
-				if (((Entity) object).getID() == ID.Cow) {
+				if (((Entity) object).getId().equals("aop:cow")) {
 					if (Vector2.dst(object.getX(), object.getY(), getX(), getY()) < 400) {
 
 						this.addTask(new HuntTask((Entity) object, damage, attackSpeed), true);
@@ -130,6 +130,6 @@ public class Wolf extends Animal implements Serializable {
 	@Override
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
-		Main.inst.world.objects.add(this);		
+		Main.inst.world.addObject(this);		
 	}
 }

@@ -40,7 +40,7 @@ public class HaulTask extends Task {
 			i.setX(hermit.getX());
 			i.setY(hermit.getY());
 			i.setHauled(false);
-			Main.inst.world.objects.add(i);
+			Main.inst.world.addItem(i);
 			hermit.getInventory().removeItem(i);
 		}
 		
@@ -71,7 +71,7 @@ public class HaulTask extends Task {
 			
 			finish();
 		} else {
-			Main.inst.world.objects.remove(items.get(0));
+			Main.inst.world.removeItem(items.get(0));
 			hermit.getInventory().addItem(items.get(0));
 			items.remove(0);
 			

@@ -36,9 +36,9 @@ public class AreaSelector {
 
 		Rectangle rec = new Rectangle((int) start.x, (int) start.y, w, h);
 
-		Collections.reverse(Main.inst.world.objects);
+		Collections.reverse(Main.inst.world.getObjects());
 		
-		for (Renderable obj : Main.inst.world.objects) {
+		for (Renderable obj : Main.inst.world.getObjects()) {
 			if(obj instanceof GameObject) {
 				if (((GameObject)obj).getHitBox().intersects(rec)) {
 					handle((GameObject)obj);

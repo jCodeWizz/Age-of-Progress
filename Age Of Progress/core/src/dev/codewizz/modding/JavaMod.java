@@ -6,7 +6,6 @@ public abstract class JavaMod {
 
 	private Main main;
 	
-	
 	public void start() {
 		main = Main.inst;
 		
@@ -14,7 +13,6 @@ public abstract class JavaMod {
 	}
 	
 	public void stop() {
-		
 		onStop();
 	}
 	
@@ -24,5 +22,6 @@ public abstract class JavaMod {
 	
 	public abstract void onStart();
 	public abstract void onStop();
+	public abstract void register();
 	public abstract void update(float dt);
 }

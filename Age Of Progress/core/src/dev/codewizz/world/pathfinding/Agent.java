@@ -9,7 +9,6 @@ import dev.codewizz.main.Main;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
-import dev.codewizz.world.objects.ID;
 
 public class Agent {
 
@@ -101,7 +100,7 @@ public class Agent {
 			
 			if(object instanceof Animal) {
 				if(graphPath.get(i).getObject() != null) {
-					if(graphPath.get(i).getObject().getID() == ID.FenceGate) {
+					if(graphPath.get(i).getObject().getId().equals("aop:fence-gate")) {
 						stop();
 						return false;
 					}

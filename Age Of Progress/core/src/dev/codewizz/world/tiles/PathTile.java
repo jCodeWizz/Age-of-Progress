@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.Tile;
-import dev.codewizz.world.TileType;
 
 public abstract class PathTile extends Tile {
 
@@ -24,8 +23,8 @@ public abstract class PathTile extends Tile {
 	private static BufferedImage tBR = Assets.getImage("tBR");
 	private static BufferedImage tBL = Assets.getImage("tBL");
 
-	protected TileType template;
-	protected TileType templateGround;
+	protected String template;
+	protected String templateGround;
 	
 	public PathTile(Cell cell) {
 		super(cell);
@@ -98,6 +97,6 @@ public abstract class PathTile extends Tile {
 	}
 	
 	private String getSavedName() {
-		return type.toString() + "-" + neighbours[0] + neighbours[1] + neighbours[2] + neighbours[3];
+		return id + "-" + neighbours[0] + neighbours[1] + neighbours[2] + neighbours[3];
 	}
 }

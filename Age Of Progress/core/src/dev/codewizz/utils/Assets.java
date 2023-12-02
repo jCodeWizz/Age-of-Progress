@@ -12,8 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
-import dev.codewizz.world.TileType;
-
 
 public class Assets {
 
@@ -131,7 +129,7 @@ public class Assets {
 		addImage("textures/procuderal/path-tile-TR.png", "tTR");
 		addImage("textures/procuderal/path-tile-BR.png", "tBR");
 		addImage("textures/procuderal/path-tile-BL.png", "tBL");
-		addImage("textures/tiles/base-tile.png", "grass");
+		addImage("textures/tiles/grass-tile.png", "grass");
 		addImage("textures/tiles/tiled-tile-1.png", "tiled-tile-1");
 		addImage("textures/tiles/tiled-tile-2.png", "tiled-tile-2");
 		addImage("textures/tiles/tiled-tile-3.png", "tiled-tile-3");
@@ -141,16 +139,16 @@ public class Assets {
 		addImage("textures/tiles/tiled-tile-7.png", "tiled-tile-7");
 		addImage("textures/tiles/tiled-tile-8.png", "tiled-tile-8");
 
-		procuderal.put(TileType.Base.toString(), new Texture(Gdx.files.internal("textures/tiles/base-tile.png")));
-		procuderal.put(TileType.Dirt.toString(), new Texture(Gdx.files.internal("textures/tiles/dirt-tile.png")));
-		procuderal.put(TileType.Tiled_1.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-1.png")));
-		procuderal.put(TileType.Tiled_2.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-2.png")));
-		procuderal.put(TileType.Tiled_3.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-3.png")));
-		procuderal.put(TileType.Tiled_4.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-4.png")));
-		procuderal.put(TileType.Tiled_5.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-5.png")));
-		procuderal.put(TileType.Tiled_6.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-6.png")));
-		procuderal.put(TileType.Tiled_7.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-7.png")));
-		procuderal.put(TileType.Tiled_8.toString(), new Texture(Gdx.files.internal("textures/tiles/tiled-tile-8.png")));
+		procuderal.put("aop:grass-tile", new Texture(Gdx.files.internal("textures/tiles/grass-tile.png")));
+		procuderal.put("aop:dirt-tile", new Texture(Gdx.files.internal("textures/tiles/dirt-tile.png")));
+		procuderal.put("aop:tiled-tile-1", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-1.png")));
+		procuderal.put("aop:tiled-tile-2", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-2.png")));
+		procuderal.put("aop:tiled-tile-3", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-3.png")));
+		procuderal.put("aop:tiled-tile-4", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-4.png")));
+		procuderal.put("aop:tiled-tile-5", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-5.png")));
+		procuderal.put("aop:tiled-tile-6", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-6.png")));
+		procuderal.put("aop:tiled-tile-7", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-7.png")));
+		procuderal.put("aop:tiled-tile-8", new Texture(Gdx.files.internal("textures/tiles/tiled-tile-8.png")));
 
 		
 	}

@@ -28,7 +28,7 @@ public class Stump extends GameObject implements Serializable, IBuy {
 
 		this.sortHeight = 25f;
 
-		this.id = ID.Stump;
+		this.id = "aop:stump";
 		this.name = "Stump";
 	}
 
@@ -54,7 +54,7 @@ public class Stump extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override

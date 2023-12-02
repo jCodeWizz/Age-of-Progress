@@ -34,7 +34,7 @@ public class GrowCropTask extends Task{
 			
 			for(int i = 0; i < Utils.getRandom(crop.type.getItem().getSize(), crop.type.getMax()); i++) {
 				Item item = new Item(crop.cell.x + 25 + Utils.getRandom(-20, 20), crop.cell.y + 25 + Utils.getRandom(-10, 10), crop.type.getItem().getType());
-				Main.inst.world.objects.add(item);
+				Main.inst.world.addItem(item);
 			}
 		}
 		

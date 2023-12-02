@@ -30,7 +30,7 @@ public class Tree extends GameObject implements Serializable, IGatherable {
 
 		this.sortHeight = 25f;
 
-		this.id = ID.Tree;
+		this.id = "aop:tree";
 		this.name = "Tree";
 	}
 
@@ -56,7 +56,7 @@ public class Tree extends GameObject implements Serializable, IGatherable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.objects.add(this);
+		Main.inst.world.addObject(this);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Tree extends GameObject implements Serializable, IGatherable {
 		int amount = Utils.getRandom(4, 8);
 		for(int i = 0; i < amount; i++) {
 			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 35 + Utils.getRandom(-5, 5), ItemType.Wood);
-			Main.inst.world.objects.add(item);
+			Main.inst.world.addItem(item);
 		}
 		destroy();
 	}
