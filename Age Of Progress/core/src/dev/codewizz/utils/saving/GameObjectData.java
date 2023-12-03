@@ -1,14 +1,11 @@
 package dev.codewizz.utils.saving;
 
+import dev.codewizz.main.Main;
+import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.serialization.RCDatabase;
 import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.objects.Cow;
-import dev.codewizz.world.objects.Flag;
-import dev.codewizz.world.objects.Tree;
-import dev.codewizz.world.objects.Wolf;
-import dev.codewizz.world.objects.buildings.Building;
-import dev.codewizz.world.objects.hermits.Hermit;
+import dev.codewizz.world.Serializable;
 
 public class GameObjectData {
 
@@ -23,25 +20,9 @@ public class GameObjectData {
 		float x = ro.findField("x").getFloat();
 		float y = ro.findField("y").getFloat();
 		
-		if(t.equalsIgnoreCase("tree")) {
-			Tree tree = new Tree(x, y);
-			tree.load(ro);
-		} else if(t.equalsIgnoreCase("cow")) {
-			Cow cow = new Cow(x, y);
-			cow.load(ro);
-		} else if(t.equalsIgnoreCase("wolf")) {
-			Wolf wolf = new Wolf(x, y);
-			wolf.load(ro);
-		} else if(t.equalsIgnoreCase("hermit")) {
-			Hermit hermit = new Hermit(x, y);
-			hermit.load(ro);
-		} else if(t.equalsIgnoreCase("flag")) {
-			Flag flag = new Flag(x, y);
-			flag.load(ro);
-		} else if(t.equalsIgnoreCase("building")) {
-			Building building = new Building(x, y);
-			building.load(ro);
-		}
+		GameObject object = Registers.createGameObject(t, x, y);
+		((Serializable) object).load(ro);
+		Main.inst.world.addObject(object);
 	}
 	
 	public static void load(RCDatabase db) {
