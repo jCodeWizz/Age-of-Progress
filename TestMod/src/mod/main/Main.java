@@ -7,12 +7,11 @@ public class Main extends JavaMod {
 	
 	@Override
 	public void onRegister() {
-		
+		Registers.registerEvent(info, new OpenWorldEvent());
 	}
 
 	@Override
 	public void onStart() {
-		Registers.registerEvent(info, new OpenWorldEvent());
 	}
 	
 	@Override
