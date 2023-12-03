@@ -63,7 +63,6 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.addObject(this);
 	}
 
 	@Override

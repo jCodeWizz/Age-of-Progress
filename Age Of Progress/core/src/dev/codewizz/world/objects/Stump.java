@@ -7,7 +7,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.Cell;
@@ -54,7 +53,6 @@ public class Stump extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.addObject(this);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package mod.main;
 
 import dev.codewizz.modding.annotations.EventCall;
-import dev.codewizz.modding.annotations.EventListener;
 import dev.codewizz.modding.events.CreateWorldEvent;
+import dev.codewizz.modding.events.EventListener;
 import dev.codewizz.modding.events.LoadWorldEvent;
 import dev.codewizz.utils.Logger;
 

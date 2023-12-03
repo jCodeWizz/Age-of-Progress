@@ -66,15 +66,7 @@ public class Wolf extends Animal implements Serializable {
 	public void update(float d) {
 		super.update(d);
 
-		if (vel.x > 0) {
-			facingRight = false;
-			moving = true;
-		} else if (vel.x < 0) {
-			facingRight = true;
-			moving = true;
-		} else {
-			moving = false;
-		}
+		moving = vel.x != 0 || vel.y != 0;
 
 		if (moving)
 			walkAnim.tick(d);
@@ -130,6 +122,5 @@ public class Wolf extends Animal implements Serializable {
 	@Override
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
-		Main.inst.world.addObject(this);		
 	}
 }

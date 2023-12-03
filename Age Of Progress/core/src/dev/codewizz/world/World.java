@@ -39,6 +39,7 @@ import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
 import dev.codewizz.world.tiles.ClayTile;
+import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.FlowerTile;
 import dev.codewizz.world.tiles.SandTile;
 import dev.codewizz.world.tiles.WaterTile;
@@ -137,6 +138,7 @@ public class World {
 				try {
 					grid[i][j].setTile(Registers.createTile(data.tiles[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
 				} catch (Exception e) {
+					grid[i][j].setTile(new EmptyTile(grid[i][j]));
 					e.printStackTrace();
 				}
 			}

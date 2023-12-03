@@ -93,6 +93,12 @@ public abstract class TaskableObject extends Entity {
 		
 		x += vel.x;
 		y += vel.y;
+		
+		if(vel.x > 0) {
+			facingRight = true;
+		} else if(vel.x < 0){
+			facingRight = false;
+		}
 	}
 
 	public Vector2 getCenter() {

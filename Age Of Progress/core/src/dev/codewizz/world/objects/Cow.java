@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
-import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.serialization.RCField;
 import dev.codewizz.utils.serialization.RCObject;
@@ -71,17 +70,7 @@ public class Cow extends Animal implements Serializable {
 	public void update(float d) {
 		super.update(d);
 		
-		
-		
-		if(vel.x > 0) {
-			facingRight = true;
-			moving = true;
-		} else if(vel.x < 0){
-			facingRight = false;
-			moving = true;
-		} else {
-			moving = false;
-		}
+		moving = vel.x != 0 || vel.y != 0;
 		
 		if(moving)
 			walkAnim.tick(d);
@@ -130,7 +119,5 @@ public class Cow extends Animal implements Serializable {
 	@Override
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
-		
-		Main.inst.world.addObject(this);		
 	}
 }

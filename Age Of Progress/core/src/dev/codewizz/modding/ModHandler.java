@@ -134,9 +134,11 @@ public class ModHandler {
 		if(d == null) return true;
 		
 		for(int i = 0; i < d.length; i++) {
-			ModInfo mod = Registers.mods.get(d[i]).getTypeA();
-			if(!mod.initialized) {
-				return false;
+			if(!(d[i].isBlank() || d[i].isEmpty())) {
+				ModInfo mod = Registers.mods.get(d[i]).getTypeA();
+				if(!mod.initialized) {
+					return false;
+				}
 			}
 		}
 		

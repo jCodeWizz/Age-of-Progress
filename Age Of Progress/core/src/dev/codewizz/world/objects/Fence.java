@@ -66,7 +66,6 @@ public class Fence extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.addObject(this);
 	}
 
 	@Override

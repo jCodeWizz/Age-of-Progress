@@ -12,7 +12,7 @@ import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 
-public abstract class GameObject extends Renderable {
+public abstract class GameObject extends Renderable implements Serializable {
 
 	
 	protected String id;

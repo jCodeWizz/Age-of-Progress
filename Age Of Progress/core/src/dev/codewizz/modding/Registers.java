@@ -26,7 +26,7 @@ public class Registers {
 		
 		Tile tile;
 		try {
-			tile = tiles.get(id).getConstructor().newInstance(cell);
+			tile = tiles.get(id).getConstructor(Cell.class).newInstance(cell);
 			return tile;
 		} catch (Exception e) {
 			Logger.error("Exception while trying to create tile: " + id);
@@ -42,7 +42,7 @@ public class Registers {
 		}
 		
 		try {
-			GameObject object = objects.get(id).getConstructor().newInstance(x, y);
+			GameObject object = objects.get(id).getConstructor(float.class, float.class).newInstance(x, y);
 			return object;
 		} catch (Exception e) {
 			Logger.error("Exception while trying to create object: " + id);
