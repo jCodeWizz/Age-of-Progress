@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 
+import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.pathfinding.Agent;
 
@@ -32,6 +33,19 @@ public abstract class TaskableObject extends Entity {
 				return getCenter();
 			}
 		};
+	}
+	
+	@Override
+	public void load(RCObject object) {
+
+		
+		super.load(object);
+	}
+	
+	@Override
+	public RCObject save(RCObject object) {
+
+		return super.save(object);
 	}
 	
 	public void finishCurrentTask() {

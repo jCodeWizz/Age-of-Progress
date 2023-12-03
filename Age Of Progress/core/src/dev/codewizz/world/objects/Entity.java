@@ -2,6 +2,8 @@ package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.Gdx;
 
+import dev.codewizz.utils.serialization.RCField;
+import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.GameObject;
 
 public abstract class Entity extends GameObject {
@@ -29,6 +31,25 @@ public abstract class Entity extends GameObject {
 				destroy();
 		}
 	}
+	
+	@Override
+	public void load(RCObject object) {
+		this.health = object.findField("health").getFloat();
+		this.maxHealth = object.findField("maxHealth").getFloat();
+		this.damageCoolDown = object.findField("damageCoolDown").getFloat();
+		
+		super.load(object);
+	}
+	
+	@Override
+	public RCObject save(RCObject object) {
+		object.addField(RCField.Float("health", health));
+		object.addField(RCField.Float("maxHealth", maxHealth));
+		object.addField(RCField.Float("damageCoolDown", damageCoolDown));
+		
+		return super.save(object);
+	}
+	
 	
 	@Override
 	public void onDestroy() {

@@ -1,10 +1,11 @@
 package dev.codewizz.world.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.dongbat.jbump.util.MathUtils;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Utils;
+import dev.codewizz.utils.serialization.RCField;
+import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.World;
 import dev.codewizz.world.objects.tasks.MoveTask;
@@ -92,8 +93,24 @@ public abstract class Animal extends TaskableObject {
 		}
 	}
 	
-	public abstract void render(SpriteBatch b);
+	@Override
+	public RCObject save(RCObject object) {
 
+		object.addField(RCField.Boolean("inHerd", inHerd));
+		object.addField(RCField.Integer("wanderDistance", wanderDistance));
+		
+		return super.save(object);
+	}
+	
+	@Override
+	public void load(RCObject object) {
+
+		this.inHerd = object.findField("inHerd").getBoolean();
+		this.wanderDistance = object.findField("wanderDistance").getInt();
+		
+		super.load(object);
+	}
+	
 	public int getWanderDistance() {
 		return wanderDistance;
 	}

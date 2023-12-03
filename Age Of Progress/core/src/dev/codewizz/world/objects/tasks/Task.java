@@ -3,11 +3,14 @@ package dev.codewizz.world.objects.tasks;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dev.codewizz.utils.serialization.RCField;
+import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.world.Serializable;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.hermits.Jobs;
 
-public abstract class Task {
+public abstract class Task implements Serializable {
 	
 	protected List<Jobs> jobs = new CopyOnWriteArrayList<>();
 	
@@ -46,6 +49,25 @@ public abstract class Task {
 	public abstract void update(float d);
 	
 	public abstract String getName();
+	
+	@Override
+	public void load(RCObject object) {
+		
+		this.shouldRestart = object.findField("shouldRestart").getBoolean();
+		this.started = object.findField("started").getBoolean();
+		this.tasking = object.findField("tasking").getBoolean();
+		
+	}
+	
+	@Override
+	public RCObject save(RCObject object) {
+		
+		object.addField(RCField.Boolean("shouldRestart", shouldRestart));
+		object.addField(RCField.Boolean("started", started));
+		object.addField(RCField.Boolean("tasking", tasking));
+		
+		return object;
+	}
 
 	public boolean canTake(Hermit hermit) {
 		return (jobs.contains(hermit.getJob().getJob()) || jobs.isEmpty());

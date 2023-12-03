@@ -138,7 +138,6 @@ public class Building extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public void load(RCObject object) {
-		Main.inst.world.addObject(this);
 	}
 	
 	public boolean isFull() {

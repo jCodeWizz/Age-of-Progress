@@ -184,8 +184,6 @@ public class Hermit extends TaskableObject implements Serializable {
 	@Override
 	public void load(RCObject object) {
 		this.health = object.findField("health").getFloat();
-		
-		Main.inst.world.addObject(this);
 		Main.inst.world.settlement.addHermit(this);
 	}
 	

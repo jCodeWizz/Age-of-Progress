@@ -11,6 +11,7 @@ import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.serialization.RCObject;
 
 public abstract class GameObject extends Renderable implements Serializable {
 
@@ -35,6 +36,15 @@ public abstract class GameObject extends Renderable implements Serializable {
 	public void renderUICard(SelectMenu m) {}
 	public void updateUICard() {}
 	
+	@Override
+	public RCObject save(RCObject object) {
+		return object;
+	}
+	
+	@Override
+	public void load(RCObject object) {
+		
+	}
 
 	public void renderDebug() {
 		Polygon g = this.getHitBox();
