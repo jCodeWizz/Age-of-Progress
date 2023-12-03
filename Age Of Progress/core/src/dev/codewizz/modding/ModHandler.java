@@ -1,12 +1,16 @@
 package dev.codewizz.modding;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 import com.badlogic.gdx.Gdx;
 
@@ -52,13 +56,19 @@ public class ModHandler {
             
             stream.close();
             
-            Class<?> testClass = Class.forName(info.getMain(), false, child);
             
-            if(testClass.getSuperclass() == JavaMod.class) {
-            	JavaMod mod = (JavaMod)testClass.getConstructor().newInstance();
-            	Registers.registerMod(info, mod);
-            } else {
-            	Logger.error("Main class for mod: " + file.getName() + " is not a child of JavaMod");
+            
+            for(String s : getClassNames(file)) {
+            	Class<?> testClass = Class.forName(s, false, child);
+                
+                if(s.equals(info.getMain())) {
+                	if(testClass.getSuperclass() == JavaMod.class) {
+                    	JavaMod mod = (JavaMod)testClass.getConstructor().newInstance();
+                    	Registers.registerMod(info, mod);
+                    } else {
+                    	Logger.error("Main class for mod: " + file.getName() + " is not a child of JavaMod");
+                    }
+                }
             }
                 
             zip.close();
@@ -68,11 +78,37 @@ public class ModHandler {
         	e.printStackTrace();
         }
 	}
+	
+	 public ArrayList<String> getClassNames(File file) {
+	        ArrayList<String> classNames = new ArrayList<String>();
+	        try {
+	            ZipInputStream zip = new ZipInputStream(new FileInputStream(file.getPath()));
+	            for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
+	                if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
+	                    String className = entry.getName().replace('/', '.');
+	                    classNames.add(className.substring(0, className.length() - ".class".length()));
+	                }
+	            }
+	        } catch (Exception ignored) {}
+	        return classNames;
+	    }
+
 	 
 	public void start() {
 		List<Pair<ModInfo,JavaMod>> mods = new CopyOnWriteArrayList<>();
 		
 		mods.addAll(Registers.mods.values());
+		
+		
+		for(Pair<ModInfo,JavaMod> pair : mods) {
+			try {
+				pair.getTypeB().register(pair.getTypeA());
+				Logger.log("Registered mod: " + pair.getTypeA().getId().toUpperCase());
+			} catch (Exception e) {
+				Logger.error("Exception when mod: " + pair.getTypeA().getId() + " was registering");
+				e.printStackTrace();
+			}
+		}
 		
 		while(!mods.isEmpty()) {
 			for(Pair<ModInfo,JavaMod> pair : mods) {
