@@ -82,7 +82,7 @@ public class MouseInput implements InputProcessor {
 					if (object) {
 						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null ) {
 							IBuy object = (IBuy) currentlyDrawingObject;
-							GameObject obj = object.getCopy(hoveringOverCell.x, hoveringOverCell.y);
+							GameObject obj = Registers.createGameObject(object.getId(),hoveringOverCell.x, hoveringOverCell.y);
 							obj.setFlip(rotate);
 							hoveringOverCell.setObject(obj);
 							obj.setCell(hoveringOverCell);

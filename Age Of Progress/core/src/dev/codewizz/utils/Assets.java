@@ -183,8 +183,12 @@ public class Assets {
 		}
 	}
 	
-	public static void addSprite(String s, Sprite sprite) {
-		sprites.put(s, sprite);
+	public static Sprite addSpriteToAtlas(String atlas, String s, Sprite sprite) {
+		TextureAtlas textureAtlas = atlasses.get(atlas);
+	
+		textureAtlas.addRegion(s, sprite);
+	
+		return sprites.put(s, textureAtlas.createSprite(s));
 	}
 	
 	public static Sprite getSprite(String s) {

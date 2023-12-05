@@ -73,8 +73,8 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new FencePost(x, y);
+	public String getId() {
+		return id;
 	}
 
 	@Override

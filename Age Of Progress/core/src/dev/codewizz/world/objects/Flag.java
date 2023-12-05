@@ -64,8 +64,8 @@ public class Flag extends GameObject implements IBuy, Serializable {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new Flag(x, y);
+	public String getId() {
+		return id;
 	}
 
 	@Override

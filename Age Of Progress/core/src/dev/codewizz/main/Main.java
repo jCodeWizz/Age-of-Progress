@@ -12,6 +12,7 @@ import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.modding.ModHandler;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Tiles;
 import dev.codewizz.world.World;
 import dev.codewizz.world.objects.GameObjects;
@@ -35,6 +36,8 @@ public class Main extends ApplicationAdapter {
 		
 	@Override
 	public void create () {
+		long start = System.currentTimeMillis();
+		
 		inst = this;
 		Assets.create();
 		
@@ -53,6 +56,8 @@ public class Main extends ApplicationAdapter {
 		handler.register();
 		
 		handler.start();
+		
+		Logger.log("Start time: " + (float)(System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 	}
 	
 	public void setInputMultiplexer() {

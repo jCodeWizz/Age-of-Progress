@@ -13,7 +13,11 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.Utils;
@@ -70,6 +74,9 @@ public class ModHandler {
                     }
                 }
             }
+            
+            
+            loadModAssets(info, file);
                 
             zip.close();
             child.close();
@@ -77,6 +84,52 @@ public class ModHandler {
         	Logger.error("Exception while loading mod: " + file.getName());
         	e.printStackTrace();
         }
+	}
+	
+	public void loadModAssets(ModInfo info, File file) {
+
+		int total = 0;
+		
+		ZipInputStream zip;
+		try {
+			ZipFile zipFile = new ZipFile(file);
+			zip = new ZipInputStream(new FileInputStream(file.getPath()));
+			for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
+				String e = entry.getName();
+				int end = entry.getName().indexOf('/');
+				if(end != -1) {
+					if(e.substring(0, end).equalsIgnoreCase(info.getId())) {
+						
+						int end2 = e.lastIndexOf('/') + 1;
+						String folder = e.substring(end, end2);
+						String name = e.substring(end2, e.lastIndexOf('.'));
+						
+						
+						if(folder.equalsIgnoreCase("/textures/tiles/")) {
+							InputStream stream = zipFile.getInputStream(entry);
+							byte[] bytes = stream.readAllBytes();
+							
+							Pixmap m = new Pixmap(bytes, 0, bytes.length);
+							Sprite s = new Sprite(new Texture(m));
+
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							
+							stream.close();
+						}
+						
+						total++;
+					}
+				}
+			}
+			
+			zipFile.close();
+		} catch (Exception e) {
+			Logger.error("Exception occured while loading resources for: " + info.getId().toUpperCase());
+			e.printStackTrace();
+		}
+		
+		String message = total != 1 ? "Loaded " + total + " resources for: " + info.getId().toUpperCase() : "Loaded " + total + " resource for: " + info.getId().toUpperCase();
+		Logger.log(message);
 	}
 	
 	 public ArrayList<String> getClassNames(File file) {

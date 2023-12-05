@@ -84,8 +84,8 @@ public class Fence extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new Fence(x, y);
+	public String getId() {
+		return id;
 	}
 
 	@Override

@@ -87,10 +87,10 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new FenceGate(x, y);
+	public String getId() {
+		return id;
 	}
-
+	
 	@Override
 	public boolean conintues() {
 		return false;

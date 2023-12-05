@@ -112,8 +112,8 @@ public class Building extends GameObject implements IBuy, Serializable {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new Building(x, y);
+	public String getId() {
+		return id;
 	}
 
 	@Override

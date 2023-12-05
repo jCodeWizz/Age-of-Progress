@@ -71,8 +71,8 @@ public class Stump extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public GameObject getCopy(float x, float y) {
-		return new Stump(x, y);
+	public String getId() {
+		return id;
 	}
 
 	@Override
