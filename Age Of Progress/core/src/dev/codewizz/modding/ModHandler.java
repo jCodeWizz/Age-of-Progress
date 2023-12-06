@@ -16,6 +16,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
@@ -104,19 +105,30 @@ public class ModHandler {
 						String folder = e.substring(end, end2);
 						String name = e.substring(end2, e.lastIndexOf('.'));
 						
+						InputStream stream = zipFile.getInputStream(entry);
+						byte[] bytes = stream.readAllBytes();
 						
-						if(folder.equalsIgnoreCase("/textures/tiles/")) {
-							InputStream stream = zipFile.getInputStream(entry);
-							byte[] bytes = stream.readAllBytes();
-							
-							Pixmap m = new Pixmap(bytes, 0, bytes.length);
-							Sprite s = new Sprite(new Texture(m));
+						Pixmap m = new Pixmap(bytes, 0, bytes.length);
+						Sprite s = new Sprite(new Texture(m));
 
+
+						if(folder.equalsIgnoreCase("/textures/tiles/")) {
 							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
-							
-							stream.close();
+						} else if(folder.equalsIgnoreCase("/textures/objects/")) {
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+						} else if(folder.equalsIgnoreCase("/textures/entities/")) {
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+						} else if(folder.equalsIgnoreCase("/textures/particles/")) {
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+						} else if(folder.equalsIgnoreCase("/textures/items/")) {
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+						} else if(folder.equalsIgnoreCase("/textures/ui/icons/")) {
+							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+						} else {
+							Logger.error("Trying to load: " + entry.getName() + " from mod: " + info.getId().toUpperCase() + " but it isn't in the correct folder!");
 						}
-						
+
+						stream.close();
 						total++;
 					}
 				}
@@ -201,6 +213,13 @@ public class ModHandler {
 	public void update(float dt) {
 		for(Pair<ModInfo, JavaMod> mod : Registers.mods.values()) {
 			mod.getTypeB().update(dt);
+		}
+	}
+	
+	public void render(SpriteBatch b) {
+		for(Pair<ModInfo, JavaMod> mod : Registers.mods.values()) {
+			
+			mod.getTypeB().render(b);
 		}
 	}
 	

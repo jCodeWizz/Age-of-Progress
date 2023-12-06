@@ -23,7 +23,7 @@ public abstract class Tile {
 		this.texture = Assets.getSprite("grass-tile");
 		this.name = "Grass Tile";
 	}
-	
+
 	public void onPlace() {};
 	public void onDestroy() {};
 	public void update() {};

@@ -1,5 +1,7 @@
 package dev.codewizz.modding;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import dev.codewizz.main.Main;
 
 public abstract class JavaMod {
@@ -25,6 +27,8 @@ public abstract class JavaMod {
 		this.info = info;
 		onRegister();
 	}
+	
+	public void render(SpriteBatch b) {}
 	
 	public abstract void onRegister();
 	public abstract void onStart();

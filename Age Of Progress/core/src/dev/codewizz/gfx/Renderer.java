@@ -63,7 +63,7 @@ public class Renderer {
 		world.renderObjects(objectBatch);
 		
 		Main.inst.handler.update(Gdx.graphics.getDeltaTime());
-		
+		Main.inst.handler.render(objectBatch);
 		objectBatch.setProjectionMatrix(cam.combined);
 		objectBatch.end();
 		/*
