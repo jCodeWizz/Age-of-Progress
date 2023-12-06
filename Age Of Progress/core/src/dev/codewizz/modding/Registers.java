@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import dev.codewizz.modding.annotations.EventCall;
+import dev.codewizz.modding.annotations.Priorities;
+import dev.codewizz.modding.annotations.Priority;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
 import dev.codewizz.world.Cell;
@@ -73,6 +75,14 @@ public class Registers {
 		boolean valid = false;
 		for(Method b : o.getClass().getDeclaredMethods()) {
 			for(Annotation a : b.getAnnotations()) {
+				
+				
+				if(a.annotationType() == Priority.class) {
+					Priorities p = ((Priority) a).priority();
+					
+					
+					
+				}
 				if(a.annotationType() == EventCall.class) {
 					valid = true;
 					events.put(info.getId() + ":" + o.getClass().toString() + ":" + b.getName(), new Pair<Object,Method>(o, b));

@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Priority {
 
+	public Priorities priority() default Priorities.NORMAL;
 }
