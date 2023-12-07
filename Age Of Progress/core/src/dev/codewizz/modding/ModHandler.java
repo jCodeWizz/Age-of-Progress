@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.zip.ZipEntry;
@@ -165,13 +167,37 @@ public class ModHandler {
 		mods.addAll(Registers.mods.values());
 		
 		
+		ArrayList<EventMethod> e = new ArrayList<>(Registers.events.values());
+		
+		HashMap<String, EventMethod> r = new HashMap<>();
+		
+		Collections.sort(e);
+		
+		for(EventMethod m : e) {
+			for(String s : Registers.events.keySet()) {
+				
+				if(Registers.events.get(s).equals(m)) {
+					r.put(s, m);
+				}
+			}
+		}
+		
+		Registers.events = r;
+		
+		
+		for(EventMethod method : Registers.events.values()) {
+			System.out.println(method.getPriority());
+		}
+		
+		
+		
 		for(Pair<ModInfo,JavaMod> pair : mods) {
 			try {
 				pair.getTypeB().register(pair.getTypeA());
 				Logger.log("Registered mod: " + pair.getTypeA().getId().toUpperCase());
-			} catch (Exception e) {
+			} catch (Exception exc) {
 				Logger.error("Exception when mod: " + pair.getTypeA().getId() + " was registering");
-				e.printStackTrace();
+				exc.printStackTrace();
 			}
 		}
 		
@@ -184,9 +210,9 @@ public class ModHandler {
 						pair.getTypeA().initialized = true;
 						mods.remove(pair);
 						
-					} catch (Exception e) {
+					} catch (Exception exc) {
 						Logger.error("Exception when mod: " + pair.getTypeA().getId() + " was started");
-						e.printStackTrace();
+						exc.printStackTrace();
 					}
 				}
 			}

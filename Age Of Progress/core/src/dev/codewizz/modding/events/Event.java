@@ -1,10 +1,8 @@
 package dev.codewizz.modding.events;
 
-import java.lang.reflect.Method;
-
+import dev.codewizz.modding.EventMethod;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Logger;
-import dev.codewizz.utils.Pair;
 
 public abstract class Event {
 
@@ -15,10 +13,19 @@ public abstract class Event {
 	 * @return a boolean that is true if the event WASN'T cancelled. (false if it was cancelled)
 	 */
 	public static boolean dispatch(Event event) {
-		for (Pair<Object, Method> m : Registers.events.values()) {
-			if (m.getTypeB().getGenericParameterTypes()[0].getTypeName().equals(event.getClass().getTypeName())) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		for (EventMethod m : Registers.events.values()) {
+			if (m.getMethod().getGenericParameterTypes()[0].getTypeName().equals(event.getClass().getTypeName())) {
 				try {
-					m.getTypeB().invoke(m.getTypeA(), event);
+					m.getMethod().invoke(m.getObject(), event);
 				} catch (Exception exception) {
 					Logger.error("Exception during event dispatch: ");
 					exception.printStackTrace();

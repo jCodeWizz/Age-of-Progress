@@ -18,7 +18,7 @@ public class Registers {
 	public static final HashMap<String, Pair<ModInfo, JavaMod>> mods = new HashMap<>();
 	public static final HashMap<String, Class<? extends Tile>> tiles = new HashMap<>();
 	public static final HashMap<String, Class<? extends GameObject>> objects = new HashMap<>();
-	public static final HashMap<String, Pair<Object,Method>> events = new HashMap<>();
+	public static HashMap<String, EventMethod> events = new HashMap<>();
 
 	public static Tile createTile(String id, Cell cell) {
 		if(!tiles.containsKey(id)) {
@@ -73,20 +73,23 @@ public class Registers {
 	
 	public static boolean registerEvent(ModInfo info, Object o) {
 		boolean valid = false;
+		boolean found = false;
 		for(Method b : o.getClass().getDeclaredMethods()) {
+			found = false;
+			Priorities p = Priorities.NORMAL;
+
 			for(Annotation a : b.getAnnotations()) {
-				
-				
 				if(a.annotationType() == Priority.class) {
-					Priorities p = ((Priority) a).priority();
-					
-					
-					
+					p = ((Priority) a).priority();
 				}
 				if(a.annotationType() == EventCall.class) {
 					valid = true;
-					events.put(info.getId() + ":" + o.getClass().toString() + ":" + b.getName(), new Pair<Object,Method>(o, b));
+					found = true;
 				}
+			}
+			
+			if(found) {
+				events.put(info.getId() + ":" + o.getClass().toString() + ":" + b.getName(), new EventMethod(o, b, p));
 			}
 		}
 		if(!valid) {
