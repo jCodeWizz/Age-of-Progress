@@ -32,12 +32,16 @@ public class ModHandler {
 		
 		File[] mods = file.listFiles();
 		
-		for(int i = 0; i < mods.length; i++) {
-			if(Utils.getFileType(mods[i].getName()).equalsIgnoreCase("jar")) {
-				loadMod(mods[i]);
-			} else {
-				Logger.error("Could not load mod: " + mods[i].getName().toUpperCase() + " because it wasn't detected as a jar file!");
+		if(mods != null) {
+			for(int i = 0; i < mods.length; i++) {
+				if(Utils.getFileType(mods[i].getName()).equalsIgnoreCase("jar")) {
+					loadMod(mods[i]);
+				} else {
+					Logger.error("Could not load mod: " + mods[i].getName().toUpperCase() + " because it wasn't detected as a jar file!");
+				}
 			}
+		} else {
+			Logger.error("Couldn't locate mods folder!");
 		}
 	}
 	
