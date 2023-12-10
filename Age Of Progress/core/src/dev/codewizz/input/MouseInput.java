@@ -38,14 +38,13 @@ public class MouseInput implements InputProcessor {
 	public MouseInput() {
 		light = Main.inst.renderer.addLight(0, 0, 300);
 	}
-	
+
 	public void update(float d) {
-		
-		coords = Main.inst.camera.cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));		
+
+		coords = Main.inst.camera.cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		light.setPosition(coords.x, coords.y);
-		
+
 		if (Main.PLAYING && !Main.PAUSED) {
-			Cell[][] grid = Main.inst.world.grid;
 
 			/*
 			 * 
@@ -53,19 +52,14 @@ public class MouseInput implements InputProcessor {
 			 * 
 			 */
 
-			hoveringOverCell = null;
-			for (int i = 0; i < grid.length; i++) {
-				for (int j = 0; j < grid[i].length; j++) {
-					if (grid[i][j].tile.getHitbox().contains(coords.x, coords.y)) {
-						hoveringOverCell = grid[i][j];
-						clear = true;
+			hoveringOverCell = Main.inst.world.getCell(coords.x, coords.y);
+			if(hoveringOverCell != null) {
+				clear = true;
 
-						Tile tile = grid[i][j].tile;
+				Tile tile = hoveringOverCell.tile;
 
-						if (tile.getId().equals(currentlyDrawingId) || tile.getId().equals("aop:empty-tile")) {
-							clear = false;
-						}
-					}
+				if (tile.getId().equals(currentlyDrawingId) || tile.getId().equals("aop:empty-tile")) {
+					clear = false;
 				}
 			}
 
@@ -80,13 +74,14 @@ public class MouseInput implements InputProcessor {
 				if (hoveringOverCell != null) {
 
 					if (object) {
-						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null ) {
+						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null) {
 							IBuy object = (IBuy) currentlyDrawingObject;
-							GameObject obj = Registers.createGameObject(object.getId(),hoveringOverCell.x, hoveringOverCell.y);
+							GameObject obj = Registers.createGameObject(object.getId(), hoveringOverCell.x,
+									hoveringOverCell.y);
 							obj.setFlip(rotate);
 							hoveringOverCell.setObject(obj);
 							obj.setCell(hoveringOverCell);
-							((IBuy)obj).onPlace(hoveringOverCell);
+							((IBuy) obj).onPlace(hoveringOverCell);
 
 							dragging[0] = object.conintues() && object.available();
 							lastClickedUIElement.setAvailable(object.available());
@@ -96,10 +91,10 @@ public class MouseInput implements InputProcessor {
 							}
 						}
 					} else {
-						Tile tile;
+						Tile t;
 						try {
-							tile = Registers.createTile(currentlyDrawingId, hoveringOverCell);
-							hoveringOverCell.setTile(tile);
+							t = Registers.createTile(currentlyDrawingId, hoveringOverCell);
+							hoveringOverCell.setTile(t);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -122,10 +117,10 @@ public class MouseInput implements InputProcessor {
 			}
 		}
 	}
-	
+
 	public static void renderArea() {
-		if(area != null) {
-			if(area.start != null) {
+		if (area != null) {
+			if (area.start != null) {
 				Renderer.shapeRenderer.line(area.start, new Vector2(area.start.x, coords.y));
 				Renderer.shapeRenderer.line(new Vector2(area.start.x, coords.y), new Vector2(coords.x, coords.y));
 				Renderer.shapeRenderer.line(new Vector2(coords.x, coords.y), new Vector2(coords.x, area.start.y));
@@ -148,16 +143,17 @@ public class MouseInput implements InputProcessor {
 
 			Collections.sort(Main.inst.world.getObjects());
 			Collections.reverse(Main.inst.world.getObjects());
-			
-			if(area != null) {
+
+			if (area != null) {
 				area.start(new Vector2(coords.x, coords.y));
 				return false;
 			}
 
-			if(GameLayer.selectedObject != null) GameLayer.selectedObject.deselect();
+			if (GameLayer.selectedObject != null)
+				GameLayer.selectedObject.deselect();
 
 			for (Renderable o : Main.inst.world.getObjects()) {
-				if(o instanceof GameObject) {
+				if (o instanceof GameObject) {
 					GameObject obj = (GameObject) o;
 					obj.setSelected(false);
 					if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
@@ -175,12 +171,12 @@ public class MouseInput implements InputProcessor {
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		dragging[button] = false;
-		
-		if(area != null) {
+
+		if (area != null) {
 			area.end(new Vector2(coords.x, coords.y));
 			area = null;
 		}
-		
+
 		return false;
 	}
 

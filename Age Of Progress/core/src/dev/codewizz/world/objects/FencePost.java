@@ -15,6 +15,7 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.settlement.FarmArea;
 
 public class FencePost extends GameObject implements Serializable, IBuy {
 
@@ -91,6 +92,13 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 	public void onPlace(Cell cell) {
 		CellGraph c = Main.inst.world.cellGraph;
 		c.removeConnections(cell);
+		
+		FarmArea a = new FarmArea();
+		boolean v = a.checkArea(cell);
+		
+		if(v) {
+			Main.inst.world.settlement.areas.add(a);
+		}
 	}
 	
 	@Override

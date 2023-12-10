@@ -32,6 +32,7 @@ public class Settlement {
 	public Queue<Task> taskTree = new Queue<>();
 	public List<GameObject> buildings = new CopyOnWriteArrayList<>();
 	public List<Crop> crops = new CopyOnWriteArrayList<>();
+	public List<FarmArea> areas = new CopyOnWriteArrayList<>();
 	
 	public Inventory inventory;
 

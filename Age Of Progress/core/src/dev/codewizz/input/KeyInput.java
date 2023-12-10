@@ -62,12 +62,10 @@ public class KeyInput implements InputProcessor {
 		}
 		
 		if(key == Input.Keys.SPACE) {
-
 			CraftTask task = new CraftTask(Recipe.Planks);
 			task.addJob(Jobs.Craftsman);
 			
 			Main.inst.world.settlement.addTask(task, false);
-			
 		}
 		
 		if(key == Input.Keys.NUM_3) {

@@ -16,6 +16,7 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.settlement.FarmArea;
 
 public class FenceGate extends GameObject implements Serializable, IBuy {
 
@@ -123,6 +124,12 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 		c.connectCells(a, cell, cell.tile.getCost());
 		c.connectCells(b, cell, cell.tile.getCost());
 		
+		FarmArea area = new FarmArea();
+		boolean v = area.checkArea(cell);
+		
+		if(v) {
+			Main.inst.world.settlement.areas.add(area);
+		}
 	}
 	
 	@Override
