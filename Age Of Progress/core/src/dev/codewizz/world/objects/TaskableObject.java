@@ -49,6 +49,7 @@ public abstract class TaskableObject extends Entity {
 	}
 	
 	public void finishCurrentTask() {
+		agent.stop();
 		tree.removeFirst();
 		currentTask = null;
 	}

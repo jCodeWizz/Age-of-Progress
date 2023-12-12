@@ -26,6 +26,10 @@ public abstract class Task implements Serializable {
 		}
 	}
 	
+	public Task() {
+		
+	}
+	
 	public void addJob(Jobs job) {
 		jobs.add(job);
 	}
