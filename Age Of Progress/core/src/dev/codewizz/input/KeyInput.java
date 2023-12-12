@@ -12,17 +12,16 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
-import dev.codewizz.world.items.Recipe;
 import dev.codewizz.world.objects.IGatherable;
 import dev.codewizz.world.objects.hermits.Hermit;
-import dev.codewizz.world.objects.hermits.Jobs;
-import dev.codewizz.world.objects.tasks.CraftTask;
 import dev.codewizz.world.objects.tasks.GatherTask;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
+import dev.codewizz.world.tiles.EmptyTile;
 
 public class KeyInput implements InputProcessor {
 
@@ -62,10 +61,26 @@ public class KeyInput implements InputProcessor {
 		}
 		
 		if(key == Input.Keys.SPACE) {
+			
+			Cell cell1 = Main.inst.world.grid[10][10];
+			Cell cell2 = Main.inst.world.grid[20][20];
+			
+			for(int i = cell1.indexX; i < cell2.indexX; i++) {
+				for(int j = cell1.indexY; j < cell2.indexY; j++) {
+					Main.inst.world.grid[i][j].setTile(new EmptyTile(Main.inst.world.grid[i][j]));
+				}
+			}
+			
+			
+			
+			
+			
+			/*
 			CraftTask task = new CraftTask(Recipe.Planks);
 			task.addJob(Jobs.Craftsman);
 			
 			Main.inst.world.settlement.addTask(task, false);
+			*/
 		}
 		
 		if(key == Input.Keys.NUM_3) {

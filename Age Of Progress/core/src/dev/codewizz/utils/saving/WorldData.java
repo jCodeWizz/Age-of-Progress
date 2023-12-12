@@ -54,12 +54,12 @@ public class WorldData {
 		for (int i = 0; i < World.WORLD_SIZE_W; i++) {
 			for (int j = 0; j < World.WORLD_SIZE_H; j++) {
 				if (j % 2 == 0) {
-					Cell cell = new Cell((i - (World.WORLD_SIZE_W / 2)) * 64, (j - (World.WORLD_SIZE_H / 2)) * 16, i, j, false);
+					Cell cell = new Cell((i - (World.WORLD_SIZE_W / 2)) * 64, (j - (World.WORLD_SIZE_H / 2)) * 16, i, j);
 					data.tree.set(cell.x, cell.y, cell);
 					data.grid[i][j] = cell;
 					data.cellGraph.addCell(cell);
 				} else {
-					Cell cell = new Cell((i - (World.WORLD_SIZE_W / 2)) * 64 + 32, (j - (World.WORLD_SIZE_H / 2)) * 16, i, j, true);
+					Cell cell = new Cell((i - (World.WORLD_SIZE_W / 2)) * 64 + 32, (j - (World.WORLD_SIZE_H / 2)) * 16, i, j);
 					data.tree.set(cell.x, cell.y, cell);
 					data.grid[i][j] = cell;
 					data.cellGraph.addCell(cell);

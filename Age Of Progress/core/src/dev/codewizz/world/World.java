@@ -49,7 +49,7 @@ public class World {
 	public static final int WORLD_SIZE_W = 48;
 	public static final int WORLD_SIZE_H = 96;
 	public static final int WORLD_SIZE_WP = WORLD_SIZE_W * 64;
-	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 16;
+	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 64;
 	public static final int RADIUS = 2;
 	public static final int MAX_RIVER_LENGTH = 1000;
 	public static final float E = 0.5f;
@@ -73,23 +73,16 @@ public class World {
 
 	public World() {
 		grid = new Cell[WORLD_SIZE_W][WORLD_SIZE_H];
-		tree = new QuadTree<Cell>(-WORLD_SIZE_WP / 2, -WORLD_SIZE_HP / 2, WORLD_SIZE_WP / 2, WORLD_SIZE_HP / 2);
+		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
 
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				if (j % 2 == 0) {
-					Cell cell = new Cell((i - (WORLD_SIZE_W / 2)) * 64, (j - (WORLD_SIZE_H / 2)) * 16, i, j, false);
-					grid[i][j] = cell;
-					tree.set(cell.x, cell.y, cell);
-					cellGraph.addCell(cell);
-				} else {
-					Cell cell = new Cell((i - (WORLD_SIZE_W / 2)) * 64 + 32, (j - (WORLD_SIZE_H / 2)) * 16, i, j, true);
-					grid[i][j] = cell;
-					tree.set(cell.x, cell.y, cell);
-					cellGraph.addCell(cell);
-				}
+				Cell cell = new Cell(i * 32 - j * 32, i * -16 - j * 16, i, j);
+				grid[i][j] = cell;
+				tree.set(cell.x, cell.y, cell);
+				cellGraph.addCell(cell);
 			}
 		}
 
@@ -148,7 +141,7 @@ public class World {
 	}
 
 	public void init() {
-		spawnRivers();
+		//spawnRivers();
 		spawnTree();
 		spawnRock();
 		spawnResources();
@@ -222,43 +215,7 @@ public class World {
 	}
 
 	private void spawnRivers() {
-		Cell currentCell = grid[0][WORLD_SIZE_H / 2];
-		int length = 0;
-		boolean done = false;
 
-		List<Cell> cells = new CopyOnWriteArrayList<>();
-		List<Cell> cellsSand = new CopyOnWriteArrayList<>();
-
-		do {
-			float sizeNoise = (float) terrainNoise.noise(currentCell.indexX, currentCell.indexY);
-			int size = (int) (3 * ((sizeNoise + 1) / 2)) + 2;
-			currentCell.setTile(new WaterTile(currentCell));
-
-			cells.addAll(currentCell.getCellsInRadius((int) (size)));
-			cellsSand.addAll(currentCell.getCellsInRadius((int) (size * 2)));
-
-			float noise = (float) terrainNoise.noise(currentCell.indexX * E, currentCell.indexY * E);
-			int degrees = 90 + (int) (90 * noise);
-
-			Direction dir = Direction.getDirFromDeg(degrees);
-			Cell newCell = currentCell.getNeighbourCrossed(dir);
-			if (newCell != null) {
-				currentCell = newCell;
-				length++;
-			} else {
-				if (length > 5) {
-					done = true;
-				}
-			}
-		} while (length < MAX_RIVER_LENGTH && done == false);
-
-		for (int i = 0; i < cellsSand.size(); i++) {
-			cellsSand.get(i).setTile(new SandTile(cellsSand.get(i)));
-		}
-
-		for (int i = 0; i < cells.size(); i++) {
-			cells.get(i).setTile(new WaterTile(cells.get(i)));
-		}
 	}
 
 	private void spawnTree() {
@@ -302,11 +259,20 @@ public class World {
 			iY2 = c2.indexY;
 		}
 		
+		/*
 		for (int i = iY2 - 1; i >= iY1; i--) {
 			for (int j = iX2 - 1; j >= iX1; j--) {
 				grid[j][i].render(b);
 			}
 		}
+		*/
+		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				grid[i][j].render(b);
+			}
+		}
+		
 		
 		if (!Main.PAUSED) {
 			if (MouseInput.hoveringOverCell != null) {

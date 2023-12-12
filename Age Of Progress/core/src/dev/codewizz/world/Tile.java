@@ -28,7 +28,7 @@ public abstract class Tile {
 	public void onDestroy() {};
 	public void update() {};
 	
-	public void place() {
+	public void place() {/*
 		Cell[] cells = this.cell.getCrossedNeighbours();
 		for(int i = 0; i < 4; i++) {
 			if(cells[i] != null) {
@@ -53,7 +53,7 @@ public abstract class Tile {
 		} else {
 			c.removeConnections(cell);
 		}
-		
+		*/
 		onPlace();
 	}
 	

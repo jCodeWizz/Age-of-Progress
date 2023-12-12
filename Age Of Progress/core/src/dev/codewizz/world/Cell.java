@@ -22,18 +22,16 @@ public class Cell {
 	public Tile tile;
 	public float x, y;
 	public int indexX, indexY;
-	public boolean odd = false;
 	public World world;
 	public int index;
 	public GameObject object; 
 	
-	public Cell(float x, float y, int indexX, int indexY, boolean odd) {
+	public Cell(float x, float y, int indexX, int indexY) {
 		this.x = x;
 		this.y = y;
 		this.indexX = indexX;
 		this.indexY = indexY;
 		this.tile = new GrassTile(this);
-		this.odd = odd;
 	}
 	
 	public void init(CellGraph graph, World world) {
@@ -71,133 +69,59 @@ public class Cell {
 		b.draw(tile.getCurrentSprite(), x, y);
 	}
 	
-	public Cell getNeighbourCrossed(Direction dir) {
-		if (dir == Direction.West) {
-			if(indexX > 0) {
-				return world.grid[indexX-1][indexY];
+	public Cell getCrossedNeighbour(Direction dir) {
+		if(dir == Direction.North) {
+			if(indexY > 0 && indexX > 0) {
+				return world.grid[indexX - 1][indexY - 1];
+			}
+		} else if(dir == Direction.East) {
+			if(indexX < World.WORLD_SIZE_W - 1 && indexY > 0) {
+				return world.grid[indexX + 1][indexY - 1];
+			}
+		} else if(dir == Direction.South) {
+			if(indexY < World.WORLD_SIZE_H - 1 && indexX < World.WORLD_SIZE_W - 1) {
+				return world.grid[indexX + 1][indexY + 1];
+			}
+		} else if(dir == Direction.West) {
+			if(indexX > 0 && indexY < World.WORLD_SIZE_H - 1) {
+				return world.grid[indexX - 1][indexY + 1];
 			}
 		}
-		
-		if (dir == Direction.East) {
-			if(indexX < World.WORLD_SIZE_W-1) {
-				return world.grid[indexX+1][indexY];
-			}
-		}
-		if (dir == Direction.North) {
-			if(indexY > 1) {
-				return world.grid[indexX][indexY-2];
-			}
-		}
-
-		if (dir == Direction.South) {
-			if(indexY < World.WORLD_SIZE_H-2) {
-				return world.grid[indexX][indexY+2];
-			}
-		}
-		
-		if (odd) {
-			if (dir == Direction.NorthWest) {
-				if (indexY > 0) {
-					return (world.grid[indexX][indexY - 1]);
-				}
-			} else if (dir == Direction.NorthEast) {
-				if (indexY > 0 && indexX < World.WORLD_SIZE_W - 1) {
-					return (world.grid[indexX + 1][indexY - 1]);
-				}
-			} else if (dir == Direction.SouthWest) {
-				if (indexY < World.WORLD_SIZE_H - 1) {
-					return (world.grid[indexX][indexY + 1]);
-				}
-			} else if (dir == Direction.SouthEast) {
-				if (indexY < World.WORLD_SIZE_H - 1 && indexX < World.WORLD_SIZE_W - 1) {
-					return (world.grid[indexX + 1][indexY + 1]);
-				}
-			}
-		} else {
-			if (dir == Direction.NorthWest) {
-				if (indexY > 0 && indexX > 0) {
-					return (world.grid[indexX - 1][indexY - 1]);
-				}
-			} else if (dir == Direction.NorthEast) {
-				if (indexY > 0) {
-					return (world.grid[indexX][indexY - 1]);
-				}
-			} else if (dir == Direction.SouthWest) {
-				if (indexY < World.WORLD_SIZE_H && indexX > 0) {
-					return (world.grid[indexX - 1][indexY + 1]);
-				}
-			} else if (dir == Direction.SouthEast) {
-				if (indexY < World.WORLD_SIZE_H) {
-					return (world.grid[indexX][indexY + 1]);
-				}
-			}
-		}
-		
 		return null;
 	}
 	
-	public Cell getNeighbour(Direction dir, Direction dir2) {
-
-		if (odd) {
-			if (dir == Direction.North && dir2 == Direction.West) {
-				if (indexY > 0) {
-					return (world.grid[indexX][indexY - 1]);
-				}
-			} else if (dir == Direction.North && dir2 == Direction.East) {
-				if (indexY > 0 && indexX < World.WORLD_SIZE_W - 1) {
-					return (world.grid[indexX + 1][indexY - 1]);
-				}
-			} else if (dir == Direction.South && dir2 == Direction.West) {
-				if (indexY < World.WORLD_SIZE_H - 1) {
-					return (world.grid[indexX][indexY + 1]);
-				}
-			} else if (dir == Direction.South && dir2 == Direction.East) {
-				if (indexY < World.WORLD_SIZE_H - 1 && indexX < World.WORLD_SIZE_W - 1) {
-					return (world.grid[indexX + 1][indexY + 1]);
-				}
+	public Cell getNeighbour(Direction dir) {
+		if(dir == Direction.North) {
+			if(indexY > 0) {
+				return world.grid[indexX][indexY - 1];
 			}
-		} else {
-			if (dir == Direction.North && dir2 == Direction.West) {
-				if (indexY > 0 && indexX > 0) {
-					return (world.grid[indexX - 1][indexY - 1]);
-				}
-			} else if (dir == Direction.North && dir2 == Direction.East) {
-				if (indexY > 0) {
-					return (world.grid[indexX][indexY - 1]);
-				}
-			} else if (dir == Direction.South && dir2 == Direction.West) {
-				if (indexY < World.WORLD_SIZE_H && indexX > 0) {
-					return (world.grid[indexX - 1][indexY + 1]);
-				}
-			} else if (dir == Direction.South && dir2 == Direction.East) {
-				if (indexY < World.WORLD_SIZE_H) {
-					return (world.grid[indexX][indexY + 1]);
-				}
+		} else if(dir == Direction.East) {
+			if(indexX < World.WORLD_SIZE_W - 1) {
+				return world.grid[indexX + 1][indexY];
+			}
+		} else if(dir == Direction.South) {
+			if(indexY < World.WORLD_SIZE_H - 1) {
+				return world.grid[indexX][indexY + 1];
+			}
+		} else if(dir == Direction.West) {
+			if(indexX > 0) {
+				return world.grid[indexX - 1][indexY];
 			}
 		}
-
 		return null;
 	}
 	
 	public Cell[] getCrossedNeighbours() {
 		Cell[] data = new Cell[] { null, null, null, null , null, null, null, null };
 		
-		data[0] = getNeighbour(Direction.South, Direction.West);
-		data[1] = getNeighbour(Direction.South, Direction.East);
-		data[2] = getNeighbour(Direction.North, Direction.East);
-		data[3] = getNeighbour(Direction.North, Direction.West);
-		if(indexX > 0) {
-			data[4] = world.grid[indexX-1][indexY];
-		}
-		if(indexX < World.WORLD_SIZE_W-1) {
-			data[5] = world.grid[indexX+1][indexY];
-		}
-		if(indexY > 1) {
-			data[6] = world.grid[indexX][indexY-2];
-		}
-		if(indexY < World.WORLD_SIZE_H-2) {
-			data[7] = world.grid[indexX][indexY+2];
-		}
+		data[0] = getCrossedNeighbour(Direction.North);
+		data[1] = getNeighbour(Direction.North);
+		data[2] = getCrossedNeighbour(Direction.East);
+		data[3] = getNeighbour(Direction.East);
+		data[4] = getCrossedNeighbour(Direction.South);
+		data[5] = getNeighbour(Direction.South);
+		data[6] = getCrossedNeighbour(Direction.West);
+		data[7] = getNeighbour(Direction.West);
 		
 		return data;
 	}
@@ -241,10 +165,10 @@ public class Cell {
 	public Cell[] getNeighbours() {
 		Cell[] data = new Cell[] { null, null, null, null };
 
-		data[0] = getNeighbour(Direction.South, Direction.West);
-		data[1] = getNeighbour(Direction.South, Direction.East);
-		data[2] = getNeighbour(Direction.North, Direction.East);
-		data[3] = getNeighbour(Direction.North, Direction.West);
+		data[0] = getNeighbour(Direction.North);
+		data[1] = getNeighbour(Direction.East);
+		data[2] = getNeighbour(Direction.South);
+		data[3] = getNeighbour(Direction.West);
 
 		return data;
 	}
@@ -259,7 +183,7 @@ public class Cell {
 	public static void printDebugInfo(Cell cell) {
 		System.out.println("CELL: [" + cell.indexX + "][" + cell.indexY + "]");
 		System.out.println(" - X: " + cell.x + " Y: " + cell.y);
-		System.out.println(" - ODD: " + cell.odd + " INDEX: " + cell.index);
+		System.out.println(" INDEX: " + cell.index);
 		
 		Array<Link> links = Main.inst.world.cellGraph.getLinks(cell);
 		
