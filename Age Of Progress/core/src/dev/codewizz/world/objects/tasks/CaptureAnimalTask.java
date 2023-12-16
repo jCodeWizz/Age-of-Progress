@@ -12,7 +12,7 @@ import dev.codewizz.world.settlement.FarmArea;
 
 public class CaptureAnimalTask extends Task {
 
-	private final float REACH = 100f;
+	private final float REACH = 1000f;
 	
 	private Hermit hermit;
 	private Animal animal;
@@ -20,23 +20,30 @@ public class CaptureAnimalTask extends Task {
 	
 	private boolean reachedAnimal = false;
 	
+	private float counter = 0f;
+	
 	public CaptureAnimalTask(Animal animal, FarmArea area) {
 		this.animal = animal;
 		this.area = area;
-		
 		this.jobs.add(Jobs.Farmer);
+		
+		animal.setTasked(true);
 	}
 	
 	@Override
 	public void finish() {
 		hermit.setTaskAnimation(null);
 		hermit.finishCurrentTask();
+	
+		animal.setTasked(false);
 	}
 
 	@Override
 	public void stop() {
 		hermit.setTaskAnimation(null);
 		hermit.finishCurrentTask();
+		
+		animal.setTasked(false);
 	}
 
 	@Override
@@ -51,20 +58,22 @@ public class CaptureAnimalTask extends Task {
 
 	@Override
 	public void reach() {
-		/*
-		 * force animal to follow hermit path finding.
-		 *
-		 */ 
-		
 		if(!reachedAnimal) {
 			if(Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
+				reachedAnimal = true;
 				
 				hermit.getAgent().setGoal(area.getEntrances().get(0), hermit.getX(), hermit.getY());
 				if(hermit.getAgent().path.isEmpty()) {
-					reachedAnimal = true;
+					reach();
+				}
+				
+				animal.getAgent().stop();
+				animal.getAgent().setGoal(area.getEntrances().get(0), animal.getX(), animal.getY());
+				if(animal.getAgent().path.isEmpty()) {
 					reach();
 				}
 			} else {
+				
 				hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()), hermit.getX(), hermit.getY());
 				if(hermit.getAgent().path.isEmpty()) {
 					Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) + "/"+ REACH);
@@ -75,14 +84,28 @@ public class CaptureAnimalTask extends Task {
 			}
 		} else {
 			
-			/*
-			 * Add animal to some kind of list
-			 * Force it inside of pen
-			 * Reset it's path finding logic
-			 */
+			boolean s = area.join(animal);
+			if(!s) {
+				if(FarmArea.anyAvailable()) {
+					area = FarmArea.findArea(animal);
+					s = area.join(animal);
+				}
+			}
 			
-			
-			finish();
+			if(!s) {
+				stop();
+			} else {
+				animal.setX(area.getArea().get(0).getMiddlePoint().x);
+				animal.setY(area.getArea().get(0).getMiddlePoint().y);
+				
+				if(animal.isInHerd()) {
+					animal.getHerd().removeMember(animal);
+				}
+				
+				finish();
+			}
+			animal.getAgent().stop();
+			hermit.setSpeed(20f);
 		}
 	}
 
@@ -94,6 +117,12 @@ public class CaptureAnimalTask extends Task {
 	@Override
 	public void update(float d) {
 		
+		if(reachedAnimal) {
+			if(counter < 3f) counter += d;
+			else {
+				hermit.setSpeed(animal.getSpeed());
+			}
+		}
 	}
 
 	@Override

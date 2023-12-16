@@ -25,6 +25,8 @@ public class Agent {
 	public Agent(GameObject object) {
 		dir = new Vector2();
 		this.object = object;
+
+		graph = Main.inst.world.cellGraph;
 	}
 
 	public void update(float d, float x, float y) {
@@ -100,7 +102,7 @@ public class Agent {
 			
 			if(object instanceof Animal) {
 				if(graphPath.get(i).getObject() != null) {
-					if(graphPath.get(i).getObject().getId().equals("aop:fence-gate")) {
+					if(graphPath.get(i).getObject().getId().equals("aop:fence-gate") && !object.isTasked()) {
 						stop();
 						return false;
 					}

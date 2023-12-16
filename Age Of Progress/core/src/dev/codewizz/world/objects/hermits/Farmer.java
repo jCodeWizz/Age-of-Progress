@@ -21,7 +21,21 @@ public class Farmer extends Job {
 	@Override
 	public void update(float dt) {
 		
-		
+		/*
+		if(this.hermit.getCurrentTask() == null && this.hermit.getTree().isEmpty()) {
+			if(FarmArea.anyAvailable()) {
+				for(Renderable r : Main.inst.world.getObjects()) {
+					if(r instanceof Animal && !r.isTasked()) {
+						Animal a = (Animal) r;
+						
+						FarmArea area = FarmArea.findArea(a);
+						CaptureAnimalTask task = new CaptureAnimalTask(a, area);
+						hermit.addTask(task, true);
+					}
+				}
+			}
+		}
+		*/
 	}
 
 	@Override

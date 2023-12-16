@@ -3,8 +3,9 @@ package dev.codewizz.world.settlement;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import dev.codewizz.main.Main;
 import dev.codewizz.world.Cell;
-import dev.codewizz.world.tiles.EmptyTile;
+import dev.codewizz.world.objects.Animal;
 
 public class FarmArea {
 
@@ -14,12 +15,16 @@ public class FarmArea {
 	private List<Cell> fencing;
 	private List<Cell> entrances;
 	
+	private List<Animal> animals;
+	private String prefered = "";
+	
 	private boolean valid = false;
 
 	public FarmArea() {
 		area = new CopyOnWriteArrayList<>();
 		fencing = new CopyOnWriteArrayList<>();
 		entrances = new CopyOnWriteArrayList<>();
+		animals = new CopyOnWriteArrayList<>();
 	}
 	
 	
@@ -30,11 +35,6 @@ public class FarmArea {
 				checkCell(cells[i]);
 				
 				if(checkValid()) {
-					
-					for(Cell c : area) {
-						c.setTile(new EmptyTile(c));
-					}
-					
 					return true;
 				}
 				
@@ -114,6 +114,87 @@ public class FarmArea {
 				return true;
 			}
 		}
+	}
+	
+	public static boolean anyAvailable() {
+		List<FarmArea> options = new CopyOnWriteArrayList<FarmArea>(Main.inst.world.settlement.areas);
+
+		for(FarmArea area : options) {
+			boolean valid = area.checkValid();
+			
+			if(!valid) {
+				if(!area.getEntrances().isEmpty()) {
+					valid = area.checkArea(area.entrances.get(0));
+				}
+			}
+			
+			if(valid && area.hasSpace()) {
+				return true;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static FarmArea findArea(Animal animal) {
+		
+		List<FarmArea> options = new CopyOnWriteArrayList<FarmArea>(Main.inst.world.settlement.areas);
+		
+		for(FarmArea area : options) {
+			boolean valid = area.checkValid();
+			
+			
+			
+			if(valid && area.hasSpace()) {
+				
+				if(area.getPrefered().equals(animal.getId())) {
+					return area;
+				}
+			} else {
+				options.remove(area);
+			}
+		}
+		
+		for(FarmArea area : options) {
+			if(area.getPrefered().equals("")) {
+				area.setPrefered(animal.getId());
+				return area;
+			}
+		}
+		for(FarmArea area : options) {
+			return area;
+		}
+		
+		return null;
+	}
+	
+	public boolean join(Animal animal) {
+		if(animals.size() < area.size()) {
+			animals.add(animal);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean hasSpace() {
+		return animals.size() < area.size();
+	}
+	
+	public void remove(Animal animal) {
+		animals.remove(animal);
+	}
+	
+	public List<Animal> getAnimals() {
+		return animals;
+	}
+	
+	public String getPrefered() {
+		return prefered;
+	}
+	
+	public void setPrefered(String s) {
+		this.prefered = s;
 	}
 
 	public List<Cell> getArea() {

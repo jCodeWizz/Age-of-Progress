@@ -24,7 +24,7 @@ import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.LoadWorldEvent;
 import dev.codewizz.modding.events.RemoveObjectEvent;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.WNoise;
 import dev.codewizz.utils.quadtree.Point;
@@ -41,13 +41,14 @@ import dev.codewizz.world.settlement.Settlement;
 import dev.codewizz.world.tiles.ClayTile;
 import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.FlowerTile;
+import dev.codewizz.world.tiles.HighTile;
 import dev.codewizz.world.tiles.SandTile;
 import dev.codewizz.world.tiles.WaterTile;
 
 public class World {
 
-	public static final int WORLD_SIZE_W = 48;
-	public static final int WORLD_SIZE_H = 96;
+	public static final int WORLD_SIZE_W = 128;
+	public static final int WORLD_SIZE_H = 128;
 	public static final int WORLD_SIZE_WP = WORLD_SIZE_W * 64;
 	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 64;
 	public static final int RADIUS = 2;
@@ -72,6 +73,8 @@ public class World {
 	public boolean showInfoSartMenu = true;
 
 	public World() {
+		long start = System.currentTimeMillis();
+		
 		grid = new Cell[WORLD_SIZE_W][WORLD_SIZE_H];
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
@@ -93,9 +96,19 @@ public class World {
 		}
 
 		nature = new Nature(this);
-		init();
+		
+		Thread initThread = new Thread("create-world-thread" ) {
+			@Override
+			public void run() {
+				init();
+			}
+		};
+		
+		initThread.start();
 		
 		Event.dispatch(new CreateWorldEvent());
+		
+		Logger.log("World creation time: " + (float)(System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 	}
 
 	public static World openWorld(String path) {
@@ -141,7 +154,7 @@ public class World {
 	}
 
 	public void init() {
-		//spawnRivers();
+		spawnRivers();
 		spawnTree();
 		spawnRock();
 		spawnResources();
@@ -215,7 +228,23 @@ public class World {
 	}
 
 	private void spawnRivers() {
+		
+		for (int i = 0; i < WORLD_SIZE_W; i++) {
+			for (int j = 0; j < WORLD_SIZE_H; j++) {
+				
+				Cell cell = grid[i][j];
 
+				float n = (float) noise.noise((float)cell.indexX / 3f, (float)cell.indexY / 3f);
+				
+				n = Math.abs(n);
+				
+				if(n <= 0.075f) {
+					cell.setTile(new WaterTile(cell));
+				} else if(n <= 0.15f) {
+					cell.setTile(new SandTile(cell));
+				} 	
+			}
+		}
 	}
 
 	private void spawnTree() {

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class Renderable implements Comparable<Renderable> {
 	
+	protected boolean tasked = false;
+	
 	public abstract void render(SpriteBatch b);
 	public abstract float getY();
 	public abstract float getX();
@@ -18,5 +20,11 @@ public abstract class Renderable implements Comparable<Renderable> {
 		} else {
 			return 0;
 		}
+	}
+	public boolean isTasked() {
+		return tasked;
+	}
+	public void setTasked(boolean tasked) {
+		this.tasked = tasked;
 	}
 }

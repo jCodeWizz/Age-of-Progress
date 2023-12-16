@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
+import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.serialization.RCField;
 import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.Serializable;
+import dev.codewizz.world.objects.tasks.CaptureAnimalTask;
+import dev.codewizz.world.settlement.FarmArea;
 
 public class Cow extends Animal implements Serializable {
 	
@@ -74,6 +77,17 @@ public class Cow extends Animal implements Serializable {
 		
 		if(moving)
 			walkAnim.tick(d);
+		
+		
+		if(this.isSelected()) {
+			this.deselect();
+			
+			if(FarmArea.anyAvailable()) {
+				FarmArea a = FarmArea.findArea(this);
+				Main.inst.world.settlement.addTask(new CaptureAnimalTask(this, a), moving);
+			}
+			
+		}
 	}
 
 	@Override

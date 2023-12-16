@@ -87,6 +87,10 @@ public class Herd {
 	
 	public void removeMember(Animal member) {
 		this.members.remove(member);
+		
+		if(member.equals(leader)) {
+			setLeader();
+		}
 	}
 	
 	public void clear() {

@@ -93,7 +93,7 @@ public class WNoise {
 			size /= 2.0;
 		}
 
-		return value / initialSize;
+		return Utils.clamp((value / initialSize) / 8.0 * 10.0, -1.0, 1.0);
 	}
 
     public double noise(double x) {
