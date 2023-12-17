@@ -13,6 +13,7 @@ import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.pathfinding.Link;
 import dev.codewizz.world.tiles.GrassTile;
@@ -23,6 +24,7 @@ public class Cell {
 	public float x, y;
 	public int indexX, indexY;
 	public World world;
+	public Chunk chunk;
 	public int index;
 	public GameObject object; 
 	
@@ -31,13 +33,15 @@ public class Cell {
 		this.y = y;
 		this.indexX = indexX;
 		this.indexY = indexY;
-		this.tile = new GrassTile(this);
+		this.tile = new GrassTile();
+		this.tile.setCell(this);
 	}
 	
-	public void init(CellGraph graph, World world) {
+	public void init(CellGraph graph, World world, Chunk chunk) {
 		this.world = world;
+		this.chunk = chunk;
 		
-		Cell[] neighBours = getCrossedNeighbours();
+		Cell[] neighBours = getAllNeighbours();
 		for(int i = 0; i < neighBours.length; i++) {
 			if(neighBours[i] != null) {
 				graph.connectCells(this, neighBours[i], tile.cost);
@@ -55,8 +59,9 @@ public class Cell {
 				return false;
 			
 			this.tile.onDestroy();
+			this.tile.setCell(null);
 			this.tile = tile;
-			this.tile.cell = this;
+			this.tile.setCell(this);
 			this.tile.place();
 			
 			return true;
@@ -72,19 +77,91 @@ public class Cell {
 	public Cell getCrossedNeighbour(Direction dir) {
 		if(dir == Direction.North) {
 			if(indexY > 0 && indexX > 0) {
-				return world.grid[indexX - 1][indexY - 1];
+				return chunk.getGrid()[indexX - 1][indexY - 1];
+			} else if(indexY > 0 && indexX == 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0).toString());
+				
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[Chunk.SIZE - 1][indexY - 1];
+				}
+			} else if(indexY == 0 && indexX > 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[indexX - 1][Chunk.SIZE - 1];
+				}
+			} else if(indexY == 0 && indexX == 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[Chunk.SIZE - 1][Chunk.SIZE - 1];
+				}
 			}
 		} else if(dir == Direction.East) {
-			if(indexX < World.WORLD_SIZE_W - 1 && indexY > 0) {
-				return world.grid[indexX + 1][indexY - 1];
+			if(indexX < Chunk.SIZE - 1 && indexY > 0) {
+				return chunk.getGrid()[indexX + 1][indexY - 1];
+			} else if(indexX < Chunk.SIZE - 1 && indexY == 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[indexX + 1][Chunk.SIZE - 1];
+				}
+			} else if(indexX == Chunk.SIZE - 1 && indexY > 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[0][indexY - 1];
+				}
+			} else if(indexX == Chunk.SIZE - 1 && indexY == 0) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(-1, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[0][Chunk.SIZE - 1];
+				}
 			}
 		} else if(dir == Direction.South) {
-			if(indexY < World.WORLD_SIZE_H - 1 && indexX < World.WORLD_SIZE_W - 1) {
-				return world.grid[indexX + 1][indexY + 1];
+			if(indexY < Chunk.SIZE - 1 && indexX < Chunk.SIZE - 1) {
+				return chunk.getGrid()[indexX + 1][indexY + 1];
+			} else if(indexX == Chunk.SIZE - 1 && indexY < Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[0][indexY + 1];
+				}
+			} else if(indexX < Chunk.SIZE - 1 && indexY == Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[indexX + 1][0];
+				}
+			} else if(indexX == Chunk.SIZE - 1 && indexY == Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[0][0];
+				}
 			}
 		} else if(dir == Direction.West) {
-			if(indexX > 0 && indexY < World.WORLD_SIZE_H - 1) {
-				return world.grid[indexX - 1][indexY + 1];
+			if(indexX > 0 && indexY < Chunk.SIZE - 1) {
+				return chunk.getGrid()[indexX - 1][indexY + 1];
+			} else if(indexX == 0 && indexY < Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 0).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[Chunk.SIZE - 1][indexY + 1];
+				}
+			} else if(indexX > 0 && indexY == Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[indexX - 1][0];
+				}
+			} else if(indexX == 0 && indexY == Chunk.SIZE - 1) {
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 1).toString());
+
+				if(n != null && n.isGenerated()) {
+					return n.getGrid()[Chunk.SIZE - 1][0];
+				}
 			}
 		}
 		return null;
@@ -93,25 +170,48 @@ public class Cell {
 	public Cell getNeighbour(Direction dir) {
 		if(dir == Direction.North) {
 			if(indexY > 0) {
-				return world.grid[indexX][indexY - 1];
+				return chunk.getGrid()[indexX][indexY - 1];
+			}
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+			
+			if(n != null && n.isGenerated()) {
+				return n.getGrid()[indexX][Chunk.SIZE-1];
 			}
 		} else if(dir == Direction.East) {
-			if(indexX < World.WORLD_SIZE_W - 1) {
-				return world.grid[indexX + 1][indexY];
+			if(indexX < Chunk.SIZE - 1) {
+				return chunk.getGrid()[indexX + 1][indexY];
+			}
+			
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+			
+			if(n != null && n.isGenerated()) {
+				return n.getGrid()[0][indexY];
 			}
 		} else if(dir == Direction.South) {
-			if(indexY < World.WORLD_SIZE_H - 1) {
-				return world.grid[indexX][indexY + 1];
+			if(indexY < Chunk.SIZE - 1) {
+				return chunk.getGrid()[indexX][indexY + 1];
+			}
+			
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+			
+			if(n != null && n.isGenerated()) {
+				return n.getGrid()[indexX][0];
 			}
 		} else if(dir == Direction.West) {
 			if(indexX > 0) {
-				return world.grid[indexX - 1][indexY];
+				return chunk.getGrid()[indexX - 1][indexY];
+			}
+			
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0).toString());
+			
+			if(n != null && n.isGenerated()) {
+				return n.getGrid()[Chunk.SIZE-1][indexY];
 			}
 		}
 		return null;
 	}
 	
-	public Cell[] getCrossedNeighbours() {
+	public Cell[] getAllNeighbours() {
 		Cell[] data = new Cell[] { null, null, null, null , null, null, null, null };
 		
 		data[0] = getCrossedNeighbour(Direction.North);
@@ -126,42 +226,17 @@ public class Cell {
 		return data;
 	}
 	
-	public List<Cell> getCellsInRadius(int r) {
-		ArrayList<Cell> cells = new ArrayList<>();
+	public List<Cell> getCellsInSquare(int r) {
+		Point<Cell>[] cells = world.tree.searchIntersect(this.x - r, this.y - r, this.x + r, this.y + r);
 		
-		Cell[][] grid = Main.inst.world.grid;
+		ArrayList<Cell> a = new ArrayList<>();
 		
-		for(int i = 0; i < grid.length; i++) {
-			for(int j = 0; j < grid[i].length; j++) {
-				Cell cell = grid[i][j];
-				if(Vector2.dst(cell.x, cell.y, x, y) < r * 32) {
-					cells.add(cell);
-				}
-			}
+		for(int i = 0; i < cells.length; i++) {		
+			a.add(cells[i].getValue());
 		}
-		
-		return cells;
+		return a;
 	}
 	
-	public List<Cell> getCellsInSquare(int r) {
-		ArrayList<Cell> cells = new ArrayList<>();
-		
-		Cell[][] grid = Main.inst.world.grid;
-		
-		for(int i = -r; i < r; i++) {
-			for(int j = -r; j < r; j++) {
-				int iX = i + indexX;
-				int jY = j + indexY;
-				
-				if(iX >= 0 && iX < World.WORLD_SIZE_W && jY >= 0 && jY < World.WORLD_SIZE_H) {
-					cells.add(grid[iX][jY]);
-				}
-			}
-		}
-		
-		return cells;
-	}
-
 	public Cell[] getNeighbours() {
 		Cell[] data = new Cell[] { null, null, null, null };
 
@@ -169,6 +244,17 @@ public class Cell {
 		data[1] = getNeighbour(Direction.East);
 		data[2] = getNeighbour(Direction.South);
 		data[3] = getNeighbour(Direction.West);
+
+		return data;
+	}
+	
+	public Cell[] getCrossedNeighbours() {
+		Cell[] data = new Cell[] { null, null, null, null };
+
+		data[0] = getCrossedNeighbour(Direction.North);
+		data[1] = getCrossedNeighbour(Direction.East);
+		data[2] = getCrossedNeighbour(Direction.South);
+		data[3] = getCrossedNeighbour(Direction.West);
 
 		return data;
 	}

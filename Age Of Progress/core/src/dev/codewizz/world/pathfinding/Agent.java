@@ -89,14 +89,7 @@ public class Agent {
 	public boolean setGoal(Cell goal, float x, float y) {
 		this.goal = goal;
 
-		Cell[][] grid = Main.inst.world.grid;
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				if (grid[i][j].tile.getHitbox().contains(x, y)) {
-					previousCell = grid[i][j];
-				}
-			}
-		}
+		previousCell = Main.inst.world.getCell(x, y);
 		GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
 		for (int i = 1; i < graphPath.getCount(); i++) {
 			

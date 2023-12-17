@@ -3,21 +3,20 @@ package dev.codewizz.world;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import com.dongbat.jbump.util.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Shaders;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
-import dev.codewizz.modding.Registers;
 import dev.codewizz.modding.events.AddObjectEvent;
 import dev.codewizz.modding.events.CreateWorldEvent;
 import dev.codewizz.modding.events.Event;
@@ -33,18 +32,8 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.WorldData;
 import dev.codewizz.utils.serialization.RCDatabase;
 import dev.codewizz.world.items.Item;
-import dev.codewizz.world.objects.Mushrooms;
-import dev.codewizz.world.objects.Rock;
-import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
-import dev.codewizz.world.tiles.ClayTile;
-import dev.codewizz.world.tiles.DeepWaterTile;
-import dev.codewizz.world.tiles.DirtTile;
-import dev.codewizz.world.tiles.EmptyTile;
-import dev.codewizz.world.tiles.FlowerTile;
-import dev.codewizz.world.tiles.SandTile;
-import dev.codewizz.world.tiles.WaterTile;
 
 public class World {
 
@@ -59,7 +48,8 @@ public class World {
 	public static int gameSpeed = 3;
 
 	public QuadTree<Cell> tree;
-	public Cell[][] grid;
+	public HashMap<String, Chunk> chunkTree = new HashMap<>();
+	public List<Chunk> chunks = new CopyOnWriteArrayList<>();
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
 
@@ -76,25 +66,9 @@ public class World {
 	public World() {
 		long start = System.currentTimeMillis();
 		
-		grid = new Cell[WORLD_SIZE_W][WORLD_SIZE_H];
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
-
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				Cell cell = new Cell(i * 32 - j * 32, i * -16 - j * 16, i, j);
-				grid[i][j] = cell;
-				tree.set(cell.x, cell.y, cell);
-				cellGraph.addCell(cell);
-			}
-		}
-
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				grid[i][j].init(cellGraph, this);
-			}
-		}
 
 		nature = new Nature(this);
 		
@@ -128,7 +102,6 @@ public class World {
 		Main.inst.world = this;
 
 		this.tree = data.tree;
-		this.grid = data.grid;
 		this.settlement = data.settlement;
 		this.objects = data.objects;
 		this.showInfoSartMenu = data.showStartInfo;
@@ -136,16 +109,16 @@ public class World {
 
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				grid[i][j].init(cellGraph, this);
+				//grid[i][j].init(cellGraph, this);
 			}
 		}
 
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
 				try {
-					grid[i][j].setTile(Registers.createTile(data.tiles[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
+					//grid[i][j].setTile(Registers.createTile(data.tiles[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
 				} catch (Exception e) {
-					grid[i][j].setTile(new EmptyTile(grid[i][j]));
+					//grid[i][j].setTile(new EmptyTile());
 					e.printStackTrace();
 				}
 			}
@@ -153,17 +126,38 @@ public class World {
 		
 		Event.dispatch(new LoadWorldEvent());
 	}
+	
+	public Chunk addChunk(int indexX, int indexY) {
+		
+		float x = indexX * Chunk.SIZE * 32 - indexY * Chunk.SIZE * 32;
+		float y = indexX * Chunk.SIZE * - 16 - indexY * Chunk.SIZE * 16;
+		
+		
+		Chunk c = new Chunk(this, x, y, indexX, indexY);
+		
+		chunkTree.put(new Vector2(indexX, indexY).toString(), c);
+		chunks.add(c);
+		
+		Collections.sort(chunks);
+
+		return c;
+	}
 
 	public void init() {
-		spawnRivers();
-		spawnResources();
-		spawnTree();
-		spawnRock();
-		
 
-		nature.spawnHerd();
-		nature.spawnHerd();
-		nature.spawnHerd();
+		for(int i = 0; i < 3; i++) {
+			for(int j = 0; j < 3; j++) {
+				addChunk(i, j);
+			}
+		}
+		
+		for(Chunk c : chunks) {
+			c.init();
+		}
+		
+		//nature.spawnHerd();
+		//nature.spawnHerd();
+		//nature.spawnHerd();
 	}
 
 	public void start(Settlement s) {
@@ -175,6 +169,7 @@ public class World {
 		}
 	}
 
+	/*
 	private void spawnResources() {
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
@@ -186,21 +181,21 @@ public class World {
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
 					if (n > 0.2f) {
-						cell.setTile(new ClayTile(cell));
+						cell.setTile(new ClayTile());
 					}
 				} else if (cell.tile.getId().equals("aop:grass-tile")) {
 					float e = 20f;
 					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 
 					if (n > 0.65f) {
-						cell.setTile(new FlowerTile(cell));
+						cell.setTile(new FlowerTile());
 					}
 					
 					e = 1f;
 					n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
 					
 					if(n > 0.65f) {
-						cell.setTile(new DirtTile(cell));
+						cell.setTile(new DirtTile());
 					}
 				}
 			}
@@ -248,11 +243,11 @@ public class World {
 				n = Math.abs(n);
 				
 				if(n <= 0.03) {
-					cell.setTile(new DeepWaterTile(cell));
+					cell.setTile(new DeepWaterTile());
 				} else if(n <= 0.075f) {
-					cell.setTile(new WaterTile(cell));
+					cell.setTile(new WaterTile());
 				} else if(n <= 0.15f) {
-					cell.setTile(new SandTile(cell));
+					cell.setTile(new SandTile());
 				}
 			}
 		}
@@ -276,43 +271,14 @@ public class World {
 			}
 		}
 	}
-
+	*/
+	
 	public void renderTiles(SpriteBatch b) {
-		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(-64*4, -64*4, 0));
-		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth() + 64*4, Gdx.graphics.getHeight() + 64*4, 0));
 
-		Cell c1 = this.getCell(p1.x, p2.y);
-		Cell c2 = this.getCell(p2.x, p1.y);
-
-		int iX1 = 0;
-		int iX2 = WORLD_SIZE_W;
-		int iY1 = 0;
-		int iY2 = WORLD_SIZE_H;
-
-		if(c1 != null) {
-			iX1 = c1.indexX;
-			iY1 = c1.indexY;
-		}
 		
-		if(c2 != null) {
-			iX2 = c2.indexX;
-			iY2 = c2.indexY;
+		for(Chunk chunk : chunks) {
+			chunk.render(b);
 		}
-		
-		/*
-		for (int i = iY2 - 1; i >= iY1; i--) {
-			for (int j = iX2 - 1; j >= iX1; j--) {
-				grid[j][i].render(b);
-			}
-		}
-		*/
-		
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				grid[i][j].render(b);
-			}
-		}
-		
 		
 		if (!Main.PAUSED) {
 			if (MouseInput.hoveringOverCell != null) {
@@ -400,13 +366,6 @@ public class World {
 		}
 	}
 
-	public Cell getCellIndex(int x, int y) {
-		x = MathUtils.clamp(x, 0, WORLD_SIZE_W - 1);
-		y = MathUtils.clamp(y, 0, WORLD_SIZE_H - 1);
-
-		return grid[x][y];
-	}
-
 	public List<GameObject> getGameObjects() {
 		List<GameObject> list = new CopyOnWriteArrayList<>();
 
@@ -443,63 +402,19 @@ public class World {
 		// if filter is on, tiletype should not be in list. if filer is off, tiletype
 		// should be in list if (!evaluateTile(cell, filter, t)) {
 
-		int m = r;
-		int n = (int) ((float) r * 1.5f);
+		for (Cell c : cell.getCellsInSquare(r)) {
 
-		int xx = cell.indexX - m / 2;
-		int yy = cell.indexY - n / 2;
-
-		int i, k = 0, l = 0;
-
-		while (k < m && l < n) {
-
-			for (i = l; i < n; ++i) {
-				Cell c = getCellIndex(k + xx, i + yy);
-				if (evaluateTile(c, filter, t)) {
-					cells.add(c);
-				}
-			}
-			k++;
-
-			for (i = k; i < m; ++i) {
-
-				Cell c = getCellIndex(i + xx, n - 1 + yy);
-				if (evaluateTile(c, filter, t)) {
-					cells.add(c);
-				}
-
-			}
-			n--;
-
-			if (k < m) {
-				for (i = n - 1; i >= l; --i) {
-
-					Cell c = getCellIndex(m - 1 + xx, i + yy);
-					if (evaluateTile(c, filter, t)) {
-						cells.add(c);
-					}
-				}
-				m--;
-			}
-
-			if (l < n) {
-				for (i = m - 1; i >= k; --i) {
-
-					Cell c = getCellIndex(i + xx, l + yy);
-					if (evaluateTile(c, filter, t)) {
-						cells.add(c);
-					}
-				}
-				l++;
+			if (evaluateTile(c, filter, t)) {
+				cells.add(c);
 			}
 		}
-
 		return cells;
 
 	}
 
 	public Cell getRandomCell() {
-		return grid[Utils.getRandom(0, WORLD_SIZE_W)][Utils.getRandom(0, WORLD_SIZE_H)];
+		List<Cell> all = tree.getValues();
+		return all.get(Utils.getRandom(0, all.size()));
 	}
 
 	public Cell getCell(float x, float y) {

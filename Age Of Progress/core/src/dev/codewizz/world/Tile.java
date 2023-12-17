@@ -17,8 +17,7 @@ public abstract class Tile {
 	protected String id;
 	protected int cost = 1;
 	
-	public Tile(Cell cell) {
-		this.cell = cell;
+	public Tile() {
 		this.id = "no-id";
 		this.texture = Assets.getSprite("grass-tile");
 		this.name = "Grass Tile";
@@ -29,7 +28,7 @@ public abstract class Tile {
 	public void update() {};
 	
 	public void place() {
-		Cell[] cells = this.cell.getCrossedNeighbours();
+		Cell[] cells = this.cell.getAllNeighbours();
 		for(int i = 0; i < 4; i++) {
 			if(cells[i] != null) {
 				cells[i].tile.update();				
@@ -43,7 +42,7 @@ public abstract class Tile {
 					link.setCost(cost);
 				}
 			} else {
-				Cell[] neighBours = cell.getCrossedNeighbours();
+				Cell[] neighBours = cell.getAllNeighbours();
 				for(int i = 0; i < neighBours.length; i++) {
 					if(neighBours[i] != null) {
 						c.connectCells(cell, neighBours[i], this.cost);
@@ -117,7 +116,7 @@ public abstract class Tile {
 					link.setCost(cost);
 				}
 			} else {
-				Cell[] neighBours = cell.getCrossedNeighbours();
+				Cell[] neighBours = cell.getAllNeighbours();
 				for(int i = 0; i < neighBours.length; i++) {
 					if(neighBours[i] != null) {
 						c.connectCells(cell, neighBours[i], this.cost);
@@ -128,5 +127,9 @@ public abstract class Tile {
 			c.removeConnections(cell);
 		}
 		this.cost = cost;
+	}
+
+	public void setCell(Cell cell) {
+		this.cell = cell;
 	}
 }

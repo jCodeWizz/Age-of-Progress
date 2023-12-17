@@ -118,7 +118,7 @@ public class Fence extends GameObject implements Serializable, IBuy {
 	public void onDestroy() {
 		CellGraph c = Main.inst.world.cellGraph;
 		
-		Cell[] neighBours = cell.getCrossedNeighbours();
+		Cell[] neighBours = cell.getAllNeighbours();
 		for(int i = 0; i < neighBours.length; i++) {
 			if(neighBours[i] != null) {
 				c.connectCells(cell, neighBours[i], cell.tile.getCost());

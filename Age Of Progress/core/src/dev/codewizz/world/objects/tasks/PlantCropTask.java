@@ -31,7 +31,7 @@ public class PlantCropTask extends Task{
 	public void finish() {
 		Main.inst.world.settlement.crops.add(new Crop(cell, CropType.carrots1));
 		
-		cell.setTile(new FarmTile(cell));
+		cell.setTile(new FarmTile());
 		cell.tile.setCurrentSprite(CropType.carrots1.getSprite());
 		
 		hermit.setTaskAnimation(null);

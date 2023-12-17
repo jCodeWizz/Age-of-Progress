@@ -45,7 +45,7 @@ public class Herd {
 		int indexX = cell.indexX + Utils.getRandom(-offset, offset);
 		int indexY = cell.indexY + Utils.getRandom(-offset, offset);
 		
-		return Main.inst.world.getCellIndex(indexX, indexY);
+		return Main.inst.world.getCell(indexX * 32, indexY * 16);
 	}
 
 	public void attackHerd() {

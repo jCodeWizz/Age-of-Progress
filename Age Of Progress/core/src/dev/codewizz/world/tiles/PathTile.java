@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import dev.codewizz.utils.Assets;
-import dev.codewizz.world.Cell;
 import dev.codewizz.world.Tile;
 
 public abstract class PathTile extends Tile {
@@ -26,9 +25,7 @@ public abstract class PathTile extends Tile {
 	protected String template;
 	protected String templateGround;
 	
-	public PathTile(Cell cell) {
-		super(cell);
-		
+	public PathTile() {
 		this.cost = 1;
 	}
 	

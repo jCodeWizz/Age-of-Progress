@@ -1,13 +1,10 @@
 package dev.codewizz.world.tiles;
 
 import dev.codewizz.utils.Assets;
-import dev.codewizz.world.Cell;
 
 public class TiledTile6 extends PathTile {
 
-	public TiledTile6(Cell cell) {
-		super(cell);
-
+	public TiledTile6() {
 		this.id = "aop:tiled-tile-6";
 		this.texture = Assets.getSprite("tiled-tile-6");
 		this.template = "aop:tiled-tile-6";

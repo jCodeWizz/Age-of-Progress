@@ -11,7 +11,6 @@ import dev.codewizz.utils.quadtree.QuadTree;
 import dev.codewizz.utils.serialization.RCDatabase;
 import dev.codewizz.utils.serialization.RCField;
 import dev.codewizz.utils.serialization.RCObject;
-import dev.codewizz.utils.serialization.RCString;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
@@ -99,7 +98,7 @@ public class WorldData {
 		RCObject tiles = new RCObject("tiles");
 		for (int i = 0; i < World.WORLD_SIZE_W; i++) {
 			for (int j = 0; j < World.WORLD_SIZE_H; j++) {
-				tiles.addString(RCString.Create("" + (int) (world.grid[i][j].indexX + (world.grid[i][j].indexY * World.WORLD_SIZE_W)), world.grid[i][j].tile.getId()));
+				//tiles.addString(RCString.Create("" + (int) (world.grid[i][j].indexX + (world.grid[i][j].indexY * World.WORLD_SIZE_W)), world.grid[i][j].tile.getId()));
 			}
 		}
 		

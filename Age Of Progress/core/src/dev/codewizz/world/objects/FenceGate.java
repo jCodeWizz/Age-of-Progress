@@ -114,7 +114,7 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 			
 		c.removeConnections(cell);
 		
-		Cell[] n = cell.getCrossedNeighbours();
+		Cell[] n = cell.getAllNeighbours();
 		for(int i = 0; i < n.length; i++) {
 			c.removeConnection(n[i], cell);
 		}
@@ -138,7 +138,7 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 		
 		CellGraph c = Main.inst.world.cellGraph;
 
-		Cell[] n = cell.getCrossedNeighbours();
+		Cell[] n = cell.getAllNeighbours();
 		for(int i = 0; i < n.length; i++) {
 			c.connectCells(cell, n[i], cell.tile.getCost());
 			c.connectCells(n[i], cell, n[i].tile.getCost());

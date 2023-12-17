@@ -53,7 +53,7 @@ public class FarmArea {
 		
 		for(Cell cell : area) {
 			
-			Cell[] cells = cell.getCrossedNeighbours();
+			Cell[] cells = cell.getAllNeighbours();
 			
 			for(int i = 0; i < cells.length; i++) {
 				if(cells[i] != null) {
@@ -79,7 +79,7 @@ public class FarmArea {
 		boolean check = this.addCell(cell);
 		
 		if(check) {
-			Cell[] cells = cell.getCrossedNeighbours();
+			Cell[] cells = cell.getAllNeighbours();
 			
 			for(int i = 0; i < cells.length; i++) {
 				if(cells[i] != null) {

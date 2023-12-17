@@ -102,9 +102,9 @@ public class BuildingMenu extends UIMenu {
 		
 		
 		housingList.slots.add(new UIBuyslotTile("slot-1", (8) * UILayer.SCALE + 4,
-				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new DirtPathTile(null)));
+				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new DirtPathTile()));
 		housingList.slots.add(new UIBuyslotTile("slot-2", (8) * UILayer.SCALE + 4,
-				Gdx.graphics.getHeight() - (140 * UILayer.SCALE), 160 - 8, 52, new TiledTile(null)));
+				Gdx.graphics.getHeight() - (140 * UILayer.SCALE), 160 - 8, 52, new TiledTile()));
 
 		settlementList.maxScroll = (settlementList.slots.size()) * 52;
 

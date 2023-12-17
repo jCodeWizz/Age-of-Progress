@@ -48,7 +48,7 @@ public abstract class Animal extends TaskableObject {
 						offX = MathUtils.clamp(offX, 0, World.WORLD_SIZE_W-1);
 						offY = MathUtils.clamp(offY, 0, World.WORLD_SIZE_H-1);
 						
-						Cell goalCell = Main.inst.world.grid[offX][offY];
+						Cell goalCell = Main.inst.world.getCell(offX * 32, offY * 16);
 						CellGraph c = Main.inst.world.cellGraph;
 						int s = c.getConnections(goalCell).size;
 						if(s == 0) {
@@ -79,7 +79,7 @@ public abstract class Animal extends TaskableObject {
 					offX = MathUtils.clamp(offX, 0, World.WORLD_SIZE_W-1);
 					offY = MathUtils.clamp(offY, 0, World.WORLD_SIZE_H-1);
 					
-					Cell goalCell = Main.inst.world.grid[offX][offY];
+					Cell goalCell = Main.inst.world.getCell(offX * 32, offY * 16);
 					
 					CellGraph c = Main.inst.world.cellGraph;
 					int s = c.getConnections(goalCell).size;

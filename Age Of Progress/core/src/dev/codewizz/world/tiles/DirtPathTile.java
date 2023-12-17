@@ -1,13 +1,10 @@
 package dev.codewizz.world.tiles;
 
 import dev.codewizz.utils.Assets;
-import dev.codewizz.world.Cell;
 
 public class DirtPathTile extends PathTile {
 
-	public DirtPathTile(Cell cell) {
-		super(cell);
-
+	public DirtPathTile() {
 		this.id = "aop:dirt-path-tile";
 		this.texture = Assets.getSprite("dirt-tile");
 		this.template = "aop:dirt-tile";
