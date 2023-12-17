@@ -1,5 +1,6 @@
 package dev.codewizz.world;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.Renderable;
@@ -132,7 +134,6 @@ public class World {
 		float x = indexX * Chunk.SIZE * 32 - indexY * Chunk.SIZE * 32;
 		float y = indexX * Chunk.SIZE * - 16 - indexY * Chunk.SIZE * 16;
 		
-		
 		Chunk c = new Chunk(this, x, y, indexX, indexY);
 		
 		chunkTree.put(new Vector2(indexX, indexY).toString(), c);
@@ -145,8 +146,8 @@ public class World {
 
 	public void init() {
 
-		for(int i = 0; i < 3; i++) {
-			for(int j = 0; j < 3; j++) {
+		for(int i = 0; i < 9; i++) {
+			for(int j = 0; j < 9; j++) {
 				addChunk(i, j);
 			}
 		}
@@ -169,115 +170,30 @@ public class World {
 		}
 	}
 
-	/*
-	private void spawnResources() {
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-
-				Cell cell = grid[i][j];
-
-				if (cell.tile.getId().equals("aop:sand-tile")) {
-					float e = 1f;
-					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
-
-					if (n > 0.2f) {
-						cell.setTile(new ClayTile());
-					}
-				} else if (cell.tile.getId().equals("aop:grass-tile")) {
-					float e = 20f;
-					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
-
-					if (n > 0.65f) {
-						cell.setTile(new FlowerTile());
-					}
-					
-					e = 1f;
-					n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
-					
-					if(n > 0.65f) {
-						cell.setTile(new DirtTile());
-					}
-				}
-			}
-		}
-	}
-
-	private void spawnRock() {
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-
-				Cell cell = grid[i][j];
-				if (cell.tile.getId().equals("aop:grass-tile")) {
-					float e = 21f;
-					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
-
-					if (n > 0.8f) {
-						List<Cell> cells = this.findCell(cell.x, cell.y, 3, false, "aop:grass-tile");
-
-						for (Cell c : cells) {
-							
-							if(Utils.getRandom(1, 4) < 3) {
-								if(c.object == null)
-									c.setObject(new Mushrooms(c.x, c.y));
-							} 
-						}
-					} else if (n > 0.7f) {
-						if(cell.object == null)
-							cell.setObject(new Rock(cell.x, cell.y));
-							
-					}
-				}
-			}
-		}
-	}
-
-	private void spawnRivers() {
-		
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				
-				Cell cell = grid[i][j];
-
-				float n = (float) noise.noise((float)cell.indexX / 3f, (float)cell.indexY / 3f);
-				
-				n = Math.abs(n);
-				
-				if(n <= 0.03) {
-					cell.setTile(new DeepWaterTile());
-				} else if(n <= 0.075f) {
-					cell.setTile(new WaterTile());
-				} else if(n <= 0.15f) {
-					cell.setTile(new SandTile());
-				}
-			}
-		}
-	}
-
-	private void spawnTree() {
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-
-				Cell cell = grid[i][j];
-
-				if (cell.tile.getId().equals("aop:grass-tile")) {
-					float e = 5f;
-					float n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
-
-					if (n > 0.4f) {
-						if(cell.object == null)
-							cell.setObject(new Tree(cell.x, cell.y + Utils.RANDOM.nextFloat()));
-					}
-				}
-			}
-		}
-	}
-	*/
-	
 	public void renderTiles(SpriteBatch b) {
-
+		
+		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(0, 0, 0));
+		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0));
+		
+		Rectangle r = new Rectangle((int)p1.x, (int)p2.y, (int) (p2.x - p1.x), (int)-(p2.y - p1.y));
 		
 		for(Chunk chunk : chunks) {
-			chunk.render(b);
+			
+			if(r.contains(chunk.getX(), chunk.getY())) {
+				
+				if(chunk.isLoaded()) {
+					chunk.render(b);
+					continue;
+				}
+				
+				if(!chunk.isGenerated()) {
+					chunk.generate();
+				} else {
+					chunk.load();
+				}
+			} else if(chunk.isLoaded()) {
+				chunk.unload();
+			}
 		}
 		
 		if (!Main.PAUSED) {

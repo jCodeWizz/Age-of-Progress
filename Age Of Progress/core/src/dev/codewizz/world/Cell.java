@@ -28,7 +28,10 @@ public class Cell {
 	public int index;
 	public GameObject object; 
 	
-	public Cell(float x, float y, int indexX, int indexY) {
+	public Cell(World world, Chunk chunk, float x, float y, int indexX, int indexY) {
+		this.world = world;
+		this.chunk = chunk;
+		
 		this.x = x;
 		this.y = y;
 		this.indexX = indexX;
@@ -37,9 +40,7 @@ public class Cell {
 		this.tile.setCell(this);
 	}
 	
-	public void init(CellGraph graph, World world, Chunk chunk) {
-		this.world = world;
-		this.chunk = chunk;
+	public void init(CellGraph graph) {
 		
 		Cell[] neighBours = getAllNeighbours();
 		for(int i = 0; i < neighBours.length; i++) {

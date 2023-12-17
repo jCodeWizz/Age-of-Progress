@@ -50,6 +50,7 @@ public class WorldData {
 		data.tiles = tileIds;
 		data.objects = new CopyOnWriteArrayList<Renderable>();
 
+		/*
 		for (int i = 0; i < World.WORLD_SIZE_W; i++) {
 			for (int j = 0; j < World.WORLD_SIZE_H; j++) {
 				if (j % 2 == 0) {
@@ -65,6 +66,7 @@ public class WorldData {
 				}
 			}
 		}
+		*/
 		
 		float sx = settlementData.findField("x").getFloat();
 		float sy = settlementData.findField("y").getFloat();
