@@ -12,13 +12,14 @@ import dev.codewizz.gfx.gui.UIScrollList;
 import dev.codewizz.gfx.gui.UITabButton;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.input.MouseInput;
-import dev.codewizz.world.tiles.GrassTile;
 import dev.codewizz.world.tiles.ClayTile;
+import dev.codewizz.world.tiles.DeepWaterTile;
 import dev.codewizz.world.tiles.DirtPathTile;
 import dev.codewizz.world.tiles.DirtTile;
 import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.FarmTile;
 import dev.codewizz.world.tiles.FlowerTile;
+import dev.codewizz.world.tiles.GrassTile;
 import dev.codewizz.world.tiles.SandTile;
 import dev.codewizz.world.tiles.TiledTile;
 import dev.codewizz.world.tiles.TiledTile2;
@@ -111,6 +112,8 @@ public class PathingMenu extends UIMenu {
 				Gdx.graphics.getHeight() - (390 * UILayer.SCALE), 160 - 8, 52, new EmptyTile(null)));
 		terrainList.slots.add(new UIBuyslotTile("slot-8", (8) * UILayer.SCALE + 4,
 				Gdx.graphics.getHeight() - (440 * UILayer.SCALE), 160 - 8, 52, new FarmTile(null)));
+		terrainList.slots.add(new UIBuyslotTile("slot-9", (8) * UILayer.SCALE + 4,
+				Gdx.graphics.getHeight() - (490 * UILayer.SCALE), 160 - 8, 52, new DeepWaterTile(null)));
 
 		stonesList.slots.add(new UIBuyslotTile("slot-1", (8) * UILayer.SCALE + 4,
 				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new DirtPathTile(null)));

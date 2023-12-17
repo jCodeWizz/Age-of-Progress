@@ -23,6 +23,7 @@ import dev.codewizz.world.objects.hermits.Hermit;
 public class Building extends GameObject implements IBuy, Serializable {
 	
 	private static Sprite texture = Assets.getSprite("crude-home");
+	private static Sprite textureFlipped = Assets.getSprite("crude-home-flipped");
 
 	private List<Item> costs = new CopyOnWriteArrayList<>();
 	
@@ -75,7 +76,11 @@ public class Building extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public void render(SpriteBatch b) {
-		b.draw(texture, x - 2, y + 16);
+		if(flip) {
+			b.draw(textureFlipped, x - 2, y + 16);
+		} else {
+			b.draw(texture, x - 2, y + 16);
+		}
 	}
 	
 	@Override

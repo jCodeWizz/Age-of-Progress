@@ -18,7 +18,13 @@ public abstract class Renderable implements Comparable<Renderable> {
 		} else if(other.getY() + other.getSorthingHeight() > this.getY() + this.getSorthingHeight()){
 			return 1;
 		} else {
-			return 0;
+			if(other.getX() < this.getX()) {
+				return 1;
+			} else if(other.getX() > this.getX()) {
+				return -1;
+			} else {
+				return 0;
+			}
 		}
 	}
 	public boolean isTasked() {

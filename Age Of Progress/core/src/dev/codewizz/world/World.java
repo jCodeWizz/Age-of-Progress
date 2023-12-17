@@ -39,9 +39,10 @@ import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
 import dev.codewizz.world.tiles.ClayTile;
+import dev.codewizz.world.tiles.DeepWaterTile;
+import dev.codewizz.world.tiles.DirtTile;
 import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.FlowerTile;
-import dev.codewizz.world.tiles.HighTile;
 import dev.codewizz.world.tiles.SandTile;
 import dev.codewizz.world.tiles.WaterTile;
 
@@ -155,9 +156,10 @@ public class World {
 
 	public void init() {
 		spawnRivers();
+		spawnResources();
 		spawnTree();
 		spawnRock();
-		spawnResources();
+		
 
 		nature.spawnHerd();
 		nature.spawnHerd();
@@ -192,6 +194,13 @@ public class World {
 
 					if (n > 0.65f) {
 						cell.setTile(new FlowerTile(cell));
+					}
+					
+					e = 1f;
+					n = (float) noise.noise(cell.indexX * e, cell.indexY * e);
+					
+					if(n > 0.65f) {
+						cell.setTile(new DirtTile(cell));
 					}
 				}
 			}
@@ -238,11 +247,13 @@ public class World {
 				
 				n = Math.abs(n);
 				
-				if(n <= 0.075f) {
+				if(n <= 0.03) {
+					cell.setTile(new DeepWaterTile(cell));
+				} else if(n <= 0.075f) {
 					cell.setTile(new WaterTile(cell));
 				} else if(n <= 0.15f) {
 					cell.setTile(new SandTile(cell));
-				} 	
+				}
 			}
 		}
 	}

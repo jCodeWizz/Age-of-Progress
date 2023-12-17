@@ -2,6 +2,7 @@ package dev.codewizz.world;
 
 import dev.codewizz.modding.Registers;
 import dev.codewizz.world.tiles.ClayTile;
+import dev.codewizz.world.tiles.DeepWaterTile;
 import dev.codewizz.world.tiles.DirtPathTile;
 import dev.codewizz.world.tiles.DirtTile;
 import dev.codewizz.world.tiles.EmptyTile;
@@ -30,6 +31,7 @@ public class Tiles {
 		Registers.registerTile("aop:clay-tile", ClayTile.class);
 		Registers.registerTile("aop:empty-tile", EmptyTile.class);
 		Registers.registerTile("aop:water-tile", WaterTile.class);
+		Registers.registerTile("aop:deep-water-tile", DeepWaterTile.class);
 		Registers.registerTile("aop:farm-tile", FarmTile.class);
 		Registers.registerTile("aop:flower-tile", FlowerTile.class);
 		

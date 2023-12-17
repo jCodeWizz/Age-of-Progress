@@ -119,16 +119,6 @@ public abstract class GameObject extends Renderable implements Serializable {
 	public String getId() {
 		return id;
 	}
-	
-	public int compareTo(GameObject other) {
-		if(other.y + other.sortHeight < this.y + this.sortHeight) {
-			return -1;
-		} else if(other.y + other.sortHeight > this.y + this.sortHeight){
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 
 	public boolean isSelected() {
 		return selected;

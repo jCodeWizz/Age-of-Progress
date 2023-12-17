@@ -6,23 +6,30 @@ filter: Nearest, Nearest
 repeat: none
 bush
   rotate: false
-  xy: 68, 38
+  xy: 68, 39
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 bush-berries
   rotate: false
-  xy: 234, 230
+  xy: 213, 163
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 crude-home
   rotate: false
-  xy: 130, 181
-  size: 68, 65
-  orig: 68, 65
+  xy: 130, 182
+  size: 81, 65
+  orig: 81, 65
+  offset: 0, 0
+  index: -1
+crude-home-flipped
+  rotate: false
+  xy: 130, 115
+  size: 81, 65
+  orig: 81, 65
   offset: 0, 0
   index: -1
 fence
@@ -34,7 +41,7 @@ fence
   index: -1
 fence-flipped
   rotate: false
-  xy: 2, 8
+  xy: 2, 9
   size: 64, 46
   orig: 64, 46
   offset: 0, 0
@@ -55,28 +62,21 @@ fence-gate-flipped
   index: -1
 fence-post
   rotate: false
-  xy: 200, 214
+  xy: 213, 215
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-fence3
-  rotate: false
-  xy: 130, 115
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 flag
   rotate: false
-  xy: 200, 180
+  xy: 213, 181
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mushrooms
   rotate: false
-  xy: 68, 20
+  xy: 68, 21
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -97,21 +97,21 @@ rock-broken
   index: -1
 stump
   rotate: false
-  xy: 234, 212
+  xy: 213, 145
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 tent
   rotate: false
-  xy: 2, 56
+  xy: 2, 57
   size: 86, 62
   orig: 86, 62
   offset: 0, 0
   index: -1
 tree
   rotate: false
-  xy: 2, 120
+  xy: 2, 121
   size: 126, 126
   orig: 126, 126
   offset: 0, 0
