@@ -54,6 +54,8 @@ public class World {
 	public List<Chunk> chunks = new CopyOnWriteArrayList<>();
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
+	
+	private List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
 
 	public Settlement settlement;
 	public Nature nature;
@@ -67,25 +69,25 @@ public class World {
 
 	public World() {
 		long start = System.currentTimeMillis();
-		
+
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
 
 		nature = new Nature(this);
-		
-		Thread initThread = new Thread("create-world-thread" ) {
+
+		Thread initThread = new Thread("create-world-thread") {
 			@Override
 			public void run() {
 				init();
 			}
 		};
-		
+
 		initThread.start();
-		
+
 		Event.dispatch(new CreateWorldEvent());
-		
-		Logger.log("World creation time: " + (float)(System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+
+		Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 	}
 
 	public static World openWorld(String path) {
@@ -111,34 +113,35 @@ public class World {
 
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				//grid[i][j].init(cellGraph, this);
+				// grid[i][j].init(cellGraph, this);
 			}
 		}
 
 		for (int i = 0; i < WORLD_SIZE_W; i++) {
 			for (int j = 0; j < WORLD_SIZE_H; j++) {
 				try {
-					//grid[i][j].setTile(Registers.createTile(data.tiles[i + (j * World.WORLD_SIZE_W)], grid[i][j]));
+					// grid[i][j].setTile(Registers.createTile(data.tiles[i + (j *
+					// World.WORLD_SIZE_W)], grid[i][j]));
 				} catch (Exception e) {
-					//grid[i][j].setTile(new EmptyTile());
+					// grid[i][j].setTile(new EmptyTile());
 					e.printStackTrace();
 				}
 			}
 		}
-		
+
 		Event.dispatch(new LoadWorldEvent());
 	}
-	
+
 	public Chunk addChunk(int indexX, int indexY) {
-		
+
 		float x = indexX * Chunk.SIZE * 32 - indexY * Chunk.SIZE * 32;
-		float y = indexX * Chunk.SIZE * - 16 - indexY * Chunk.SIZE * 16;
-		
+		float y = indexX * Chunk.SIZE * -16 - indexY * Chunk.SIZE * 16;
+
 		Chunk c = new Chunk(this, x, y, indexX, indexY);
-		
+
 		chunkTree.put(new Vector2(indexX, indexY).toString(), c);
 		chunks.add(c);
-		
+
 		Collections.sort(chunks);
 
 		return c;
@@ -146,19 +149,25 @@ public class World {
 
 	public void init() {
 
-		for(int i = 0; i < 9; i++) {
-			for(int j = 0; j < 9; j++) {
-				addChunk(i, j);
+		Chunk c = addChunk(0, 0);
+		c.init();
+		
+		while(Main.RUNNING && Main.PLAYING) {
+			if(!generationQueue.isEmpty()) {
+				for(Chunk chunk : generationQueue) {
+					if(Main.RUNNING && Main.PLAYING) {
+						chunk.generate();
+						generationQueue.remove(chunk);
+					} else {
+						break;
+					}
+				}
 			}
 		}
 		
-		for(Chunk c : chunks) {
-			c.init();
-		}
-		
-		//nature.spawnHerd();
-		//nature.spawnHerd();
-		//nature.spawnHerd();
+		// nature.spawnHerd();
+		// nature.spawnHerd();
+		// nature.spawnHerd();
 	}
 
 	public void start(Settlement s) {
@@ -171,31 +180,49 @@ public class World {
 	}
 
 	public void renderTiles(SpriteBatch b) {
-		
+
 		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(0, 0, 0));
 		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0));
-		
-		Rectangle r = new Rectangle((int)p1.x, (int)p2.y, (int) (p2.x - p1.x), (int)-(p2.y - p1.y));
-		
-		for(Chunk chunk : chunks) {
-			
-			if(r.contains(chunk.getX(), chunk.getY())) {
-				
-				if(chunk.isLoaded()) {
+
+		Rectangle r = new Rectangle((int) p1.x, (int) p2.y, (int) (p2.x - p1.x), (int) -(p2.y - p1.y));
+
+		for (Chunk chunk : chunks) {
+
+			if (r.intersects(chunk.getBounds())) {
+
+				if (chunk.isLoaded()) {
 					chunk.render(b);
 					continue;
 				}
 				
-				if(!chunk.isGenerated()) {
-					chunk.generate();
+				if (!chunk.isGenerated()) {
+					chunk.markGenerated();
+					generationQueue.add(chunk);
+					
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0).toString())) {
+						Chunk c = addChunk((int)chunk.getIndex().x + 1, (int)chunk.getIndex().y);
+						c.init();
+					}
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1).toString())) {
+						Chunk c = addChunk((int)chunk.getIndex().x, (int)chunk.getIndex().y + 1);
+						c.init();
+					}
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0).toString())) {
+						Chunk c = addChunk((int)chunk.getIndex().x - 1, (int)chunk.getIndex().y);
+						c.init();
+					}
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1).toString())) {
+						Chunk c = addChunk((int)chunk.getIndex().x, (int)chunk.getIndex().y - 1);
+						c.init();
+					}
 				} else {
 					chunk.load();
 				}
-			} else if(chunk.isLoaded()) {
+			} else if (chunk.isLoaded()) {
 				chunk.unload();
 			}
 		}
-		
+
 		if (!Main.PAUSED) {
 			if (MouseInput.hoveringOverCell != null) {
 				if (MouseInput.clear) {
@@ -263,20 +290,20 @@ public class World {
 			p.render(b);
 		}
 		b.setColor(Color.WHITE);
-		
-		if(MouseInput.currentlyDrawingObject != null && MouseInput.object && MouseInput.hoveringOverCell != null) {
-			
+
+		if (MouseInput.currentlyDrawingObject != null && MouseInput.object && MouseInput.hoveringOverCell != null) {
+
 			MouseInput.currentlyDrawingObject.setX(MouseInput.hoveringOverCell.x);
 			MouseInput.currentlyDrawingObject.setY(MouseInput.hoveringOverCell.y);
 			MouseInput.currentlyDrawingObject.setFlip(MouseInput.rotate);
-			
-			if(MouseInput.hoveringOverCell.object == null)
+
+			if (MouseInput.hoveringOverCell.object == null)
 				b.setColor(1f, 1f, 1f, 0.5f);
 			else
 				b.setColor(1f, 0.2f, 0.2f, 0.5f);
-			
+
 			MouseInput.currentlyDrawingObject.render(b);
-			
+
 			b.setColor(1f, 1f, 1f, 1f);
 
 		}
@@ -298,6 +325,10 @@ public class World {
 
 		for (GameObject object : this.getGameObjects()) {
 			object.renderDebug();
+		}
+		
+		for(Chunk c : chunks) {
+			c.renderDebug();
 		}
 
 	}
@@ -337,48 +368,48 @@ public class World {
 		x -= 32f;
 		y -= 32f;
 
-		Point<Cell>[] list = tree.searchIntersect(x-100, y-100, x+100, y+100);
-		
-		x+=32;
-		y+=32;
-		
-		for(Point<Cell> cell : list) {
-			if(cell.getValue().tile.getHitbox().contains(x, y)) {
+		Point<Cell>[] list = tree.searchIntersect(x - 100, y - 100, x + 100, y + 100);
+
+		x += 32;
+		y += 32;
+
+		for (Point<Cell> cell : list) {
+			if (cell.getValue().tile.getHitbox().contains(x, y)) {
 				return cell.getValue();
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public void addItem(Item item) {
 		objects.add(item);
 	}
-	
+
 	public boolean addObject(GameObject object) {
-		
+
 		boolean proceed = Event.dispatch(new AddObjectEvent(object));
-		
-		if(proceed)
+
+		if (proceed)
 			objects.add(object);
-		
+
 		return proceed;
 	}
-	
+
 	public boolean removeObject(GameObject object) {
-		
+
 		boolean proceed = Event.dispatch(new RemoveObjectEvent(object));
-		
-		if(proceed)
+
+		if (proceed)
 			objects.remove(object);
-		
+
 		return proceed;
 	}
-	
+
 	public void removeItem(Item item) {
 		objects.remove(item);
 	}
-	
+
 	public List<Renderable> getObjects() {
 		return objects;
 	}

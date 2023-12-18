@@ -22,6 +22,7 @@ public class Main extends ApplicationAdapter {
 	public static boolean DEBUG = false;
 	public static boolean PLAYING = false;
 	public static boolean PAUSED = false;
+	public static boolean RUNNING = false;
 		
 	public static Main inst;
 		
@@ -37,6 +38,8 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create () {
 		long start = System.currentTimeMillis();
+		
+		RUNNING = true;
 		
 		inst = this;
 		Assets.create();
@@ -131,6 +134,8 @@ public class Main extends ApplicationAdapter {
 	}
 	
 	public static void exit() {
+		RUNNING = false;
+		
 		
 		Main.inst.handler.stop();
 		

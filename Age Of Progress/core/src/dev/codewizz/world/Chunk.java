@@ -1,10 +1,12 @@
 package dev.codewizz.world;
 
+import java.awt.Rectangle;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
@@ -25,6 +27,7 @@ public class Chunk implements Comparable<Chunk> {
 	private World world;
 	private float x, y;
 	private Vector2 index;
+	private Rectangle bounds;
 	
 	private boolean loaded;
 	private boolean generated;
@@ -32,7 +35,8 @@ public class Chunk implements Comparable<Chunk> {
 	public Chunk(World world, float x, float y, int indexX, int indexY) {
 		grid = new Cell[SIZE][SIZE];
 		this.index = new Vector2(indexX, indexY);
-
+		this.bounds = new Rectangle((int)x - 28 * SIZE, (int)y - 28 * SIZE, 64 * SIZE, 34 * SIZE);
+		
 		this.world = world;	
 		this.x = x;
 		this.y = y;
@@ -54,15 +58,15 @@ public class Chunk implements Comparable<Chunk> {
 				grid[i][j].init(world.cellGraph);
 			}	
 		}
+	}
+	
+	public void generate() {
+		this.generated = true;
 		
 		spawnRivers();
 		spawnResources();
 		spawnTree();
 		spawnRock();
-	}
-	
-	public void generate() {
-		this.generated = true;
 	}
 	
 	public void render(SpriteBatch b) {
@@ -71,6 +75,21 @@ public class Chunk implements Comparable<Chunk> {
 				grid[i][j].render(b);
 			}
 		}
+	}
+	
+	public void renderDebug() {
+		Vector2 a = new Vector2((float)bounds.getX(), (float)bounds.getY());
+		Vector2 b = new Vector2((float)bounds.getX() + (float)bounds.getWidth(), (float)bounds.getY());
+		Vector2 c = new Vector2((float)bounds.getX() + (float)bounds.getWidth(), (float)bounds.getY() + (float)bounds.getHeight());
+		Vector2 d = new Vector2((float)bounds.getX(), (float)bounds.getY() + (float)bounds.getHeight());
+		
+		Renderer.drawDebugLine(a, b);
+		Renderer.drawDebugLine(b, c);
+		Renderer.drawDebugLine(c, d);
+		Renderer.drawDebugLine(d, a);
+		
+		
+		
 	}
 	
 	public void load() {
@@ -177,6 +196,14 @@ public class Chunk implements Comparable<Chunk> {
 				}
 			}
 		}
+	}
+	
+	public void markGenerated() {
+		generated = true;
+	}
+	
+	public Rectangle getBounds() {
+		return bounds;
 	}
 	
 	public void unload() {
