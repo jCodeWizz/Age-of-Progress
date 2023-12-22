@@ -1,5 +1,6 @@
 package dev.codewizz.utils;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -15,12 +16,36 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class Assets {
 
+	public static File folderAgeOfProgress;
+	public static File folderMods;
+	public static File folderSaves;
+	public static File folderData;
+	
+	public static final String pathFolderAgeOfProgress = "ageofprogress/";
+	public static final String pathFolderMods = pathFolderAgeOfProgress + "/mods/";
+	public static final String pathFolderSaves = pathFolderAgeOfProgress + "/saves/";
+	public static final String pathFolderData = pathFolderAgeOfProgress + "/data/";
+	
+	
+	
 	public static HashMap<String, Sprite> sprites = new HashMap<>();
 	public static HashMap<String, TextureAtlas> atlasses = new HashMap<>();
 	public static HashMap<String, BufferedImage> images = new HashMap<>();
 	public static HashMap<String, Texture> procuderal = new HashMap<>();
 
 	public static void create() {
+		
+		try {
+			folderAgeOfProgress = createFolder(pathFolderAgeOfProgress);
+			folderMods = createFolder(pathFolderMods);
+			folderSaves = createFolder(pathFolderSaves);
+			folderData = createFolder(pathFolderData);
+		} catch(Exception e) {
+			Logger.error("Couldn't find main game files: ");
+			Logger.error("Game will load, but saves, settings and mods will not be loaded.");
+			e.printStackTrace();
+		}
+		
 		atlasses.put("tiles", new TextureAtlas(Gdx.files.internal("packs/tiles.atlas")));
 		atlasses.put("entities", new TextureAtlas(Gdx.files.internal("packs/entities.atlas")));
 		atlasses.put("particles", new TextureAtlas(Gdx.files.internal("packs/particles.atlas")));
@@ -170,6 +195,16 @@ public class Assets {
 	
 	public static BufferedImage getImage(String name) {
 		return images.get(name);
+	}
+	
+	private static File createFolder(String path) {
+		File f = Gdx.files.external(path).file();
+		
+		if(!f.exists()) {
+			f.mkdir();
+		}
+		
+		return f;
 	}
 	
 	

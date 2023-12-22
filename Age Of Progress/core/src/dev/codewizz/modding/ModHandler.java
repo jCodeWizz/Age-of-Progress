@@ -14,7 +14,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -28,7 +27,7 @@ import dev.codewizz.utils.Utils;
 public class ModHandler {
 
 	public void register() {
-		File file = Gdx.files.external("mods").file();
+		File file = Assets.folderMods;
 		
 		File[] mods = file.listFiles();
 		
@@ -41,7 +40,7 @@ public class ModHandler {
 				}
 			}
 		} else {
-			Logger.error("Couldn't locate mods folder!");
+			Logger.error("Mods folder wasn't loaded correctly, check logs!");
 		}
 	}
 	
@@ -78,6 +77,7 @@ public class ModHandler {
                     	Registers.registerMod(info, mod);
                     } else {
                     	Logger.error("Main class for mod: " + file.getName() + " is not a child of JavaMod");
+                    	Logger.error("or your Main class is not in a unique package");
                     }
                 }
             }

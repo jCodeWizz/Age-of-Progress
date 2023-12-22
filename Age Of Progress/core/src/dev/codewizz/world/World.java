@@ -66,10 +66,12 @@ public class World {
 	public WNoise terrainNoise = new WNoise();
 
 	public boolean showInfoSartMenu = true;
+	private long start;
 
 	public World() {
-		long start = System.currentTimeMillis();
 
+		start = System.currentTimeMillis();
+		
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
@@ -80,14 +82,23 @@ public class World {
 			@Override
 			public void run() {
 				init();
+				Event.dispatch(new CreateWorldEvent(Main.inst.world));
+				Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+			}
+		};
+		
+		Thread generateThread = new Thread() {
+			@Override
+			public void run() {
+				generate();
 			}
 		};
 
 		initThread.start();
+		generateThread.start();
+		
 
-		Event.dispatch(new CreateWorldEvent(this));
-
-		Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+		
 	}
 
 	public static World openWorld(String path) {
@@ -147,11 +158,19 @@ public class World {
 		return c;
 	}
 
-	public void init() {
+	private void init() {
 
 		Chunk c = addChunk(0, 0);
 		c.init();
 		
+		
+		
+		// nature.spawnHerd();
+		// nature.spawnHerd();
+		// nature.spawnHerd();
+	}
+	
+	private void generate() {
 		while(Main.RUNNING && Main.PLAYING) {
 			if(!generationQueue.isEmpty()) {
 				for(Chunk chunk : generationQueue) {
@@ -164,10 +183,6 @@ public class World {
 				}
 			}
 		}
-		
-		// nature.spawnHerd();
-		// nature.spawnHerd();
-		// nature.spawnHerd();
 	}
 
 	public void start(Settlement s) {

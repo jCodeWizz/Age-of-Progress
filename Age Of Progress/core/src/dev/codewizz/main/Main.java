@@ -40,10 +40,9 @@ public class Main extends ApplicationAdapter {
 		long start = System.currentTimeMillis();
 		
 		RUNNING = true;
-		
 		inst = this;
+
 		Assets.create();
-		
 		
 		camera = new Camera();
 		renderer = new Renderer();
