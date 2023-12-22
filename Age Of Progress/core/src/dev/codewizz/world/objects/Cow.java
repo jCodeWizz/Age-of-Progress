@@ -84,7 +84,9 @@ public class Cow extends Animal implements Serializable {
 			
 			if(FarmArea.anyAvailable()) {
 				FarmArea a = FarmArea.findArea(this);
-				Main.inst.world.settlement.addTask(new CaptureAnimalTask(this, a), moving);
+				if(a != null) {
+					Main.inst.world.settlement.addTask(new CaptureAnimalTask(this, a), moving);
+				}
 			}
 			
 		}

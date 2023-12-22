@@ -85,7 +85,7 @@ public class World {
 
 		initThread.start();
 
-		Event.dispatch(new CreateWorldEvent());
+		Event.dispatch(new CreateWorldEvent(this));
 
 		Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 	}
@@ -129,7 +129,7 @@ public class World {
 			}
 		}
 
-		Event.dispatch(new LoadWorldEvent());
+		Event.dispatch(new LoadWorldEvent(this));
 	}
 
 	public Chunk addChunk(int indexX, int indexY) {

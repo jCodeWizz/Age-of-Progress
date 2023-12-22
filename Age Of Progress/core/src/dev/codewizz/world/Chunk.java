@@ -87,9 +87,6 @@ public class Chunk implements Comparable<Chunk> {
 		Renderer.drawDebugLine(b, c);
 		Renderer.drawDebugLine(c, d);
 		Renderer.drawDebugLine(d, a);
-		
-		
-		
 	}
 	
 	public void load() {

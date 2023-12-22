@@ -26,7 +26,6 @@ public class CaptureAnimalTask extends Task {
 		this.animal = animal;
 		this.area = area;
 		this.jobs.add(Jobs.Farmer);
-		
 		animal.setTasked(true);
 	}
 	
@@ -49,6 +48,11 @@ public class CaptureAnimalTask extends Task {
 	@Override
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
+		
+		if(area == null) {
+			stop();
+		}
+		
 		hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()), hermit.getX(), hermit.getY());
 		if(hermit.getAgent().path.isEmpty())
 			reach();
@@ -88,7 +92,11 @@ public class CaptureAnimalTask extends Task {
 			if(!s) {
 				if(FarmArea.anyAvailable()) {
 					area = FarmArea.findArea(animal);
-					s = area.join(animal);
+					if(area != null) {
+						s = area.join(animal);
+					} else {
+						stop();
+					}
 				}
 			}
 			

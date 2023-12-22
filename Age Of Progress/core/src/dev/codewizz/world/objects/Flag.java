@@ -97,6 +97,7 @@ public class Flag extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public void load(RCObject object) {
+		
 	}
 
 	@Override
