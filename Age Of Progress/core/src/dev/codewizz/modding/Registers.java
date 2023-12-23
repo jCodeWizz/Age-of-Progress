@@ -28,7 +28,7 @@ public class Registers {
 		
 		Tile tile;
 		try {
-			tile = tiles.get(id).getConstructor(Cell.class).newInstance(cell);
+			tile = tiles.get(id).getConstructor().newInstance();
 			return tile;
 		} catch (Exception e) {
 			Logger.error("Exception while trying to create tile: " + id);

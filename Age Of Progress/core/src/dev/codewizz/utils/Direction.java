@@ -36,6 +36,35 @@ public enum Direction {
 	 * 
 	 */
 	
+	public Direction other() {
+		
+		switch(this) {
+			case North:
+				return South;
+			case South:
+				return North;
+			case West:
+				return East;
+			case East:
+				return West;
+			case NorthWest:
+				return SouthEast;
+			case NorthEast:
+				return SouthWest;
+			case SouthEast:
+				return NorthWest;
+			case SouthWest:
+				return NorthEast;
+			default:
+				return North;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param d
+	 * @return
+	 */
 	public static Direction getDirFromDeg(float d) {
 		
 		int deg = 0;

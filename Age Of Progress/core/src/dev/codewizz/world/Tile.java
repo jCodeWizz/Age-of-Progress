@@ -37,17 +37,12 @@ public abstract class Tile {
 		
 		CellGraph c = Main.inst.world.cellGraph;
 		if(cost != -1) {
-			if(c.containsCell(cell)) {
+			if(c.containsCell(cell) && c.getLinks(cell) != null) {
 				for(Link link : c.getLinks(cell)) {
 					link.setCost(cost);
 				}
 			} else {
-				Cell[] neighBours = cell.getAllNeighbours();
-				for(int i = 0; i < neighBours.length; i++) {
-					if(neighBours[i] != null) {
-						c.connectCells(cell, neighBours[i], this.cost);
-					}
-				}
+				this.cell.connectAll();
 			}
 		} else {
 			c.removeConnections(cell);

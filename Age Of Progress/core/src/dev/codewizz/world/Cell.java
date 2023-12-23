@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -15,7 +16,6 @@ import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.world.pathfinding.CellGraph;
-import dev.codewizz.world.pathfinding.Link;
 import dev.codewizz.world.tiles.GrassTile;
 
 public class Cell {
@@ -26,7 +26,10 @@ public class Cell {
 	public World world;
 	public Chunk chunk;
 	public int index;
-	public GameObject object; 
+	public GameObject object;
+	
+	public boolean[] acceptConnections = { true, true, true, true, true, true, true, true };
+	public boolean[] connectedTo = { false, false, false, false, false, false, false, false };
 	
 	public Cell(World world, Chunk chunk, float x, float y, int indexX, int indexY) {
 		this.world = world;
@@ -41,11 +44,47 @@ public class Cell {
 	}
 	
 	public void init(CellGraph graph) {
+		connectAll();
+	}
+	
+	public void connectAll() {
+		
+		if(this.tile.cost == -1) {
+			
+			
+			
+			
+			
+			return;
+		}
+		
+		CellGraph graph = Main.inst.world.cellGraph;
 		
 		Cell[] neighBours = getAllNeighbours();
+
 		for(int i = 0; i < neighBours.length; i++) {
 			if(neighBours[i] != null) {
-				graph.connectCells(this, neighBours[i], tile.cost);
+				if(neighBours[i].acceptConnections[(i + 4) % 8] && neighBours[i].tile.cost != -1) {
+					if(!connectedTo[i]) {
+						if(i % 2 == 0) {
+							graph.connectCells(this, neighBours[i], this.tile.cost * 4);
+						} else {
+							graph.connectCells(this, neighBours[i], this.tile.cost * 2);
+						}
+					}
+					
+					connectedTo[i] = true;
+					
+					if(acceptConnections[i] && !neighBours[i].connectedTo[(i + 4) % 8]) {
+						neighBours[i].connectedTo[(i + 4) % 8] = true;
+						
+						if(i % 2 == 0) {
+							graph.connectCells(neighBours[i], this, this.tile.cost * 4);
+						} else {
+							graph.connectCells(neighBours[i], this, this.tile.cost * 2);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -272,10 +311,12 @@ public class Cell {
 		System.out.println(" - X: " + cell.x + " Y: " + cell.y);
 		System.out.println(" INDEX: " + cell.index);
 		
-		Array<Link> links = Main.inst.world.cellGraph.getLinks(cell);
+		Array<Connection<Cell>> links = Main.inst.world.cellGraph.getConnections(cell);
 		
-		for(int i = 0; i < links.size; i++) {
-			System.out.println(" - Link[" + i + "] " + links.get(i).getCost());
+		if(links != null) {
+			for(int i = 0; i < links.size; i++) {
+				System.out.println(" - Link[" + i + "] " + links.get(i).getCost());
+			}
 		}
 		
 		System.out.println("TILE: [" + cell.tile.getName() + "]");

@@ -93,8 +93,15 @@ public class Agent {
 		GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
 		for (int i = 1; i < graphPath.getCount(); i++) {
 			
+			
+			if(graphPath.get(i).tile.getId().equals("aop:water") || graphPath.get(i).tile.getId().equals("aop:deep-water")) {
+				stop();
+				return false;
+			}
+			
 			if(object instanceof Animal) {
 				if(graphPath.get(i).getObject() != null) {
+					
 					if(graphPath.get(i).getObject().getId().equals("aop:fence-gate") && !object.isTasked()) {
 						stop();
 						return false;
@@ -102,15 +109,10 @@ public class Agent {
 				}
 			}
 			
-			
-			
-			
-			
 			path.addLast(graphPath.get(i));
 		}
-		
+
 		int s = graph.getConnections(goal).size;
-		
 		
 		if (!path.isEmpty() && s > 0) {
 			setSpeedToNextCell(x, y);

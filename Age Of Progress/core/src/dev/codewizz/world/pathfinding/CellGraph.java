@@ -1,12 +1,13 @@
 package dev.codewizz.world.pathfinding;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
 import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
 
 import dev.codewizz.world.Cell;
 
@@ -14,9 +15,9 @@ public class CellGraph implements IndexedGraph<Cell> {
 
 	private CellHeuristic heuristic = new CellHeuristic();
 	private Array<Cell> cells = new Array<>();
-	private Array<Link> links = new Array<>();
 	
-	private ObjectMap<Cell, Array<Connection<Cell>>> linkMap = new ObjectMap<>();
+	private HashMap<Cell, Array<Link>> links = new HashMap<>();
+	private HashMap<Cell, Array<Connection<Cell>>> linkMap = new HashMap<>();
 	
 	private int lastIndex = 0;
 	
@@ -34,7 +35,12 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(!linkMap.get(fromCell).contains(link, false)) {
 			linkMap.get(fromCell).add(link);
 		}
-		links.add(link);
+		if(!links.containsKey(fromCell)) {
+			links.put(fromCell, new Array<Link>());
+		}
+		if(!links.get(fromCell).contains(link, false)) {
+			links.get(fromCell).add(link);
+		}
 	}
 	
 	public boolean containsCell(Cell cell) {
@@ -48,23 +54,20 @@ public class CellGraph implements IndexedGraph<Cell> {
 	}
 	
 	public Array<Link> getLinks(Cell fromCell) {
-		Array<Link> a = new Array<>();
-		for(int i = 0; i < links.size; i++) {
-			Link link = links.get(i);
-			if(link.getFromNode().index == fromCell.index) {
-				a.add(link);
-			}
-		}
-		return a;
+		return links.get(fromCell);
 	}
 	
 	public void removeConnections(Cell fromNode) {
 		linkMap.remove(fromNode);
+		links.remove(fromNode);
 	}
 	
 	public void removeConnection(Cell from, Cell to) {
 		Array<Connection<Cell>> a = linkMap.get(from);
 		Array<Connection<Cell>> b = linkMap.get(to);
+		
+		Array<Link> d = links.get(from);
+		Array<Link> e = links.get(to);
 		
 		if(a != null) {
 			for(Connection<Cell> c : a) {
@@ -74,10 +77,26 @@ public class CellGraph implements IndexedGraph<Cell> {
 			}
 		}
 		
+		if(d != null) {
+			for(Link c : d) {
+				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
+					links.get(from).removeValue(c, false);
+				}
+			}
+		}
+		
 		if(b != null) {
 			for(Connection<Cell> c : b) {
 				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
 					linkMap.get(from).removeValue(c, false);
+				}
+			}
+		}
+		
+		if(e != null) {
+			for(Link c : e) {
+				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
+					links.get(from).removeValue(c, false);
 				}
 			}
 		}

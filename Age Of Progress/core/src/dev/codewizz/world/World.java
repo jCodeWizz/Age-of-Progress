@@ -96,9 +96,6 @@ public class World {
 
 		initThread.start();
 		generateThread.start();
-		
-
-		
 	}
 
 	public static World openWorld(String path) {
