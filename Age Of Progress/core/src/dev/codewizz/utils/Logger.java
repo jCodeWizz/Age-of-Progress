@@ -1,29 +1,78 @@
 package dev.codewizz.utils;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import com.badlogic.gdx.Gdx;
 
 public class Logger {
 
-	public static void error(String message) {
+	private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss"); 
+	private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"); 
+	
+	private static File currentFile;
+	private static boolean open = false;
+	private static BufferedWriter writer;
+	
+	public static void setup() {
+		try {
+			LocalDateTime now = LocalDateTime.now();
+			String date = DATE_FORMAT.format(now);
+			currentFile = Gdx.files.external(Assets.pathFolderLogs + "LOG-" + date + ".txt").file();
+			
+			if(currentFile.createNewFile()) {
+				writer = new BufferedWriter(new FileWriter(currentFile));
+				open = true;
+				Logger.log("Opened log file!");
+			} else {
+				Logger.error("Couldn't create a log file!");
+			}
+		} catch (Exception e) {
+			Logger.error("Couldn't create a log file!");
+			e.printStackTrace();
+		}
+	}
+	
+	private static void write(String line) {
+		try {
+			if(open) {
+				writer.write(line);
+				writer.newLine();
+				writer.flush();
+			}
+		} catch(Exception e) { }
+	}
+	
+	private static String prefix() {
 		Thread t = Thread.currentThread();
-		LocalTime time = LocalTime.now();
+		LocalTime now = LocalTime.now();
 		String s = t.getStackTrace()[2].getFileName().substring(0, t.getStackTrace()[2].getFileName().length()-5);
-		System.err.println("[" + time.getHour() + ":" + time.getMinute() + ":" + time.getSecond() + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[2].getLineNumber() + "] [ERROR]: " + message);
-		
-		
+		String time = TIME_FORMAT.format(now);
+		return "[" + time + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[2].getLineNumber() + "] ";
+	}
+	
+	public static void error(String message) {
+		String prefix = prefix();
+		String total = prefix += "[ERROR]: " + message;
+		System.err.println(total);
+		write(total);
 	}
 	
 	public static void log(String message) {
-		Thread t = Thread.currentThread();
-		LocalTime time = LocalTime.now();
-		String s = t.getStackTrace()[2].getFileName().substring(0, t.getStackTrace()[2].getFileName().length()-5);
-		System.out.println("[" + time.getHour() + ":" + time.getMinute() + ":" + time.getSecond() + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[2].getLineNumber() + "] [INFO]: " + message);
+		String prefix = prefix();
+		String total = prefix += "[INFO]: " + message;
+		System.out.println(total);
+		write(total);
 	}
 	
 	public static void warn(String message) {
-		Thread t = Thread.currentThread();
-		LocalTime time = LocalTime.now();
-		String s = t.getStackTrace()[2].getFileName().substring(0, t.getStackTrace()[2].getFileName().length()-5);
-		System.err.println("[" + time.getHour() + ":" + time.getMinute() + ":" + time.getSecond() + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[2].getLineNumber() + "] [WARN]: " + message);
+		String prefix = prefix();
+		String total = prefix += "[WARN]: " + message;
+		System.err.println(total);
+		write(total);
 	}
 }

@@ -42,6 +42,10 @@ public class Main extends ApplicationAdapter {
 		RUNNING = true;
 		inst = this;
 
+		Assets.setup();
+		
+		Logger.setup();
+		
 		Assets.create();
 		
 		camera = new Camera();
