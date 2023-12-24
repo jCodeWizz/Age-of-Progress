@@ -58,6 +58,13 @@ public class CellGraph implements IndexedGraph<Cell> {
 	}
 	
 	public void removeConnections(Cell fromNode) {
+		
+		for(int i = 0; i < fromNode.connectedTo.length; i++) {
+			fromNode.connectedTo[i] = false;
+			fromNode.acceptConnections[i] = false;
+		}
+		
+		
 		linkMap.remove(fromNode);
 		links.remove(fromNode);
 	}

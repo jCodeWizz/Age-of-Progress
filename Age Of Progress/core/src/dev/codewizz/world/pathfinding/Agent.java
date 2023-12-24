@@ -94,7 +94,7 @@ public class Agent {
 		for (int i = 1; i < graphPath.getCount(); i++) {
 			
 			
-			if(graphPath.get(i).tile.getId().equals("aop:water") || graphPath.get(i).tile.getId().equals("aop:deep-water")) {
+			if(graphPath.get(i).tile.getId().equals("aop:water-tile") || graphPath.get(i).tile.getId().equals("aop:deep-water-tile")) {
 				stop();
 				return false;
 			}

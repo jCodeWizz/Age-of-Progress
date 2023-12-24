@@ -21,14 +21,14 @@ public class Assets {
 	public static File folderSaves;
 	public static File folderData;
 	public static File folderLogs;
+	public static File folderScreenshots;
 	
 	public static final String pathFolderAgeOfProgress = "ageofprogress/";
 	public static final String pathFolderMods = pathFolderAgeOfProgress + "/mods/";
 	public static final String pathFolderSaves = pathFolderAgeOfProgress + "/saves/";
 	public static final String pathFolderData = pathFolderAgeOfProgress + "/data/";
 	public static final String pathFolderLogs = pathFolderData + "/logs/";
-	
-	
+	public static final String pathFolderScreenshots = pathFolderAgeOfProgress + "/screenshots/";
 	
 	public static HashMap<String, Sprite> sprites = new HashMap<>();
 	public static HashMap<String, TextureAtlas> atlasses = new HashMap<>();
@@ -42,6 +42,7 @@ public class Assets {
 			folderSaves = createFolder(pathFolderSaves);
 			folderData = createFolder(pathFolderData);
 			folderLogs = createFolder(pathFolderLogs);
+			folderScreenshots = createFolder(pathFolderScreenshots);
 		} catch(Exception e) {
 			Logger.error("Couldn't find main game files: ");
 			Logger.error("Game will load, but saves, settings and mods will not be loaded.");

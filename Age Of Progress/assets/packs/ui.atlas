@@ -6,49 +6,49 @@ filter: Nearest, Nearest
 repeat: none
 build-icon
   rotate: false
-  xy: 1626, 934
+  xy: 2013, 998
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 1626, 960
+  xy: 1368, 688
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
   index: -1
 button-pressed
   rotate: false
-  xy: 1884, 998
+  xy: 1626, 726
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
   index: -1
 button-unavailable
   rotate: false
-  xy: 1002, 568
+  xy: 1931, 966
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
   index: -1
 buyslot
   rotate: false
-  xy: 854, 594
+  xy: 1112, 594
   size: 250, 84
   orig: 250, 84
   offset: 0, 0
   index: -1
 buyslot-pressed
   rotate: false
-  xy: 1368, 765
+  xy: 1112, 508
   size: 250, 84
   orig: 250, 84
   offset: 0, 0
   index: -1
 close-icon
   rotate: false
-  xy: 1694, 960
+  xy: 1694, 726
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -60,37 +60,51 @@ craftsman-icon
   orig: 32, 32
   offset: 0, 0
   index: -1
+discord-icon
+  rotate: false
+  xy: 802, 484
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
 farmer-icon
   rotate: false
-  xy: 1368, 681
+  xy: 1931, 932
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon
   rotate: false
-  xy: 1952, 998
+  xy: 1931, 906
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-board
   rotate: false
-  xy: 854, 562
+  xy: 1865, 992
   size: 146, 30
   orig: 146, 30
   offset: 0, 0
   index: -1
+icon-board-extension
+  rotate: false
+  xy: 1364, 648
+  size: 1, 30
+  orig: 1, 30
+  offset: 0, 0
+  index: -1
 icon-pressed
   rotate: false
-  xy: 1070, 568
+  xy: 1965, 940
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-unavailable
   rotate: false
-  xy: 1172, 635
+  xy: 1865, 813
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -109,23 +123,30 @@ main-menu
   orig: 540, 540
   offset: 0, 0
   index: -1
+main-menu-background
+  rotate: false
+  xy: 1368, 752
+  size: 495, 270
+  orig: 495, 270
+  offset: 0, 0
+  index: -1
 manage-icon
   rotate: false
-  xy: 802, 484
+  xy: 1718, 726
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 notification
   rotate: false
-  xy: 1626, 986
+  xy: 1368, 714
   size: 256, 36
   orig: 256, 36
   offset: 0, 0
   index: -1
 path-icon
   rotate: false
-  xy: 1402, 689
+  xy: 802, 458
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -139,14 +160,14 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 1468, 739
+  xy: 1865, 787
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 selected-background
   rotate: false
-  xy: 1368, 851
+  xy: 854, 507
   size: 256, 171
   orig: 256, 171
   offset: 0, 0
@@ -167,49 +188,49 @@ tab-button
   index: -1
 tab-button-pressed
   rotate: false
-  xy: 1106, 611
+  xy: 1865, 873
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
   index: -1
 tab-button-unavailable
   rotate: false
-  xy: 1172, 661
+  xy: 1436, 695
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
   index: -1
 tile-highlight
   rotate: false
-  xy: 1106, 630
+  xy: 1865, 942
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
 tile-highlight2
   rotate: false
-  xy: 1368, 715
+  xy: 1865, 892
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
 tool-icon
   rotate: false
-  xy: 1626, 908
+  xy: 1742, 726
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 1650, 934
+  xy: 802, 432
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 worker-icon
   rotate: false
-  xy: 1434, 731
+  xy: 1865, 839
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

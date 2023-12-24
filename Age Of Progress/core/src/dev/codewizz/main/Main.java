@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.kotcrab.vis.ui.VisUI;
 
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.layers.GameLayer;
@@ -48,6 +49,8 @@ public class Main extends ApplicationAdapter {
 		
 		Assets.create();
 		
+		VisUI.load();
+		
 		camera = new Camera();
 		renderer = new Renderer();
 		mouseInput = new MouseInput();
@@ -64,6 +67,8 @@ public class Main extends ApplicationAdapter {
 		handler.start();
 		
 		Logger.log("Start time: " + (float)(System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+
+		
 	}
 	
 	public void setInputMultiplexer() {
@@ -147,7 +152,8 @@ public class Main extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		Assets.dispose();
+		VisUI.dispose();
 		renderer.dispose();
+		Assets.dispose();
 	}
 }

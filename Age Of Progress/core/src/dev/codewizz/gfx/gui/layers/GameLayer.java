@@ -1,5 +1,6 @@
 package dev.codewizz.gfx.gui.layers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.gui.UIElement;
@@ -128,6 +129,7 @@ public class GameLayer extends UILayer {
 
 		// BACKGROUND
 		elements.add(new UIImage("icon-background", (WIDTH / 2) - (146 * SCALE) / 2, 0, 146, 30, "icon-board"));
+		elements.add(new UIImage("icon-background-extension", 0, 0, Gdx.graphics.getWidth() / 3, 30, "icon-board-extension"));
 
 		// PATH MENU
 		pathingMenu = new PathingMenu("pathingMenu", 0, 0, 128, 260, this);

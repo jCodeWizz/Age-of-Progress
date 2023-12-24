@@ -43,9 +43,6 @@ public class World {
 	public static final int WORLD_SIZE_H = 128;
 	public static final int WORLD_SIZE_WP = WORLD_SIZE_W * 64;
 	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 64;
-	public static final int RADIUS = 2;
-	public static final int MAX_RIVER_LENGTH = 1000;
-	public static final float E = 0.5f;
 
 	public static int gameSpeed = 3;
 

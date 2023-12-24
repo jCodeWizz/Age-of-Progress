@@ -172,10 +172,12 @@ public class QuadTree<T> {
             @Override
             public void call(QuadTree<T> quadTree, Node<T> node) {
                 Point<T> pt = node.getPoint();
-                if (pt.getX() < xmin || pt.getX() > xmax || pt.getY() < ymin || pt.getY() > ymax) {
-                    // Definitely not within the polygon!
-                } else {
-                    arr.add(node.getPoint());
+                if(pt != null) {
+                	 if (pt.getX() < xmin || pt.getX() > xmax || pt.getY() < ymin || pt.getY() > ymax) {
+                         // Definitely not within the polygon!
+                     } else {
+                         arr.add(node.getPoint());
+                     }
                 }
 
             }

@@ -21,7 +21,7 @@ public class MainMenuLayer extends UILayer {
 		settingsMenu = new SettingsMainMenu("settings-menu-menu", 0, 0, 1920, 1080, this);
 		settingsMenu.disable();
 		elements.add(settingsMenu);
-		
-		elements.add(new UIImage("main-menu", 0, 0, Gdx.graphics.getHeight(), Gdx.graphics.getHeight(), "main-menu", 1));
+
+		elements.add(new UIImage("main-menu-background", 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), "main-menu-background", 1));
 	}
 }

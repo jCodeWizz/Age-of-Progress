@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
 import dev.codewizz.world.items.Recipe;
@@ -117,7 +118,7 @@ public class KeyInput implements InputProcessor {
 		
 		
 		// create a screenshot
-		if(key == Input.Keys.C) {
+		if(key == Input.Keys.F2) {
 			Pixmap pixmap = Pixmap.createFromFrameBuffer(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 			ByteBuffer pixels = pixmap.getPixels();
 
@@ -130,7 +131,7 @@ public class KeyInput implements InputProcessor {
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");  
 			LocalDateTime now = LocalDateTime.now();  
 			
-			PixmapIO.writePNG(Gdx.files.external("\\Desktop\\Java Coding\\Eclipse\\Age-of-Progress\\LibGDX\\sc_" + dtf.format(now) + ".png"), pixmap, Deflater.DEFAULT_COMPRESSION, true);
+			PixmapIO.writePNG(Gdx.files.external(Assets.pathFolderScreenshots + "sc_" + dtf.format(now) + ".png"), pixmap, Deflater.DEFAULT_COMPRESSION, true);
 			pixmap.dispose();
 
 			return true;

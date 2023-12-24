@@ -22,7 +22,7 @@ public class Logger {
 		try {
 			LocalDateTime now = LocalDateTime.now();
 			String date = DATE_FORMAT.format(now);
-			currentFile = Gdx.files.external(Assets.pathFolderLogs + "LOG-" + date + ".txt").file();
+			//currentFile = Gdx.files.external(Assets.pathFolderLogs + "LOG-" + date + ".txt").file();
 			
 			if(currentFile.createNewFile()) {
 				writer = new BufferedWriter(new FileWriter(currentFile));
@@ -33,7 +33,6 @@ public class Logger {
 			}
 		} catch (Exception e) {
 			Logger.error("Couldn't create a log file!");
-			e.printStackTrace();
 		}
 	}
 	
@@ -50,9 +49,9 @@ public class Logger {
 	private static String prefix() {
 		Thread t = Thread.currentThread();
 		LocalTime now = LocalTime.now();
-		String s = t.getStackTrace()[2].getFileName().substring(0, t.getStackTrace()[2].getFileName().length()-5);
+		String s = t.getStackTrace()[3].getFileName().substring(0, t.getStackTrace()[3].getFileName().length()-5);
 		String time = TIME_FORMAT.format(now);
-		return "[" + time + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[2].getLineNumber() + "] ";
+		return "[" + time + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[3].getLineNumber() + "] ";
 	}
 	
 	public static void error(String message) {

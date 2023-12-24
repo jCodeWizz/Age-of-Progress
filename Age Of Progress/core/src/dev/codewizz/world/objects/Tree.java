@@ -20,8 +20,6 @@ public class Tree extends GameObject implements Serializable, IGatherable {
 
 	private static Sprite texture = Assets.getSprite("tree");
 	
-	private boolean tasked = false;
-
 	public Tree(float x, float y) {
 		super(x, y);
 

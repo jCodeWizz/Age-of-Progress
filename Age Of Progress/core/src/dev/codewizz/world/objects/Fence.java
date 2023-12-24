@@ -109,7 +109,6 @@ public class Fence extends GameObject implements Serializable, IBuy {
 			Main.inst.world.settlement.areas.add(a);
 		}
 		
-		
 		CellGraph c = Main.inst.world.cellGraph;
 		c.removeConnections(cell);
 	}
