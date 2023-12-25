@@ -33,6 +33,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 		this.sortHeight = 25f;
 
 		this.id = "aop:rock";
+		this.name = "Rock";
 	}
 
 	@Override
@@ -83,6 +84,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 		} else {
 			broken = true;
 			tasked = false;
+			this.name = "Rock (Broken)";
 			spawnParticles();
 		}
 	}

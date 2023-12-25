@@ -8,10 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.UILayer;
+import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.world.objects.IBuy;
 
 public abstract class GameObject extends Renderable implements Serializable {
 
@@ -26,6 +29,8 @@ public abstract class GameObject extends Renderable implements Serializable {
 	protected boolean selected = false;
 	protected String name = "Object";
 	
+	private UIText text;
+	
 	public GameObject(float x, float y) {
 		this.x = x;
 		this.y = y;
@@ -33,8 +38,22 @@ public abstract class GameObject extends Renderable implements Serializable {
 	
 	public abstract void update(float d);
 	public abstract void render(SpriteBatch b);
-	public void renderUICard(SelectMenu m) {}
-	public void updateUICard() {}
+	
+	public void renderUICard(SelectMenu m) {
+		if(this instanceof IBuy) {
+	
+			if(this.text == null) this.text = new UIText("description-text", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 - 69 * UILayer.SCALE, (6+20) * UILayer.SCALE, "", 6);
+			
+			
+			m.elements.add(text);
+		}
+	}
+	
+	public void updateUICard(SelectMenu m) {
+		if(this instanceof IBuy) {
+			text.setText(((IBuy) this).getMenuDescription());
+		}
+	}
 	
 	@Override
 	public RCObject save(RCObject object) {
@@ -57,6 +76,10 @@ public abstract class GameObject extends Renderable implements Serializable {
 	public void onDestroy() {};
 	
 	public void destroy() {
+		
+		
+		if(this.isSelected()) this.deselect();
+		
 		onDestroy();
 		Main.inst.world.removeObject(this);
 		if(cell != null) cell.setObject(null);

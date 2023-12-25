@@ -37,9 +37,15 @@ public abstract class Tile {
 		
 		CellGraph c = Main.inst.world.cellGraph;
 		if(cost != -1) {
-			if(c.containsCell(cell) && c.getLinks(cell) != null) {
-				for(Link link : c.getLinks(cell)) {
-					link.setCost(cost);
+			if(c.containsCell(cell)) {
+				try {
+					if(c.getLinks(cell) != null) {
+						for(Link link : c.getLinks(cell)) {
+							link.setCost(cost);
+						}
+					}
+				} catch (Exception e) {
+					this.cell.connectAll();
 				}
 			} else {
 				this.cell.connectAll();

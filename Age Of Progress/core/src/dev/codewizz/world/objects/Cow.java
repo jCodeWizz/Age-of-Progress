@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Animation;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.serialization.RCField;
@@ -113,16 +112,6 @@ public class Cow extends Animal implements Serializable {
 		
 		if(this.damageCoolDown >= 0f)
 			b.setColor(1f, 1f, 1f, 1f);
-	}
-
-	@Override
-	public void renderUICard(SelectMenu m) {
-		
-	}
-	
-	@Override
-	public void updateUICard() {
-
 	}
 
 	@Override

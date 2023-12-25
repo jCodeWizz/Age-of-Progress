@@ -2,6 +2,7 @@ package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.Gdx;
 
+import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.utils.serialization.RCField;
 import dev.codewizz.utils.serialization.RCObject;
 import dev.codewizz.world.GameObject;
@@ -50,6 +51,15 @@ public abstract class Entity extends GameObject {
 		return super.save(object);
 	}
 	
+	@Override
+	public void renderUICard(SelectMenu m) {
+
+	}
+	
+	@Override
+	public void updateUICard(SelectMenu m) {
+
+	}
 	
 	@Override
 	public void onDestroy() {

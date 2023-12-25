@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.Renderable;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.serialization.RCField;
@@ -100,16 +99,6 @@ public class Wolf extends Animal implements Serializable {
 				b.draw(Assets.getSprite("wolf-idle"), x + 32, y, -w, h);
 			}
 		}
-	}
-
-	@Override
-	public void renderUICard(SelectMenu m) {
-
-	}
-	
-	@Override
-	public void updateUICard() {
-
 	}
 	
 	@Override

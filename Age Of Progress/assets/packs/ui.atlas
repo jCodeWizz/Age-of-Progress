@@ -6,28 +6,28 @@ filter: Nearest, Nearest
 repeat: none
 build-icon
   rotate: false
-  xy: 2013, 998
+  xy: 2017, 998
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 1368, 688
+  xy: 1626, 726
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
   index: -1
 button-pressed
   rotate: false
-  xy: 1626, 726
+  xy: 1516, 688
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
   index: -1
 button-unavailable
   rotate: false
-  xy: 1931, 966
+  xy: 1931, 946
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
@@ -48,7 +48,7 @@ buyslot-pressed
   index: -1
 close-icon
   rotate: false
-  xy: 1694, 726
+  xy: 1584, 688
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -69,21 +69,21 @@ discord-icon
   index: -1
 farmer-icon
   rotate: false
-  xy: 1931, 932
+  xy: 1931, 912
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon
   rotate: false
-  xy: 1931, 906
+  xy: 1931, 886
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-board
   rotate: false
-  xy: 1865, 992
+  xy: 1368, 682
   size: 146, 30
   orig: 146, 30
   offset: 0, 0
@@ -97,14 +97,14 @@ icon-board-extension
   index: -1
 icon-pressed
   rotate: false
-  xy: 1965, 940
+  xy: 1965, 920
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-unavailable
   rotate: false
-  xy: 1865, 813
+  xy: 1865, 793
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -132,7 +132,7 @@ main-menu-background
   index: -1
 manage-icon
   rotate: false
-  xy: 1718, 726
+  xy: 2017, 972
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -146,7 +146,7 @@ notification
   index: -1
 path-icon
   rotate: false
-  xy: 802, 458
+  xy: 1999, 946
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -160,9 +160,16 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 1865, 787
+  xy: 802, 458
   size: 22, 24
   orig: 22, 24
+  offset: 0, 0
+  index: -1
+select-menu-background
+  rotate: false
+  xy: 1865, 972
+  size: 150, 50
+  orig: 150, 50
   offset: 0, 0
   index: -1
 selected-background
@@ -188,49 +195,49 @@ tab-button
   index: -1
 tab-button-pressed
   rotate: false
-  xy: 1865, 873
+  xy: 1865, 853
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
   index: -1
 tab-button-unavailable
   rotate: false
-  xy: 1436, 695
+  xy: 1694, 733
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
   index: -1
 tile-highlight
   rotate: false
-  xy: 1865, 942
+  xy: 1865, 922
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
 tile-highlight2
   rotate: false
-  xy: 1865, 892
+  xy: 1865, 872
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
 tool-icon
   rotate: false
-  xy: 1742, 726
+  xy: 1989, 920
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 802, 432
+  xy: 1865, 767
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 worker-icon
   rotate: false
-  xy: 1865, 839
+  xy: 1865, 819
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

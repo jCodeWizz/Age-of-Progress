@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
@@ -51,7 +52,10 @@ public class Hermit extends TaskableObject implements Serializable {
 	
 	private float sleepNeed = 10f;
 	
-	private int age = 10;
+	private int age = 101;
+	
+	private UIText nameText;
+	private UIImage jobIcon;
 	
 	public Hermit(float x, float y) {
 		super(x, y);
@@ -70,6 +74,7 @@ public class Hermit extends TaskableObject implements Serializable {
 		setSleepNeed();
 
 		this.setJob(new Worker());
+		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
 	}
 	
 	@Override
@@ -138,32 +143,22 @@ public class Hermit extends TaskableObject implements Serializable {
 							new int[] {(int)y + 3, (int)y + 24, (int)y + 24, (int)y + 3}, 4) ;
 	}
 
-	private SelectMenu m;
-	private UIText nameText;
-	private UIText jobText = new UIText("job-text", (6 + 3) * UILayer.SCALE, (6+30) * UILayer.SCALE, "", 8);
-	private UIText taskText = new UIText("task-text", (6 + 3) * UILayer.SCALE, (6+50) * UILayer.SCALE, "", 8);
-	private UIText moodText = new UIText("mood-text", (6 + 3) * UILayer.SCALE, (6+80) * UILayer.SCALE, "", 8);
-	
 	@Override
 	public void renderUICard(SelectMenu m) {
-		this.m = m;
+		super.renderUICard(m);
+		
 		nameText = (UIText)m.layer.getElement("name-text");
-		m.elements.add(moodText);
-		m.elements.add(taskText);
-		m.elements.add(jobText);
+	
+		m.elements.add(0, jobIcon);
 	}
 	
 	@Override
-	public void updateUICard() {
+	public void updateUICard(SelectMenu m) {
+		super.updateUICard(m);
 		if(nameText != null) nameText.setText(name + "   ( " + age + " )");
 		else nameText = (UIText) m.layer.getElement("name-text");
-		moodText.setText("mood");
-		jobText.setText("Job >> " + job.getJob().toString());
-		if(this.getCurrentTask() == null) {
-			taskText.setText("Task >> Idle");
-		} else {
-			taskText.setText("Task >> " + this.getCurrentTask().getName());
-		}
+
+		jobIcon.setSprite(this.getJob().getIcon());
 	}
 
 	public Settlement getSettlement() {
@@ -248,7 +243,7 @@ public class Hermit extends TaskableObject implements Serializable {
 	}
 	
 	public Job getJob() {
-		return job;
+		return this.job;
 	}
 	
 	public void setJob(Job job) {

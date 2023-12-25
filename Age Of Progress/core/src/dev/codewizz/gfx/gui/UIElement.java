@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class UIElement {
 
 	protected int x, y, w, h;
-	protected boolean hovering = false, pressed = false, enabled = true, available = true, wantsClick = true;
+	protected boolean hovering = false, pressed = false, enabled = true, available = true, wantsClick = true, background = false;
 	protected String id;
 	
 	public UIElement(String id, int x, int y, int w, int h) {
@@ -134,4 +134,12 @@ public abstract class UIElement {
 	}
 	
 	
+	public UIElement setBackground(boolean background) {
+		this.background = background;
+		return this;
+	}
+	
+	public boolean isBackground() {
+		return background;
+	}
 }

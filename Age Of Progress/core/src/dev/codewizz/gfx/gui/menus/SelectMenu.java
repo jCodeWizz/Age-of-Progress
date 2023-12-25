@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.gui.UIElement;
-import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
@@ -25,20 +24,9 @@ public class SelectMenu extends UIMenu {
 
 	@Override
 	public void setup() {
-		
-		nameText = new UIText("name-text", (6 + 3) * UILayer.SCALE,  (6+98) * UILayer.SCALE, "", 8);
-		
+		nameText = new UIText("name-text", x + 6 * UILayer.SCALE,  y + (h-5) * UILayer.SCALE, "", 8);
 		elements.add(nameText);
-		
-		elements.add(new UIIcon("close-button", (6 + 142) * UILayer.SCALE - 1, (6+87) * UILayer.SCALE + 1, 14, 15,
-				"close-icon") {
-			@Override
-			protected void onDeClick() {
-				close();
-			}
-		});
-
-		elements.add(new UIImage("selected-background", x, y, w, h, "selected-background"));
+		elements.add(new UIImage("selected-background", x, y, 150, 50, "select-menu-background"));
 	}
 	
 	@Override
@@ -48,7 +36,6 @@ public class SelectMenu extends UIMenu {
 	
 	public void updateData() {
 		nameText.setText("" + object.getName());
-
 	}
 
 	@Override
@@ -61,7 +48,7 @@ public class SelectMenu extends UIMenu {
 	public void onClose() {
 		
 		for(UIElement e : elements) {
-			if(!e.getID().equalsIgnoreCase("selected-background") && !e.getID().equalsIgnoreCase("close-button") && !e.getID().equalsIgnoreCase("name-text")) {
+			if(!e.getID().equalsIgnoreCase("selected-background") && !e.getID().equalsIgnoreCase("name-text")) {
 				elements.remove(e);
 				layer.elements.remove(e);
 			}

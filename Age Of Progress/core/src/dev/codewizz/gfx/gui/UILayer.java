@@ -156,7 +156,16 @@ public abstract class UILayer implements InputProcessor {
 		for (int i = elements.size() - 1; i >= 0; i--) {
 			UIElement e = elements.get(i);
 		
-			if(e instanceof UIImage) {
+			if(e.isBackground() && e.isEnabled()) {
+				e.render(b);
+			}
+		
+		}
+		
+		for (int i = elements.size() - 1; i >= 0; i--) {
+			UIElement e = elements.get(i);
+		
+			if(e instanceof UIImage && e.isEnabled() && !e.isBackground()) {
 				e.render(b);
 			}
 		
@@ -165,7 +174,7 @@ public abstract class UILayer implements InputProcessor {
 		for (int i = elements.size() - 1; i >= 0; i--) {
 			UIElement e = elements.get(i);
 			
-			if(!(e instanceof UIImage)) {
+			if(!(e instanceof UIImage) && !e.isBackground()) {
 				if (e.isEnabled()) { // CHECK IF UI COMPONENT SHOULD BE RENDERED AT ALL
 					if (e instanceof UIBuyslotTile || e instanceof UIBuyslotObject) { // CHECK IF UI COMPONENT IS A MOVEABLE SLOT
 						b.flush();

@@ -126,10 +126,6 @@ public class GameLayer extends UILayer {
 			}
 		});
 
-		// BACKGROUND
-		elements.add(new UIImage("icon-background", (WIDTH / 2) - (146 * SCALE) / 2, 0, 146, 30, "icon-board"));
-		elements.add(new UIImage("icon-background-extension", 0, 0, Gdx.graphics.getWidth() / 3, 30, "icon-board-extension"));
-
 		// PATH MENU
 		pathingMenu = new PathingMenu("pathingMenu", 0, 0, 128, 260, this);
 		pathingMenu.disable();
@@ -161,7 +157,7 @@ public class GameLayer extends UILayer {
 		elements.add(settingsMenu);
 
 		// SELECTMENU
-		selectMenu = new SelectMenu("selectMenu", 6, 6, 160, 107, this);
+		selectMenu = new SelectMenu("selectMenu", ((WIDTH / 2) - (146 * SCALE) / 2)/2 - 75 * UILayer.SCALE, 0, 150, 50, this);
 		selectMenu.disable();
 		elements.add(selectMenu);
 		
@@ -184,11 +180,15 @@ public class GameLayer extends UILayer {
 		elements.add(notificationMenu);
 		notificationMenu.enable();
 		
+		// BACKGROUND
+		elements.add(new UIImage("icon-background", (WIDTH / 2) - (146 * SCALE) / 2, 0, 146, 30, "icon-board").setBackground(true));
+		elements.add(new UIImage("icon-background-extension", 0, 0, Gdx.graphics.getWidth() / 3, 30, "icon-board-extension").setBackground(true));
+		
 	}
 
 	@Override
 	public void render(SpriteBatch b) {
-		if(selectedObject != null) selectedObject.updateUICard();
+		if(selectedObject != null) selectedObject.updateUICard(selectMenu);
 		super.render(b);
 	}
 }
