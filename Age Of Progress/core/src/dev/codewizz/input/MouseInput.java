@@ -27,7 +27,7 @@ public class MouseInput implements InputProcessor {
 	public static boolean[] dragging = new boolean[5];
 	public static Vector3 coords = new Vector3();
 	public static Cell hoveringOverCell;
-	public static String currentlyDrawingId = "aop:base-tile";
+	public static String currentlyDrawingTileId = "aop:base-tile";
 	public static GameObject currentlyDrawingObject = null;
 	public static AreaSelector area = null;
 	public static boolean clear = false;
@@ -58,7 +58,7 @@ public class MouseInput implements InputProcessor {
 
 				Tile tile = hoveringOverCell.tile;
 
-				if (tile.getId().equals(currentlyDrawingId) || tile.getId().equals("aop:empty-tile")) {
+				if (tile.getId().equals(currentlyDrawingTileId) || tile.getId().equals("aop:empty-tile")) {
 					clear = false;
 				}
 			}
@@ -75,13 +75,16 @@ public class MouseInput implements InputProcessor {
 
 					if (object) {
 						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null) {
+							
+							
 							IBuy object = (IBuy) currentlyDrawingObject;
-							GameObject obj = Registers.createGameObject(object.getId(), hoveringOverCell.x,
-									hoveringOverCell.y);
-							obj.setFlip(rotate);
-							hoveringOverCell.setObject(obj);
-							obj.setCell(hoveringOverCell);
-							((IBuy) obj).onPlace(hoveringOverCell);
+							
+							GameObject toPlace = Registers.createGameObject(object.getId(), hoveringOverCell.x, hoveringOverCell.y);
+							
+							toPlace.setFlip(rotate);
+							hoveringOverCell.setObject(toPlace);
+							toPlace.setCell(hoveringOverCell);
+							((IBuy) toPlace).onPlace(hoveringOverCell);
 
 							dragging[0] = object.conintues() && object.available();
 							lastClickedUIElement.setAvailable(object.available());
@@ -93,7 +96,7 @@ public class MouseInput implements InputProcessor {
 					} else {
 						Tile t;
 						try {
-							t = Registers.createTile(currentlyDrawingId, hoveringOverCell);
+							t = Registers.createTile(currentlyDrawingTileId, hoveringOverCell);
 							hoveringOverCell.setTile(t);
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -144,22 +147,26 @@ public class MouseInput implements InputProcessor {
 			Collections.sort(Main.inst.world.getObjects());
 			Collections.reverse(Main.inst.world.getObjects());
 
-			if (area != null) {
-				area.start(new Vector2(coords.x, coords.y));
-				return false;
-			}
-
-			if (GameLayer.selectedObject != null)
-				GameLayer.selectedObject.deselect();
-
-			for (Renderable o : Main.inst.world.getObjects()) {
-				if (o instanceof GameObject) {
-					GameObject obj = (GameObject) o;
-					obj.setSelected(false);
-					if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
-						obj.select();
-						dragging[button] = false;
-						break;
+			
+			
+			if(button == 0) {
+				if (area != null) {
+					area.start(new Vector2(coords.x, coords.y));
+					return false;
+				}
+				
+				if (GameLayer.selectedObject != null)
+					GameLayer.selectedObject.deselect();
+				
+				for (Renderable o : Main.inst.world.getObjects()) {
+					if (o instanceof GameObject) {
+						GameObject obj = (GameObject) o;
+						obj.setSelected(false);
+						if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+							obj.select();
+							dragging[button] = false;
+							break;
+						}
 					}
 				}
 			}

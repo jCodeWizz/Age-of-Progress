@@ -62,6 +62,7 @@ public class MainMenu extends UIMenu {
 				
 				Main.inst.renderer.ui.getElement("manage-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("path-icon").setAvailable(false);
+				Main.inst.renderer.ui.getElement("build-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("people-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("tool-icon").setAvailable(false);
 			}

@@ -7,7 +7,9 @@ import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.gfx.gui.UIText;
+import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.world.objects.Flag;
 
 public class StartInfoMenu extends UIMenu {
 private boolean[] states = null;
@@ -67,7 +69,7 @@ private boolean[] states = null;
 			states = new boolean[5];
 		}
 		
-		states[0] = true;
+		states[0] = false;
 		states[1] = false;
 		states[2] = false;
 		states[3] = false;
@@ -88,5 +90,7 @@ private boolean[] states = null;
 		layer.getElement("people-icon").setAvailable(states[2]);
 		layer.getElement("manage-icon").setAvailable(states[3]);
 		layer.getElement("path-icon").setAvailable(states[4]);
+		
+		MouseInput.currentlyDrawingObject = new Flag(0, 0);
 	}
 }
