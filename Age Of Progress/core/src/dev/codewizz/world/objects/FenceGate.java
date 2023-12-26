@@ -84,7 +84,7 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public String getMenuDescription() {
-		return "The first workshop for your craftsman";
+		return "Will magically sort Hermits and Animals";
 	}
 
 	@Override

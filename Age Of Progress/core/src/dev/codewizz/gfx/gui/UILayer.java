@@ -24,6 +24,8 @@ public abstract class UILayer implements InputProcessor {
 	private Texture fadeTex;
 	
 	private Rectangle scissors;
+	
+	private int mx, my;
 
 	public UILayer() {
 		WIDTH = Gdx.graphics.getWidth();
@@ -114,6 +116,8 @@ public abstract class UILayer implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		mx = screenX;
+		my = screenY;
 		return false;
 	}
 
@@ -155,11 +159,14 @@ public abstract class UILayer implements InputProcessor {
 		
 		for (int i = elements.size() - 1; i >= 0; i--) {
 			UIElement e = elements.get(i);
-		
+			e.hovering = false;
 			if(e.isBackground() && e.isEnabled()) {
 				e.render(b);
 			}
-		
+			
+			if(e.getBounds().contains(mx, my)) {
+				e.hovering = true;
+			}
 		}
 		
 		for (int i = elements.size() - 1; i >= 0; i--) {

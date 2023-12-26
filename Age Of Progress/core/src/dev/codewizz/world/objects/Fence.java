@@ -81,7 +81,7 @@ public class Fence extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public String getMenuDescription() {
-		return "The first workshop for your craftsman";
+		return "A very primitive wall";
 	}
 
 	@Override

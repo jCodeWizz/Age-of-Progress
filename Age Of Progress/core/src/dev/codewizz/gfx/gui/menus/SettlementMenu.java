@@ -1,5 +1,7 @@
 package dev.codewizz.gfx.gui.menus;
 
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.Gdx;
 
 import dev.codewizz.gfx.gui.UIElement;
@@ -24,7 +26,7 @@ public class SettlementMenu extends UIMenu {
 		super(id, x, y, w, h, layer);
 
 	}
-
+	
 	@Override
 	public void setup() {
 		
@@ -47,8 +49,8 @@ public class SettlementMenu extends UIMenu {
 	}
 
 	@Override
-	public java.awt.Rectangle getBounds() {
-		return new java.awt.Rectangle(6 * UILayer.SCALE, Gdx.graphics.getHeight() - (331 * UILayer.SCALE),
+	public Rectangle getBounds() {
+		return new Rectangle(6 * UILayer.SCALE, Gdx.graphics.getHeight() - (331 * UILayer.SCALE),
 				160 * UILayer.SCALE, 325 * UILayer.SCALE);
 	}
 

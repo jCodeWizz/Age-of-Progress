@@ -27,7 +27,7 @@ button-pressed
   index: -1
 button-unavailable
   rotate: false
-  xy: 1931, 946
+  xy: 1694, 726
   size: 66, 24
   orig: 66, 24
   offset: 0, 0
@@ -48,7 +48,7 @@ buyslot-pressed
   index: -1
 close-icon
   rotate: false
-  xy: 1584, 688
+  xy: 1984, 946
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -62,21 +62,21 @@ craftsman-icon
   index: -1
 discord-icon
   rotate: false
-  xy: 802, 484
+  xy: 1584, 688
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 farmer-icon
   rotate: false
-  xy: 1931, 912
+  xy: 1931, 885
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon
   rotate: false
-  xy: 1931, 886
+  xy: 802, 450
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -97,14 +97,14 @@ icon-board-extension
   index: -1
 icon-pressed
   rotate: false
-  xy: 1965, 920
+  xy: 2017, 972
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-unavailable
   rotate: false
-  xy: 1865, 793
+  xy: 1984, 920
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -132,7 +132,7 @@ main-menu-background
   index: -1
 manage-icon
   rotate: false
-  xy: 2017, 972
+  xy: 2008, 946
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -146,7 +146,7 @@ notification
   index: -1
 path-icon
   rotate: false
-  xy: 1999, 946
+  xy: 802, 424
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -160,7 +160,7 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 802, 458
+  xy: 2008, 920
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -186,6 +186,27 @@ settlement-menu
   orig: 850, 478
   offset: 0, 0
   index: -1
+slot-background
+  rotate: false
+  xy: 1931, 919
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+slot-background-hovering
+  rotate: false
+  xy: 1865, 819
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+slot-background-pressed
+  rotate: false
+  xy: 1865, 766
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
 tab-button
   rotate: false
   xy: 544, 3
@@ -195,14 +216,14 @@ tab-button
   index: -1
 tab-button-pressed
   rotate: false
-  xy: 1865, 853
+  xy: 1762, 733
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
   index: -1
 tab-button-unavailable
   rotate: false
-  xy: 1694, 733
+  xy: 601, 3
   size: 55, 17
   orig: 55, 17
   offset: 0, 0
@@ -223,21 +244,21 @@ tile-highlight2
   index: -1
 tool-icon
   rotate: false
-  xy: 1989, 920
+  xy: 802, 398
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 1865, 767
+  xy: 802, 372
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 worker-icon
   rotate: false
-  xy: 1865, 819
+  xy: 802, 476
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

@@ -70,7 +70,7 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public String getMenuDescription() {
-		return "The first workshop for your craftsman";
+		return "A sturdy wooden post";
 	}
 
 	@Override
