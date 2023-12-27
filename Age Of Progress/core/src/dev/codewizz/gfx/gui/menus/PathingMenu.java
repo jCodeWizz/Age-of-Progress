@@ -14,6 +14,7 @@ import dev.codewizz.gfx.gui.UIScrollList;
 import dev.codewizz.gfx.gui.UITabButton;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.input.MouseInput;
+import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Tile;
 import dev.codewizz.world.tiles.ClayTile;
@@ -41,6 +42,8 @@ public class PathingMenu extends UIMenu {
 	private UIScrollList terrainList;
 	
 	private int rowSize = 5;
+	private Tile toRender;
+	private UIText name;
 
 	public PathingMenu(String id, int x, int y, int w, int h, UILayer layer) {
 		super(id, x, y, w, h, layer);
@@ -103,7 +106,10 @@ public class PathingMenu extends UIMenu {
 		});
 
 		elements.add(new UIText("text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - (6 + 5) * UILayer.SCALE + 1, "Pathing Menu", 8));
+		name = new UIText("object-name-text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - 200 * UILayer.SCALE, "", 8);
 
+		elements.add(name);
+		
 		terrainList.slots.add(new Slot(new GrassTile()));
 		terrainList.slots.add(new Slot(new FlowerTile()));
 		terrainList.slots.add(new Slot(new DirtTile()));
@@ -170,6 +176,39 @@ public class PathingMenu extends UIMenu {
 			
 			e.setX(indexX * 94 + x + 8 * UILayer.SCALE);
 			e.setY(indexY * - 94 + y + 291 * UILayer.SCALE);
+		}
+	}
+	
+	@Override
+	public void render(SpriteBatch b) {
+		
+		if(Main.inst.renderer.ui.getHovering() != null) {
+
+			if(Main.inst.renderer.ui.getHovering() instanceof Slot) {
+				Slot s = (Slot) Main.inst.renderer.ui.getHovering();
+				if(s != null) {
+					toRender = s.tile;
+				}
+			}
+		}
+		
+		if(toRender != null) {
+			name.setText(toRender.getName());
+			//description.setText(toRender.getMenuDescription());
+
+			float maxWidth = 154 * UILayer.SCALE;
+			
+			float width = 154 * UILayer.SCALE;
+			float height = 90 * UILayer.SCALE;
+			
+			width = (int) (((float) (height) / toRender.getCurrentSprite().getHeight()) * toRender.getCurrentSprite().getWidth());
+			
+			if(width > maxWidth) {
+				width = maxWidth;
+				height = (int) (((float) (width) / toRender.getCurrentSprite().getWidth()) * toRender.getCurrentSprite().getHeight());
+			}
+			
+			b.draw(toRender.getCurrentSprite(), 6 * UILayer.SCALE + maxWidth / 2 - width / 2, Gdx.graphics.getHeight() - (328 * UILayer.SCALE), width, height);
 		}
 	}
 
