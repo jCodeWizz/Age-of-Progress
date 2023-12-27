@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-import dev.codewizz.gfx.gui.UIBuyslotTile;
 import dev.codewizz.gfx.gui.UIElement;
 import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UIImage;
@@ -15,6 +14,7 @@ import dev.codewizz.gfx.gui.UIScrollList;
 import dev.codewizz.gfx.gui.UITabButton;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.input.MouseInput;
+import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Fence;
@@ -22,15 +22,17 @@ import dev.codewizz.world.objects.FenceGate;
 import dev.codewizz.world.objects.FencePost;
 import dev.codewizz.world.objects.IBuy;
 import dev.codewizz.world.objects.buildings.Building;
-import dev.codewizz.world.tiles.DirtPathTile;
-import dev.codewizz.world.tiles.TiledTile;
 
 public class BuildingMenu extends UIMenu {
 
 	private UIScrollList housingList;
 	private UIScrollList settlementList;
 
+	private UIText name;
+	private UIText description;
+	
 	private int rowSize = 5;
+	private IBuy toRender;
 	
 	public BuildingMenu(String id, int x, int y, int w, int h, UILayer layer) {
 		super(id, x, y, w, h, layer);
@@ -51,10 +53,10 @@ public class BuildingMenu extends UIMenu {
 		elements.add(settlementList);
 		
 
-		housingList.slotPort = new Rectangle((8) * UILayer.SCALE + 4, Gdx.graphics.getHeight() - (329 * UILayer.SCALE),
+		housingList.slotPort = new Rectangle((0) * UILayer.SCALE + 0, Gdx.graphics.getHeight() - (329 * UILayer.SCALE),
 				160 * UILayer.SCALE, 291 * UILayer.SCALE);
 
-		settlementList.slotPort = new Rectangle((8) * UILayer.SCALE + 4, Gdx.graphics.getHeight() - (329 * UILayer.SCALE),
+		settlementList.slotPort = new Rectangle((0) * UILayer.SCALE + 0, Gdx.graphics.getHeight() - (329 * UILayer.SCALE),
 				160 * UILayer.SCALE, 291 * UILayer.SCALE);
 
 		elements.add(0, new UIIcon("close-button", (6 + 160 - 13 - 1) * UILayer.SCALE - 1,
@@ -91,18 +93,21 @@ public class BuildingMenu extends UIMenu {
 		});
 
 		elements.add(new UIText("text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - (6 + 5) * UILayer.SCALE + 1, "Building Menu", 8));
+		name = new UIText("object-name-text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - 200 * UILayer.SCALE, "", 8);
+		description = new UIText("object-description-text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - 210 * UILayer.SCALE, "", 6);
+		
+		elements.add(name);
+		elements.add(description);
 
 		settlementList.slots.add(new ObjectSlot(new Building(0, 0)));
 		settlementList.slots.add(new ObjectSlot(new FencePost(0, 0)));
 		settlementList.slots.add(new ObjectSlot(new Fence(0, 0)));
 		settlementList.slots.add(new ObjectSlot(new FenceGate(0, 0)));
-		
-		
-		housingList.slots.add(new UIBuyslotTile("slot-1", (8) * UILayer.SCALE + 4,
-				Gdx.graphics.getHeight() - (90 * UILayer.SCALE), 160 - 8, 52, new DirtPathTile()));
-		housingList.slots.add(new UIBuyslotTile("slot-2", (8) * UILayer.SCALE + 4,
-				Gdx.graphics.getHeight() - (140 * UILayer.SCALE), 160 - 8, 52, new TiledTile()));
 
+		for(int i = settlementList.slots.size(); i < 30; i++) {
+			settlementList.slots.add(new ObjectSlot());
+		}
+		
 		settlementList.maxScroll = (settlementList.slots.size()) * 52;
 
 		housingList.maxScroll = (housingList.slots.size()) * 52;
@@ -118,7 +123,39 @@ public class BuildingMenu extends UIMenu {
 		layer.elements.removeAll(housingList.slots);
 		layer.elements.remove(settlementList);
 		layer.elements.remove(housingList);
+	}
+	
+	@Override
+	public void render(SpriteBatch b) {
 		
+		if(Main.inst.renderer.ui.getHovering() != null) {
+
+			if(Main.inst.renderer.ui.getHovering() instanceof ObjectSlot) {
+				ObjectSlot s = (ObjectSlot) Main.inst.renderer.ui.getHovering();
+				if(s.iBuy != null) {
+					toRender = s.iBuy;
+				}
+			}
+		}
+		
+		if(toRender != null) {
+			name.setText(toRender.getMenuName());
+			description.setText(toRender.getMenuDescription());
+
+			float maxWidth = 154 * UILayer.SCALE;
+			
+			float width = 154 * UILayer.SCALE;
+			float height = 90 * UILayer.SCALE;
+			
+			width = (int) (((float) (height) / toRender.getMenuSprite().getHeight()) * toRender.getMenuSprite().getWidth());
+			
+			if(width > maxWidth) {
+				width = maxWidth;
+				height = (int) (((float) (width) / toRender.getMenuSprite().getWidth()) * toRender.getMenuSprite().getHeight());
+			}
+			
+			b.draw(toRender.getMenuSprite(), 6 * UILayer.SCALE + maxWidth / 2 - width / 2, Gdx.graphics.getHeight() - (328 * UILayer.SCALE), width, height);
+		}
 	}
 
 	@Override
@@ -158,45 +195,59 @@ class ObjectSlot extends UIElement {
 	
 	private int width, height;
 	
+	public ObjectSlot() {
+		super("slot-empty", 0, 0, 94, 94);
+		
+		this.object = null;
+	}
+	
 	public ObjectSlot(GameObject object) {
 		super("slot-" + object.getId(), 0, 0, 94, 94);
 		
 		this.object = object;
 		this.iBuy = (IBuy) object;
-		
-		if(iBuy.getMenuSprite().getWidth() > iBuy.getMenuSprite().getHeight()) {
-			
+
+		if (iBuy.getMenuSprite().getWidth() > iBuy.getMenuSprite().getHeight()) {
+
 			width = w - 6;
-			height = (int)(((float)(width) / iBuy.getMenuSprite().getWidth()) * iBuy.getMenuSprite().getHeight());
-			
-			
+			height = (int) (((float) (width) / iBuy.getMenuSprite().getWidth()) * iBuy.getMenuSprite().getHeight());
+
 		} else {
 			height = h - 6;
-			width = (int)(((float)(height) / iBuy.getMenuSprite().getHeight()) * iBuy.getMenuSprite().getWidth());
+			width = (int) (((float) (height) / iBuy.getMenuSprite().getHeight()) * iBuy.getMenuSprite().getWidth());
 		}
-		
-		
+
 		width = w - 6;
-		height = (int)(((float)(width) / 64f) * 48f);;
+		height = (int)(((float)(width) / 64f) * 48f);
 	}
 	
 	@Override
 	protected void onDeClick() {
-		MouseInput.object = true;
-		MouseInput.currentlyDrawingObject = object;
+		if(object != null) {
+			MouseInput.object = true;
+			MouseInput.currentlyDrawingObject = object;
+		}
 	}
 
 	@Override
 	public void render(SpriteBatch b) {
-		if(pressed) {	
-			b.draw(backgroundPressed, x, y, w, h);	
-		} else if(hovering){
-			b.draw(backgroundHovering, x, y, w, h);	
-		} else {
-			b.draw(background, x, y, w, h);	
-		}
+		if(object != null) {
+			if(pressed) {	
+				b.draw(backgroundPressed, x, y, w, h);	
+			} else if(hovering){
+				b.draw(backgroundHovering, x, y, w, h);	
+			} else {
+				b.draw(background, x, y, w, h);	
+			}
 		
-		b.draw(iBuy.getMenuSprite(), x, y + 6, width, height);
+			b.draw(iBuy.getMenuSprite(), x, y + 6, width, height);
+		} else {
+			if(hovering){
+				b.draw(backgroundHovering, x, y, w, h);	
+			} else {
+				b.draw(background, x, y, w, h);	
+			}	
+		}
 	}
 	
 	@Override

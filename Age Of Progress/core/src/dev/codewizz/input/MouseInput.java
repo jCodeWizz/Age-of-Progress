@@ -149,7 +149,7 @@ public class MouseInput implements InputProcessor {
 
 			
 			
-			if(button == 0) {
+			if(button == 0 && Main.inst.renderer.ui.menusClosed()) {
 				if (area != null) {
 					area.start(new Vector2(coords.x, coords.y));
 					return false;

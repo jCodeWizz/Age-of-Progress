@@ -221,6 +221,9 @@ public class QuadTree<T> {
     }
 
     private boolean intersects(double left, double bottom, double right, double top, Node<T> node) {
+    	
+    	if (node == null) return false;
+    	
         return !(node.getX() > right ||
                 (node.getX() + node.getW()) < left ||
                 node.getY() > bottom ||

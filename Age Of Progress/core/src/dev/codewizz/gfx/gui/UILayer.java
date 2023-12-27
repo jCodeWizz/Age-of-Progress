@@ -20,6 +20,7 @@ public abstract class UILayer implements InputProcessor {
 	public static boolean FADE = false;
 
 	private UIElement current;
+	private UIElement hovering;
 	public List<UIElement> elements = new CopyOnWriteArrayList<>();
 	private Texture fadeTex;
 	
@@ -44,8 +45,8 @@ public abstract class UILayer implements InputProcessor {
 		fadeMap.drawPixel(0, 0);
 		fadeTex = new Texture(fadeMap);
 		
-		scissors = new Rectangle((8) * UILayer.SCALE + 4, Gdx.graphics.getHeight() - (329 * UILayer.SCALE),
-				160 * UILayer.SCALE, 291 * UILayer.SCALE);
+		scissors = new Rectangle((3) * UILayer.SCALE + 4, Gdx.graphics.getHeight() - (194 * UILayer.SCALE) - 2,
+				160 * UILayer.SCALE, 157 * UILayer.SCALE);
 	}
 
 	public abstract void setup();
@@ -135,6 +136,19 @@ public abstract class UILayer implements InputProcessor {
 
 		return closed;
 	}
+	
+	public boolean menusClosed() {
+		for (UIElement e : elements) {
+			if (e instanceof UIMenu) {
+				UIMenu menu = (UIMenu) e;
+				if (menu.isEnabled() && !menu.id.equalsIgnoreCase("debugMenu") && !menu.id.equalsIgnoreCase("notification-menu") && !menu.id.equalsIgnoreCase("selectMenu")) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 
 	@Override
 	public boolean scrolled(float amountX, float amountY) {
@@ -157,6 +171,7 @@ public abstract class UILayer implements InputProcessor {
 			b.draw(fadeTex, 0, 0, WIDTH, HEIGHT);
 		}
 		
+		this.hovering = null;
 		for (int i = elements.size() - 1; i >= 0; i--) {
 			UIElement e = elements.get(i);
 			e.hovering = false;
@@ -175,7 +190,6 @@ public abstract class UILayer implements InputProcessor {
 			if(e instanceof UIImage && e.isEnabled() && !e.isBackground()) {
 				e.render(b);
 			}
-		
 		}
 		
 		for (int i = elements.size() - 1; i >= 0; i--) {
@@ -183,7 +197,7 @@ public abstract class UILayer implements InputProcessor {
 			
 			if(!(e instanceof UIImage) && !e.isBackground()) {
 				if (e.isEnabled()) { // CHECK IF UI COMPONENT SHOULD BE RENDERED AT ALL
-					if (e instanceof UIBuyslotTile || e instanceof UIBuyslotObject) { // CHECK IF UI COMPONENT IS A MOVEABLE SLOT
+					if (e instanceof UIBuyslotTile || e instanceof UIBuyslotObject || e.getID().startsWith("slot-")) { // CHECK IF UI COMPONENT IS A MOVEABLE SLOT
 						b.flush();
 						if (ScissorStack.pushScissors(scissors)) {
 							e.render(b);
@@ -193,9 +207,20 @@ public abstract class UILayer implements InputProcessor {
 					} else {
 						e.render(b);
 					}
+					
+					if(e.getBounds().contains(mx, my)) {
+						e.hovering = true;
+						if(this.hovering == null) {			
+							this.hovering = e;
+						}
+					}
 				}
 			}
 		}
+	}
+	
+	public UIElement getHovering() {
+		return this.hovering;
 	}
 
 	/*

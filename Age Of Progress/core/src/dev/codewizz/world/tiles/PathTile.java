@@ -1,8 +1,5 @@
 package dev.codewizz.world.tiles;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -15,12 +12,12 @@ import dev.codewizz.world.Tile;
 public abstract class PathTile extends Tile {
 
 	private boolean[] neighbours = new boolean[] { false, false, false, false };
-
-	private static BufferedImage t = Assets.getImage("t");
-	private static BufferedImage tTL = Assets.getImage("tTL");
-	private static BufferedImage tTR = Assets.getImage("tTR");
-	private static BufferedImage tBR = Assets.getImage("tBR");
-	private static BufferedImage tBL = Assets.getImage("tBL");
+	
+	private static Texture tp = Assets.procuderal.get("t");
+	private static Texture tTLp = Assets.procuderal.get("tTL");
+	private static Texture tTRp = Assets.procuderal.get("tTR");
+	private static Texture tBRp = Assets.procuderal.get("tBR");
+	private static Texture tBLp = Assets.procuderal.get("tBL");
 
 	protected String template;
 	protected String templateGround;
@@ -37,10 +34,8 @@ public abstract class PathTile extends Tile {
 	}
 	
 	private void redrawTexture() {
-
 		Pixmap r = new Pixmap( 64, 48, Format.RGBA8888 );
-		
-		BufferedImage b = new BufferedImage(t.getWidth(), t.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Pixmap bp = new Pixmap(tp.getWidth(), tp.getHeight(), Format.RGBA8888);
 		
 		Texture t1 = Assets.procuderal.get(templateGround.toString());
 		if (!t1.getTextureData().isPrepared()) {
@@ -54,26 +49,43 @@ public abstract class PathTile extends Tile {
 		    t2.getTextureData().prepare();
 		}
 		Pixmap tiled = t2.getTextureData().consumePixmap();
-		
-		Graphics g = b.createGraphics();
 
-		g.drawImage(t, 0, 0, null);
+		if(!tp.getTextureData().isPrepared()) {
+			tp.getTextureData().prepare();
+		}
+		bp.drawPixmap(tp.getTextureData().consumePixmap(), 0, 0);
 		
-		if (neighbours[0])
-			g.drawImage(tTL, 0, 0, null);
-		if (neighbours[1])
-			g.drawImage(tTR, 0, 0, null);
-		if (neighbours[2])
-			g.drawImage(tBR, 0, 0, null);
-		if (neighbours[3])
-			g.drawImage(tBL, 0, 0, null);
-		
-		for(int yy = 0; yy < b.getHeight(); yy++) {
-			for(int xx = 0; xx < b.getWidth(); xx++) {
-				int color = b.getRGB(xx, yy);
+		if (neighbours[0]) {
+			if(!tTLp.getTextureData().isPrepared()) {
+				tTLp.getTextureData().prepare();
+			}
+			bp.drawPixmap(tTLp.getTextureData().consumePixmap(), 0, 0);
+		}	
+		if (neighbours[1]) {
+			if(!tTRp.getTextureData().isPrepared()) {
+				tTRp.getTextureData().prepare();
+			}
+			bp.drawPixmap(tTRp.getTextureData().consumePixmap(), 0, 0);
+		}
+		if (neighbours[2]) {
+			if(!tBRp.getTextureData().isPrepared()) {
+				tBRp.getTextureData().prepare();
+			}
+			bp.drawPixmap(tBRp.getTextureData().consumePixmap(), 0, 0);
+		}
+		if (neighbours[3]) {
+			if(!tBLp.getTextureData().isPrepared()) {
+				tBLp.getTextureData().prepare();
+			}
+			bp.drawPixmap(tBLp.getTextureData().consumePixmap(), 0, 0);
+		}
+		for(int yy = 0; yy < bp.getHeight(); yy++) {
+			for(int xx = 0; xx < bp.getWidth(); xx++) {
+				int color = bp.getPixel(xx, yy);
 				int red = color >>> 24;
 				int green = (color & 0xFF0000) >>> 16;
 				int blue = (color & 0xFF00) >>> 8;
+
 				if(red == 255 && green == 255 && blue == 0) {
 					r.drawPixel(xx, yy, tiled.getPixel(xx, yy));
 				} else {
