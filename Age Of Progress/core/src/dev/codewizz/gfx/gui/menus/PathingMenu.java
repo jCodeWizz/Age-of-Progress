@@ -147,6 +147,7 @@ public class PathingMenu extends UIMenu {
 		layer.elements.removeAll(stonesList.slots);
 		layer.elements.remove(terrainList);
 		layer.elements.remove(stonesList);
+		toRender = null;
 	}
 
 	@Override
@@ -183,7 +184,6 @@ public class PathingMenu extends UIMenu {
 	public void render(SpriteBatch b) {
 		
 		if(Main.inst.renderer.ui.getHovering() != null) {
-
 			if(Main.inst.renderer.ui.getHovering() instanceof Slot) {
 				Slot s = (Slot) Main.inst.renderer.ui.getHovering();
 				if(s != null) {

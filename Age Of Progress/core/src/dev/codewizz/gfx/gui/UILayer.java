@@ -189,6 +189,13 @@ public abstract class UILayer implements InputProcessor {
 		
 			if(e instanceof UIImage && e.isEnabled() && !e.isBackground()) {
 				e.render(b);
+			} else {
+				if(e.getBounds().contains(mx, my) && e.getID().startsWith("slot-")) {
+					e.hovering = true;
+					if(this.hovering == null) {
+						this.hovering = e;
+					}
+				}
 			}
 		}
 		
@@ -206,13 +213,6 @@ public abstract class UILayer implements InputProcessor {
 						}
 					} else {
 						e.render(b);
-					}
-					
-					if(e.getBounds().contains(mx, my)) {
-						e.hovering = true;
-						if(this.hovering == null) {			
-							this.hovering = e;
-						}
 					}
 				}
 			}
