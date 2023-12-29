@@ -16,12 +16,9 @@ import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.gfx.gui.menus.SettingsGameMenu;
 import dev.codewizz.gfx.gui.menus.SettlementMenu;
 import dev.codewizz.gfx.gui.menus.StartInfoMenu;
-import dev.codewizz.input.AreaSelector;
-import dev.codewizz.input.MouseInput;
+import dev.codewizz.gfx.gui.menus.ToolMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.objects.IGatherable;
-import dev.codewizz.world.objects.tasks.GatherTask;
 
 public class GameLayer extends UILayer {
 
@@ -35,6 +32,7 @@ public class GameLayer extends UILayer {
 	private NotificationMenu notificationMenu;
 	private SettlementMenu settlementMenu;
 	private PeopleMenu peopleMenu;
+	private ToolMenu toolMenu;
 
 	public static GameObject selectedObject = null;
 	
@@ -112,19 +110,21 @@ public class GameLayer extends UILayer {
 				"icon-unavailable", "tool-icon") {
 			@Override
 			protected void onDeClick() {
-				MouseInput.area = new AreaSelector() {
-					@Override
-					public void handle(GameObject obj) {
-						if(obj instanceof IGatherable) {
-							if(((IGatherable) obj).ready()) {
-								obj.setSelected(true);
-								Main.inst.world.settlement.addTask(new GatherTask(obj), false);
-							}
-						}
+				if (!pauseMenu.isEnabled()) {
+					UIElement e = toolMenu;
+					if (e.isEnabled())
+						e.disable();
+					else {
+						closeMenus();
+						e.enable();
 					}
-				};
+				}
 			}
 		});
+		
+		toolMenu = new ToolMenu("tool-menu", (WIDTH / 2) - (-90 * SCALE) / 2 - 3 * SCALE, 3 * SCALE, 28 * SCALE, (12+24*3) * SCALE, this);
+		toolMenu.disable();
+		elements.add(toolMenu);
 
 		// PATH MENU
 		pathingMenu = new PathingMenu("pathingMenu", 0, 0, 128, 260, this);

@@ -147,14 +147,12 @@ public class MouseInput implements InputProcessor {
 			Collections.sort(Main.inst.world.getObjects());
 			Collections.reverse(Main.inst.world.getObjects());
 
-			
+			if (area != null) {
+				area.start(new Vector2(coords.x, coords.y));
+				return false;
+			}			
 			
 			if(button == 0 && Main.inst.renderer.ui.menusClosed()) {
-				if (area != null) {
-					area.start(new Vector2(coords.x, coords.y));
-					return false;
-				}
-				
 				if (GameLayer.selectedObject != null)
 					GameLayer.selectedObject.deselect();
 				

@@ -22,7 +22,7 @@ public abstract class UILayer implements InputProcessor {
 	private UIElement current;
 	private UIElement hovering;
 	public List<UIElement> elements = new CopyOnWriteArrayList<>();
-	private Texture fadeTex;
+	public static Texture fadeTex;
 	
 	private Rectangle scissors;
 	

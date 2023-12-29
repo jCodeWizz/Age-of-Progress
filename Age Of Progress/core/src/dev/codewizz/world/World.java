@@ -38,14 +38,14 @@ import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
 
 public class World {
-
+	
 	public static final int WORLD_SIZE_W = 128;
 	public static final int WORLD_SIZE_H = 128;
 	public static final int WORLD_SIZE_WP = WORLD_SIZE_W * 64;
 	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 64;
-
+	
 	public static int gameSpeed = 3;
-
+	
 	public QuadTree<Cell> tree;
 	public HashMap<String, Chunk> chunkTree = new HashMap<>();
 	public List<Chunk> chunks = new CopyOnWriteArrayList<>();
@@ -53,26 +53,26 @@ public class World {
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
 	
 	private List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
-
+	
 	public Settlement settlement;
 	public Nature nature;
-
+	
 	public CellGraph cellGraph;
-
+	
 	public WNoise noise = new WNoise();
 	public WNoise terrainNoise = new WNoise();
-
+	
 	public boolean showInfoSartMenu = true;
 	private long start;
-
+	
 	public World() {
-
+		
 		start = System.currentTimeMillis();
 		
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
-
+		
 		nature = new Nature(this);
 
 		Thread initThread = new Thread("create-world-thread") {
