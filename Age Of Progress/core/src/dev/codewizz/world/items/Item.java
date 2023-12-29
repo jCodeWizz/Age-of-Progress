@@ -88,4 +88,9 @@ public class Item extends Renderable {
 	public void setHauled(boolean hauled) {
 		this.hauled = hauled;
 	}
+	
+	@Override
+	public String toString() {
+		return "X: " + x + " Y: " + y + " " + type.toString() + ": " + size;
+	}
 }

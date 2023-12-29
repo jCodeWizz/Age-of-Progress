@@ -62,7 +62,7 @@ public class GrowCropTask extends Task{
 	@Override
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
-		hermit.getAgent().setGoal(crop.cell, hermit.getX(), hermit.getY());
+		hermit.getAgent().setGoal(crop.cell);
 		if(hermit.getAgent().path.isEmpty())
 			reach();
 		

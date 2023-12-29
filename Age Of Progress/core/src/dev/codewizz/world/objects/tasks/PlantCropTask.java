@@ -49,7 +49,7 @@ public class PlantCropTask extends Task{
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
 		
-		hermit.getAgent().setGoal(cell, hermit.getX(), hermit.getY());
+		hermit.getAgent().setGoal(cell);
 		if(hermit.getAgent().path.isEmpty())
 			reach();
 		

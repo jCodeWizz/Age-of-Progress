@@ -29,6 +29,10 @@ public class Inventory {
 		
 		return false;
 	}
+	
+	public boolean containsItem(Item i) {
+		return containsItem(i, i.getSize());
+	}
 
 	public boolean containsItem(Item i, int count) {
 
@@ -65,6 +69,14 @@ public class Inventory {
 		}
 
 		return false;
+	}
+	
+	public boolean roomFor(Item i) {
+		return (getSizeAvailable() > 0 || containsItem(i, 1));
+	}
+	
+	public boolean isEmpty() {
+		return this.items.isEmpty();
 	}
 	
 	public int getSizeAvailable() {

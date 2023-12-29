@@ -86,10 +86,10 @@ public class Agent {
 
 	}
 
-	public boolean setGoal(Cell goal, float x, float y) {
+	public boolean setGoal(Cell goal) {
 		this.goal = goal;
 
-		previousCell = Main.inst.world.getCell(x, y);
+		previousCell = Main.inst.world.getCell(object.getX(), object.getY());
 		GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
 		for (int i = 1; i < graphPath.getCount(); i++) {
 			
@@ -115,7 +115,7 @@ public class Agent {
 		int s = graph.getConnections(goal).size;
 		
 		if (!path.isEmpty() && s > 0) {
-			setSpeedToNextCell(x, y);
+			setSpeedToNextCell(object.getX(), object.getY());
 			moving = true;
 			
 			return true;

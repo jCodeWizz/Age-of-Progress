@@ -54,7 +54,7 @@ public class HaulTask extends Task {
 		
 		Cell cell = Main.inst.world.getCell(items.get(0).getX(), items.get(0).getY());
 		
-		object.getAgent().setGoal(cell, object.getX(), object.getY());
+		object.getAgent().setGoal(cell);
 		if(object.getAgent().path.isEmpty())
 			reach();
 		started = true;
@@ -78,14 +78,14 @@ public class HaulTask extends Task {
 			if(items.isEmpty()) {
 				Cell cell = hermit.getSettlement().getCell();
 				
-				hermit.getAgent().setGoal(cell, hermit.getX(), hermit.getY());
+				hermit.getAgent().setGoal(cell);
 				if(hermit.getAgent().path.isEmpty())
 					reach();
 				
 			} else {
 				Cell cell = Main.inst.world.getCell(items.get(0).getX(), items.get(0).getY());
 				
-				hermit.getAgent().setGoal(cell, hermit.getX(), hermit.getY());
+				hermit.getAgent().setGoal(cell);
 				if(hermit.getAgent().path.isEmpty())
 					reach();
 			}

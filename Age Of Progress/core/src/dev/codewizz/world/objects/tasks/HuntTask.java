@@ -41,7 +41,7 @@ public class HuntTask extends Task {
 		if(inRange()) {
 			hunter.getAgent().stop();
 		} else {
-			hunter.getAgent().setGoal(Main.inst.world.getCell(huntable.getX(), huntable.getY()), hunter.getX(), hunter.getY());
+			hunter.getAgent().setGoal(Main.inst.world.getCell(huntable.getX(), huntable.getY()));
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class HuntTask extends Task {
 			}
 		} else {
 			if(!hunter.getAgent().moving) {
-				hunter.getAgent().setGoal(Main.inst.world.getCell(huntable.getX(), huntable.getY()), hunter.getX(), hunter.getY());
+				hunter.getAgent().setGoal(Main.inst.world.getCell(huntable.getX(), huntable.getY()));
 			}
 		}
 	}

@@ -53,7 +53,7 @@ public class CaptureAnimalTask extends Task {
 			stop();
 		}
 		
-		hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()), hermit.getX(), hermit.getY());
+		hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
 		if(hermit.getAgent().path.isEmpty())
 			reach();
 		
@@ -66,19 +66,19 @@ public class CaptureAnimalTask extends Task {
 			if(Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
 				reachedAnimal = true;
 				
-				hermit.getAgent().setGoal(area.getEntrances().get(0), hermit.getX(), hermit.getY());
+				hermit.getAgent().setGoal(area.getEntrances().get(0));
 				if(hermit.getAgent().path.isEmpty()) {
 					reach();
 				}
 				
 				animal.getAgent().stop();
-				animal.getAgent().setGoal(area.getEntrances().get(0), animal.getX(), animal.getY());
+				animal.getAgent().setGoal(area.getEntrances().get(0));
 				if(animal.getAgent().path.isEmpty()) {
 					reach();
 				}
 			} else {
 				
-				hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()), hermit.getX(), hermit.getY());
+				hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
 				if(hermit.getAgent().path.isEmpty()) {
 					Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) + "/"+ REACH);
 					reachedAnimal = true;

@@ -33,7 +33,7 @@ public class SleepTask extends Task {
 		
 		if(b != null) {
 			Cell cell = Main.inst.world.getCell(b.getX(), b.getY() + 32);
-			object.getAgent().setGoal(cell, object.getX(), object.getY());
+			object.getAgent().setGoal(cell);
 		} else {
 			//TODO: maybe add different ways/spaces to sleep.
 			onGround = true;

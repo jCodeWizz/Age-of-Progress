@@ -41,7 +41,7 @@ public class CraftTask extends Task {
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
 		
-		hermit.getAgent().setGoal(hermit.getSettlement().getCell(), hermit.getX(), hermit.getY());
+		hermit.getAgent().setGoal(hermit.getSettlement().getCell());
 		if(hermit.getAgent().path.isEmpty())
 			reach();
 		
@@ -78,7 +78,7 @@ public class CraftTask extends Task {
 					GameObject object = (GameObject) r;
 					if(object.getId().equals("aop:stump")) {
 						
-						hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25), hermit.getX(), hermit.getY());
+						hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25));
 						if(hermit.getAgent().path.isEmpty())
 							reach();
 					}

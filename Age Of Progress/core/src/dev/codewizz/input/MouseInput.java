@@ -19,6 +19,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.objects.ConstructionObject;
 import dev.codewizz.world.objects.IBuy;
 
 public class MouseInput implements InputProcessor {
@@ -90,16 +91,19 @@ public class MouseInput implements InputProcessor {
 								
 								GameObject toPlace = Registers.createGameObject(object.getId(), hoveringOverCell.x, hoveringOverCell.y);
 								
-								toPlace.setFlip(rotate);
-								hoveringOverCell.setObject(toPlace);
-								toPlace.setCell(hoveringOverCell);
-								((IBuy) toPlace).onPlace(hoveringOverCell);
-
-								dragging[0] = object.conintues() && object.available();
-								lastClickedUIElement.setAvailable(object.available());
-
-								if (!object.available()) {
-									currentlyDrawingObject = null;
+								if(toPlace.getId().equals("aop:flag")) {
+									toPlace.setFlip(rotate);
+									hoveringOverCell.setObject(toPlace);
+									((IBuy) toPlace).onPlace(hoveringOverCell);
+									dragging[0] = object.conintues() && object.available();
+									if (!object.available()) {
+										currentlyDrawingObject = null;
+									}
+								} else {
+									toPlace.setFlip(rotate);
+									toPlace.setCell(hoveringOverCell);
+									ConstructionObject b = new ConstructionObject(toPlace.getX(), toPlace.getY(), toPlace);
+									hoveringOverCell.setObject(b);
 								}
 							}
 						}

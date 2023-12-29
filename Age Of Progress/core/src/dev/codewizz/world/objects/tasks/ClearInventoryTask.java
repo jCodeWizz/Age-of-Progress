@@ -29,7 +29,7 @@ public class ClearInventoryTask extends Task {
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
 		
-		object.getAgent().setGoal(hermit.getSettlement().getCell(), object.getX(), object.getY());
+		object.getAgent().setGoal(hermit.getSettlement().getCell());
 		if(object.getAgent().path.isEmpty())
 			reach();
 		started = true;

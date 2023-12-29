@@ -48,7 +48,7 @@ public class GatherTask extends Task {
 	@Override
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
-		this.hermit.getAgent().setGoal(cell, this.hermit.getX(), this.hermit.getY());
+		this.hermit.getAgent().setGoal(cell);
 		if(this.hermit.getAgent().path.isEmpty())
 			stop();
 		started = true;
