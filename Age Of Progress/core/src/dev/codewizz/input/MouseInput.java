@@ -18,6 +18,7 @@ import dev.codewizz.modding.Registers;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
+import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.IBuy;
 
 public class MouseInput implements InputProcessor {
@@ -56,10 +57,19 @@ public class MouseInput implements InputProcessor {
 			if(hoveringOverCell != null) {
 				clear = true;
 
-				Tile tile = hoveringOverCell.tile;
+				if(object && Main.inst.world.settlement != null && currentlyDrawingObject != null) {
 
-				if (tile.getId().equals(currentlyDrawingTileId) || tile.getId().equals("aop:empty-tile")) {
-					clear = false;
+					for(Item c : ((IBuy) currentlyDrawingObject).costs()) {
+						if(!Main.inst.world.settlement.inventory.containsItem(c, c.getSize())) {
+							clear = false;
+						}
+					}
+				} else {
+					Tile tile = hoveringOverCell.tile;
+
+					if (tile.getId().equals(currentlyDrawingTileId) || tile.getId().equals("aop:empty-tile")) {
+						clear = false;
+					}
 				}
 			}
 
@@ -75,22 +85,22 @@ public class MouseInput implements InputProcessor {
 
 					if (object) {
 						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null) {
-							
-							
-							IBuy object = (IBuy) currentlyDrawingObject;
-							
-							GameObject toPlace = Registers.createGameObject(object.getId(), hoveringOverCell.x, hoveringOverCell.y);
-							
-							toPlace.setFlip(rotate);
-							hoveringOverCell.setObject(toPlace);
-							toPlace.setCell(hoveringOverCell);
-							((IBuy) toPlace).onPlace(hoveringOverCell);
+							if(clear) {
+								IBuy object = (IBuy) currentlyDrawingObject;
+								
+								GameObject toPlace = Registers.createGameObject(object.getId(), hoveringOverCell.x, hoveringOverCell.y);
+								
+								toPlace.setFlip(rotate);
+								hoveringOverCell.setObject(toPlace);
+								toPlace.setCell(hoveringOverCell);
+								((IBuy) toPlace).onPlace(hoveringOverCell);
 
-							dragging[0] = object.conintues() && object.available();
-							lastClickedUIElement.setAvailable(object.available());
+								dragging[0] = object.conintues() && object.available();
+								lastClickedUIElement.setAvailable(object.available());
 
-							if (!object.available()) {
-								currentlyDrawingObject = null;
+								if (!object.available()) {
+									currentlyDrawingObject = null;
+								}
 							}
 						}
 					} else {

@@ -3,6 +3,7 @@ package dev.codewizz.gfx.gui;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -92,6 +93,10 @@ public class UIText extends UIElement {
 		}
 		
 		
+	}
+	
+	public void setColor(Color c) {
+		f.setColor(c);
 	}
 	
 	public void setText(String text) {

@@ -1,6 +1,7 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,10 +18,12 @@ import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.Fence;
 import dev.codewizz.world.objects.FenceGate;
 import dev.codewizz.world.objects.FencePost;
 import dev.codewizz.world.objects.IBuy;
+import dev.codewizz.world.objects.Stump;
 import dev.codewizz.world.objects.buildings.Building;
 
 public class BuildingMenu extends UIMenu {
@@ -30,6 +33,7 @@ public class BuildingMenu extends UIMenu {
 
 	private UIText name;
 	private UIText description;
+	private UIText cost;
 	
 	private int rowSize = 5;
 	private IBuy toRender;
@@ -95,6 +99,7 @@ public class BuildingMenu extends UIMenu {
 		elements.add(new UIText("text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - (6 + 5) * UILayer.SCALE + 1, "Building Menu", 8));
 		name = new UIText("object-name-text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - 200 * UILayer.SCALE, "", 8);
 		description = new UIText("object-description-text", (6 + 6) * UILayer.SCALE, Gdx.graphics.getHeight() - 210 * UILayer.SCALE, "", 6);
+		cost = new UIText("object-cost-text", 0, 0, "x1", 6);
 		
 		elements.add(name);
 		elements.add(description);
@@ -103,6 +108,7 @@ public class BuildingMenu extends UIMenu {
 		settlementList.slots.add(new ObjectSlot(new FencePost(0, 0)));
 		settlementList.slots.add(new ObjectSlot(new Fence(0, 0)));
 		settlementList.slots.add(new ObjectSlot(new FenceGate(0, 0)));
+		settlementList.slots.add(new ObjectSlot(new Stump(0, 0)));
 
 		for(int i = settlementList.slots.size(); i < 30; i++) {
 			settlementList.slots.add(new ObjectSlot());
@@ -113,7 +119,7 @@ public class BuildingMenu extends UIMenu {
 		housingList.maxScroll = (housingList.slots.size()) * 52;
 
 		elements.addAll(settlementList.slots);
-
+		
 		elements.add(new UIImage("background", 6 * UILayer.SCALE, Gdx.graphics.getHeight() - (331 * UILayer.SCALE), 160,
 				325, "path-menu"));
 	}
@@ -142,6 +148,8 @@ public class BuildingMenu extends UIMenu {
 			name.setText(toRender.getMenuName());
 			description.setText(toRender.getMenuDescription());
 
+			
+			
 			float maxWidth = 154 * UILayer.SCALE;
 			
 			float width = 154 * UILayer.SCALE;
@@ -155,6 +163,24 @@ public class BuildingMenu extends UIMenu {
 			}
 			
 			b.draw(toRender.getMenuSprite(), 6 * UILayer.SCALE + maxWidth / 2 - width / 2, Gdx.graphics.getHeight() - (328 * UILayer.SCALE), width, height);
+		
+			for(int i = 0; i < toRender.costs().size(); i++) {
+				Item item = toRender.costs().get(i);
+
+				if(Main.inst.world.settlement.inventory.containsItem(item, item.getSize())) {
+					cost.setColor(Color.GREEN);
+				} else {
+					cost.setColor(Color.RED);
+				}
+				
+				
+				
+				b.draw(item.getType().getSprite(), x + (152) * UILayer.SCALE - 48, Gdx.graphics.getHeight() - (215 + i * 2) * UILayer.SCALE - 48 * i, 48, 48);
+				cost.setText("x" + item.getSize());
+				cost.setX(x + (154) * UILayer.SCALE);
+				cost.setY(Gdx.graphics.getHeight() - (203 + i * 2) * UILayer.SCALE - 48 * i);
+				cost.render(b);
+			}
 		}
 	}
 

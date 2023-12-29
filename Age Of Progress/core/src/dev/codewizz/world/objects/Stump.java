@@ -13,6 +13,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
 
 public class Stump extends GameObject implements Serializable, IBuy {
 
@@ -29,6 +30,10 @@ public class Stump extends GameObject implements Serializable, IBuy {
 
 		this.id = "aop:stump";
 		this.name = "Stump";
+		
+		costs.add(new Item(0, 0, ItemType.Wood, 5));
+		costs.add(new Item(0, 0, ItemType.Carrot, 15));
+		costs.add(new Item(0, 0, ItemType.Mushrooms, 1));
 	}
 
 	@Override
