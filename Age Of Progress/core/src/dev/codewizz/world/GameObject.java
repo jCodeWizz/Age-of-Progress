@@ -19,7 +19,7 @@ import dev.codewizz.world.objects.IBuy;
 public abstract class GameObject extends Renderable implements Serializable {
 
 	
-	protected String id;
+	protected String id = "unid-object";
 	
 	protected float x, y, sortHeight;
 	protected int w, h;

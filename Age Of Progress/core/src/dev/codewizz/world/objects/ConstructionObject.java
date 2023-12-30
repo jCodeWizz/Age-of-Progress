@@ -17,6 +17,8 @@ public class ConstructionObject extends GameObject {
 	
 	public ConstructionObject(float x, float y, GameObject toPlace) {
 		super(x, y);
+		
+		this.id = "aop:construction";
 
 		this.toPlace = toPlace;
 		
@@ -26,8 +28,6 @@ public class ConstructionObject extends GameObject {
 			costs.addItem(i);
 			Main.inst.world.settlement.addTask(new BuildObjectTask(this, i), true);
 		}
-		
-		
 	}
 	
 	private void placeObject() {

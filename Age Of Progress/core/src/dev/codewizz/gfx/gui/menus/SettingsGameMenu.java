@@ -55,7 +55,7 @@ public class SettingsGameMenu extends UIMenu {
 			states = new boolean[5];
 		}
 		
-		states[0] = layer.getElement("build-icon").isAvailable();
+		states[0] = layer.getElement("construction-icon").isAvailable();
 		states[1] = layer.getElement("tool-icon").isAvailable();
 		states[2] = layer.getElement("people-icon").isAvailable();
 		states[3] = layer.getElement("manage-icon").isAvailable();
@@ -71,7 +71,7 @@ public class SettingsGameMenu extends UIMenu {
 			setStates();
 		}
 		
-		layer.getElement("build-icon").setAvailable(states[0]);
+		layer.getElement("construction-icon").setAvailable(states[0]);
 		layer.getElement("tool-icon").setAvailable(states[1]);
 		layer.getElement("people-icon").setAvailable(states[2]);
 		layer.getElement("manage-icon").setAvailable(states[3]);

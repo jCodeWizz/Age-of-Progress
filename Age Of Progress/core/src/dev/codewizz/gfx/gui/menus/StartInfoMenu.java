@@ -56,7 +56,7 @@ private boolean[] states = null;
 		
 		setStates();
 		
-		layer.getElement("build-icon").setAvailable(false);
+		layer.getElement("construction-icon").setAvailable(false);
 		layer.getElement("tool-icon").setAvailable(false);
 		layer.getElement("people-icon").setAvailable(false);
 		layer.getElement("manage-icon").setAvailable(false);
@@ -85,7 +85,7 @@ private boolean[] states = null;
 			setStates();
 		}
 		
-		layer.getElement("build-icon").setAvailable(states[0]);
+		layer.getElement("construction-icon").setAvailable(states[0]);
 		layer.getElement("tool-icon").setAvailable(states[1]);
 		layer.getElement("people-icon").setAvailable(states[2]);
 		layer.getElement("manage-icon").setAvailable(states[3]);

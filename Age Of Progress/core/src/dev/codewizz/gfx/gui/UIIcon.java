@@ -26,6 +26,15 @@ public class UIIcon extends UIElement {
 		this.buttonUnavailable = Assets.getSprite("icon-unavailable");
 		this.icon = Assets.getSprite(iconName);
 	}
+	
+	public UIIcon(String id, String iconName) {
+		super(id, 0, 0, 22, 24);
+		
+		this.button = Assets.getSprite("icon");
+		this.buttonPressed = Assets.getSprite("icon-pressed");
+		this.buttonUnavailable = Assets.getSprite("icon-unavailable");
+		this.icon = Assets.getSprite(iconName);
+	}
 
 	@Override
 	public void render(SpriteBatch b) {

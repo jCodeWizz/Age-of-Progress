@@ -85,7 +85,7 @@ public class Flag extends GameObject implements IBuy, Serializable {
 		
 		Main.inst.renderer.ui.getElement("manage-icon").setAvailable(true);
 		Main.inst.renderer.ui.getElement("people-icon").setAvailable(true);
-		Main.inst.renderer.ui.getElement("build-icon").setAvailable(true);
+		Main.inst.renderer.ui.getElement("construction-icon").setAvailable(true);
 		Main.inst.renderer.ui.getElement("tool-icon").setAvailable(true);
 		Main.inst.renderer.ui.getElement("path-icon").setAvailable(true);
 		
