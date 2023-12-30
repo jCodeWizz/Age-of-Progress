@@ -32,13 +32,13 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(!linkMap.containsKey(fromCell)) {
 			linkMap.put(fromCell, new Array<Connection<Cell>>());
 		}
-		if(!linkMap.get(fromCell).contains(link, false)) {
+		if(!linkMap.get(fromCell).equals(null)) {
 			linkMap.get(fromCell).add(link);
 		}
 		if(!links.containsKey(fromCell)) {
 			links.put(fromCell, new Array<Link>());
 		}
-		if(!links.get(fromCell).contains(link, false)) {
+		if(!links.get(fromCell).equals(null)) {
 			links.get(fromCell).add(link);
 		}
 	}

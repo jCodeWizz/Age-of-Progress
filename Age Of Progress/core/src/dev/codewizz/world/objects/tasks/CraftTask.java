@@ -81,6 +81,8 @@ public class CraftTask extends Task {
 						hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25));
 						if(hermit.getAgent().path.isEmpty())
 							reach();
+						
+						break;
 					}
 				}
 			}
