@@ -4,11 +4,13 @@ import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.input.AreaSelector;
 import dev.codewizz.input.MouseInput;
+import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.objects.Entity;
 import dev.codewizz.world.objects.IGatherable;
 import dev.codewizz.world.objects.tasks.GatherTask;
+import dev.codewizz.world.tiles.EmptyTile;
 
 public class ToolMenu extends UIIconMenu {
 	
@@ -42,12 +44,10 @@ public class ToolMenu extends UIIconMenu {
 		UIIcon removeIcon = new UIIcon("remove-icon", x + 3 * UILayer.SCALE, y + currentHeight - 54 * UILayer.SCALE, 22, 24, "close-icon") {
 			@Override
 			protected void onDeClick() {
-				MouseInput.area = new AreaSelector() {
+				MouseInput.tileArea = new TileSelector() {
 					@Override
-					public void handle(GameObject obj) {
-						if(!(obj instanceof Entity)) {
-							obj.destroy();
-						}
+					public void handle(Cell cell) {
+						cell.setTile(new EmptyTile());
 					}
 				};
 			}

@@ -32,6 +32,7 @@ public class MouseInput implements InputProcessor {
 	public static String currentlyDrawingTileId = "aop:base-tile";
 	public static GameObject currentlyDrawingObject = null;
 	public static AreaSelector area = null;
+	public static TileSelector tileArea = null;
 	public static boolean clear = false;
 	public static UIElement lastClickedUIElement;
 	public static PointLight light;
@@ -164,7 +165,11 @@ public class MouseInput implements InputProcessor {
 			if (area != null) {
 				area.start(new Vector2(coords.x, coords.y));
 				return false;
-			}			
+			}	
+			if (tileArea != null) {
+				tileArea.start(hoveringOverCell);
+				return false;
+			}	
 			
 			if(button == 0 && Main.inst.renderer.ui.menusClosed()) {
 				if (GameLayer.selectedObject != null)
@@ -194,6 +199,11 @@ public class MouseInput implements InputProcessor {
 		if (area != null) {
 			area.end(new Vector2(coords.x, coords.y));
 			area = null;
+		}
+		
+		if (tileArea != null) {
+			tileArea.end(hoveringOverCell);
+			tileArea = null;
 		}
 
 		return false;

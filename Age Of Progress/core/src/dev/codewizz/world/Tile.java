@@ -133,4 +133,8 @@ public abstract class Tile {
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}
+	
+	public Cell getCell() {
+		return cell;
+	}
 }

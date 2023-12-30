@@ -355,4 +355,49 @@ public class Cell {
 	public GameObject getObject() {
 		return object;
 	}
+	
+	public static Vector2 getCoordsFromIndex(int worldIndexX, int worldIndexY) {
+		
+		int chunkX = worldIndexX / 8;
+		int chunkY = worldIndexY / 8;
+		
+		int indexX = Math.abs(worldIndexX % 8);
+		int indexY = Math.abs(worldIndexY % 8);
+
+		float x = chunkX * Chunk.SIZE * 32 - chunkY * Chunk.SIZE * 32 + indexX * 32 - indexY * 32;
+		float y = chunkX * Chunk.SIZE * -16 - chunkY * Chunk.SIZE * 16 + indexX * -16 - indexY * 16;
+		
+		return new Vector2(x, y);
+	}
+	
+	public int getWorldIndexX() {
+		int indexX = (int)chunk.getIndex().x * Chunk.SIZE;
+		
+		if(chunk.getIndex().x < 0) {
+			indexX -= this.indexX;
+		} else {
+			indexX += this.indexX;
+		}
+		
+		return indexX;
+	}
+	
+	public int getWorldIndexY() {
+		int indexY = (int)chunk.getIndex().y * Chunk.SIZE;
+		
+		if(chunk.getIndex().y < 0) {
+			indexY -= this.indexY;
+		} else {
+			indexY += this.indexY;
+		}
+		
+		return indexY;
+	}
+	
+	@Override
+	public String toString() {
+		return "X: " + x + " Y: " + y;
+	}
+	
+	
 }

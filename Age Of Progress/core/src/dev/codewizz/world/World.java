@@ -372,6 +372,10 @@ public class World {
 		List<Cell> all = tree.getValues();
 		return all.get(Utils.getRandom(0, all.size()));
 	}
+	
+	public Cell getCell(Vector2 coords) {
+		return getCell(coords.x, coords.y);
+	}
 
 	public Cell getCell(float x, float y) {
 		x -= 32f;

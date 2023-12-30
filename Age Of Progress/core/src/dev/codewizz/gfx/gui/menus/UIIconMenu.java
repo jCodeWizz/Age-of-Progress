@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import dev.codewizz.gfx.gui.UIElement;
 import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
@@ -22,6 +23,8 @@ public abstract class UIIconMenu extends UIMenu {
 	private UIImage fade;
 	private UIImage fade1;
 	private UIImage fade2;
+	
+	private boolean closing = false;
 	
 	public UIIconMenu(String id, int x, int y, UILayer layer, UIIcon parent, UIIcon... icons) {
 		super(id, x, y, 0, 0, layer);
@@ -53,26 +56,51 @@ public abstract class UIIconMenu extends UIMenu {
 		parent.setPressed(true);
 		currentHeight = 0;
 		update();
+		
+		closing = false;
 	}
 
 	@Override
 	public void onClose() {
+		
+		closing = true;
+		
+		for(UIElement e : elements) {
+			layer.elements.add(e);
+		}
+		
+		this.enabled = true;
 		parent.setPressed(false);
-		currentHeight = 0;
 		update();
 	}
 	
 	private void update() {
-		fade.setH(currentHeight);
-		fade1.setH(currentHeight);
-		fade2.setH(currentHeight);
 		
-		for(int i = 0; i < icons.size(); i++) {
-			float newY = y + currentHeight - 27 * (i+1) * UILayer.SCALE;
-			if(newY > parent.getY()) {
-				icons.get(i).setY(y + currentHeight - 27 * (i+1) * UILayer.SCALE);
-			} else {
-				icons.get(i).setY(parent.getY());
+		if(closing) {
+			fade.setH(currentHeight);
+			fade1.setH(currentHeight);
+			fade2.setH(currentHeight);
+			
+			for(int i = 0; i < icons.size(); i++) {
+				float newY = y + currentHeight - 27 * (i+1) * UILayer.SCALE;
+				if(newY > parent.getY()) {
+					icons.get(i).setY(y + currentHeight - 27 * (i+1) * UILayer.SCALE);
+				} else {
+					icons.get(i).setY(parent.getY());
+				}
+			}
+		} else {
+			fade.setH(currentHeight);
+			fade1.setH(currentHeight);
+			fade2.setH(currentHeight);
+			
+			for(int i = 0; i < icons.size(); i++) {
+				float newY = y + currentHeight - 27 * (i+1) * UILayer.SCALE;
+				if(newY > parent.getY()) {
+					icons.get(i).setY(y + currentHeight - 27 * (i+1) * UILayer.SCALE);
+				} else {
+					icons.get(i).setY(parent.getY());
+				}
 			}
 		}
 	}
@@ -81,14 +109,33 @@ public abstract class UIIconMenu extends UIMenu {
 	public void render(SpriteBatch b) {
 		parent.setPressed(true);
 		
-		if(currentHeight < h) {
-			currentHeight += (int)(Gdx.graphics.getDeltaTime() * 2000f);
-			update();
-		}
-		
-		if(currentHeight > h) {
-			currentHeight = h;
-			update();
+		if(closing) {
+			if(currentHeight > 0) {
+				currentHeight -= (int)(Gdx.graphics.getDeltaTime() * 4000f);
+				update();
+			}
+			
+			if(currentHeight <= 0) {
+				currentHeight = 0;
+				update();
+				
+				for(UIElement e : elements) {
+					layer.elements.remove(e);
+				}
+				
+				this.enabled = false;
+				parent.setPressed(false);
+			}
+		} else {
+			if(currentHeight < h) {
+				currentHeight += (int)(Gdx.graphics.getDeltaTime() * 2000f);
+				update();
+			}
+			
+			if(currentHeight > h) {
+				currentHeight = h;
+				update();
+			}
 		}
 	}
 	

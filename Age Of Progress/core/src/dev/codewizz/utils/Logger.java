@@ -52,23 +52,23 @@ public class Logger {
 		return "[" + time + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[3].getLineNumber() + "] ";
 	}
 	
-	public static void error(String message) {
+	public static void error(Object message) {
 		String prefix = prefix();
-		String total = prefix += "[ERROR]: " + message;
+		String total = prefix += "[ERROR]: " + message.toString();
 		System.err.println(total);
 		write(total);
 	}
 	
-	public static void log(String message) {
+	public static void log(Object message) {
 		String prefix = prefix();
-		String total = prefix += "[INFO]: " + message;
+		String total = prefix += "[INFO]: " + message.toString();
 		System.out.println(total);
 		write(total);
 	}
 	
-	public static void warn(String message) {
+	public static void warn(Object message) {
 		String prefix = prefix();
-		String total = prefix += "[WARN]: " + message;
+		String total = prefix += "[WARN]: " + message.toString();
 		System.err.println(total);
 		write(total);
 	}
