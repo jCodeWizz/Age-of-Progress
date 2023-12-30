@@ -31,9 +31,7 @@ public class Stump extends GameObject implements Serializable, IBuy {
 		this.id = "aop:stump";
 		this.name = "Stump";
 		
-		costs.add(new Item(0, 0, ItemType.Stone, 5));
-		costs.add(new Item(0, 0, ItemType.Wood, 15));
-		costs.add(new Item(0, 0, ItemType.Mushrooms, 1));
+		costs.add(new Item(0, 0, ItemType.Wood, 3));
 	}
 
 	@Override

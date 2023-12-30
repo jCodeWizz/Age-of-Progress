@@ -6,6 +6,7 @@ import dev.codewizz.input.AreaSelector;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.objects.Entity;
 import dev.codewizz.world.objects.IGatherable;
 import dev.codewizz.world.objects.tasks.GatherTask;
 
@@ -44,7 +45,9 @@ public class ToolMenu extends UIIconMenu {
 				MouseInput.area = new AreaSelector() {
 					@Override
 					public void handle(GameObject obj) {
-						obj.destroy();
+						if(!(obj instanceof Entity)) {
+							obj.destroy();
+						}
 					}
 				};
 			}

@@ -14,6 +14,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.FarmArea;
 
@@ -32,6 +33,9 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 
 		this.id = "aop:fence-post";
 		this.name = "Fence Post";
+		
+		this.costs.add(new Item(0, 0, ItemType.Wood, 4));
+		this.costs.add(new Item(0, 0, ItemType.Planks, 2));
 	}
 
 	@Override

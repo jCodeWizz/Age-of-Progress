@@ -61,11 +61,6 @@ public abstract class Entity extends GameObject {
 
 	}
 	
-	@Override
-	public void onDestroy() {
-		cell.setObject(null);
-	}
-
 	public float getHealth() {
 		return health;
 	}

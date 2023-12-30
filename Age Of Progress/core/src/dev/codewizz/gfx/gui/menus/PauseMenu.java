@@ -64,7 +64,7 @@ public class PauseMenu extends UIMenu{
 		
 		setStates();
 		
-		layer.getElement("build-icon").setAvailable(false);
+		layer.getElement("construction-icon").setAvailable(false);
 		layer.getElement("tool-icon").setAvailable(false);
 		layer.getElement("people-icon").setAvailable(false);
 		layer.getElement("manage-icon").setAvailable(false);
