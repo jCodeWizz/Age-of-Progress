@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
+import dev.codewizz.world.Chunk;
+import dev.codewizz.world.tiles.FarmTile;
 
 public class TileSelector {
 	
@@ -18,32 +20,34 @@ public class TileSelector {
 		Vector2 startIndex = new Vector2(start.getWorldIndexX(), start.getWorldIndexY());
 		Vector2 endIndex = new Vector2(end.getWorldIndexX(), end.getWorldIndexY());
 		
-		if(startIndex.x > endIndex.x) {
-			
-			
-			Logger.log("A");
-			
-			float a = startIndex.x;
-			startIndex.x = endIndex.x;
-			endIndex.x = a;
-		}
-		
-		if(startIndex.y > endIndex.y) {
-			
-			Logger.log("B");
-			
-			float a = startIndex.y;
-			startIndex.y = endIndex.y;
-			endIndex.y = a;
-		}
+		Logger.log("Start: {" + start.indexX + " ; " + start.indexY);
+		Logger.log("End: {" + end.indexX + " ; " + end.indexY);
+
 		
 		for(int i = (int)startIndex.x; i < (int)endIndex.x; i++) {
 			for(int j = (int)startIndex.y; j < (int)endIndex.y; j++) {
-				Vector2 coords = Cell.getCoordsFromIndex(i, j);
-				Cell c = Main.inst.world.getCell(coords.x, coords.y);
-				handle(c);
+				
+				
+				int chunkX = i / 8;
+				int chunkY = j / 8;
+				
+				Chunk chunk = Main.inst.world.chunkTree.get(new Vector2(chunkX, chunkY).toString());
+				
+				if(chunk != null) {
+					Cell cell = chunk.getGrid()[Math.abs(i % 8)][Math.abs(j % 8)];
+					
+					Logger.log("Handeling: {" + cell.indexX + " ; " + cell.indexY);
+					
+					handle(cell);
+				}
 			}
 		}
+		
+		Cell startCell = Main.inst.world.getCellWorldIndex(startIndex);
+		Cell endCell = Main.inst.world.chunkTree.get(new Vector2((int)endIndex.x / 8, (int)endIndex.y / 8).toString()).getGrid()[(int) Math.abs(endIndex.x % 8)][(int) Math.abs(endIndex.y % 8)];
+	
+		startCell.setTile(new FarmTile());
+		endCell.setTile(new FarmTile());
 	}
 	
 	public void handle(Cell cell) {

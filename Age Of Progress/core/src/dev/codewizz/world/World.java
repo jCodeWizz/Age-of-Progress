@@ -376,6 +376,20 @@ public class World {
 	public Cell getCell(Vector2 coords) {
 		return getCell(coords.x, coords.y);
 	}
+	
+	public Cell getCellWorldIndex(int worldIndexX, int worldIndexY) {
+		int chunkX = worldIndexX / 8;
+		int chunkY = worldIndexY / 8;
+		
+		int indexX = Math.abs(worldIndexX % 8);
+		int indexY = Math.abs(worldIndexY % 8);
+		
+		return chunkTree.get(new Vector2(chunkX, chunkY).toString()).getGrid()[indexX][indexY];
+	}
+	
+	public Cell getCellWorldIndex(Vector2 index) {
+		return getCellWorldIndex((int)index.x, (int)index.y);
+	}
 
 	public Cell getCell(float x, float y) {
 		x -= 32f;
