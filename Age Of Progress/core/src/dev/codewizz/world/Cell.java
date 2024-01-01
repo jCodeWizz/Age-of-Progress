@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.SetTileEvent;
@@ -31,6 +32,8 @@ public class Cell {
 	public boolean[] acceptConnections = { true, true, true, true, true, true, true, true };
 	public boolean[] connectedTo = { false, false, false, false, false, false, false, false };
 	
+	public UIText text;
+	
 	public Cell(World world, Chunk chunk, float x, float y, int indexX, int indexY) {
 		this.world = world;
 		this.chunk = chunk;
@@ -41,6 +44,7 @@ public class Cell {
 		this.indexY = indexY;
 		this.tile = new GrassTile();
 		this.tile.setCell(this);
+		
 	}
 	
 	public void init(CellGraph graph) {
@@ -50,11 +54,6 @@ public class Cell {
 	public void connectAll() {
 		
 		if(this.tile.cost == -1) {
-			
-			
-			
-			
-			
 			return;
 		}
 		
@@ -112,6 +111,10 @@ public class Cell {
 
 	public void render(SpriteBatch b) {
 		b.draw(tile.getCurrentSprite(), x, y);
+		
+		if(text != null) {
+			text.render(b);
+		}
 	}
 	
 	public Cell getCrossedNeighbour(Direction dir) {
@@ -356,40 +359,18 @@ public class Cell {
 		return object;
 	}
 	
-	public static Vector2 getCoordsFromIndex(int worldIndexX, int worldIndexY) {
-		
-		int chunkX = worldIndexX / 8;
-		int chunkY = worldIndexY / 8;
-		
-		int indexX = Math.abs(worldIndexX % 8);
-		int indexY = Math.abs(worldIndexY % 8);
-
-		float x = chunkX * Chunk.SIZE * 32 - chunkY * Chunk.SIZE * 32 + indexX * 32 - indexY * 32;
-		float y = chunkX * Chunk.SIZE * -16 - chunkY * Chunk.SIZE * 16 + indexX * -16 - indexY * 16;
-		
-		return new Vector2(x, y);
-	}
-	
 	public int getWorldIndexX() {
 		int indexX = (int)chunk.getIndex().x * Chunk.SIZE;
 		
-		if(chunk.getIndex().x < 0) {
-			indexX -= this.indexX;
-		} else {
-			indexX += this.indexX;
-		}
+		indexX += this.indexX;
 		
 		return indexX;
 	}
 	
 	public int getWorldIndexY() {
 		int indexY = (int)chunk.getIndex().y * Chunk.SIZE;
-		
-		if(chunk.getIndex().y < 0) {
-			indexY -= this.indexY;
-		} else {
-			indexY += this.indexY;
-		}
+
+		indexY += this.indexY;
 		
 		return indexY;
 	}

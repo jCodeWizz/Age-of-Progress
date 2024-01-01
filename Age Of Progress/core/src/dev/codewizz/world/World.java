@@ -378,11 +378,29 @@ public class World {
 	}
 	
 	public Cell getCellWorldIndex(int worldIndexX, int worldIndexY) {
-		int chunkX = worldIndexX / 8;
-		int chunkY = worldIndexY / 8;
+		int chunkX = 0;
+		int chunkY = 0;
 		
-		int indexX = Math.abs(worldIndexX % 8);
-		int indexY = Math.abs(worldIndexY % 8);
+		int indexX = 0;
+		int indexY = 0;
+		
+		if(worldIndexX >= 0) {
+			chunkX = worldIndexX / 8;
+			indexX = worldIndexX % 8;
+		} else {
+			chunkX = (int) Math.floor((float)worldIndexX / 8f);
+			indexX = Math.abs(worldIndexX % 8);
+			if(indexX != 0) indexX = Chunk.SIZE - indexX;
+		}
+		
+		if(worldIndexY >= 0) {
+			chunkY = worldIndexY / 8;
+			indexY = worldIndexY % 8;
+		} else {
+			chunkY = (int) Math.floor((float)worldIndexY / 8f);
+			indexY = Math.abs(worldIndexY % 8);
+			if(indexY != 0) indexY = Chunk.SIZE - indexY;
+		}
 		
 		return chunkTree.get(new Vector2(chunkX, chunkY).toString()).getGrid()[indexX][indexY];
 	}

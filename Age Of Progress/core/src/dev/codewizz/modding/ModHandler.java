@@ -49,7 +49,15 @@ public class ModHandler {
             URLClassLoader child = new URLClassLoader(new URL[]{file.toURI().toURL()}, this.getClass().getClassLoader());
             
             ZipFile zip = new ZipFile(file);
-            InputStream stream = zip.getInputStream(zip.getEntry("info.mod"));
+            InputStream stream = null;
+            try {
+            	stream = zip.getInputStream(zip.getEntry("info.mod"));
+            } catch(Exception e) {
+            	Logger.error("Mod: " + file.getName().toUpperCase() + " is missing or has a corruped info.mod file.");
+            	child.close();
+            	zip.close();
+            	return;
+            }
 
             ModInfo info = new ModInfo(stream);
             
