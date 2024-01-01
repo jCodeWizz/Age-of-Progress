@@ -87,7 +87,7 @@ public class MouseInput implements InputProcessor {
 
 				if (hoveringOverCell != null) {
 
-					if(tileArea != null) {
+					if(tileArea != null && tileArea.start != null) {
 						if(hoveringOverCell != tileArea.start) {
 							tileArea.step(hoveringOverCell);
 						}

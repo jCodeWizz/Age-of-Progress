@@ -56,13 +56,13 @@ public class BuildObjectTask extends Task {
 		} else {
 			if(Main.inst.world.settlement.inventory.containsItem(i)) {
 				if(!hermit.getInventory().addItem(i)) {
-					Main.inst.world.settlement.inventory.removeItem(i);
 					stop();
 				}
 			} else {
 				stop();
 			}
- 			
+
+			Main.inst.world.settlement.inventory.removeItem(i);
 			hermit.getAgent().setGoal(object.getCell());
 		}
 	}

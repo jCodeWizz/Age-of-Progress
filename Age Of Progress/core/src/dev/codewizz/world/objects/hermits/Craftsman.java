@@ -2,13 +2,21 @@ package dev.codewizz.world.objects.hermits;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Queue;
 
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.items.Recipe;
+import dev.codewizz.world.objects.tasks.CraftTask;
 
 public class Craftsman extends Job {
-
+				
+	public static Queue<CraftTask> queue = new Queue<CraftTask>(); 
+	
+	
 	private static Sprite icon = Assets.getSprite("craftsman-icon");
 	
 	public Craftsman() {
@@ -20,6 +28,11 @@ public class Craftsman extends Job {
 	@Override
 	public void update(float dt) {
 		
+		if(!hermit.getSettlement().inventory.containsItem(new Item(0, 0, ItemType.Planks, 10)) && queue.size < 10) {
+			CraftTask task = new CraftTask(Recipe.Planks);
+			queue.addLast(task);
+			hermit.getSettlement().addTask(task, true);
+		}
 	}
 
 	@Override
