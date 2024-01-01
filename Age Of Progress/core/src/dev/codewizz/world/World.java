@@ -312,10 +312,11 @@ public class World {
 				b.setColor(1f, 0.2f, 0.2f, 0.5f);
 
 			MouseInput.currentlyDrawingObject.render(b);
-
 			b.setColor(1f, 1f, 1f, 1f);
 
 		}
+		
+		MouseInput.renderTileArea(b);
 	}
 
 	public List<GameObject> getGameObjects() {

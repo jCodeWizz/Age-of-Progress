@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -15,6 +16,7 @@ import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
@@ -85,6 +87,13 @@ public class MouseInput implements InputProcessor {
 
 				if (hoveringOverCell != null) {
 
+					if(tileArea != null) {
+						if(hoveringOverCell != tileArea.start) {
+							tileArea.step(hoveringOverCell);
+						}
+					}
+					
+					
 					if (object) {
 						if (currentlyDrawingObject != null && hoveringOverCell.getObject() == null) {
 							if(clear) {
@@ -133,6 +142,14 @@ public class MouseInput implements InputProcessor {
 				Main.inst.camera.move(-Gdx.input.getDeltaX(), 0);
 				Main.inst.camera.move(0, Gdx.input.getDeltaY());
 			}
+		}
+	}
+	
+	public static void renderTileArea(SpriteBatch b) {
+		if(tileArea == null || tileArea.start == null || tileArea.end == null) return;
+		
+		for(Cell cell : tileArea.cells) {
+			b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
 		}
 	}
 
