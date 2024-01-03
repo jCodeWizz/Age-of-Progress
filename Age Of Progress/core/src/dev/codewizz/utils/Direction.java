@@ -12,7 +12,6 @@ public enum Direction {
 	SouthWest(-1, -1),
 	SouthEast(1, -1);
 	
-	
 	private int dx, dy;
 	
 	Direction(int dx, int dy) {

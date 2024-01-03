@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Utils {
 	
-	public static File file = Gdx.files.internal("../assets/data/names.txt").file();
+	public static File file = Gdx.files.external(Assets.pathFolderData + "names.txt").file();
 	
 	public static Random RANDOM = new Random();
 
