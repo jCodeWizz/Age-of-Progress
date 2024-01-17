@@ -57,7 +57,7 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 		
 		int amount = Utils.getRandom(1, 3);
 		for(int i = 0; i < amount; i++) {
-			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.Mushrooms);
+			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.MUSHROOMS);
 			Main.inst.world.addItem(item);
 		}
 		

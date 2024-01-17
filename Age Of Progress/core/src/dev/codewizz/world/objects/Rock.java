@@ -74,7 +74,7 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 		
 		int amount = Utils.getRandom(4, 8);
 		for(int i = 0; i < amount; i++) {
-			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.Stone);
+			Item item = new Item(x + 25 + Utils.getRandom(-15, 15), y + 30 + Utils.getRandom(-5, 5), ItemType.STONE);
 			Main.inst.world.addItem(item);
 		}
 		

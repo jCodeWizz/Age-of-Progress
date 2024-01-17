@@ -36,8 +36,8 @@ public class Fence extends GameObject implements Serializable, IBuy {
 		this.id = "aop:fence";
 		this.name = "Fence";
 		
-		this.costs.add(new Item(0, 0, ItemType.Wood, 4));
-		this.costs.add(new Item(0, 0, ItemType.Planks, 2));
+		this.costs.add(new Item(ItemType.WOOD, 4));
+		this.costs.add(new Item(ItemType.PLANKS, 2));
 	}
 
 	@Override

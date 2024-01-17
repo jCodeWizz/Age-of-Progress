@@ -17,7 +17,7 @@ public class CraftTask extends Task {
 	private boolean pickup = false;
 
 	public CraftTask(Recipe recipe) {
-		this.jobs.add(Jobs.Craftsman);
+		super(Jobs.Craftsman);
 		this.recipe = recipe;
 	}
 
@@ -35,7 +35,7 @@ public class CraftTask extends Task {
 
 		if (pickup) {
 			for (Item i : hermit.getInventory().getItems()) {
-				Item item = new Item(hermit.getX(), hermit.getY(), i.getType(), i.getSize());
+				Item item = new Item(hermit.getX(), hermit.getY(), i.getType()).size(i.getSize());
 				Main.inst.world.addItem(item);
 			}
 		}
@@ -59,7 +59,7 @@ public class CraftTask extends Task {
 			for (int i = 0; i < recipe.getCosts().length; i++) {
 				hermit.getInventory().removeItem(recipe.getCosts()[i]);
 			}
-			hermit.getInventory().addItem(new Item(0, 0, recipe.getResult().getType(), recipe.getResult().getSize()));
+			hermit.getInventory().addItem(new Item(recipe.getResult().getType(), recipe.getResult().getSize()));
 
 			finish();
 		} else {
@@ -126,7 +126,7 @@ public class CraftTask extends Task {
 	public void reset() {
 		if (pickup) {
 			for (Item i : hermit.getInventory().getItems()) {
-				Item item = new Item(hermit.getX(), hermit.getY(), i.getType(), i.getSize());
+				Item item = new Item(hermit.getX(), hermit.getY(), i.getType()).size(i.getSize());
 				Main.inst.world.addItem(item);
 			}
 			pickup = false;

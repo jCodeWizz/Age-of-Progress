@@ -16,8 +16,8 @@ public class Inventory {
 
 	public boolean addItem(Item i) {
 		for (Item items : items) {
-			if (items.getType() == i.getType()) {
-				items.setSize(items.getSize() + i.getSize());
+			if (items.getType().equals(i.getType())) {
+				items.size(items.getSize() + i.getSize());
 				return true;
 			}
 		}
@@ -37,7 +37,7 @@ public class Inventory {
 	public boolean containsItem(Item i, int count) {
 
 		for (Item items : items) {
-			if (items.getType() == i.getType()) {
+			if (items.getType().equals(i.getType())) {
 				if (items.getSize() >= count) {
 					return true;
 				}
@@ -53,10 +53,10 @@ public class Inventory {
 
 			for (Item items : items) {
 
-				if (items.getType() == i.getType()) {
+				if (items.getType().equals(i.getType())) {
 
 					if (items.getSize() > i.getSize()) {
-						items.setSize(items.getSize() - i.getSize());
+						items.size(items.getSize() - i.getSize());
 						return true;
 					} else if (items.getSize() == i.getSize()) {
 						this.items.remove(items);

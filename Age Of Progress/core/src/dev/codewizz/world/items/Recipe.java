@@ -2,7 +2,7 @@ package dev.codewizz.world.items;
 
 public enum Recipe {
 
-	Planks(new Item(ItemType.Planks, 5), new Item(ItemType.Wood, 1));
+	Planks(new Item(ItemType.PLANKS, 5), new Item(ItemType.WOOD, 1));
 	
 	Item result;
 	Item[] costs;

@@ -39,8 +39,8 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 		this.id = "aop:fence-gate";
 		this.name = "Fence Gate";
 		
-		costs.add(new Item(0, 0, ItemType.Wood, 4));
-		costs.add(new Item(0, 0, ItemType.Planks, 8));
+		costs.add(new Item(ItemType.WOOD, 4));
+		costs.add(new Item(ItemType.PLANKS, 8));
 		
 	}
 

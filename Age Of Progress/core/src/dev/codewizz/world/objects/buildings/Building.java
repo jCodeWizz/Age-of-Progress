@@ -48,9 +48,9 @@ public class Building extends GameObject implements IBuy, Serializable {
 		
 		this.sortHeight = 8;
 		
-		this.costs.add(new Item(0, 0, ItemType.Wood, 12));
-		this.costs.add(new Item(0, 0, ItemType.Planks, 10));
-		this.costs.add(new Item(0, 0, ItemType.Stone, 4));
+		this.costs.add(new Item(ItemType.WOOD, 12));
+		this.costs.add(new Item(ItemType.PLANKS, 10));
+		this.costs.add(new Item(ItemType.STONE, 4));
 	}
 	
 	public void enter(Hermit hermit) {

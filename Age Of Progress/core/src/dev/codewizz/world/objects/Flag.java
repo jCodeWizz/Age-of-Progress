@@ -1,7 +1,6 @@
 package dev.codewizz.world.objects;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -16,7 +15,6 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
-import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.settlement.Settlement;
 
@@ -24,16 +22,12 @@ public class Flag extends GameObject implements IBuy, Serializable {
 
 	private static Sprite texture = Assets.getSprite("flag");
 
-	private List<Item> costs = new CopyOnWriteArrayList<>();
-	
 	public Flag(float x, float y) {
 		super(x, y);
 
 		this.id = "aop:flag";
 		
 		this.sortHeight = 26;
-		
-		costs.add(new Item(0, 0, ItemType.Wood, 5));
 	}
 
 	@Override
@@ -108,6 +102,6 @@ public class Flag extends GameObject implements IBuy, Serializable {
 
 	@Override
 	public List<Item> costs() {
-		return costs;
+		return null;
 	}
 }

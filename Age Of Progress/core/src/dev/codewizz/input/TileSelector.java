@@ -52,7 +52,9 @@ public class TileSelector {
 		}
 	}
 
-	public ArrayList<Cell> end(Cell end) {
+	public void end(Cell end) {
+		if(start == null) return;
+		
 		this.end = end;
 		
 		step(end);
@@ -61,7 +63,7 @@ public class TileSelector {
 			handle(cell);
 		}
 		
-		return cells;
+		return;
 	}
 
 	public void handle(Cell cell) {

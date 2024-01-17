@@ -9,7 +9,6 @@ import dev.codewizz.main.Main;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.IGatherable;
-import dev.codewizz.world.objects.hermits.Jobs;
 import dev.codewizz.world.objects.tasks.GatherTask;
 import dev.codewizz.world.objects.tasks.PlantCropTask;
 
@@ -48,7 +47,7 @@ public class ToolMenu extends UIIconMenu {
 				MouseInput.tileArea = new TileSelector() {
 					@Override
 					public void handle(Cell cell) {
-						Main.inst.world.settlement.addTask(new PlantCropTask(cell, Jobs.Farmer), true);
+						Main.inst.world.settlement.addTask(new PlantCropTask(cell), true);
 					
 					}
 				};

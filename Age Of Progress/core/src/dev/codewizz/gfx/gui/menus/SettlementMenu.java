@@ -45,7 +45,7 @@ public class SettlementMenu extends UIMenu {
 	private void addItemCard(Item item, int x, int y) {
 		elements.add(new UIImage("settlementMenu-item", x, y, 16, 16, item.getType().getSprite()));
 		elements.add(new UIText("settlementMenu-item", x + 6 + (int)item.getType().getSprite().getWidth() * UILayer.SCALE, y + 15, "" + item.getSize(), 8));
-		elements.add(new UIText("settlementMenu-item", x + 6 + (int)item.getType().getSprite().getWidth() * UILayer.SCALE, y + 45, "" + item.getType().toString(), 10));
+		elements.add(new UIText("settlementMenu-item", x + 6 + (int)item.getType().getSprite().getWidth() * UILayer.SCALE, y + 45, "" + item.getType().getName(), 10));
 	}
 
 	@Override

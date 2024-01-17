@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.TaskableObject;
@@ -18,7 +19,7 @@ public class HaulTask extends Task {
 		this.items = new CopyOnWriteArrayList<>();
 		
 		for(Item i : items) {
-			i.setHauled(true);
+			i.setTasked(true);
 			this.items.add(i);
 		}
 		
@@ -33,13 +34,13 @@ public class HaulTask extends Task {
 	@Override
 	public void stop() {
 		for(Item i : items) {
-			i.setHauled(false);
+			i.setTasked(false);
 		}
 		
 		for(Item i : hermit.getInventory().getItems()) {
 			i.setX(hermit.getX());
 			i.setY(hermit.getY());
-			i.setHauled(false);
+			i.setTasked(false);
 			Main.inst.world.addItem(i);
 			hermit.getInventory().removeItem(i);
 		}
@@ -53,6 +54,9 @@ public class HaulTask extends Task {
 		this.hermit = (Hermit) object;
 		
 		Cell cell = Main.inst.world.getCell(items.get(0).getX(), items.get(0).getY());
+		
+		
+		Logger.log("IX: " + items.get(0).getX() + "IY: " + items.get(0).getY());
 		
 		object.getAgent().setGoal(cell);
 		if(object.getAgent().path.isEmpty())

@@ -17,7 +17,6 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.hermits.Hermit;
-import dev.codewizz.world.objects.hermits.Jobs;
 import dev.codewizz.world.objects.tasks.GrowCropTask;
 import dev.codewizz.world.objects.tasks.HaulTask;
 import dev.codewizz.world.objects.tasks.Task;
@@ -57,8 +56,8 @@ public class Settlement {
 			for(Crop crop : crops) {
 				if(crop.isReady()) {
 					if(!crop.tasked) {
-						crop.tasked = true;
-						addTask(new GrowCropTask(crop, Jobs.Farmer), true);
+						crop.task();
+						addTask(new GrowCropTask(crop), true);
 					}
 				} else {
 					crop.counter += dt;
@@ -91,7 +90,7 @@ public class Settlement {
 		for (Renderable r : Main.inst.world.getObjects()) {
 			if (r instanceof Item) {
 				Item i = (Item) r;
-				if (!i.isHauled()) {
+				if (!i.isTasked()) {
 					items.add(i);
 				}
 			}
