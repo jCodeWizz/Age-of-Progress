@@ -3,7 +3,6 @@ package dev.codewizz.world.items;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Renderable;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 
 public class Item extends Renderable {
@@ -16,8 +15,6 @@ public class Item extends Renderable {
 	private long offset;
 	
 	public Item(float x, float y, ItemType item) {
-		Logger.log("X: " + x + " Y: " + y);
-		
 		this.x = x;
 		this.y = y;
 		
@@ -55,12 +52,12 @@ public class Item extends Renderable {
 
 	@Override
 	public float getY() {
-		return x;
+		return y;
 	}
 
 	@Override
 	public float getX() {
-		return y;
+		return x;
 	}
 
 	@Override

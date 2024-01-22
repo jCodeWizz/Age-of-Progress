@@ -6,13 +6,13 @@ import dev.codewizz.utils.Assets;
 
 public class ItemType {
 	
-	public static ItemType CARROT = new ItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"));
-	public static ItemType CLAY = new ItemType("Clay", "aop:clay", Assets.getSprite("item-clay"));
-	public static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("item-mushrooms"));
-	public static ItemType PLANKS = new ItemType("Planks", "aop:planks", Assets.getSprite("item-plank"));
-	public static ItemType STONE = new ItemType("Stone", "aop:stone", Assets.getSprite("item-stone"));
-	public static ItemType WHEAT = new ItemType("Wheat", "aop:wheat", Assets.getSprite("item-wheat"));
-	public static ItemType WOOD = new ItemType("Wood", "aop:wood", Assets.getSprite("item-wood"));
+	public final static ItemType CARROT = new ItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"));
+	public final static ItemType CLAY = new ItemType("Clay", "aop:clay", Assets.getSprite("item-clay"));
+	public final static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("item-mushrooms"));
+	public final static ItemType PLANKS = new ItemType("Planks", "aop:planks", Assets.getSprite("item-plank"));
+	public final static ItemType STONE = new ItemType("Stone", "aop:stone", Assets.getSprite("item-stone"));
+	public final static ItemType WHEAT = new ItemType("Wheat", "aop:wheat", Assets.getSprite("item-wheat"));
+	public final static ItemType WOOD = new ItemType("Wood", "aop:wood", Assets.getSprite("item-wood"));
 	
 	private float w, h;
 	private String id, name;

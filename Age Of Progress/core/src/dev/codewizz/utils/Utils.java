@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Utils {
 	
-	public static File file = Gdx.files.external(Assets.pathFolderData + "names.txt").file();
+	public static File nameFile = Gdx.files.external(Assets.pathFolderData + "names.txt").file();
 	
 	public static Random RANDOM = new Random();
 
@@ -126,7 +126,7 @@ public class Utils {
 	public static String getRandomName() {
 		String name = "";
 		
-		try (Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()))) {
+		try (Stream<String> lines = Files.lines(Paths.get(nameFile.getAbsolutePath()))) {
 		    name = lines.skip(RANDOM.nextInt(7940)).findFirst().get();
 		} catch(Exception e) {
 			name = "ptr1500";
