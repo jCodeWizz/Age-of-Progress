@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import com.badlogic.gdx.Gdx;
 
 public class Logger {
 
@@ -20,7 +23,7 @@ public class Logger {
 		try {
 			LocalDateTime now = LocalDateTime.now();
 			String date = DATE_FORMAT.format(now);
-			//currentFile = Gdx.files.external(Assets.pathFolderLogs + "LOG-" + date + ".txt").file();
+			currentFile = Gdx.files.external(Assets.pathFolderLogs + "LOG-" + date + ".txt").file();
 			
 			if(currentFile.createNewFile()) {
 				writer = new BufferedWriter(new FileWriter(currentFile));
@@ -28,6 +31,14 @@ public class Logger {
 				Logger.log("Opened log file!");
 			} else {
 				Logger.error("Couldn't create a log file!");
+			}
+			
+			for(File file : Assets.folderLogs.listFiles()) {
+				long diff = new Date().getTime() - file.lastModified();
+				
+				if(diff > 24 * 60 * 60 * 1000) {
+					file.delete();
+				}
 			}
 		} catch (Exception e) {
 			Logger.error("Couldn't create a log file!");
