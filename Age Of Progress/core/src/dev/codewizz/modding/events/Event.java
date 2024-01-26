@@ -13,15 +13,6 @@ public abstract class Event {
 	 * @return a boolean that is true if the event WASN'T cancelled. (false if it was cancelled)
 	 */
 	public static boolean dispatch(Event event) {
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		for (EventMethod m : Registers.events.values()) {
 			if (m.getMethod().getGenericParameterTypes()[0].getTypeName().equals(event.getClass().getTypeName())) {
 				try {

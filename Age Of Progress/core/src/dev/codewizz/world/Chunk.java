@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.GenerateChunkEvent;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
@@ -63,10 +65,12 @@ public class Chunk implements Comparable<Chunk> {
 	public void generate() {
 		this.generated = true;
 		
-		spawnRivers();
-		spawnResources();
-		spawnTree();
-		spawnRock();
+		if(Event.dispatch(new GenerateChunkEvent(world, this))) {
+			spawnRivers();
+			spawnResources();
+			spawnTree();
+			spawnRock();
+		}
 	}
 	
 	public void render(SpriteBatch b) {
