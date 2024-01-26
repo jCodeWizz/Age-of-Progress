@@ -5,7 +5,7 @@ import dev.codewizz.modding.Registers;
 
 public class Main extends JavaMod {
 
-	public static final int SIZE = 1;
+	public static int SIZE = 0;
 	
 	@Override
 	public void onRegister() {

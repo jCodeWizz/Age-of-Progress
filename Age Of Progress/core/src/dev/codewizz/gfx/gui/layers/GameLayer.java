@@ -9,6 +9,7 @@ import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.menus.BuildingMenu;
 import dev.codewizz.gfx.gui.menus.ConstructionMenu;
+import dev.codewizz.gfx.gui.menus.DebugMenu;
 import dev.codewizz.gfx.gui.menus.NotificationMenu;
 import dev.codewizz.gfx.gui.menus.PathingMenu;
 import dev.codewizz.gfx.gui.menus.PauseMenu;
@@ -29,7 +30,7 @@ public class GameLayer extends UILayer {
 	private SettingsGameMenu settingsMenu;
 	private SelectMenu selectMenu;
 	private StartInfoMenu startInfoMenu;
-	// private DebugMenu debugMenu;
+	private DebugMenu debugMenu;
 	private NotificationMenu notificationMenu;
 	private SettlementMenu settlementMenu;
 	private PeopleMenu peopleMenu;
@@ -180,9 +181,9 @@ public class GameLayer extends UILayer {
 		}
 		elements.add(startInfoMenu);
 
-		// debugMenu = new DebugMenu("debugMenu", 0, 0, 0, 0, this);
-		// elements.add(debugMenu);
-		// debugMenu.enable();
+		debugMenu = new DebugMenu("debugMenu", 0, 0, 0, 0, this);
+		elements.add(debugMenu);
+		debugMenu.enable();
 
 		// NOTIFICATION MENU
 		notificationMenu = new NotificationMenu("notification-menu",

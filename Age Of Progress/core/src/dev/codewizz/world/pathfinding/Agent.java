@@ -93,12 +93,6 @@ public class Agent {
 		GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
 		for (int i = 1; i < graphPath.getCount(); i++) {
 			
-			
-			if(graphPath.get(i).tile.getId().equals("aop:water-tile") || graphPath.get(i).tile.getId().equals("aop:deep-water-tile")) {
-				stop();
-				return false;
-			}
-			
 			if(object instanceof Animal) {
 				if(graphPath.get(i).getObject() != null) {
 					

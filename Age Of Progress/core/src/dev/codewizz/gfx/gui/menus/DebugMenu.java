@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.gfx.gui.UIText;
+import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.Nature;
 
 public class DebugMenu extends UIMenu {
@@ -17,6 +19,11 @@ public class DebugMenu extends UIMenu {
 	UIText settlement;
 	UIText rendering;
 	UIText time;
+	
+	UIText currentCell;
+	UIText currentCellInfo;
+	UIText currentCellConnections;
+	UIText currentCellObject;
 	
 	public DebugMenu(String id, int x, int y, int w, int h, UILayer layer) {
 		super(id, x, y, w, h, layer);
@@ -39,6 +46,15 @@ public class DebugMenu extends UIMenu {
 		
 		time = new UIText("debug-text-time", 20, UILayer.HEIGHT - 135, "", 8);
 		elements.add(time);
+		
+		currentCell = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 185, "Current Cell:", 8);
+		elements.add(currentCell);
+		
+		currentCellInfo = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 210, "", 8);
+		elements.add(currentCellInfo);
+		
+		currentCellConnections = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 235, "", 8);
+		elements.add(currentCellConnections);
 	}
 	
 	public void updateData() {
@@ -61,6 +77,39 @@ public class DebugMenu extends UIMenu {
 			time.setText("Time>> Day: " + n.day + " | " + (int)n.timeCounter + " / " + Nature.TRANSITION_TIME + " | Light: " + l);
 		} else {
 			time.setText("Time>> Day: " + n.day + " | " + (int)n.timeCounter + " / " + Nature.DAY_TIME + " | Light: " + l);
+		}
+		
+		if(MouseInput.hoveringOverCell != null) {
+			currentCellInfo.setText(MouseInput.hoveringOverCell.getTile().getName() + " | Cost: " + MouseInput.hoveringOverCell.getTile().getCost() + " | X: " + (int)MouseInput.hoveringOverCell.x + " Y: " + (int)MouseInput.hoveringOverCell.y);
+			
+			int c = 0;
+			int link = 0;
+			
+			if(Main.inst.world.cellGraph.getConnections(MouseInput.hoveringOverCell) != null) {
+				c = Main.inst.world.cellGraph.getConnections(MouseInput.hoveringOverCell).size;
+			}
+			if(Main.inst.world.cellGraph.getLinks(MouseInput.hoveringOverCell) != null) {
+				link = Main.inst.world.cellGraph.getLinks(MouseInput.hoveringOverCell).size;
+			}
+			
+			String connections = "C: " + c + " L: " + link + " B:";
+			
+			Cell[] neighbours = MouseInput.hoveringOverCell.getAllNeighbours();
+			 
+			for(int i = 0; i < neighbours.length; i++) {
+				if(neighbours[i] != null) {
+					connections += " " + neighbours[i].acceptConnections[(i + 4) % 8];
+				} else {
+					connections += " NULL";
+				}
+			}
+			
+			
+			
+			currentCellConnections.setText(connections);
+		} else {
+			currentCellInfo.setText("");
+			currentCellConnections.setText("");
 		}
 	}
 	

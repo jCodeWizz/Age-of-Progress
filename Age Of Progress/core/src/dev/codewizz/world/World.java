@@ -116,24 +116,6 @@ public class World {
 		this.showInfoSartMenu = data.showStartInfo;
 		this.cellGraph = data.cellGraph;
 
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				// grid[i][j].init(cellGraph, this);
-			}
-		}
-
-		for (int i = 0; i < WORLD_SIZE_W; i++) {
-			for (int j = 0; j < WORLD_SIZE_H; j++) {
-				try {
-					// grid[i][j].setTile(Registers.createTile(data.tiles[i + (j *
-					// World.WORLD_SIZE_W)], grid[i][j]));
-				} catch (Exception e) {
-					// grid[i][j].setTile(new EmptyTile());
-					e.printStackTrace();
-				}
-			}
-		}
-
 		Event.dispatch(new LoadWorldEvent(this));
 	}
 
@@ -183,9 +165,12 @@ public class World {
 		this.settlement = s;
 		this.showInfoSartMenu = false;
 
+		/*
 		for (int i = 0; i < 5; i++) {
 			this.settlement.addHermit(Utils.getRandom(-75, 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY());
 		}
+		*/
+		this.settlement.addHermit(Utils.getRandom(-75, 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY());
 	}
 
 	public void renderTiles(SpriteBatch b) {

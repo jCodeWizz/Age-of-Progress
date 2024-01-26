@@ -29,7 +29,7 @@ public abstract class Tile {
 	
 	public void place() {
 		Cell[] cells = this.cell.getAllNeighbours();
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < cells.length; i++) {
 			if(cells[i] != null) {
 				cells[i].tile.update();				
 			}
@@ -38,20 +38,35 @@ public abstract class Tile {
 		CellGraph c = Main.inst.world.cellGraph;
 		if(cost != -1) {
 			if(c.containsCell(cell)) {
-				try {
-					if(c.getLinks(cell) != null) {
-						for(Link link : c.getLinks(cell)) {
-							link.setCost(cost);
-						}
+				if(c.getLinks(cell) != null) {
+					for(Link link : c.getLinks(cell)) {
+						link.setCost(cost);
 					}
-				} catch (Exception e) {
-					this.cell.connectAll();
 				}
 			} else {
 				this.cell.connectAll();
 			}
 		} else {
 			c.removeConnections(cell);
+			
+			for(int i = 0; i < cells.length; i++) {
+				if(cells[i] != null) {
+					cell.acceptConnections[i] = false;
+					cells[i].connectedTo[(i + 4) % 8] = false;
+					
+					c.removeConnection(cells[i], cell);
+					
+					
+					if(cells[i] != null) {
+						if(cells[i].acceptConnections[(i + 4) % 8]) {
+							c.connectCells(cell, cells[i], cells[i].tile.getCost());
+						}
+					}
+					
+					
+				}
+			}
+			
 		}
 		onPlace();
 	}

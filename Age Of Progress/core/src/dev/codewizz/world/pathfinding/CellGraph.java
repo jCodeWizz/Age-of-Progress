@@ -44,7 +44,7 @@ public class CellGraph implements IndexedGraph<Cell> {
 	}
 	
 	public boolean containsCell(Cell cell) {
-		return linkMap.containsKey(cell);
+		return links.containsKey(cell);
 	}
 	
 	public GraphPath<Cell> findPath(Cell startCell, Cell goalCell) {
@@ -79,7 +79,7 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(a != null) {
 			for(Connection<Cell> c : a) {
 				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
-					linkMap.get(from).removeValue(c, false);
+					a.removeValue(c, false);
 				}
 			}
 		}
@@ -87,7 +87,7 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(d != null) {
 			for(Link c : d) {
 				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
-					links.get(from).removeValue(c, false);
+					d.removeValue(c, false);
 				}
 			}
 		}
@@ -95,7 +95,7 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(b != null) {
 			for(Connection<Cell> c : b) {
 				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
-					linkMap.get(from).removeValue(c, false);
+					b.removeValue(c, false);
 				}
 			}
 		}
@@ -103,7 +103,7 @@ public class CellGraph implements IndexedGraph<Cell> {
 		if(e != null) {
 			for(Link c : e) {
 				if(c.getFromNode().index == from.index && c.getToNode().index == to.index) {
-					links.get(from).removeValue(c, false);
+					e.removeValue(c, false);
 				}
 			}
 		}
