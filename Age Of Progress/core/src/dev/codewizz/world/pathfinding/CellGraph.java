@@ -30,16 +30,31 @@ public class CellGraph implements IndexedGraph<Cell> {
 		Link link = new Link(fromCell, toCell);
 		link.setCost(cost);
 		if(!linkMap.containsKey(fromCell)) {
-			linkMap.put(fromCell, new Array<Connection<Cell>>());
+			Array<Connection<Cell>> l = new Array<>();
+			linkMap.put(fromCell, l);
 		}
-		if(linkMap.get(fromCell) != null) {
-			linkMap.get(fromCell).add(link);
+		
+		Array<Connection<Cell>> b = linkMap.get(fromCell);
+		if(b != null) {
+			b.add(link);
+		} else {
+			Array<Connection<Cell>> l = new Array<>();
+			l.add(link);
+			linkMap.put(fromCell, l);
 		}
+		
 		if(!links.containsKey(fromCell)) {
-			links.put(fromCell, new Array<Link>());
+			Array<Link> l = new Array<>();
+			links.put(fromCell, l);
 		}
-		if(links.get(fromCell) != null) {
-			links.get(fromCell).add(link);
+		
+		Array<Link> c = links.get(fromCell);
+		if(c != null) {
+			c.add(link);
+		} else {
+			Array<Link> l = new Array<>();
+			l.add(link);
+			links.put(fromCell, l);
 		}
 	}
 	
