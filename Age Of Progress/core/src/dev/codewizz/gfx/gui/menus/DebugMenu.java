@@ -3,8 +3,10 @@ package dev.codewizz.gfx.gui.menus;
 import java.awt.Rectangle;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.gfx.gui.UIText;
@@ -23,7 +25,11 @@ public class DebugMenu extends UIMenu {
 	UIText currentCell;
 	UIText currentCellInfo;
 	UIText currentCellConnections;
+	UIText currentCellConnections2;
 	UIText currentCellObject;
+	
+	private UIImage fade1;
+	private UIImage fade2;
 	
 	public DebugMenu(String id, int x, int y, int w, int h, UILayer layer) {
 		super(id, x, y, w, h, layer);
@@ -32,6 +38,9 @@ public class DebugMenu extends UIMenu {
 
 	@Override
 	public void setup() {
+		
+		fade1 = new UIImage("fade", 5, UILayer.HEIGHT - 295, 710, 290, new Sprite(UILayer.fadeTex), 1);
+		fade2 = new UIImage("fade", 5, UILayer.HEIGHT - 295, 710, 290, new Sprite(UILayer.fadeTex), 1);
 		
 		elements.add(new UIText("debug-text", 20, UILayer.HEIGHT - 20, "DEBUG MODE", 10));
 		
@@ -55,6 +64,18 @@ public class DebugMenu extends UIMenu {
 		
 		currentCellConnections = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 235, "", 8);
 		elements.add(currentCellConnections);
+		
+		currentCellConnections2 = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 260, "", 8);
+		elements.add(currentCellConnections2);
+		
+		currentCellObject = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 285, "", 8);
+		elements.add(currentCellObject);
+
+		fade1.setBackground(true);
+		elements.add(fade1);
+		
+		fade2.setBackground(true);
+		elements.add(fade2);
 	}
 	
 	public void updateData() {
@@ -93,6 +114,7 @@ public class DebugMenu extends UIMenu {
 			}
 			
 			String connections = "C: " + c + " L: " + link + " B:";
+			String connections2 = "                ";
 			
 			Cell[] neighbours = MouseInput.hoveringOverCell.getAllNeighbours();
 			 
@@ -102,14 +124,21 @@ public class DebugMenu extends UIMenu {
 				} else {
 					connections += " NULL";
 				}
+				
+				connections2 += " " + MouseInput.hoveringOverCell.connectedTo[i];
 			}
-			
-			
-			
 			currentCellConnections.setText(connections);
+			currentCellConnections2.setText(connections2);
+			
+			if(MouseInput.hoveringOverCell.getObject() != null) {
+				currentCellObject.setText("Object: " + MouseInput.hoveringOverCell.getObject().getName() + " | " + MouseInput.hoveringOverCell.getObject().getId() + " | Flipped: " + MouseInput.hoveringOverCell.getObject().isFlip());
+			} else {
+				currentCellObject.setText("Object: none");
+			}
 		} else {
 			currentCellInfo.setText("");
 			currentCellConnections.setText("");
+			currentCellObject.setText("");
 		}
 	}
 	

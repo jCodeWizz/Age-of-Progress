@@ -38,41 +38,41 @@ import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
 
 public class World {
-	
+
 	public static final int WORLD_SIZE_W = 128;
 	public static final int WORLD_SIZE_H = 128;
 	public static final int WORLD_SIZE_WP = WORLD_SIZE_W * 64;
 	public static final int WORLD_SIZE_HP = WORLD_SIZE_H * 64;
-	
+
 	public static int gameSpeed = 3;
-	
+
 	public QuadTree<Cell> tree;
 	public HashMap<String, Chunk> chunkTree = new HashMap<>();
 	public List<Chunk> chunks = new CopyOnWriteArrayList<>();
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
-	
+
 	private List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
-	
+
 	public Settlement settlement;
 	public Nature nature;
-	
+
 	public CellGraph cellGraph;
-	
+
 	public WNoise noise = new WNoise();
 	public WNoise terrainNoise = new WNoise();
-	
+
 	public boolean showInfoSartMenu = true;
 	private long start;
-	
+
 	public World() {
-		
+
 		start = System.currentTimeMillis();
-		
+
 		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
-		
+
 		nature = new Nature(this);
 
 		Thread initThread = new Thread("create-world-thread") {
@@ -80,10 +80,11 @@ public class World {
 			public void run() {
 				init();
 				Event.dispatch(new CreateWorldEvent(Main.inst.world));
-				Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+				Logger.log(
+						"World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 			}
 		};
-		
+
 		Thread generateThread = new Thread() {
 			@Override
 			public void run() {
@@ -138,19 +139,18 @@ public class World {
 
 		Chunk c = addChunk(0, 0);
 		c.init();
-		
-		
-		
+
 		// nature.spawnHerd();
 		// nature.spawnHerd();
 		// nature.spawnHerd();
 	}
-	
+
 	private void generate() {
-		while(Main.RUNNING && Main.PLAYING) {
-			if(!generationQueue.isEmpty()) {
-				for(Chunk chunk : generationQueue) {
-					if(Main.RUNNING && Main.PLAYING) {
+		while (Main.RUNNING && Main.PLAYING) {
+			if (!generationQueue.isEmpty()) {
+				for (Chunk chunk : generationQueue) {
+					if (Main.RUNNING && Main.PLAYING) {
+						chunk.init();
 						chunk.generate();
 						generationQueue.remove(chunk);
 					} else {
@@ -166,10 +166,9 @@ public class World {
 		this.showInfoSartMenu = false;
 
 		/*
-		for (int i = 0; i < 5; i++) {
-			this.settlement.addHermit(Utils.getRandom(-75, 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY());
-		}
-		*/
+		 * for (int i = 0; i < 5; i++) { this.settlement.addHermit(Utils.getRandom(-75,
+		 * 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY()); }
+		 */
 		this.settlement.addHermit(Utils.getRandom(-75, 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY());
 	}
 
@@ -188,26 +187,26 @@ public class World {
 					chunk.render(b);
 					continue;
 				}
-				
+
 				if (!chunk.isGenerated()) {
 					chunk.markGenerated();
 					generationQueue.add(chunk);
-					
+
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0).toString())) {
-						Chunk c = addChunk((int)chunk.getIndex().x + 1, (int)chunk.getIndex().y);
-						c.init();
+						Chunk c = addChunk((int) chunk.getIndex().x + 1, (int) chunk.getIndex().y);
+						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1).toString())) {
-						Chunk c = addChunk((int)chunk.getIndex().x, (int)chunk.getIndex().y + 1);
-						c.init();
+						Chunk c = addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y + 1);
+						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0).toString())) {
-						Chunk c = addChunk((int)chunk.getIndex().x - 1, (int)chunk.getIndex().y);
-						c.init();
+						Chunk c = addChunk((int) chunk.getIndex().x - 1, (int) chunk.getIndex().y);
+						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1).toString())) {
-						Chunk c = addChunk((int)chunk.getIndex().x, (int)chunk.getIndex().y - 1);
-						c.init();
+						Chunk c = addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y - 1);
+						//c.init();
 					}
 				} else {
 					chunk.load();
@@ -300,7 +299,7 @@ public class World {
 			b.setColor(1f, 1f, 1f, 1f);
 
 		}
-		
+
 		MouseInput.renderTileArea(b);
 	}
 
@@ -321,8 +320,8 @@ public class World {
 		for (GameObject object : this.getGameObjects()) {
 			object.renderDebug();
 		}
-		
-		for(Chunk c : chunks) {
+
+		for (Chunk c : chunks) {
 			c.renderDebug();
 		}
 
@@ -358,41 +357,43 @@ public class World {
 		List<Cell> all = tree.getValues();
 		return all.get(Utils.getRandom(0, all.size()));
 	}
-	
+
 	public Cell getCell(Vector2 coords) {
 		return getCell(coords.x, coords.y);
 	}
-	
+
 	public Cell getCellWorldIndex(int worldIndexX, int worldIndexY) {
 		int chunkX = 0;
 		int chunkY = 0;
-		
+
 		int indexX = 0;
 		int indexY = 0;
-		
-		if(worldIndexX >= 0) {
+
+		if (worldIndexX >= 0) {
 			chunkX = worldIndexX / 8;
 			indexX = worldIndexX % 8;
 		} else {
-			chunkX = (int) Math.floor((float)worldIndexX / 8f);
+			chunkX = (int) Math.floor((float) worldIndexX / 8f);
 			indexX = Math.abs(worldIndexX % 8);
-			if(indexX != 0) indexX = Chunk.SIZE - indexX;
+			if (indexX != 0)
+				indexX = Chunk.SIZE - indexX;
 		}
-		
-		if(worldIndexY >= 0) {
+
+		if (worldIndexY >= 0) {
 			chunkY = worldIndexY / 8;
 			indexY = worldIndexY % 8;
 		} else {
-			chunkY = (int) Math.floor((float)worldIndexY / 8f);
+			chunkY = (int) Math.floor((float) worldIndexY / 8f);
 			indexY = Math.abs(worldIndexY % 8);
-			if(indexY != 0) indexY = Chunk.SIZE - indexY;
+			if (indexY != 0)
+				indexY = Chunk.SIZE - indexY;
 		}
-		
+
 		return chunkTree.get(new Vector2(chunkX, chunkY).toString()).getGrid()[indexX][indexY];
 	}
-	
+
 	public Cell getCellWorldIndex(Vector2 index) {
-		return getCellWorldIndex((int)index.x, (int)index.y);
+		return getCellWorldIndex((int) index.x, (int) index.y);
 	}
 
 	public Cell getCell(float x, float y) {

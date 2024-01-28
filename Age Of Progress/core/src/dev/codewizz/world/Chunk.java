@@ -32,6 +32,7 @@ public class Chunk implements Comparable<Chunk> {
 	private Rectangle bounds;
 	
 	private boolean loaded;
+	private boolean initialized;
 	private boolean generated;
 	
 	public Chunk(World world, float x, float y, int indexX, int indexY) {
@@ -43,6 +44,9 @@ public class Chunk implements Comparable<Chunk> {
 		this.x = x;
 		this.y = y;
 		
+	}
+	
+	public void init() {
 		for(int i = 0; i < grid.length; i++) {
 			for(int j = 0; j < grid.length; j++) {
 				Cell cell = new Cell(world, this, x + i * 32 - j * 32, y + i * -16 - j * 16, i, j);
@@ -52,14 +56,14 @@ public class Chunk implements Comparable<Chunk> {
 				world.cellGraph.addCell(cell);
 			}	
 		}
-	}
-	
-	public void init() {
+		
 		for(int i = 0; i < grid.length; i++) {
 			for(int j = 0; j < grid.length; j++) {
 				grid[i][j].init(world.cellGraph);
 			}	
 		}
+		
+		initialized = true;
 	}
 	
 	public void generate() {
@@ -82,15 +86,17 @@ public class Chunk implements Comparable<Chunk> {
 	}
 	
 	public void renderDebug() {
-		Vector2 a = new Vector2((float)bounds.getX(), (float)bounds.getY());
-		Vector2 b = new Vector2((float)bounds.getX() + (float)bounds.getWidth(), (float)bounds.getY());
-		Vector2 c = new Vector2((float)bounds.getX() + (float)bounds.getWidth(), (float)bounds.getY() + (float)bounds.getHeight());
-		Vector2 d = new Vector2((float)bounds.getX(), (float)bounds.getY() + (float)bounds.getHeight());
-		
-		Renderer.drawDebugLine(a, b);
-		Renderer.drawDebugLine(b, c);
-		Renderer.drawDebugLine(c, d);
-		Renderer.drawDebugLine(d, a);
+		if(initialized) {
+			Vector2 a = new Vector2(grid[0][0].x + 32, grid[0][0].y + 48);
+			Vector2 b = new Vector2(grid[0][SIZE-1].x, grid[0][SIZE-1].y + 32);
+			Vector2 c = new Vector2(grid[SIZE-1][SIZE-1].x + 32, grid[SIZE-1][SIZE-1].y + 16);
+			Vector2 d = new Vector2(grid[SIZE-1][0].x + 64, grid[SIZE-1][0].y + 32);
+			
+			Renderer.drawDebugLine(a, b);
+			Renderer.drawDebugLine(b, c);
+			Renderer.drawDebugLine(c, d);
+			Renderer.drawDebugLine(d, a);
+		}
 	}
 	
 	public void load() {

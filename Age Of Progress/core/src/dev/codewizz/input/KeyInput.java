@@ -13,14 +13,8 @@ import com.badlogic.gdx.graphics.PixmapIO;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
-import dev.codewizz.world.items.Recipe;
-import dev.codewizz.world.objects.IGatherable;
 import dev.codewizz.world.objects.hermits.Hermit;
-import dev.codewizz.world.objects.hermits.Jobs;
-import dev.codewizz.world.objects.tasks.CraftTask;
-import dev.codewizz.world.objects.tasks.GatherTask;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
@@ -62,14 +56,7 @@ public class KeyInput implements InputProcessor {
 			MouseInput.rotate = !MouseInput.rotate;
 		}
 		
-		if(key == Input.Keys.SPACE) {
-			CraftTask task = new CraftTask(Recipe.Planks);
-			task.addJob(Jobs.Craftsman);
-			
-			Main.inst.world.settlement.addTask(task, false);
-		}
-		
-		if(key == Input.Keys.NUM_3) {
+		if(key == Input.Keys.NUM_3) { 
 			World.gameSpeed = 3;
 		}
 		if(key == Input.Keys.NUM_2) {
@@ -86,19 +73,7 @@ public class KeyInput implements InputProcessor {
 		}
 		
 		if(key == Input.Keys.H) {
-			MouseInput.area = new AreaSelector() {
-				@Override
-				public void handle(GameObject obj) {
-					if(Main.inst.world.settlement != null) {
-						if(obj instanceof IGatherable) {
-							if(((IGatherable) obj).ready()) {
-								obj.setSelected(true);
-								Main.inst.world.settlement.addTask(new GatherTask(obj), false);
-							}
-						}
-					}
-				}
-			};
+			MouseInput.area = AreaSelector.harvest();
 		}
 		
 		if(key == Input.Keys.R) {

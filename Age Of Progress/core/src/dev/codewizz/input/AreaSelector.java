@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.objects.IGatherable;
+import dev.codewizz.world.objects.tasks.GatherTask;
 
 public class AreaSelector {
 
@@ -49,5 +51,21 @@ public class AreaSelector {
 
 	public void handle(GameObject obj) {
 
+	}
+	
+	public static AreaSelector harvest() {
+		return new AreaSelector() {
+			@Override
+			public void handle(GameObject obj) {
+				if(Main.inst.world.settlement != null) {
+					if(obj instanceof IGatherable) {
+						if(((IGatherable) obj).ready()) {
+							obj.setSelected(true);
+							Main.inst.world.settlement.addTask(new GatherTask(obj), false);
+						}
+					}
+				}
+			}
+		};
 	}
 }
