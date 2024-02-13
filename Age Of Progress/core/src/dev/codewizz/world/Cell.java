@@ -50,6 +50,33 @@ public class Cell {
 	public void init(CellGraph graph) {
 		connectAll();
 	}
+	
+	public void disconnect() {
+		CellGraph c = Main.inst.world.cellGraph;
+		Cell[] n = getAllNeighbours();
+		for(int i = 0; i < n.length; i++) {
+			if(n[i] != null) {
+				n[i].connectedTo[(i + 4) % 8] = false;
+				c.removeConnection(n[i], this);
+			}
+			
+			acceptConnections[i] = false;
+		}
+	} 
+	
+	public void reconnect() {
+		CellGraph c = Main.inst.world.cellGraph;
+
+		Cell[] neighBours = getAllNeighbours();
+		for(int i = 0; i < neighBours.length; i++) {
+			if(neighBours[i] != null && !neighBours[i].connectedTo[(i + 4) % 8]) {
+				c.connectCells(neighBours[i], this, neighBours[i].tile.getCost());
+				neighBours[i].connectedTo[(i + 4) % 8] = true;
+			}
+			
+			acceptConnections[i] = true;
+		}
+	}
 
 	public void connectAll() {
 

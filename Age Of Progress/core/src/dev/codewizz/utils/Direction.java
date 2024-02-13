@@ -2,21 +2,23 @@ package dev.codewizz.utils;
 
 public enum Direction {
 
-	North(0, 1),
-	East(1, 0),
-	South(0, -1),
-	West(-1, 0),
+	North(0, 1, 1),
+	East(1, 0, 3),
+	South(0, -1, 5),
+	West(-1, 0, 7),
 	
-	NorthWest(-1, 1),
-	NorthEast(1, 1),
-	SouthWest(-1, -1),
-	SouthEast(1, -1);
+	NorthWest(-1, 1, 0),
+	NorthEast(1, 1, 2),
+	SouthWest(-1, -1, 6),
+	SouthEast(1, -1, 4);
 	
 	private int dx, dy;
+	private int index;
 	
-	Direction(int dx, int dy) {
+	Direction(int dx, int dy, int index) {
 		this.dx = dx;
 		this.dy = dy;
+		this.index = index;
 	}
 	
 	public int getDX() {
@@ -25,6 +27,10 @@ public enum Direction {
 	
 	public int getDY() {
 		return this.dy;
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	/*

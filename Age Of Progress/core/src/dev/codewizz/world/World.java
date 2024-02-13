@@ -193,19 +193,19 @@ public class World {
 					generationQueue.add(chunk);
 
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0).toString())) {
-						Chunk c = addChunk((int) chunk.getIndex().x + 1, (int) chunk.getIndex().y);
+						addChunk((int) chunk.getIndex().x + 1, (int) chunk.getIndex().y);
 						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1).toString())) {
-						Chunk c = addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y + 1);
+						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y + 1);
 						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0).toString())) {
-						Chunk c = addChunk((int) chunk.getIndex().x - 1, (int) chunk.getIndex().y);
+						addChunk((int) chunk.getIndex().x - 1, (int) chunk.getIndex().y);
 						//c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1).toString())) {
-						Chunk c = addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y - 1);
+						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y - 1);
 						//c.init();
 					}
 				} else {

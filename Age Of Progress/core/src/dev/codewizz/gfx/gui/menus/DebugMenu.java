@@ -25,7 +25,6 @@ public class DebugMenu extends UIMenu {
 	UIText currentCell;
 	UIText currentCellInfo;
 	UIText currentCellConnections;
-	UIText currentCellConnections2;
 	UIText currentCellObject;
 	
 	private UIImage fade1;
@@ -56,7 +55,7 @@ public class DebugMenu extends UIMenu {
 		time = new UIText("debug-text-time", 20, UILayer.HEIGHT - 135, "", 8);
 		elements.add(time);
 		
-		currentCell = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 185, "Current Cell:", 8);
+		currentCell = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 185, "Current Cell>>", 8);
 		elements.add(currentCell);
 		
 		currentCellInfo = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 210, "", 8);
@@ -65,10 +64,7 @@ public class DebugMenu extends UIMenu {
 		currentCellConnections = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 235, "", 8);
 		elements.add(currentCellConnections);
 		
-		currentCellConnections2 = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 260, "", 8);
-		elements.add(currentCellConnections2);
-		
-		currentCellObject = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 285, "", 8);
+		currentCellObject = new UIText("debug-text-current-cell", 20, UILayer.HEIGHT - 260, "", 8);
 		elements.add(currentCellObject);
 
 		fade1.setBackground(true);
@@ -114,7 +110,6 @@ public class DebugMenu extends UIMenu {
 			}
 			
 			String connections = "C: " + c + " L: " + link + " B:";
-			String connections2 = "                ";
 			
 			Cell[] neighbours = MouseInput.hoveringOverCell.getAllNeighbours();
 			 
@@ -124,11 +119,8 @@ public class DebugMenu extends UIMenu {
 				} else {
 					connections += " NULL";
 				}
-				
-				connections2 += " " + MouseInput.hoveringOverCell.connectedTo[i];
 			}
 			currentCellConnections.setText(connections);
-			currentCellConnections2.setText(connections2);
 			
 			if(MouseInput.hoveringOverCell.getObject() != null) {
 				currentCellObject.setText("Object: " + MouseInput.hoveringOverCell.getObject().getName() + " | " + MouseInput.hoveringOverCell.getObject().getId() + " | Flipped: " + MouseInput.hoveringOverCell.getObject().isFlip());

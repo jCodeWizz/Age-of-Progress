@@ -53,6 +53,17 @@ public class AreaSelector {
 
 	}
 	
+	public static AreaSelector delete() {
+		return new AreaSelector() {
+			@Override
+			public void handle(GameObject obj) {
+				if(!obj.getId().equals("aop:hermit")) {
+					obj.destroy();
+				}
+			}
+		};
+	}
+	
 	public static AreaSelector harvest() {
 		return new AreaSelector() {
 			@Override

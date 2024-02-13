@@ -28,7 +28,7 @@ public class ToolMenu extends UIIconMenu {
 		};
 		addIcon(gatherIcon);
 		
-		UIIcon removeIcon = new UIIcon("remove-icon", x + 3 * UILayer.SCALE, y + currentHeight - 54 * UILayer.SCALE, 22, 24, "close-icon") {
+		UIIcon plantIcon = new UIIcon("remove-icon", x + 3 * UILayer.SCALE, y + currentHeight - 54 * UILayer.SCALE, 22, 24, "close-icon") {
 			@Override
 			protected void onDeClick() {
 				MouseInput.tileArea = new TileSelector() {
@@ -38,6 +38,14 @@ public class ToolMenu extends UIIconMenu {
 					
 					}
 				};
+			}
+		};
+		addIcon(plantIcon);
+		
+		UIIcon removeIcon = new UIIcon("remove-icon", x + 3 * UILayer.SCALE, y + currentHeight - 81 * UILayer.SCALE, 22, 24, "close-icon") {
+			@Override
+			protected void onDeClick() {
+				MouseInput.area = AreaSelector.delete();
 			}
 		};
 		addIcon(removeIcon);

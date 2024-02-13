@@ -10,6 +10,8 @@ import dev.codewizz.world.objects.tasks.BuildObjectTask;
 
 public class ConstructionObject extends GameObject {
 
+	public static boolean FREE = true;
+	
 	private GameObject toPlace;
 	private boolean placed;
 	
@@ -21,12 +23,14 @@ public class ConstructionObject extends GameObject {
 		this.id = "aop:construction";
 
 		this.toPlace = toPlace;
+		this.costs = new Inventory(-1);
 		
-		IBuy b = (IBuy) toPlace;
-		costs = new Inventory(-1);
-		for(Item i : b.costs()) {
-			costs.addItem(i);
-			Main.inst.world.settlement.addTask(new BuildObjectTask(this, i), true);
+		if(!FREE) {
+			IBuy b = (IBuy) toPlace;
+			for(Item i : b.costs()) {
+				this.costs.addItem(i);
+				Main.inst.world.settlement.addTask(new BuildObjectTask(this, i), true);
+			}
 		}
 	}
 	

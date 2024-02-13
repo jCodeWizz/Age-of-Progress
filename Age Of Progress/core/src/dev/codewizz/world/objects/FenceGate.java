@@ -114,15 +114,12 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 		
 		CellGraph c = Main.inst.world.cellGraph;
 		
-		Cell a = flip ? cell.getNeighbour(Direction.South) : cell.getNeighbour(Direction.South);
-		Cell b = flip ? cell.getNeighbour(Direction.North) : cell.getNeighbour(Direction.North);
+		Cell a = flip ? cell.getNeighbour(Direction.West) : cell.getNeighbour(Direction.South);
+		Cell b = flip ? cell.getNeighbour(Direction.East) : cell.getNeighbour(Direction.North);
 			
 		c.removeConnections(cell);
 		
-		Cell[] n = cell.getAllNeighbours();
-		for(int i = 0; i < n.length; i++) {
-			c.removeConnection(n[i], cell);
-		}
+		cell.disconnect();
 		
 		c.connectCells(cell, a, cell.tile.getCost());
 		c.connectCells(cell, b, cell.tile.getCost());
