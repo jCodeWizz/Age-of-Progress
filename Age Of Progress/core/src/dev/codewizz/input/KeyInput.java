@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.PixmapIO;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.World;
+import dev.codewizz.world.building.Building;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
@@ -44,6 +45,11 @@ public class KeyInput implements InputProcessor {
 			
 			
 			return true;
+		}
+		
+		if(key == Input.Keys.B) {
+			Building b = new Building();
+			MouseInput.tileArea = TileSelector.room(b);
 		}
 		
 		if(key == Input.Keys.TAB) {

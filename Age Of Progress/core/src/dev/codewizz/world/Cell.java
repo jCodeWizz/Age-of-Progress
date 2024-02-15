@@ -104,6 +104,30 @@ public class Cell {
 			}	
 		}
 	}
+	
+	public void blockPath(Direction dir) {
+		Cell[] n = this.getAllNeighbours();
+		Cell other = n[dir.getIndex()];
+		
+		this.acceptConnections[dir.getIndex()] = false;
+		
+		if(other != null && other.connectedTo[(dir.getIndex() + 4) % 8]) {
+			other.connectedTo[(dir.getIndex() + 4) % 8] = false;
+			Main.inst.world.cellGraph.removeConnection(other, this);
+		}
+	}
+	
+	public void unblockPath(Direction dir) {
+		Cell[] n = this.getAllNeighbours();
+		Cell other = n[dir.getIndex()];
+		
+		this.acceptConnections[dir.getIndex()] = true;
+		
+		if(other != null && other.acceptConnections[(dir.getIndex() + 4) % 8] && !other.connectedTo[(dir.getIndex() + 4) % 8]) {
+			other.connectedTo[(dir.getIndex() + 4) % 8] = true;
+			Main.inst.world.cellGraph.connectCells(other, this, other.tile.getCost());
+		} 
+	}
 
 	public boolean setTile(Tile tile) {
 		if (!this.tile.getId().equals(tile.getId())) {

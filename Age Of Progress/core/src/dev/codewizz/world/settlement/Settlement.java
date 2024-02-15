@@ -14,6 +14,7 @@ import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.HermitJoinEvent;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.building.Building;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.hermits.Hermit;
@@ -29,9 +30,10 @@ public class Settlement {
 	
 	public List<Hermit> members = new CopyOnWriteArrayList<>();
 	public Queue<Task> taskTree = new Queue<>();
-	public List<GameObject> buildings = new CopyOnWriteArrayList<>();
+	public List<GameObject> objects = new CopyOnWriteArrayList<>();
 	public List<Crop> crops = new CopyOnWriteArrayList<>();
 	public List<FarmArea> areas = new CopyOnWriteArrayList<>();
+	public List<Building> buildings = new CopyOnWriteArrayList<>();
 	
 	public Inventory inventory;
 

@@ -208,7 +208,7 @@ public class Hermit extends TaskableObject implements Serializable {
 		
 		if(this.home == null) {
 			
-			for(GameObject object : s.buildings) {
+			for(GameObject object : s.objects) {
 				if(object instanceof Building) {
 					Building b = (Building) object;
 					if(!b.isFull()) {

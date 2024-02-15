@@ -42,7 +42,7 @@ public class AreaSelector {
 		
 		for (Renderable obj : Main.inst.world.getObjects()) {
 			if(obj instanceof GameObject) {
-				if (((GameObject)obj).getHitBox().intersects(rec)) {
+				if (((GameObject)obj).getHitBox().intersects(rec) || rec.contains(obj.getX(), obj.getY())) {
 					handle((GameObject)obj);
 				}
 			}

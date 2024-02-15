@@ -78,7 +78,7 @@ public class CraftTask extends Task {
 				hermit.getInventory().addItem(recipe.getCosts()[i]);
 			}
 
-			for (GameObject object : hermit.getSettlement().buildings) {
+			for (GameObject object : hermit.getSettlement().objects) {
 				if (object.getId().equals("aop:stump")) {
 
 					hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25));
@@ -100,7 +100,7 @@ public class CraftTask extends Task {
 		
 		boolean found = false;
 
-		for (GameObject object : hermit.getSettlement().buildings) {
+		for (GameObject object : hermit.getSettlement().objects) {
 			if (object.getId().equals("aop:stump")) {
 				found = true;
 			}

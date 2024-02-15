@@ -172,6 +172,12 @@ public abstract class GameObject extends Renderable implements Serializable {
 		this.flip = flip;
 	}
 	
+	public GameObject flip() {
+		this.flip = !this.flip;
+		
+		return this;
+	}
+	
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}

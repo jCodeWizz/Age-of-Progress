@@ -91,7 +91,7 @@ public class Stump extends GameObject implements Serializable, IBuy {
 
 	@Override
 	public void onPlace(Cell cell) {
-		Main.inst.world.settlement.buildings.add(this);
+		Main.inst.world.settlement.objects.add(this);
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public class DebugMenu extends UIMenu {
 	
 	public void updateData() {
 		
-		rendering.setText("Rendering>> FPS: " + Gdx.graphics.getFramesPerSecond());
+		rendering.setText("Rendering>> FPS: " + Gdx.graphics.getFramesPerSecond() + " O: " + Main.inst.world.getObjects().size() + " P: " + Main.inst.world.particles.size());
 		
 		nature.setText("Nature>> Timer: " + (int)Main.inst.world.nature.spawnCounter + " | Cap: " + Main.inst.world.nature.animals.size() + " / " + Nature.ANIMAL_CAP);
 		

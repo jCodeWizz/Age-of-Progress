@@ -5,8 +5,6 @@ import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.input.AreaSelector;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
-import dev.codewizz.main.Main;
-import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.tasks.PlantCropTask;
 
 public class ToolMenu extends UIIconMenu {
@@ -31,13 +29,7 @@ public class ToolMenu extends UIIconMenu {
 		UIIcon plantIcon = new UIIcon("remove-icon", x + 3 * UILayer.SCALE, y + currentHeight - 54 * UILayer.SCALE, 22, 24, "close-icon") {
 			@Override
 			protected void onDeClick() {
-				MouseInput.tileArea = new TileSelector() {
-					@Override
-					public void handle(Cell cell) {
-						Main.inst.world.settlement.addTask(new PlantCropTask(cell), true);
-					
-					}
-				};
+				MouseInput.tileArea = TileSelector.task(PlantCropTask.class);
 			}
 		};
 		addIcon(plantIcon);

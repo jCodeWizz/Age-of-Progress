@@ -148,8 +148,20 @@ public class MouseInput implements InputProcessor {
 	public static void renderTileArea(SpriteBatch b) {
 		if(tileArea == null || tileArea.start == null || tileArea.end == null) return;
 		
-		for(Cell cell : tileArea.cells) {
-			b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
+		boolean clear = tileArea.isClear();
+		
+		if(clear) {
+			for(Cell cell : tileArea.cells) {
+				if(tileArea.checkCellClear(cell)) {
+					b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
+				} else {
+					b.draw(Assets.getSprite("tile-highlight2"), cell.x, cell.y);
+				}
+			}
+		} else {
+			for(Cell cell : tileArea.cells) {
+				b.draw(Assets.getSprite("tile-highlight2"), cell.x, cell.y);
+			}
 		}
 	}
 

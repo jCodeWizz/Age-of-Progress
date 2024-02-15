@@ -2,6 +2,8 @@ package dev.codewizz.main;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
@@ -13,12 +15,11 @@ public class DesktopLauncher {
 		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.useVsync(true);
 		
-		//setupTextures();
+		setupTextures();
 		
 		new Lwjgl3Application(new Main(), config);
 	}
 	
-	/*
 	private static void setupTextures() {
 		Settings settings = new Settings();
 		settings.maxWidth = 2048;
@@ -30,5 +31,4 @@ public class DesktopLauncher {
 		TexturePacker.process(settings, "../assets/textures/particles", "../assets/packs", "particles");
 		TexturePacker.process(settings, "../assets/textures/items", "../assets/packs", "items");
 	}
-	*/
 }

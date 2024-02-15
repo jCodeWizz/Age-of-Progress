@@ -41,7 +41,7 @@ public class Building extends GameObject implements IBuy, Serializable {
 		this.id = "aop:building";
 		
 		if(Main.inst.world.settlement != null) 
-			Main.inst.world.settlement.buildings.add(this);
+			Main.inst.world.settlement.objects.add(this);
 		
 		this.w = 64;
 		this.h = 48;

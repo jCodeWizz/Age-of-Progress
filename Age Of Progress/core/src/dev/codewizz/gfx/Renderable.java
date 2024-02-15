@@ -12,6 +12,7 @@ public abstract class Renderable implements Comparable<Renderable> {
 	public abstract float getSorthingHeight();
 	public abstract void update(float dt);
 	
+	@Override
 	public int compareTo(Renderable other) {
 		if(other.getY() + other.getSorthingHeight() < this.getY() + this.getSorthingHeight()) {
 			return -1;
