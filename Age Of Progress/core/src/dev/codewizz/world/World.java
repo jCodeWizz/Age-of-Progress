@@ -389,7 +389,13 @@ public class World {
 				indexY = Chunk.SIZE - indexY;
 		}
 
-		return chunkTree.get(new Vector2(chunkX, chunkY).toString()).getGrid()[indexX][indexY];
+		Chunk c = chunkTree.get(new Vector2(chunkX, chunkY).toString());
+
+		if (c != null) {
+			return c.getGrid()[indexX][indexY];
+		} else {
+			return null;
+		}
 	}
 
 	public Cell getCellWorldIndex(Vector2 index) {

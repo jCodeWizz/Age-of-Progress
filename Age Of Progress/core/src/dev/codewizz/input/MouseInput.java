@@ -180,6 +180,9 @@ public class MouseInput implements InputProcessor {
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		dragging[button] = true;
 
+		
+		
+		
 		/*
 		 * 
 		 * Object selector
@@ -191,33 +194,40 @@ public class MouseInput implements InputProcessor {
 			Collections.sort(Main.inst.world.getObjects());
 			Collections.reverse(Main.inst.world.getObjects());
 
-			if (area != null) {
-				area.start(new Vector2(coords.x, coords.y));
-				return false;
-			}	
-			if (tileArea != null) {
-				tileArea.start(hoveringOverCell);
-				return false;
-			}	
-			
-			if(button == 0 && Main.inst.renderer.ui.menusClosed()) {
-				if (GameLayer.selectedObject != null)
-					GameLayer.selectedObject.deselect();
+			if(button == 0) {
+				if (area != null) {
+					area.start(new Vector2(coords.x, coords.y));
+					return false;
+				}	
+				if (tileArea != null) {
+					tileArea.start(hoveringOverCell);
+					return false;
+				}
 				
-				for (Renderable o : Main.inst.world.getObjects()) {
-					if (o instanceof GameObject) {
-						GameObject obj = (GameObject) o;
-						obj.setSelected(false);
-						if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
-							obj.select();
-							dragging[button] = false;
-							break;
+				if(Main.inst.renderer.ui.menusClosed()) {
+					if (GameLayer.selectedObject != null)
+						GameLayer.selectedObject.deselect();
+					
+					for (Renderable o : Main.inst.world.getObjects()) {
+						if (o instanceof GameObject) {
+							GameObject obj = (GameObject) o;
+							obj.setSelected(false);
+							if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+								obj.select();
+								dragging[button] = false;
+								break;
+							}
 						}
 					}
 				}
 			}
 		}
-
+		
+		if(button == 1) {
+			if(area != null) area = null;
+			if(tileArea != null) tileArea = null;
+		}
+		
 		return false;
 	}
 
@@ -225,14 +235,16 @@ public class MouseInput implements InputProcessor {
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		dragging[button] = false;
 
-		if (area != null) {
-			area.end(new Vector2(coords.x, coords.y));
-			area = null;
-		}
-		
-		if (tileArea != null) {
-			tileArea.end(hoveringOverCell);
-			tileArea = null;
+		if(button == 0) {
+			if (area != null) {
+				area.end(new Vector2(coords.x, coords.y));
+				area = null;
+			}
+			
+			if (tileArea != null) {
+				tileArea.end(hoveringOverCell);
+				tileArea = null;
+			}
 		}
 
 		return false;

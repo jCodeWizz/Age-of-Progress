@@ -11,9 +11,6 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.Room;
 import dev.codewizz.world.objects.tasks.Task;
-import dev.codewizz.world.tiles.EmptyTile;
-import dev.codewizz.world.tiles.FlowerTile;
-import dev.codewizz.world.tiles.SandTile;
 
 public class TileSelector {
 
@@ -67,7 +64,7 @@ public class TileSelector {
 		for (int i = (int) startIndex.x; i <= (int) endIndex.x; i++) {
 			for (int j = (int) startIndex.y; j <= (int) endIndex.y; j++) {
 				Cell cell = Main.inst.world.getCellWorldIndex(i, j);
-				if(!cells.contains(cell)) {
+				if(!cells.contains(cell) && cell != null) {
 					cells.add(cell);
 				}
 			}
@@ -89,7 +86,7 @@ public class TileSelector {
 	}
 
 	public void handle(Cell cell) {
-
+ 
 	}
 	
 	public void onEnd() {
@@ -106,25 +103,38 @@ public class TileSelector {
 				Cell c3 = this.start;
 				Cell c4 = Main.inst.world.getCellWorldIndex(end.getWorldIndexX(), start.getWorldIndexY());
 
-				if(c3.y < c1.y) {
+				if(c3.y < c1.y && c2.x > c4.x) {
 					Cell t = c1;
 					c1 = c3;
 					c3 = t;
-				}
-				
-				if(c2.x > c4.x) {
-					Cell t = c2;
+					
+					t = c2;
 					c2 = c4;
 					c4 = t;
 				}
 				
+				if(c2.y > c3.y && c1.y > c4.y) {
+					Cell t = c2;
+					c2 = c3;
+					c3 = t;
+					
+					t = c1;
+					c1 = c4;
+					c4 = t;
+				}
+
+				if(c3.x > c4.x && c2.x > c1.x) {
+					Cell t = c4;
+					c4 = c3;
+					c3 = t;
+					
+					t = c2;
+					c2 = c1;
+					c1 = t;
+				}
+
 				Room room = new Room(this.cells, c1, c2, c3, c4);
 				building.addRoom(room);
-				
-				c3.setTile(new EmptyTile());
-				c1.setTile(new SandTile());
-				c2.setTile(new FlowerTile());
-				
 			}
 			
 			@Override

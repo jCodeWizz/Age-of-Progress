@@ -27,7 +27,7 @@ public class Wall extends GameObject implements IBuy {
 
 		this.id = "aop:wall";
 		
-		this.sortHeight = 10;
+		this.sortHeight = 4;
 		this.cell = cell;
 		this.facing = dir;
 		
