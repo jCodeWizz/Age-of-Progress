@@ -395,7 +395,7 @@ public class Cell {
 			object.setCell(this);
 			Main.inst.world.addObject(object);
 		}
-
+		
 		this.object = object;
 	}
 

@@ -98,6 +98,10 @@ public class TileSelector {
 			
 			@Override
 			public void onEnd() {
+				if(!checkClear()) {
+					return;
+				}
+				
 				Cell c1 = this.end;
 				Cell c2 = Main.inst.world.getCellWorldIndex(start.getWorldIndexX(), end.getWorldIndexY());
 				Cell c3 = this.start;
@@ -140,6 +144,18 @@ public class TileSelector {
 			@Override
 			public boolean checkCellClear(Cell cell) {
 				return cell.getObject() == null;
+			}
+			
+			
+			@Override
+			public boolean checkClear() {
+				for(Cell cell : this.cells) {
+					if(cell.getObject() != null && cell.object.getId().equals("aop:buildingobject")) {
+						return false;
+					}
+				}
+				
+				return true;
 			}
 		};
 	}
