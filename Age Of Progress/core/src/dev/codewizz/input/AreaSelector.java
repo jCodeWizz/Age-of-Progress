@@ -1,15 +1,19 @@
 package dev.codewizz.input;
 
 import java.awt.Rectangle;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 
 import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.IGatherable;
+import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.GatherTask;
+import dev.codewizz.world.objects.tasks.Task;
 
 public class AreaSelector {
 
@@ -74,6 +78,28 @@ public class AreaSelector {
 							obj.setSelected(true);
 							Main.inst.world.settlement.addTask(new GatherTask(obj), false);
 						}
+					}
+				}
+			}
+		};
+	}
+	
+	/**
+	 * Task any hermit in the selected area with this task. Only tasks with an empty constructor are allowed.
+	 * @param t Task to task with
+	 * @return the AreaSlector to use.
+	 */
+	public static AreaSelector taskHermit(final Class<? extends Task> t) {
+		return new AreaSelector() {
+			@Override
+			public void handle(GameObject obj) {
+				if(obj.getId().equals("aop:hermit")) {
+					Hermit h = (Hermit) obj;
+					try {
+						h.addTask(t.getConstructor().newInstance(), true);
+					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+							| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+						Logger.log("Couldn't create task: " + t.getName());
 					}
 				}
 			}
