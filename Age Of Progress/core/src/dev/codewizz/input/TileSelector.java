@@ -9,6 +9,7 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.building.Building;
+import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Room;
 import dev.codewizz.world.objects.tasks.Task;
 
@@ -143,14 +144,14 @@ public class TileSelector {
 			
 			@Override
 			public boolean checkCellClear(Cell cell) {
-				return cell.getObject() == null;
+				return cell.getObject() == null || (cell.object.getId().equals("aop:buildingobject") && ((BuildingObject)cell.object).isEdge());
 			}
 			
 			
 			@Override
 			public boolean checkClear() {
 				for(Cell cell : this.cells) {
-					if(cell.getObject() != null && cell.object.getId().equals("aop:buildingobject")) {
+					if(cell.getObject() != null && cell.object.getId().equals("aop:buildingobject") && !((BuildingObject)cell.object).isEdge()) {
 						return false;
 					}
 				}

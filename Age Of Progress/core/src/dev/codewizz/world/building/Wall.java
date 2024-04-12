@@ -44,9 +44,9 @@ public class Wall extends GameObject {
 	@Override
 	public void render(SpriteBatch b) {
 		if(flip) {
-			b.draw(TEXTURE_FLIP, x, y);
+			b.draw(TEXTURE_FLIP, (int)x, (int)y);
 		} else {
-			b.draw(TEXTURE, x, y);
+			b.draw(TEXTURE, (int)x, (int)y);
 		}
 	}	
 }		

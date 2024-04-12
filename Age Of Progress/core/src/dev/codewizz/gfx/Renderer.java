@@ -49,7 +49,7 @@ public class Renderer {
 		rayHandler.setAmbientLight(0.2f);
 	}
 
-	public void render(World world, OrthographicCamera cam) {
+	public void render(World world, OrthographicCamera cam) {   
 		tileBatch.begin();
 		world.renderTiles(tileBatch);
 		tileBatch.setProjectionMatrix(cam.combined);

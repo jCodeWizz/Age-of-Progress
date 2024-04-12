@@ -42,6 +42,11 @@ public class BuildingObject extends GameObject {
 					} else if(i == 3) {
 						setWall(i, new Wall(x, y + 32, this.cell, Direction.West));
 					}
+				} else {
+					if(walls[i] != null) {
+						walls[i].destroy();
+						walls[i] = null;
+					}
 				}
 			}
 		}

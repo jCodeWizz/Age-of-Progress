@@ -1,5 +1,6 @@
 package dev.codewizz.world.building;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,9 +17,31 @@ public class Building {
 	public void addRoom(Room room) {
 		rooms.add(room);
 		
+		ArrayList<BuildingObject> edges = new ArrayList<>(); 
+		
 		for(Cell cell : room.getArea()) {
-			cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
-			cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
+			if(cell.object == null) {
+				cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
+				cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
+			} else {
+				
+				if(cell.object.getId().equals("aop:buildingobject")) {
+					BuildingObject o = (BuildingObject) cell.object;
+					if(o.isEdge()) {
+						edges.add(o);
+					}
+				} else {
+					cell.object.destroy();
+					cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
+					cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
+				}
+			}
+		}
+		
+		for(BuildingObject o : edges) {
+			
+			
+			o.init();
 		}
 		
 		for(Cell cell : room.getArea()) {

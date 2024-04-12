@@ -41,7 +41,7 @@ public class Camera {
 	}
 	
 	public void move(float x, float y) {
-		cam.translate(x, y);
+		cam.translate((int)x, (int)y);
 	}
 	
 	public void zoom(float amount, float toX, float toY) {
@@ -55,7 +55,7 @@ public class Camera {
         } else {
         	float a = (toX - (float) (Gdx.graphics.getWidth()/2f)) * (oldZ - cam.zoom);
         	float b = (-toY + (float) (Gdx.graphics.getHeight()/2f)) * (oldZ - cam.zoom);
-        	cam.translate(a, b, 0);
+        	cam.translate((int) a,(int) b, 0);
         }
 	}
 }
