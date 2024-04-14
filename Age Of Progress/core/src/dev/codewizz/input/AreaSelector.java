@@ -95,6 +95,7 @@ public class AreaSelector {
 			public void handle(GameObject obj) {
 				if(obj.getId().equals("aop:hermit")) {
 					Hermit h = (Hermit) obj;
+					
 					try {
 						h.addTask(t.getConstructor().newInstance(), true);
 					} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
