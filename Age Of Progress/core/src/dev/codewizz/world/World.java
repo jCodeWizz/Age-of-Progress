@@ -75,7 +75,7 @@ public class World {
 
 		nature = new Nature(this);
 
-		Thread initThread = new Thread("create-world-thread") {
+		Thread initThread = new Thread("create-world") {
 			@Override
 			public void run() {
 				init();
@@ -85,7 +85,7 @@ public class World {
 			}
 		};
 
-		Thread generateThread = new Thread() {
+		Thread generateThread = new Thread("chunk-generation") {
 			@Override
 			public void run() {
 				generate();

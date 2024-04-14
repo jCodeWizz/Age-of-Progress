@@ -12,6 +12,7 @@ import dev.codewizz.gfx.gui.layers.MainMenuLayer;
 import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.modding.ModHandler;
+import dev.codewizz.networking.Client;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Tiles;
@@ -34,6 +35,7 @@ public class Main extends ApplicationAdapter {
 	public World world;
 	public MouseInput mouseInput;
 	public KeyInput keyInput;
+	public Client client;
 	public ModHandler handler;
 		
 	@Override
@@ -44,10 +46,9 @@ public class Main extends ApplicationAdapter {
 		inst = this;
 
 		Assets.setup();
-		
 		Logger.setup();
-		
 		Assets.create();
+		client = new Client();
 		
 		VisUI.load();
 		
@@ -144,7 +145,7 @@ public class Main extends ApplicationAdapter {
 	public static void exit() {
 		RUNNING = false;
 		
-		
+		Main.inst.client.stop();
 		Main.inst.handler.stop();
 		
 		Gdx.app.exit();
