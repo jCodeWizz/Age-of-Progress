@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 
 public class Server {
 
@@ -17,18 +18,35 @@ public class Server {
 	public Thread listenThread;
 	private boolean connected; 
 	
+	private Database database;
+	
 	public Server() {
 		if(!connect()) {
 			System.err.println("Could NOT start listening for Clients");
 		} else {
 			System.out.println("Listening...");
 		}
+		
+		database = new Database();
+		database.open();
+		database.setup();
 	}
 	
 	private void process(DatagramPacket packet) {
 		byte[] data = packet.getData();
 		
-		 
+		if(data[0] == (byte) 0b11001100) {
+			byte[] usernameBytes = new byte[16];
+			System.arraycopy(data, 1, usernameBytes, 0, usernameBytes.length);
+			
+			String username = new String(usernameBytes, StandardCharsets.US_ASCII).replace(" ", "").strip();
+			String ip = packet.getAddress().toString().replaceAll("([^0-9.])", "");
+			
+			System.out.println("USER: " + username + " : " + ip);
+			
+			database.insertPlayer(username, ip);
+			
+		}
 	}
 	
 	private boolean connect() {

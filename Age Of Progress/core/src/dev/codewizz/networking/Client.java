@@ -25,7 +25,7 @@ public class Client {
 	private boolean connected = false;
 	
 	
-	private String username = "CodeWizzCodeWizz";
+	private String username = "CodeWizz";
 	
 	/**
 	 * Construct a new connection to the server.
