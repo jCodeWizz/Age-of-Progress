@@ -40,14 +40,7 @@ public class Database {
 									"NAME TEXT NOT NULL," +
 									"IP TEXT NOT NULL)";
 				
-				String command2 = "CREATE TABLE IF NOT EXISTS PLAYTIME " +
-									"(ID INT PRIMARY KEY NOT NULL,"
-								+   "START DATE NOT NULL,"
-								+   "LAST DATE NOT NULL,"
-								+   "TOTAL INT NOT NULL)";
-				
 				statement.executeUpdate(command);
-				statement.executeUpdate(command2);
 				statement.close();
 				return true;
 			} catch (SQLException e) {
@@ -57,12 +50,12 @@ public class Database {
 		return false;
 	}
 	
-	public boolean insertPlayer(int id, String name, String ip) {
+	public boolean insertPlayer(String name, String ip) {
 		try {
 			connection.setAutoCommit(false);
 			Statement statement = connection.createStatement();
-			String command = "INSERT INTO PLAYERS (ID, NAME, IP) " +
-								"VALUES (" + (int)Math.abs(id) + ",'" + name + "', '" + ip + "')";
+			String command = "INSERT INTO PLAYERS (NAME, IP) " +
+								"VALUES ('" + name + "', '" + ip + "')";
 			
 			System.out.println(command);
 			

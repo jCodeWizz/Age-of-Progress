@@ -6,7 +6,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
-import java.util.Random;
 
 public class Server {
 
@@ -42,14 +41,10 @@ public class Server {
 			
 			String username = new String(usernameBytes, StandardCharsets.US_ASCII).replace(" ", "").strip();
 			String ip = packet.getAddress().toString().replaceAll("([^0-9.])", "");
-			int id = new Random().nextInt();
 			
 			System.out.println("USER: " + username + " : " + ip);
 			
-			database.insertPlayer(id, username, ip);
-			
-			int unixTime = (int)(System.currentTimeMillis() / 1000L);
-			
+			database.insertPlayer(username, ip);
 			
 		}
 	}
