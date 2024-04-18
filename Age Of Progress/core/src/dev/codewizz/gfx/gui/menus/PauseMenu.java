@@ -8,7 +8,6 @@ import dev.codewizz.gfx.gui.UIButton;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.saving.WorldData;
 
 public class PauseMenu extends UIMenu{
 
@@ -45,7 +44,7 @@ public class PauseMenu extends UIMenu{
 		elements.add(new UIButton("close-button", Gdx.graphics.getWidth()/2 - (66/2)*UILayer.SCALE, Gdx.graphics.getHeight()/2 - (24/2)*UILayer.SCALE - 60*UILayer.SCALE, 66, 24, "Quit") {
 			@Override
 			protected void onDeClick() {
-				WorldData.save(Main.inst.world, "../assets/data/world.save");
+				//WorldData.save(Main.inst.world, "../assets/data/world.save");
 				Main.exit();
 			}
 		});
