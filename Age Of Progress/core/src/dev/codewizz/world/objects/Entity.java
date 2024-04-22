@@ -3,17 +3,21 @@ package dev.codewizz.world.objects;
 import com.badlogic.gdx.Gdx;
 
 import dev.codewizz.gfx.gui.menus.SelectMenu;
-import dev.codewizz.utils.serialization.RCField;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 
 public abstract class Entity extends GameObject {
 
 	protected float maxHealth = 10f, health = maxHealth, damageCoolDown = 0.0f;
 	
+	public Entity() {
+		super();
+	}
+	
 	public Entity(float x, float y) {
 		super(x, y);
-		
 	}
 	
 	@Override
@@ -34,21 +38,30 @@ public abstract class Entity extends GameObject {
 	}
 	
 	@Override
-	public void load(RCObject object) {
-		this.health = object.findField("health").getFloat();
-		this.maxHealth = object.findField("maxHealth").getFloat();
-		this.damageCoolDown = object.findField("damageCoolDown").getFloat();
-		
+	public void load(GameObjectData object) {
 		super.load(object);
+		
+		byte[] data = object.take();
+		
+		this.health = ByteUtils.toFloat(data, 0);
+		this.maxHealth = ByteUtils.toFloat(data, 4);
+		this.damageCoolDown = 0;
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-		object.addField(RCField.Float("health", health));
-		object.addField(RCField.Float("maxHealth", maxHealth));
-		object.addField(RCField.Float("damageCoolDown", damageCoolDown));
+	public GameObjectData save(GameObjectData object) {
+		super.save(object);
 		
-		return super.save(object);
+		object.addFloat(health);
+		object.addFloat(maxHealth);
+		object.end();
+		
+		return object;
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 	
 	@Override

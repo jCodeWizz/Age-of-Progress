@@ -8,16 +8,27 @@ import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.serialization.RCField;
-import dev.codewizz.utils.serialization.RCObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.objects.tasks.HuntTask;
 
-public class Wolf extends Animal implements Serializable {
+public class Wolf extends Animal {
 
 	private Animation walkAnim;
 	private boolean moving = false;
 	private float attackSpeed = 1.5f, damage = 4f;
+	
+	public Wolf() {
+		super();
+
+		this.id = "aop:wolf";
+
+		this.wanderDistance = 20;
+
+		speed = 40f;
+
+		createAnim();
+	}
 
 	public Wolf(float x, float y) {
 		super(x, y);
@@ -102,14 +113,17 @@ public class Wolf extends Animal implements Serializable {
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-		object.addField(RCField.Float("health", health));
-		
-		return object;	
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);	
 	}
 
 	@Override
-	public void load(RCObject object) {
-		this.health = object.findField("health").getFloat();
+	public void load(GameObjectData object) {
+		super.load(object);
+	}
+
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 }

@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
@@ -23,6 +24,17 @@ public class Fence extends GameObject implements Serializable, IBuy {
 	private static Sprite texture2 = Assets.getSprite("fence-flipped");
 
 	private List<Item> costs = new CopyOnWriteArrayList<>();
+	
+	public Fence() {
+		super();
+		
+		this.sortHeight = 25f;
+		this.id = "aop:fence";
+	
+		this.costs.add(new Item(ItemType.WOOD, 4));
+		this.costs.add(new Item(ItemType.PLANKS, 2));
+	}
+	
 	
 	public Fence(float x, float y) {
 		super(x, y);
@@ -64,12 +76,18 @@ public class Fence extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
-		return object;
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		super.load(object);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 
 	@Override

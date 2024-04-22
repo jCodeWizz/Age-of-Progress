@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.serialization.RCField;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.objects.tasks.CaptureAnimalTask;
 import dev.codewizz.world.settlement.FarmArea;
@@ -25,6 +25,13 @@ public class Cow extends Animal implements Serializable {
 	
 	private Animation walkAnim;
 	private boolean moving = false;
+	
+	public Cow() {
+		super();
+		
+		this.id = "aop:cow";
+		createAnim();
+	}
 	
 	public Cow(float x, float y) {
 		super(x, y);
@@ -115,14 +122,17 @@ public class Cow extends Animal implements Serializable {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
-		object.addField(RCField.Float("health", health));
-		
-		return object;	
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);	
 	}
 
 	@Override
-	public void load(RCObject object) {
-		this.health = object.findField("health").getFloat();
+	public void load(GameObjectData object) {
+		super.load(object);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 }

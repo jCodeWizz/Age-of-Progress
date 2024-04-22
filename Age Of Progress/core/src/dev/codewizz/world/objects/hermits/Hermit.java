@@ -13,8 +13,7 @@ import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
-import dev.codewizz.utils.serialization.RCField;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Inventory;
@@ -57,10 +56,19 @@ public class Hermit extends TaskableObject implements Serializable {
 	private UIText nameText;
 	private UIImage jobIcon;
 	
+	public Hermit() {
+		super();
+		
+		this.id = "aop:hermit";
+
+		this.setJob(new Worker());
+		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
+	}
+	
 	public Hermit(float x, float y) {
 		super(x, y);
 		this.id = "aop:hermit";
-		this.name= Utils.getRandomName();
+		this.name = Utils.getRandomName();
 		this.inventory = new Inventory(5);
 		
 		this.w = 24;
@@ -170,15 +178,13 @@ public class Hermit extends TaskableObject implements Serializable {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
-		object.addField(RCField.Float("health", health));
-		
-		return object;
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);
 	}
 
 	@Override
-	public void load(RCObject object) {
-		this.health = object.findField("health").getFloat();
+	public void load(GameObjectData object) {
+		super.load(object);
 		Main.inst.world.settlement.addHermit(this);
 	}
 	

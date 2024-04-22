@@ -1,10 +1,11 @@
 package dev.codewizz.world;
 
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 
 public interface Serializable {
 	
-	public RCObject save(byte[] object);
-	public void load(RCObject object);
-	
+	public GameObjectData save(GameObjectData object);
+	public void load(GameObjectData object);
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready);
 }

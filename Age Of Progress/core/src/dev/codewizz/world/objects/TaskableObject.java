@@ -7,7 +7,8 @@ import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.pathfinding.Agent;
 
@@ -21,6 +22,22 @@ public abstract class TaskableObject extends Entity {
 	
 	protected float speed = 400f;
 	protected Agent agent;
+	
+	public TaskableObject() {
+		super();
+		
+		agent = new Agent(this) {
+			@Override
+			public void onReach() {
+				reachCell();
+			}
+			
+			@Override
+			public Vector2 getMiddlePoint() {
+				return getCenter();
+			}
+		};
+	}
 	
 	public TaskableObject(float x, float y) {
 		super(x, y);
@@ -39,15 +56,17 @@ public abstract class TaskableObject extends Entity {
 	}
 	
 	@Override
-	public void load(RCObject object) {
-
-		
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
+	}
+	
+	@Override
+	public void load(GameObjectData object) {
 		super.load(object);
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-
+	public GameObjectData save(GameObjectData object) {
 		return super.save(object);
 	}
 	

@@ -13,7 +13,9 @@ import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.objects.IBuy;
 
 public abstract class GameObject extends Renderable implements Serializable {
@@ -30,6 +32,10 @@ public abstract class GameObject extends Renderable implements Serializable {
 	protected String name = "Object";
 	
 	private UIText text;
+	
+	public GameObject() {
+		
+	}
 	
 	public GameObject(float x, float y) {
 		this.x = x;
@@ -56,13 +62,32 @@ public abstract class GameObject extends Renderable implements Serializable {
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
+	public GameObjectData save(GameObjectData object) {
+		object.addFloat(x);
+		object.addFloat(y);
+		object.addInteger(w);
+		object.addInteger(h);
+		
+		object.addString(name);
+		object.end();
 		return object;
 	}
 	
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		byte[] data = object.take();
 		
+		x = ByteUtils.toFloat(data, 0);
+		y = ByteUtils.toFloat(data, 4);
+		w = ByteUtils.toInteger(data, 8);
+		h = ByteUtils.toInteger(data, 12);
+		
+		name = ByteUtils.toString(data, 16);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return ready;
 	}
 
 	public void renderDebug() {

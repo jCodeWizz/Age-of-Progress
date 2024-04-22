@@ -30,9 +30,7 @@ import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.WNoise;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.utils.quadtree.QuadTree;
-import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.WorldData;
-import dev.codewizz.utils.serialization.RCDatabase;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
@@ -98,25 +96,11 @@ public class World {
 
 	public static World openWorld(String path) {
 		File file = Gdx.files.internal(path).file();
-		RCDatabase db = RCDatabase.DeserializeFromFile(file);
-
-		World world = new World(WorldData.load(db));
-		GameObjectData.load(db);
-
-		world.nature = new Nature(world);
-
-		return world;
+		return null;
 	}
 
 	public World(WorldData data) {
 		Main.inst.world = this;
-
-		this.tree = data.tree;
-		this.settlement = data.settlement;
-		this.objects = data.objects;
-		this.showInfoSartMenu = data.showStartInfo;
-		this.cellGraph = data.cellGraph;
-
 		Event.dispatch(new LoadWorldEvent(this));
 	}
 

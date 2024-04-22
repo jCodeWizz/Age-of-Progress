@@ -4,8 +4,9 @@ import com.dongbat.jbump.util.MathUtils;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Utils;
-import dev.codewizz.utils.serialization.RCField;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.World;
 import dev.codewizz.world.objects.tasks.MoveTask;
@@ -16,6 +17,10 @@ public abstract class Animal extends TaskableObject {
 	private Herd herd;
 	private boolean inHerd = false;
 	protected int wanderDistance = 6;
+	
+	public Animal() {
+		super();
+	}
 	
 	public Animal(float x, float y, Herd herd) {
 		super(x, y);
@@ -94,21 +99,28 @@ public abstract class Animal extends TaskableObject {
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-
-		object.addField(RCField.Boolean("inHerd", inHerd));
-		object.addField(RCField.Integer("wanderDistance", wanderDistance));
+	public GameObjectData save(GameObjectData object) {
+		super.save(object);
 		
-		return super.save(object);
+		object.addInteger(wanderDistance);
+		object.addByte(ByteUtils.toByte((byte)0, inHerd, 0));
+		object.end();
+		
+		return object;
 	}
 	
 	@Override
-	public void load(RCObject object) {
-
-		this.inHerd = object.findField("inHerd").getBoolean();
-		this.wanderDistance = object.findField("wanderDistance").getInt();
-		
+	public void load(GameObjectData object) {
 		super.load(object);
+		
+		byte[] data = object.take();
+		this.wanderDistance = ByteUtils.toInteger(data, 0);
+		this.inHerd = ByteUtils.toBoolean(data[4], 0);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 	
 	public int getWanderDistance() {

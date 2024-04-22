@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import box2dLight.PointLight;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
@@ -34,6 +34,18 @@ public class Building extends GameObject implements IBuy, Serializable {
 	
 	public int size = 2;
 	private PointLight light;
+	
+	public Building() {
+		super();
+		
+		if(Main.inst.world.settlement != null) 
+			Main.inst.world.settlement.objects.add(this);
+	
+		this.sortHeight = 8;
+		this.costs.add(new Item(ItemType.WOOD, 12));
+		this.costs.add(new Item(ItemType.PLANKS, 10));
+		this.costs.add(new Item(ItemType.STONE, 4));
+	}
 	
 	public Building(float x, float y) {
 		super(x, y);
@@ -139,12 +151,13 @@ public class Building extends GameObject implements IBuy, Serializable {
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-		return object;
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		super.load(object);
 	}
 	
 	public boolean isFull() {

@@ -8,7 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
@@ -18,7 +19,12 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 
 	private static Sprite texture = Assets.getSprite("mushrooms");
 	
-	private boolean tasked = false;
+	public Mushrooms() {
+		super();
+
+		this.id = "aop:mushrooms";
+		this.sortHeight = 28;
+	}
 	
 	public Mushrooms(float x, float y) {
 		super(x, y);
@@ -70,12 +76,18 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 	}
 	
 	@Override
-	public RCObject save(RCObject object) {
-		return object;
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		super.load(object);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 
 	@Override

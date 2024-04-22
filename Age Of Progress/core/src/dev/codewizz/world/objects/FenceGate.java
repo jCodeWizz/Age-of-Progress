@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
@@ -27,6 +29,16 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 	private List<Item> costs = new CopyOnWriteArrayList<>();
 	
 	private int previousCost = 5;
+	
+	public FenceGate() {
+		super();
+		
+		this.sortHeight = 25f;
+		this.id = "aop:fence-gate";
+	
+		costs.add(new Item(ItemType.WOOD, 4));
+		costs.add(new Item(ItemType.PLANKS, 8));
+	}
 	
 	public FenceGate(float x, float y) {
 		super(x, y);
@@ -69,12 +81,27 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
+	public GameObjectData save(GameObjectData object) {
+		super.save(object);
+		
+		object.addInteger(previousCost);
+		object.end();
+		
 		return object;
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		
+		byte[] data = object.take();
+		this.previousCost = ByteUtils.toInteger(data, 0);
+		
+		super.load(object);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 
 	@Override

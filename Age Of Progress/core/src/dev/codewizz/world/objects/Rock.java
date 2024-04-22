@@ -10,7 +10,9 @@ import dev.codewizz.gfx.Particle;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Serializable;
 import dev.codewizz.world.items.Item;
@@ -22,7 +24,14 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 	private static Sprite texture2 = Assets.getSprite("rock-broken");
 
 	private boolean broken = false;
-	private boolean tasked = false;
+	
+	public Rock() {
+		super();
+		
+		this.sortHeight = 25f;
+
+		this.id = "aop:rock";
+	}
 	
 	public Rock(float x, float y) {
 		super(x, y);
@@ -56,12 +65,29 @@ public class Rock extends GameObject implements Serializable, IGatherable {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
+	public GameObjectData save(GameObjectData object) {
+		super.save(object);
+		
+		byte b = 0;
+		b = ByteUtils.toByte(b, broken, 0);
+		object.addByte(b);
+		object.end();
+		
 		return object;
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		super.load(object);
+		
+		byte[] data = object.take();
+		
+		this.broken = ByteUtils.toBoolean(data[0], 0);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		return super.loadCheck(loader, ready);
 	}
 
 	@Override

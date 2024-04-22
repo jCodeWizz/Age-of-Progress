@@ -3,6 +3,8 @@ package dev.codewizz.world.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
@@ -57,5 +59,24 @@ public class ConstructionObject extends GameObject {
 	
 	public GameObject getToPlace() {
 		return toPlace;
+	}
+	
+	@Override
+	public GameObjectData save(GameObjectData object) {
+		return super.save(object);
+	}
+	
+	@Override
+	public void load(GameObjectData object) {
+		super.load(object);
+	}
+	
+	@Override
+	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
+		
+		
+		
+		
+		return super.loadCheck(loader, ready);
 	}
 }

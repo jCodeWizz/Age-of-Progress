@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
-import dev.codewizz.utils.serialization.RCObject;
+import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Nature;
 import dev.codewizz.world.Serializable;
@@ -18,6 +19,13 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 	
 	private boolean grown = true;
 	private float counter = Utils.getRandom(Nature.DAY_TIME, Nature.DAY_TIME + Nature.DAY_TIME/2);
+	
+	public Bush() {
+		super();
+		
+		this.sortHeight = 25f;
+		this.id = "aop:berry-bush";
+	}
 	
 	public Bush(float x, float y) {
 		super(x, y);
@@ -57,12 +65,23 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 	}
 
 	@Override
-	public RCObject save(RCObject object) {
+	public GameObjectData save(GameObjectData object) {
+		super.save(object);
+		
+		object.addFloat(counter);
+		object.addByte(ByteUtils.toByte((byte)0, grown, 0));
+		object.end();
+		
 		return object;
 	}
 
 	@Override
-	public void load(RCObject object) {
+	public void load(GameObjectData object) {
+		super.load(object);
+		
+		byte[] data = object.take();
+		this.counter = ByteUtils.toFloat(data, 0);
+		this.grown = ByteUtils.toBoolean(data[4], 0);
 	}
 
 	@Override
