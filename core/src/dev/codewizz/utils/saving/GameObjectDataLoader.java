@@ -3,26 +3,22 @@ package dev.codewizz.utils.saving;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
+import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 
 public class GameObjectDataLoader {
 
-	private HashMap<Integer, GameObjectData> toLoad;
-	private HashMap<Integer, GameObject> loaded;
+	private HashMap<UUID, GameObjectData> toLoad;
+	private HashMap<UUID, GameObject> loaded;
 	
 	public void loadFromData(byte[] total) {
 		toLoad = new HashMap<>();
 		int index = 0;
 		
 		while (index < total.length) {
-			byte[] lengthData = new byte[4];
-			lengthData[0] = total[index];
-			lengthData[1] = total[index+1];
-			lengthData[2] = total[index+2];
-			lengthData[3] = total[index+3];
-			
 			int length = ByteUtils.toInteger(total, index);
 			
 			byte[] data = new byte[length];
@@ -38,9 +34,24 @@ public class GameObjectDataLoader {
 	public void loadGameObjects() {
 		loaded = new HashMap<>();
 		
-		for(Map.Entry<Integer, GameObjectData> entry : toLoad.entrySet()) {
-			GameObjectData data = entry.getValue();
-			loaded.put(entry.getKey(), data.load());
+		while (!toLoad.isEmpty()) {
+			for(Map.Entry<UUID, GameObjectData> entry : toLoad.entrySet()) {
+				GameObjectData data = entry.getValue();
+				Pair<GameObject, Boolean> result = data.load(this);
+
+				if (result.getTypeB()) {
+					loaded.put(entry.getKey(), result.getTypeA());
+					toLoad.remove(entry.getKey());
+				}
+			}
 		}
+	}
+
+	public boolean isLoaded(UUID uuid) {
+		return loaded.containsKey(uuid);
+	}
+
+	public GameObject getLoadedObject(UUID uuid) {
+		return loaded.get(uuid);
 	}
 }

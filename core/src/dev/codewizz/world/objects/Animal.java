@@ -1,7 +1,6 @@
 package dev.codewizz.world.objects;
 
 import com.dongbat.jbump.util.MathUtils;
-
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -110,19 +109,20 @@ public abstract class Animal extends TaskableObject {
 	}
 	
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
 		
 		byte[] data = object.take();
 		this.wanderDistance = ByteUtils.toInteger(data, 0);
 		this.inHerd = ByteUtils.toBoolean(data[4], 0);
+
+		/*
+		 * Check to see if Herd.java is ready to load?
+		 */
+
+		return success;
 	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
-	}
-	
+
 	public int getWanderDistance() {
 		return wanderDistance;
 	}

@@ -2,6 +2,8 @@ package dev.codewizz.world;
 
 import java.awt.Polygon;
 import java.awt.Rectangle;
+import java.util.Random;
+import java.util.UUID;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -16,13 +18,16 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.objects.IBuy;
 
 public abstract class GameObject extends Renderable implements Serializable {
 
+	private final static Random RANDOM = new Random();
 	
 	protected String id = "unid-object";
-	
+	protected UUID uuid;
+
 	protected float x, y, sortHeight;
 	protected int w, h;
 	protected boolean flip = false;
@@ -38,6 +43,8 @@ public abstract class GameObject extends Renderable implements Serializable {
 	}
 	
 	public GameObject(float x, float y) {
+		uuid = UUID.randomUUID();
+
 		this.x = x;
 		this.y = y;
 	}
@@ -74,7 +81,7 @@ public abstract class GameObject extends Renderable implements Serializable {
 	}
 	
 	@Override
-	public void load(GameObjectData object) {
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
 		byte[] data = object.take();
 		
 		x = ByteUtils.toFloat(data, 0);
@@ -83,11 +90,8 @@ public abstract class GameObject extends Renderable implements Serializable {
 		h = ByteUtils.toInteger(data, 12);
 		
 		name = ByteUtils.toString(data, 16);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return ready;
+
+		return success;
 	}
 
 	public void renderDebug() {
@@ -209,6 +213,12 @@ public abstract class GameObject extends Renderable implements Serializable {
 	public Cell getCell() {
 		return this.cell;
 	}
-	
-	
+
+	public UUID getUUID() {
+		return uuid;
+	}
+
+	public void setUUID(UUID uuid) {
+		this.uuid = uuid;
+	}
 }

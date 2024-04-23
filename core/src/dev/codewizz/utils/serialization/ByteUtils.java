@@ -1,6 +1,9 @@
 package dev.codewizz.utils.serialization;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.UUID;
 
 public class ByteUtils {
 
@@ -33,19 +36,6 @@ public class ByteUtils {
 		return b;
 	}
 
-	public static boolean toBoolean(byte b, int pos) {
-		int checker = 1 << (7 - pos);
-		return (b & checker) != 0;
-	}
-
-	public static int toInteger(byte[] bytes) {
-		int result = 0;
-		for (int i = 0; i < bytes.length; i++) {
-			result |= (bytes[i] & 0xFF) << (8 * (bytes.length - 1 - i));
-		}
-		return result;
-	}
-
 	public static byte[] toBytes(float value) {
 		int intValue = Float.floatToIntBits(value);
 		return toBytes(intValue, Float.BYTES);
@@ -63,6 +53,22 @@ public class ByteUtils {
 		return result;
 	}
 
+	public static byte[] toBytes(UUID uuid) {
+		byte[] bytes = new byte[16];
+		long mostSigBits = uuid.getMostSignificantBits();
+		long leastSigBits = uuid.getLeastSignificantBits();
+		for (int i = 0; i < 8; i++) {
+			bytes[i] = (byte) (mostSigBits >>> (8 * (7 - i)));
+			bytes[8 + i] = (byte) (leastSigBits >>> (8 * (7 - i)));
+		}
+		return bytes;
+	}
+
+	public static boolean toBoolean(byte b, int pos) {
+		int checker = 1 << (7 - pos);
+		return (b & checker) != 0;
+	}
+
 	public static String toString(byte[] data, int index) {
 		int length = toInteger(data, index, 1);
 
@@ -76,6 +82,14 @@ public class ByteUtils {
 	public static float toFloat(byte[] bytes) {
 		int intValue = toInteger(bytes);
 		return Float.intBitsToFloat(intValue);
+	}
+
+	public static int toInteger(byte[] bytes) {
+		int result = 0;
+		for (int i = 0; i < bytes.length; i++) {
+			result |= (bytes[i] & 0xFF) << (8 * (bytes.length - 1 - i));
+		}
+		return result;
 	}
 
 	public static int toInteger(byte[] data, int index, int length) {
@@ -96,21 +110,33 @@ public class ByteUtils {
 		return toFloat(a);
 	}
 
-	public static void main(String[] args) {
-		byte b = toByte((byte)0, true, 4);
-		
-		System.out.println(b);
-		
-		b = toByte(b, true, 5);
-		
-		System.out.println(toBoolean(b, 4));
-		System.out.println(toBoolean(b, 1));
-		System.out.println(toBoolean(b, 0));
-		System.out.println(toBoolean(b, 5));
-		
-		
+	public static UUID toUUID(byte[] data) {
+		long mostSigBits = 0;
+		long leastSigBits = 0;
+		for (int i = 0; i < 8; i++) {
+			mostSigBits = (mostSigBits << 8) | (data[i] & 0xff);
+			leastSigBits = (leastSigBits << 8) | (data[8 + i] & 0xff);
+		}
+		return new UUID(mostSigBits, leastSigBits);
 	}
-	
-	
-	
+
+	public static UUID toUUID(byte[] data, int index) {
+		byte[] a = new byte[16];
+		System.arraycopy(data, index, a, 0, 16);
+		return toUUID(a);
+	}
+
+	public static void main(String[] args) {
+
+		UUID uuid = UUID.randomUUID();
+
+		System.out.println(uuid);
+
+		byte[] bytes = toBytes(uuid);
+
+		UUID uuid2 = toUUID(bytes);
+
+		System.out.println(uuid2);
+
+	}
 }

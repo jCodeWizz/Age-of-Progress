@@ -13,15 +13,15 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.settlement.FarmArea;
 
 public class FencePost extends GameObject implements Serializable, IBuy {
 
-	private static Sprite texture = Assets.getSprite("fence-post");
-	private List<Item> costs = new CopyOnWriteArrayList<>();
+	private static final Sprite texture = Assets.getSprite("fence-post");
+	private final List<Item> costs = new CopyOnWriteArrayList<>();
 	
 	public FencePost() {
 		super();
@@ -69,13 +69,8 @@ public class FencePost extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 
 	@Override

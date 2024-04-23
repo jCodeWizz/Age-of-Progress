@@ -54,15 +54,16 @@ public abstract class TaskableObject extends Entity {
 			}
 		};
 	}
-	
+
 	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
-	}
-	
-	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
+
+		/*
+		 * Check to see if tasks are ready to load?
+		 */
+
+		return success;
 	}
 	
 	@Override

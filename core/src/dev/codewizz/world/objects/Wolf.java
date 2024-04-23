@@ -118,12 +118,7 @@ public class Wolf extends Animal {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 }

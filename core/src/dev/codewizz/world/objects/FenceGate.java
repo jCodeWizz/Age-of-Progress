@@ -15,7 +15,7 @@ import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.pathfinding.CellGraph;
@@ -23,10 +23,10 @@ import dev.codewizz.world.settlement.FarmArea;
 
 public class FenceGate extends GameObject implements Serializable, IBuy {
 
-	private static Sprite texture = Assets.getSprite("fence-gate");
-	private static Sprite texture2 = Assets.getSprite("fence-gate-flipped");
+	private static final Sprite texture = Assets.getSprite("fence-gate");
+	private static final Sprite texture2 = Assets.getSprite("fence-gate-flipped");
 
-	private List<Item> costs = new CopyOnWriteArrayList<>();
+	private final List<Item> costs = new CopyOnWriteArrayList<>();
 	
 	private int previousCost = 5;
 	
@@ -91,17 +91,13 @@ public class FenceGate extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
+
 		byte[] data = object.take();
 		this.previousCost = ByteUtils.toInteger(data, 0);
-		
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+
+		return success;
 	}
 
 	@Override

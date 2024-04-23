@@ -14,8 +14,9 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
@@ -101,7 +102,7 @@ public class Hermit extends TaskableObject implements Serializable {
 			}
 		}
 		
-		if(this.currentTask == null && this.getInventory().getItems().size() > 0) {
+		if(this.currentTask == null && !this.getInventory().getItems().isEmpty()) {
 			this.addTask(new ClearInventoryTask(), true);
 		}
 		
@@ -183,9 +184,9 @@ public class Hermit extends TaskableObject implements Serializable {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
 		Main.inst.world.settlement.addHermit(this);
+		return super.load(loader, object, success);
 	}
 	
 	@Override

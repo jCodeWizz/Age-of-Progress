@@ -12,9 +12,10 @@ import box2dLight.PointLight;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.IBuy;
@@ -156,8 +157,8 @@ public class Building extends GameObject implements IBuy, Serializable {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 	
 	public boolean isFull() {

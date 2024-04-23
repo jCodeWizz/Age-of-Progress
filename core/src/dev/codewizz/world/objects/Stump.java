@@ -13,14 +13,14 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 
 public class Stump extends GameObject implements Serializable, IBuy {
 
-	private static Sprite texture = Assets.getSprite("stump");
-	private List<Item> costs = new CopyOnWriteArrayList<>();
+	private static final Sprite texture = Assets.getSprite("stump");
+	private final List<Item> costs = new CopyOnWriteArrayList<>();
 	
 	public Stump() {
 		super();
@@ -67,13 +67,8 @@ public class Stump extends GameObject implements Serializable, IBuy {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 
 	@Override

@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.tasks.BuildObjectTask;
+
+import java.util.UUID;
 
 public class ConstructionObject extends GameObject {
 
@@ -63,20 +66,28 @@ public class ConstructionObject extends GameObject {
 	
 	@Override
 	public GameObjectData save(GameObjectData object) {
-		return super.save(object);
+		super.save(object);
+
+		object.addByte(ByteUtils.toByte((byte)0, placed, 0));
+		object.addArray(ByteUtils.toBytes(toPlace.getUUID()));
+		object.end();
+
+		return object;
 	}
 	
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		
-		
-		
-		
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
+
+		byte[] data = object.take();
+
+		UUID toPlaceUUID = ByteUtils.toUUID(data, 1);
+		if (loader.isLoaded(toPlaceUUID)) {
+			this.toPlace = loader.getLoadedObject(toPlaceUUID);
+		} else {
+			success = false;
+		}
+
+		return success;
 	}
 }

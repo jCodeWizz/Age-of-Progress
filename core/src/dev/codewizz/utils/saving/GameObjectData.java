@@ -1,23 +1,23 @@
 package dev.codewizz.utils.saving;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
+import dev.codewizz.utils.Logger;
+import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 
-public class GameObjectData {
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-	private static final Random RANDOM = new Random();
+public class GameObjectData {
 
 	private List<byte[]> data;
 	private int size = 0;
 	private List<Byte> current;
 
 	private Class<? extends GameObject> type;
-	private int uuid;
+	private UUID uuid;
 
 	public GameObjectData(GameObject object) {
 		data = new ArrayList<>();
@@ -41,44 +41,55 @@ public class GameObjectData {
 			index += length + 4;
 		}
 		
-		byte[] data = this.data.remove(0);
-		uuid = ByteUtils.toInteger(data, 0, 4);
+		byte[] data = this.take();
+		uuid = ByteUtils.toUUID(data, 0);
 		try {
-			type = (Class<? extends GameObject>) Class.forName(ByteUtils.toString(data, 4));
+			type = (Class<? extends GameObject>) Class.forName(ByteUtils.toString(data, 16));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public GameObjectData() { }
+
+	public GameObjectData copy() {
+		GameObjectData data = new GameObjectData();
+		data.uuid = this.uuid;
+		data.type = this.type;
+		data.data = this.data;
+		data.size = this.size;
+		data.current = this.current;
+
+		return data;
 	}
 	
 	public byte[] getTotalBytes() {
 		byte[] total = new byte[size + 4 * this.data.size()];
 
 		int index = 0;
-		for (int i = 0; i < this.data.size(); i++) {
-			byte[] data = this.data.get(i);
+        for (byte[] data : this.data) {
+            byte[] length = ByteUtils.toBytes(data.length, 4);
 
-			byte[] length = ByteUtils.toBytes(data.length, 4);
+            total[index] = length[0];
+            total[index + 1] = length[1];
+            total[index + 2] = length[2];
+            total[index + 3] = length[3];
 
-			total[index] = length[0];
-			total[index + 1] = length[1];
-			total[index + 2] = length[2];
-			total[index + 3] = length[3];
-
-			System.arraycopy(data, 0, total, index + 4, data.length);
-			index += data.length + 4;
-		}
+            System.arraycopy(data, 0, total, index + 4, data.length);
+            index += data.length + 4;
+        }
 		
 		return total;
 	}
 
-	public GameObject load() {
+	public Pair<GameObject, Boolean> load(GameObjectDataLoader loader) {
 		GameObject object;
 		try {
 			object = type.getConstructor().newInstance();
-			load(object);
-			return object;
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-				| NoSuchMethodException | SecurityException e) {
+			boolean success = load(loader, object);
+			return new Pair<>(object, success);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+			Logger.error("Couldn't load " + type.toString() + " because: ");
 			e.printStackTrace();
 		}
 		return null;
@@ -86,19 +97,19 @@ public class GameObjectData {
 
 	private void save(GameObject object) {
 		type = object.getClass();
-		uuid = RANDOM.nextInt();
+		uuid = object.getUUID();
 
 		String typeString = type.toString().substring(6);
 
-		addInteger(uuid);
+		addArray(ByteUtils.toBytes(uuid));
 		addString(typeString);
 		end();
 
 		object.save(this);
 	}
 
-	private void load(GameObject object) {
-		object.load(this);
+	private boolean load(GameObjectDataLoader loader, GameObject object) {
+		return object.load(loader, this.copy(), true);
 	}
 
 	public void addList(List<Byte> data) {
@@ -118,22 +129,22 @@ public class GameObjectData {
 
 	public void addInteger(int value) {
 		byte[] r = ByteUtils.toBytes(value, 4);
-		for (int i = 0; i < r.length; i++) {
-			current.add(r[i]);
-		}
+        for (byte b : r) {
+            current.add(b);
+        }
 	}
 
 	public void addFloat(float value) {
 		byte[] r = ByteUtils.toBytes(value);
-		for (int i = 0; i < r.length; i++) {
-			current.add(r[i]);
-		}
+        for (byte b : r) {
+            current.add(b);
+        }
 	}
 
 	public void addArray(byte[] value) {
-		for (int i = 0; i < value.length; i++) {
-			current.add(value[i]);
-		}
+        for (byte b : value) {
+            current.add(b);
+        }
 	}
 
 	public void addByte(byte value) {
@@ -142,20 +153,20 @@ public class GameObjectData {
 
 	public void addString(String s) {
 		byte[] data = ByteUtils.toBytes(s);
-		for (int i = 0; i < data.length; i++) {
-			current.add(data[i]);
-		}
+        for (byte datum : data) {
+            current.add(datum);
+        }
 	}
 
 	public List<byte[]> getDataList() {
 		return data;
 	}
 
-	public int getUUID() {
-		return uuid;
-	}
-
 	public byte[] take() {
 		return data.remove(0);
+	}
+
+	public UUID getUUID() {
+		return uuid;
 	}
 }

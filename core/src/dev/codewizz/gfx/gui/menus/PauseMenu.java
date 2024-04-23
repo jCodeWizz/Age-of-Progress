@@ -8,6 +8,7 @@ import dev.codewizz.gfx.gui.UIButton;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 
 public class PauseMenu extends UIMenu{
 

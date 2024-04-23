@@ -11,13 +11,13 @@ import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 
 public class Mushrooms extends GameObject implements Serializable, IGatherable {
 
-	private static Sprite texture = Assets.getSprite("mushrooms");
+	private static final Sprite texture = Assets.getSprite("mushrooms");
 	
 	public Mushrooms() {
 		super();
@@ -81,13 +81,8 @@ public class Mushrooms extends GameObject implements Serializable, IGatherable {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 
 	@Override

@@ -7,10 +7,11 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
+import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Nature;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 
 public class Bush extends GameObject implements Serializable, IGatherable {
 
@@ -76,12 +77,14 @@ public class Bush extends GameObject implements Serializable, IGatherable {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
 		
 		byte[] data = object.take();
 		this.counter = ByteUtils.toFloat(data, 0);
 		this.grown = ByteUtils.toBoolean(data[4], 0);
+
+		return success;
 	}
 
 	@Override

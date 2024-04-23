@@ -14,14 +14,14 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Serializable;
+import dev.codewizz.utils.serialization.Serializable;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.settlement.Settlement;
 
 public class Flag extends GameObject implements IBuy, Serializable {
 
-	private static Sprite texture = Assets.getSprite("flag");
+	private static final Sprite texture = Assets.getSprite("flag");
 
 	public Flag() {
 		super();
@@ -100,13 +100,8 @@ public class Flag extends GameObject implements IBuy, Serializable {
 	}
 
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		return super.load(loader, object, success);
 	}
 
 	@Override

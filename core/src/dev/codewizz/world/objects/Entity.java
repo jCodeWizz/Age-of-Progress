@@ -38,14 +38,16 @@ public abstract class Entity extends GameObject {
 	}
 	
 	@Override
-	public void load(GameObjectData object) {
-		super.load(object);
+	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
+		super.load(loader, object, success);
 		
 		byte[] data = object.take();
 		
 		this.health = ByteUtils.toFloat(data, 0);
 		this.maxHealth = ByteUtils.toFloat(data, 4);
 		this.damageCoolDown = 0;
+
+		return success;
 	}
 	
 	@Override
@@ -57,11 +59,6 @@ public abstract class Entity extends GameObject {
 		object.end();
 		
 		return object;
-	}
-	
-	@Override
-	public boolean loadCheck(GameObjectDataLoader loader, boolean ready) {
-		return super.loadCheck(loader, ready);
 	}
 	
 	@Override
