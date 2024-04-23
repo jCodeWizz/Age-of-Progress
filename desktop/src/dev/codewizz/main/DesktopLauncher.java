@@ -24,11 +24,11 @@ public class DesktopLauncher {
 		Settings settings = new Settings();
 		settings.maxWidth = 2048;
 		settings.maxHeight = 2048;
-		TexturePacker.process(settings, "../assets/textures/tiles", "../assets/packs", "tiles");
-		TexturePacker.process(settings, "../assets/textures/ui/icons", "../assets/packs", "ui");
-		TexturePacker.process(settings, "../assets/textures/entities", "../assets/packs", "entities");
-		TexturePacker.process(settings, "../assets/textures/objects", "../assets/packs", "objects");
-		TexturePacker.process(settings, "../assets/textures/particles", "../assets/packs", "particles");
-		TexturePacker.process(settings, "../assets/textures/items", "../assets/packs", "items");
+		TexturePacker.process(settings, "assets/textures/tiles", "assets/packs", "tiles");
+		TexturePacker.process(settings, "assets/textures/ui/icons", "assets/packs", "ui");
+		TexturePacker.process(settings, "assets/textures/entities", "assets/packs", "entities");
+		TexturePacker.process(settings, "assets/textures/objects", "assets/packs", "objects");
+		TexturePacker.process(settings, "assets/textures/particles", "assets/packs", "particles");
+		TexturePacker.process(settings, "assets/textures/items", "assets/packs", "items");
 	}
 }
