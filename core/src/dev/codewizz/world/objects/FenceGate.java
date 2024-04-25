@@ -15,13 +15,13 @@ import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.FarmArea;
 
-public class FenceGate extends GameObject implements Serializable, IBuy {
+public class FenceGate extends GameObject implements SerializableObject, IBuy {
 
 	private static final Sprite texture = Assets.getSprite("fence-gate");
 	private static final Sprite texture2 = Assets.getSprite("fence-gate-flipped");

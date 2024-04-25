@@ -1,15 +1,19 @@
 package dev.codewizz.world;
 
 import java.awt.Polygon;
+import java.util.UUID;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.saving.ChunkData;
+import dev.codewizz.utils.serialization.ByteUtils;
+import dev.codewizz.utils.serialization.SerializableTile;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.pathfinding.Link;
 
-public abstract class Tile {
+public abstract class Tile implements SerializableTile {
 	
 	protected Cell cell;
 	protected Sprite texture;
@@ -151,5 +155,29 @@ public abstract class Tile {
 	
 	public Cell getCell() {
 		return cell;
+	}
+
+	@Override
+	public void save(ChunkData data) {
+
+		String type = getClass().toString();
+		data.addString(type.substring(6));
+
+		if (this.cell.getObject() != null) {
+			byte[] uuid = ByteUtils.toBytes(this.cell.getObject().getId());
+			data.addArray(uuid);
+		}
+
+		data.end();
+	}
+
+	@Override
+	public void load(byte[] data) {
+		if (data.length >= 16) {
+			UUID uuid = ByteUtils.toUUID(data, 0);
+
+
+
+		}
 	}
 }

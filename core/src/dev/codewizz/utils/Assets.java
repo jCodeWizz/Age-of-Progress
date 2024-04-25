@@ -83,7 +83,7 @@ public class Assets {
 		return images.get(name);
 	}
 	
-	private static File createFolder(String path) {
+	public static File createFolder(String path) {
 		File f = Gdx.files.external(path).file();
 		
 		if(!f.exists()) {
@@ -92,10 +92,7 @@ public class Assets {
 		
 		return f;
 	}
-	
-	
-	
-	
+
 	public static TextureAtlas getAtlas(String s) {
 		if(atlasses.containsKey(s)) {
 			return atlasses.get(s);

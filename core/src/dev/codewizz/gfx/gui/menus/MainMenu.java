@@ -43,7 +43,7 @@ public class MainMenu extends UIMenu {
 			@Override
 			protected void onDeClick() {
 				
-				Main.inst.openWorld(World.openWorld("../assets/data/world.save"));
+				Main.inst.openWorld(World.openWorld("test_world"));
 				
 				boolean hideButtons = !Main.inst.world.showInfoSartMenu;
 				
@@ -60,6 +60,7 @@ public class MainMenu extends UIMenu {
 			protected void onDeClick() {
 				
 				Main.inst.openWorld(new World());
+				Main.inst.world.setup();
 				
 				Main.inst.renderer.ui.getElement("manage-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("path-icon").setAvailable(false);

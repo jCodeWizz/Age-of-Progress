@@ -1,8 +1,6 @@
 package dev.codewizz.utils.serialization;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.UUID;
 
 public class ByteUtils {
@@ -23,6 +21,11 @@ public class ByteUtils {
 		return result;
 	}
 
+	public static byte[] toBytes(float value) {
+		int intValue = Float.floatToIntBits(value);
+		return toBytes(intValue, Float.BYTES);
+	}
+
 	public static byte toByte(byte b, boolean flag, int pos) {
 		int bits = (int) b;
 		int bytes = 1 << (7 - pos);
@@ -36,11 +39,6 @@ public class ByteUtils {
 		return b;
 	}
 
-	public static byte[] toBytes(float value) {
-		int intValue = Float.floatToIntBits(value);
-		return toBytes(intValue, Float.BYTES);
-	}
-
 	public static byte[] toBytes(String value) {
 		int length = Math.min(255, value.length());
 
@@ -51,6 +49,15 @@ public class ByteUtils {
 		System.arraycopy(data, 0, result, 1, length);
 
 		return result;
+	}
+
+	public static byte[] toBytes(double value) {
+		long longBits = Double.doubleToLongBits(value);
+		byte[] bytes = new byte[8];
+		for (int i = 0; i < 8; i++) {
+			bytes[i] = (byte) (longBits >> (8 * (7 - i)) & 0xFF);
+		}
+		return bytes;
 	}
 
 	public static byte[] toBytes(UUID uuid) {
@@ -110,6 +117,21 @@ public class ByteUtils {
 		return toFloat(a);
 	}
 
+	public static double toDouble(byte[] data, int index) {
+		byte[] a = new byte[Double.BYTES];
+		System.arraycopy(data, index, a, 0, Double.BYTES);
+		return toDouble(a);
+	}
+
+	public static double toDouble(byte[] bytes) {
+		long longBits = 0;
+		for (int i = 0; i < 8; i++) {
+			longBits |= ((long) bytes[i] & 0xFF) << (8 * (7 - i));
+		}
+
+		return Double.longBitsToDouble(longBits);
+	}
+
 	public static UUID toUUID(byte[] data) {
 		long mostSigBits = 0;
 		long leastSigBits = 0;
@@ -128,15 +150,13 @@ public class ByteUtils {
 
 	public static void main(String[] args) {
 
-		UUID uuid = UUID.randomUUID();
+		double value = 1000.5954858;
 
-		System.out.println(uuid);
+		byte[] data = toBytes(value);
 
-		byte[] bytes = toBytes(uuid);
+		double v = toDouble(data);
 
-		UUID uuid2 = toUUID(bytes);
 
-		System.out.println(uuid2);
-
+		System.out.println(v);
 	}
 }

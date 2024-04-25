@@ -14,11 +14,11 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 
-public class Rock extends GameObject implements Serializable, IGatherable {
+public class Rock extends GameObject implements SerializableObject, IGatherable {
 
 	private static final Sprite texture = Assets.getSprite("rock");
 	private static final Sprite texture2 = Assets.getSprite("rock-broken");

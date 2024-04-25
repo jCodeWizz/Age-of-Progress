@@ -94,8 +94,7 @@ public abstract class UILayer implements InputProcessor {
 		
 		for (UIElement e : elements) {
 			if(e instanceof UIIcon || e instanceof UIButton || e instanceof UITabButton) {
-				if (e.getBounds().contains(screenX, screenY) && e.equals(current) && e.isAvailable() && e.isEnabled()
-						&& !(e instanceof UIImage)) {
+				if (e.getBounds().contains(screenX, screenY) && e.equals(current) && e.isAvailable() && e.isEnabled()) {
 					current.deClick();
 					return true;
 				}

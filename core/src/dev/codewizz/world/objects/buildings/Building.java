@@ -15,13 +15,13 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.IBuy;
 import dev.codewizz.world.objects.hermits.Hermit;
 
-public class Building extends GameObject implements IBuy, Serializable {
+public class Building extends GameObject implements IBuy, SerializableObject {
 	
 	private static Sprite texture = Assets.getSprite("crude-home");
 	private static Sprite textureFlipped = Assets.getSprite("crude-home-flipped");

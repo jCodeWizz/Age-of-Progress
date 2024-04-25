@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.GenerateChunkEvent;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
@@ -35,35 +36,38 @@ public class Chunk implements Comparable<Chunk> {
 	private boolean initialized;
 	private boolean generated;
 	
-	public Chunk(World world, float x, float y, int indexX, int indexY) {
+	public Chunk(World world, int indexX, int indexY) {
 		grid = new Cell[SIZE][SIZE];
 		this.index = new Vector2(indexX, indexY);
+
+		this.x = indexX * Chunk.SIZE * 32 - indexY * Chunk.SIZE * 32;
+		this.y = indexX * Chunk.SIZE * -16 - indexY * Chunk.SIZE * 16;
+
 		this.bounds = new Rectangle((int)x - 28 * SIZE, (int)y - 28 * SIZE, 64 * SIZE, 34 * SIZE);
 		
 		this.world = world;	
-		this.x = x;
-		this.y = y;
-		
 	}
 	
 	public void init() {
-		for(int i = 0; i < grid.length; i++) {
-			for(int j = 0; j < grid.length; j++) {
-				Cell cell = new Cell(world, this, x + i * 32 - j * 32, y + i * -16 - j * 16, i, j);
-				
-				grid[i][j] = cell;
-				world.tree.set(cell.x, cell.y, cell);
-				world.cellGraph.addCell(cell);
-			}	
+		synchronized (world.tree) {
+			for(int i = 0; i < grid.length; i++) {
+				for(int j = 0; j < grid.length; j++) {
+					Cell cell = new Cell(world, this, x + i * 32 - j * 32, y + i * -16 - j * 16, i, j);
+
+					grid[i][j] = cell;
+					world.tree.set(cell.x, cell.y, cell);
+					world.cellGraph.addCell(cell);
+				}
+			}
+
+			for(int i = 0; i < grid.length; i++) {
+				for(int j = 0; j < grid.length; j++) {
+					grid[i][j].init(world.cellGraph);
+				}
+			}
+
+			initialized = true;
 		}
-		
-		for(int i = 0; i < grid.length; i++) {
-			for(int j = 0; j < grid.length; j++) {
-				grid[i][j].init(world.cellGraph);
-			}	
-		}
-		
-		initialized = true;
 	}
 	
 	public void generate() {
@@ -244,9 +248,21 @@ public class Chunk implements Comparable<Chunk> {
 	public boolean isGenerated() {
 		return generated;
 	}
-	
+
+	public void setGenerated(boolean generated) {
+		this.generated = generated;
+	}
+
+	public void setInitialized(boolean initialized) {
+		this.initialized = initialized;
+	}
+
 	public Vector2 getIndex() {
 		return index;
+	}
+
+	public boolean isInitialized() {
+		return initialized;
 	}
 
 	@Override

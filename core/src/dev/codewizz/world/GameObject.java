@@ -1,13 +1,7 @@
 package dev.codewizz.world;
 
-import java.awt.Polygon;
-import java.awt.Rectangle;
-import java.util.Random;
-import java.util.UUID;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.UILayer;
@@ -18,13 +12,14 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.objects.IBuy;
 
-public abstract class GameObject extends Renderable implements Serializable {
+import java.awt.*;
+import java.util.UUID;
 
-	private final static Random RANDOM = new Random();
-	
+public abstract class GameObject extends Renderable implements SerializableObject {
+
 	protected String id = "unid-object";
 	protected UUID uuid;
 
@@ -70,11 +65,14 @@ public abstract class GameObject extends Renderable implements Serializable {
 	
 	@Override
 	public GameObjectData save(GameObjectData object) {
+
+		object.addByte(ByteUtils.toByte((byte)0, flip, 0));
+
 		object.addFloat(x);
 		object.addFloat(y);
 		object.addInteger(w);
 		object.addInteger(h);
-		
+
 		object.addString(name);
 		object.end();
 		return object;
@@ -83,13 +81,15 @@ public abstract class GameObject extends Renderable implements Serializable {
 	@Override
 	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
 		byte[] data = object.take();
+
+		flip = ByteUtils.toBoolean(data[0], 0);
+
+		x = ByteUtils.toFloat(data, 1);
+		y = ByteUtils.toFloat(data, 5);
+		w = ByteUtils.toInteger(data, 9);
+		h = ByteUtils.toInteger(data, 13);
 		
-		x = ByteUtils.toFloat(data, 0);
-		y = ByteUtils.toFloat(data, 4);
-		w = ByteUtils.toInteger(data, 8);
-		h = ByteUtils.toInteger(data, 12);
-		
-		name = ByteUtils.toString(data, 16);
+		name = ByteUtils.toString(data, 17);
 
 		return success;
 	}
@@ -102,7 +102,7 @@ public abstract class GameObject extends Renderable implements Serializable {
 		}
 	}
 	
-	public void onDestroy() {};
+	public void onDestroy() {}
 	
 	public void destroy() {
 		if(cell != null) cell.setObject(null);
@@ -216,9 +216,5 @@ public abstract class GameObject extends Renderable implements Serializable {
 
 	public UUID getUUID() {
 		return uuid;
-	}
-
-	public void setUUID(UUID uuid) {
-		this.uuid = uuid;
 	}
 }

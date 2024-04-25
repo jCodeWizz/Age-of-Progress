@@ -13,11 +13,11 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 
-public class Stump extends GameObject implements Serializable, IBuy {
+public class Stump extends GameObject implements SerializableObject, IBuy {
 
 	private static final Sprite texture = Assets.getSprite("stump");
 	private final List<Item> costs = new CopyOnWriteArrayList<>();

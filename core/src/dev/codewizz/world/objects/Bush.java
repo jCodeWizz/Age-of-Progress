@@ -11,9 +11,9 @@ import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Nature;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 
-public class Bush extends GameObject implements Serializable, IGatherable {
+public class Bush extends GameObject implements SerializableObject, IGatherable {
 
 	private static Sprite texture = Assets.getSprite("bush");
 	private static Sprite texture2 = Assets.getSprite("bush-berries");

@@ -31,6 +31,7 @@ import dev.codewizz.utils.WNoise;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.utils.quadtree.QuadTree;
 import dev.codewizz.utils.saving.WorldData;
+import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
@@ -45,7 +46,7 @@ public class World {
 	public static int gameSpeed = 3;
 
 	public QuadTree<Cell> tree;
-	public HashMap<String, Chunk> chunkTree = new HashMap<>();
+	public HashMap<Vector2, Chunk> chunkTree = new HashMap<>();
 	public List<Chunk> chunks = new CopyOnWriteArrayList<>();
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
@@ -58,7 +59,6 @@ public class World {
 	public CellGraph cellGraph;
 
 	public WNoise noise = new WNoise();
-	public WNoise terrainNoise = new WNoise();
 
 	public boolean showInfoSartMenu = true;
 	private long start;
@@ -67,12 +67,37 @@ public class World {
 
 		start = System.currentTimeMillis();
 
-		tree = new QuadTree<Cell>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
+		tree = new QuadTree<>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2, WORLD_SIZE_HP * 2);
 		cellGraph = new CellGraph();
 		Main.inst.world = this;
 
 		nature = new Nature(this);
+	}
 
+	public static World openWorld(String name) {
+		WorldDataLoader loader = new WorldDataLoader(name);
+		return loader.getWorld();
+	}
+
+	public World(WorldData data) {
+		Main.inst.world = this;
+		Event.dispatch(new LoadWorldEvent(this));
+	}
+
+	public Chunk addChunk(int indexX, int indexY) {
+		if(chunkTree.containsKey(new Vector2(indexX, indexY))) { return null; }
+
+		Chunk c = new Chunk(this, indexX, indexY);
+
+		chunkTree.put(new Vector2(indexX, indexY), c);
+		chunks.add(c);
+
+		Collections.sort(chunks);
+
+		return c;
+	}
+
+	public void setup() {
 		Thread initThread = new Thread("create-world") {
 			@Override
 			public void run() {
@@ -94,35 +119,12 @@ public class World {
 		generateThread.start();
 	}
 
-	public static World openWorld(String path) {
-		File file = Gdx.files.internal(path).file();
-		return null;
-	}
-
-	public World(WorldData data) {
-		Main.inst.world = this;
-		Event.dispatch(new LoadWorldEvent(this));
-	}
-
-	public Chunk addChunk(int indexX, int indexY) {
-
-		float x = indexX * Chunk.SIZE * 32 - indexY * Chunk.SIZE * 32;
-		float y = indexX * Chunk.SIZE * -16 - indexY * Chunk.SIZE * 16;
-
-		Chunk c = new Chunk(this, x, y, indexX, indexY);
-
-		chunkTree.put(new Vector2(indexX, indexY).toString(), c);
-		chunks.add(c);
-
-		Collections.sort(chunks);
-
-		return c;
-	}
-
 	private void init() {
 
 		Chunk c = addChunk(0, 0);
-		c.init();
+		if (c != null) {
+			c.init();
+		}
 
 		// nature.spawnHerd();
 		// nature.spawnHerd();
@@ -167,7 +169,7 @@ public class World {
 
 			if (r.intersects(chunk.getBounds())) {
 
-				if (chunk.isLoaded()) {
+				if (chunk.isLoaded() && chunk.isInitialized()) {
 					chunk.render(b);
 					continue;
 				}
@@ -176,19 +178,19 @@ public class World {
 					chunk.markGenerated();
 					generationQueue.add(chunk);
 
-					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0).toString())) {
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0))) {
 						addChunk((int) chunk.getIndex().x + 1, (int) chunk.getIndex().y);
 						//c.init();
 					}
-					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1).toString())) {
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1))) {
 						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y + 1);
 						//c.init();
 					}
-					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0).toString())) {
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0))) {
 						addChunk((int) chunk.getIndex().x - 1, (int) chunk.getIndex().y);
 						//c.init();
 					}
-					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1).toString())) {
+					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1))) {
 						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y - 1);
 						//c.init();
 					}
@@ -373,7 +375,7 @@ public class World {
 				indexY = Chunk.SIZE - indexY;
 		}
 
-		Chunk c = chunkTree.get(new Vector2(chunkX, chunkY).toString());
+		Chunk c = chunkTree.get(new Vector2(chunkX, chunkY));
 
 		if (c != null) {
 			return c.getGrid()[indexX][indexY];

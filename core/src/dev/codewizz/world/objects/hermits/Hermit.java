@@ -16,7 +16,7 @@ import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
@@ -24,7 +24,7 @@ import dev.codewizz.world.objects.tasks.ClearInventoryTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
 
-public class Hermit extends TaskableObject implements Serializable {
+public class Hermit extends TaskableObject implements SerializableObject {
 
 	public static final float walkAnimSpeed = 0.1f;
 	

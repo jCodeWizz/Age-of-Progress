@@ -8,11 +8,11 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
-import dev.codewizz.utils.serialization.Serializable;
+import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.objects.tasks.CaptureAnimalTask;
 import dev.codewizz.world.settlement.FarmArea;
 
-public class Cow extends Animal implements Serializable {
+public class Cow extends Animal implements SerializableObject {
 	
 	/*
 	 * pTR1600:
