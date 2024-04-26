@@ -162,19 +162,19 @@ public class Cell {
 			if (indexY > 0 && indexX > 0) {
 				return chunk.getGrid()[indexX - 1][indexY - 1];
 			} else if (indexY > 0 && indexX == 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[Chunk.SIZE - 1][indexY - 1];
 				}
 			} else if (indexY == 0 && indexX > 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[indexX - 1][Chunk.SIZE - 1];
 				}
 			} else if (indexY == 0 && indexX == 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[Chunk.SIZE - 1][Chunk.SIZE - 1];
@@ -184,19 +184,19 @@ public class Cell {
 			if (indexX < Chunk.SIZE - 1 && indexY > 0) {
 				return chunk.getGrid()[indexX + 1][indexY - 1];
 			} else if (indexX < Chunk.SIZE - 1 && indexY == 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[indexX + 1][Chunk.SIZE - 1];
 				}
 			} else if (indexX == Chunk.SIZE - 1 && indexY > 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[0][indexY - 1];
 				}
 			} else if (indexX == Chunk.SIZE - 1 && indexY == 0) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(-1, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(-1, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[0][Chunk.SIZE - 1];
@@ -206,19 +206,19 @@ public class Cell {
 			if (indexY < Chunk.SIZE - 1 && indexX < Chunk.SIZE - 1) {
 				return chunk.getGrid()[indexX + 1][indexY + 1];
 			} else if (indexX == Chunk.SIZE - 1 && indexY < Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[0][indexY + 1];
 				}
 			} else if (indexX < Chunk.SIZE - 1 && indexY == Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[indexX + 1][0];
 				}
 			} else if (indexX == Chunk.SIZE - 1 && indexY == Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[0][0];
@@ -228,19 +228,19 @@ public class Cell {
 			if (indexX > 0 && indexY < Chunk.SIZE - 1) {
 				return chunk.getGrid()[indexX - 1][indexY + 1];
 			} else if (indexX == 0 && indexY < Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 0).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 0));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[Chunk.SIZE - 1][indexY + 1];
 				}
 			} else if (indexX > 0 && indexY == Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[indexX - 1][0];
 				}
 			} else if (indexX == 0 && indexY == Chunk.SIZE - 1) {
-				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 1).toString());
+				Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(-1, 1));
 
 				if (n != null && n.isGenerated()) {
 					return n.getGrid()[Chunk.SIZE - 1][0];
@@ -255,7 +255,7 @@ public class Cell {
 			if (indexY > 0) {
 				return chunk.getGrid()[indexX][indexY - 1];
 			}
-			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1).toString());
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(0, 1));
 
 			if (n != null && n.isGenerated()) {
 				return n.getGrid()[indexX][Chunk.SIZE - 1];
@@ -265,7 +265,7 @@ public class Cell {
 				return chunk.getGrid()[indexX + 1][indexY];
 			}
 
-			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0).toString());
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(1, 0));
 
 			if (n != null && n.isGenerated()) {
 				return n.getGrid()[0][indexY];
@@ -275,7 +275,7 @@ public class Cell {
 				return chunk.getGrid()[indexX][indexY + 1];
 			}
 
-			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1).toString());
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).add(0, 1));
 
 			if (n != null && n.isGenerated()) {
 				return n.getGrid()[indexX][0];
@@ -285,7 +285,7 @@ public class Cell {
 				return chunk.getGrid()[indexX - 1][indexY];
 			}
 
-			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0).toString());
+			Chunk n = world.chunkTree.get(new Vector2(chunk.getIndex()).sub(1, 0));
 
 			if (n != null && n.isGenerated()) {
 				return n.getGrid()[Chunk.SIZE - 1][indexY];

@@ -1,36 +1,29 @@
 package dev.codewizz.world;
 
-import java.awt.Rectangle;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.GenerateChunkEvent;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
 import dev.codewizz.world.objects.Tree;
-import dev.codewizz.world.tiles.ClayTile;
-import dev.codewizz.world.tiles.DeepWaterTile;
-import dev.codewizz.world.tiles.DirtTile;
-import dev.codewizz.world.tiles.FlowerTile;
-import dev.codewizz.world.tiles.SandTile;
-import dev.codewizz.world.tiles.WaterTile;
+import dev.codewizz.world.tiles.*;
+
+import java.awt.Rectangle;
+import java.util.List;
 
 public class Chunk implements Comparable<Chunk> {
 
 	public static final int SIZE = 8;
 	
-	private Cell[][] grid;
+	private final Cell[][] grid;
 	
-	private World world;
-	private float x, y;
-	private Vector2 index;
-	private Rectangle bounds;
+	private final World world;
+	private final float x, y;
+	private final Vector2 index;
+	private final Rectangle bounds;
 	
 	private boolean loaded;
 	private boolean initialized;
@@ -175,7 +168,7 @@ public class Chunk implements Comparable<Chunk> {
 				
 				Cell cell = grid[i][j];
 
-				float n = (float) world.noise.noise((float)(cell.indexX + this.index.x * SIZE)/ 3f, (float) (cell.indexY + this.index.y * SIZE) / 3f);
+				float n = (float) world.noise.noise((cell.indexX + this.index.x * SIZE) / 3f, (cell.indexY + this.index.y * SIZE) / 3f);
 				
 				n = Math.abs(n);
 				
@@ -267,12 +260,6 @@ public class Chunk implements Comparable<Chunk> {
 
 	@Override
 	public int compareTo(Chunk o) {
-		if(o.getY() > getY()) {
-			return 1;
-		} else if(o.getY() < getY()) {
-			return -1;
-		} else {
-			return 0;
-		}
+        return Float.compare(o.getY(), getY());
 	}
 }

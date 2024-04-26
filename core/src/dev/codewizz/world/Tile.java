@@ -27,9 +27,9 @@ public abstract class Tile implements SerializableTile {
 		this.name = "Grass Tile";
 	}
 
-	public void onPlace() {};
-	public void onDestroy() {};
-	public void update() {};
+	public void onPlace() {}
+	public void onDestroy() {}
+	public void update() {}
 	
 	public void place() {
 		Cell[] cells = this.cell.getAllNeighbours();
@@ -60,17 +60,13 @@ public abstract class Tile implements SerializableTile {
 					
 					c.removeConnection(cells[i], cell);
 					
-					
 					if(cells[i] != null) {
 						if(cells[i].acceptConnections[(i + 4) % 8]) {
 							c.connectCells(cell, cells[i], cells[i].tile.getCost());
 						}
 					}
-					
-					
 				}
 			}
-			
 		}
 		onPlace();
 	}
