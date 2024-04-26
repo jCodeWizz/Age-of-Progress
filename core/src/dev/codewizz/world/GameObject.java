@@ -217,4 +217,22 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	public UUID getUUID() {
 		return uuid;
 	}
+
+	@Override
+	public String toString() {
+		return "GameObject{" +
+				"id='" + id + '\'' +
+				", uuid=" + uuid +
+				", x=" + x +
+				", y=" + y +
+				", sortHeight=" + sortHeight +
+				", w=" + w +
+				", h=" + h +
+				", flip=" + flip +
+				", cell=" + cell +
+				", selected=" + selected +
+				", name='" + name + '\'' +
+				", text=" + text +
+				'}';
+	}
 }

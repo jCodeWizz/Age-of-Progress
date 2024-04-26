@@ -37,12 +37,21 @@ public class Settlement {
 	
 	public Inventory inventory;
 
+	private Settlement() {
+		this.inventory = new Inventory(-1);
+	}
+
 	public Settlement(Cell cell) {
+		this();
 		this.x = cell.x + 32;
 		this.y = cell.y + 32;
 		this.cell = cell;
-		
-		this.inventory = new Inventory(-1);
+	}
+
+	public Settlement(float x, float y) {
+		this();
+		this.x = x;
+		this.y = y;
 	}
 
 	public void update(float dt) {
@@ -137,6 +146,7 @@ public class Settlement {
 	}
 
 	public Cell getCell() {
+		if(cell == null) this.cell = Main.inst.world.getCell(x, y);
 		return cell;
 	}
 
@@ -167,5 +177,4 @@ public class Settlement {
 	public Inventory getInventory() {
 		return this.inventory;
 	}
-
 }

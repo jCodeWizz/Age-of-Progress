@@ -17,6 +17,7 @@ import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
@@ -62,6 +63,8 @@ public class MouseInput implements InputProcessor {
 				clear = true;
 
 				if(object && Main.inst.world.settlement != null && currentlyDrawingObject != null) {
+
+					Logger.log(currentlyDrawingObject);
 
 					for(Item c : ((IBuy) currentlyDrawingObject).costs()) {
 						if(!Main.inst.world.settlement.inventory.containsItem(c, c.getSize()) && !ConstructionObject.FREE) {

@@ -2,11 +2,14 @@ package dev.codewizz.utils.saving;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Chunk;
 import dev.codewizz.world.World;
+import dev.codewizz.world.objects.Flag;
+import dev.codewizz.world.settlement.Settlement;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,10 +52,11 @@ public class WorldDataLoader {
         File objectFolder = Gdx.files.external(Assets.pathFolderSaves + name + "/objects/").file();
 
         world = new World();
+        Main.inst.world = world;
 
-        loadMainFile(mainFile);
-        loadObjects(objectFolder);
         loadTiles(tileFolder);
+        loadObjects(objectFolder);
+        loadMainFile(mainFile);
 
         world.chunkTree = chunks;
         //world.chunks.addAll(chunks.values().stream().filter(chunk -> !chunk.isInitialized()).toList());
@@ -60,6 +64,7 @@ public class WorldDataLoader {
         Collections.sort(world.chunks);
 
         world.setup();
+        world.showInfoSartMenu = false;
     }
 
     private void saveMainFile(String mainFilePath) {
@@ -67,6 +72,18 @@ public class WorldDataLoader {
 
         loader.addDouble(world.noise.getSeed());
         loader.end();
+
+        loader.addByte(ByteUtils.toByte((byte)0, world.settlement != null, 0));
+        if(world.settlement != null) {
+            loader.addFloat(world.settlement.getX());
+            loader.addFloat(world.settlement.getY());
+
+            //TODO: Serialize inventories...........
+
+
+        }
+        loader.end();
+
 
         File file = Gdx.files.external(mainFilePath).file();
         try {
@@ -106,6 +123,15 @@ public class WorldDataLoader {
 
         byte[] general = loader.take();
         world.noise.setSeed(ByteUtils.toDouble(general, 0));
+
+        byte[] settlement = loader.take();
+        if(ByteUtils.toBoolean(settlement[0], 0)) {
+            float x = ByteUtils.toFloat(settlement, 1);
+            float y = ByteUtils.toFloat(settlement, 5);
+            world.settlement = new Settlement(x, y);
+
+            world.settlement.getCell().setObject(new Flag());
+        }
     }
 
     private void loadTiles(File tileFolder) {

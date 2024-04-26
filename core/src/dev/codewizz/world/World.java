@@ -1,7 +1,6 @@
 package dev.codewizz.world;
 
 import java.awt.Rectangle;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,7 +29,6 @@ import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.WNoise;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.utils.quadtree.QuadTree;
-import dev.codewizz.utils.saving.WorldData;
 import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
@@ -79,7 +77,7 @@ public class World {
 		return loader.getWorld();
 	}
 
-	public World(WorldData data) {
+	public World(WorldDataLoader data) {
 		Main.inst.world = this;
 		Event.dispatch(new LoadWorldEvent(this));
 	}
