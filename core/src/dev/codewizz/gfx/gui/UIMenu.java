@@ -31,9 +31,7 @@ public abstract class UIMenu extends UIElement {
 	@Override
 	protected void onEnable() {
 		onOpen();
-		for(UIElement e : elements) {
-			layer.elements.add(e);
-		}	
+        layer.elements.addAll(elements);
 	}		
 			
 	@Override

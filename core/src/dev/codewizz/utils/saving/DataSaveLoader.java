@@ -123,18 +123,11 @@ public abstract class DataSaveLoader {
         int used = ByteUtils.toInteger(data, index + 4);
         Inventory inventory = new Inventory(size);
 
-        Logger.log(size);
-        Logger.log(used);
-
         int pos = 0;
 
         for (int i = 0; i < used; i++) {
-
-            System.out.println("cycle");
-
             Pair<Item, Integer> result = readItem(data, pos + index + 8);
             pos += result.getTypeB();
-
             inventory.addItem(result.getTypeA());
         }
 
@@ -143,13 +136,7 @@ public abstract class DataSaveLoader {
 
     public Pair<Item, Integer> readItem(byte[] data, int index) {
         int size = ByteUtils.toInteger(data, index);
-
-        Logger.log("Index: " + index);
-        Logger.log("Size: " + size);
-
         String type = ByteUtils.toString(data, index + 4);
-
-        Logger.log("Type: " + type);
 
         return new Pair<>(new Item(ItemType.types.get(type), size), type.length() + 5);
     }

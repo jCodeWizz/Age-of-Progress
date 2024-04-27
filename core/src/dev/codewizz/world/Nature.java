@@ -32,6 +32,7 @@ public class Nature {
 	public boolean transition = false;
 	public boolean day = true;
 	public float light = DAY_LIGHT;
+	public int dayCounter = 1;
 	
 	public Nature(World world) {
 		this.world = world;
@@ -63,7 +64,7 @@ public class Nature {
 	}
 	
 	public void onDay() {
-		
+		dayCounter++;
 	}
 	
 	public void onNight() {

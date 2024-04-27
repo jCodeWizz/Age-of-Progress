@@ -75,13 +75,25 @@ public class WorldDataLoader {
         loader.addDouble(world.noise.getSeed());
         loader.end();
 
-        //loader.addByte(ByteUtils.toByte((byte)0, world.settlement != null, 0));
+        loader.addByte(ByteUtils.toByte((byte)0, world.settlement != null, 0));
         if(world.settlement != null) {
             loader.addFloat(world.settlement.getX());
             loader.addFloat(world.settlement.getY());
 
             loader.addInventory(world.settlement.getInventory());
         }
+        loader.end();
+
+        loader.addFloat(world.nature.spawnCounter);
+        loader.addFloat(world.nature.timeCounter);
+        loader.addFloat(world.nature.light);
+        loader.addInteger(world.nature.dayCounter);
+
+        byte b = 0;
+        b = ByteUtils.toByte(b, world.nature.transition, 0);
+        b = ByteUtils.toByte(b, world.nature.day, 1);
+        loader.addByte(b);
+
         loader.end();
 
 
@@ -125,21 +137,27 @@ public class WorldDataLoader {
         world.noise.setSeed(ByteUtils.toDouble(general, 0));
 
         byte[] settlement = loader.take();
-        //if(ByteUtils.toBoolean(settlement[0], 0)) {
-            float x = ByteUtils.toFloat(settlement, 0);
-            float y = ByteUtils.toFloat(settlement, 4);
+        if(ByteUtils.toBoolean(settlement[0], 0)) {
+            float x = ByteUtils.toFloat(settlement, 1);
+            float y = ByteUtils.toFloat(settlement, 5);
             world.settlement = new Settlement(x, y);
 
-            Logger.log(Arrays.toString(settlement));
-
-            Pair<Inventory, Integer> result = loader.readInventory(settlement, 8);
-
-
+            Pair<Inventory, Integer> result = loader.readInventory(settlement, 9);
 
             world.settlement.inventory = result.getTypeA();
 
             world.settlement.getCell().setObject(new Flag());
-        //}
+        }
+
+        byte[] nature = loader.take();
+        world.nature.spawnCounter = ByteUtils.toFloat(nature, 0);
+        world.nature.timeCounter = ByteUtils.toFloat(nature, 4);
+        world.nature.light = ByteUtils.toFloat(nature, 8);
+        world.nature.dayCounter = ByteUtils.toInteger(nature, 12);
+
+        world.nature.transition = ByteUtils.toBoolean(nature[16], 0);
+        world.nature.day = ByteUtils.toBoolean(nature[16], 1);
+
     }
 
     private void loadTiles(File tileFolder) {
