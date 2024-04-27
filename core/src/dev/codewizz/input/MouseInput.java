@@ -63,9 +63,6 @@ public class MouseInput implements InputProcessor {
 				clear = true;
 
 				if(object && Main.inst.world.settlement != null && currentlyDrawingObject != null) {
-
-					Logger.log(currentlyDrawingObject);
-
 					for(Item c : ((IBuy) currentlyDrawingObject).costs()) {
 						if(!Main.inst.world.settlement.inventory.containsItem(c, c.getSize()) && !ConstructionObject.FREE) {
 							clear = false;

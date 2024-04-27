@@ -12,6 +12,7 @@ import dev.codewizz.utils.Pair;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
+import dev.codewizz.world.items.ItemType;
 
 public class Registers {
 
@@ -58,7 +59,7 @@ public class Registers {
 		mods.put(info.getId(), new Pair<ModInfo,JavaMod>(info, mod));
 		return true;
 	}
-	
+
 	public static boolean registerTile(String id, Class<? extends Tile> tile) {
 		if(tiles.containsKey(id)) return false;
 		tiles.put(id, tile);

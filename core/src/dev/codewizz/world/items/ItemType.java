@@ -2,10 +2,16 @@ package dev.codewizz.world.items;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
+
+import java.util.HashMap;
 
 public class ItemType {
-	
+
+	public final static HashMap<String, ItemType> types = new HashMap<>();
+
 	public final static ItemType CARROT = new ItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"));
 	public final static ItemType CLAY = new ItemType("Clay", "aop:clay", Assets.getSprite("item-clay"));
 	public final static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("mushrooms"));
@@ -14,17 +20,12 @@ public class ItemType {
 	public final static ItemType WHEAT = new ItemType("Wheat", "aop:wheat", Assets.getSprite("item-wheat"));
 	public final static ItemType WOOD = new ItemType("Wood", "aop:wood", Assets.getSprite("item-wood"));
 	
-	private float w, h;
-	private String id, name;
-	private Sprite sprite;
+	private final float w, h;
+	private final String id, name;
+	private final Sprite sprite;
 	
 	public ItemType(String name, String id) {
-		this.id = id;
-		this.sprite = Assets.getSprite(id);
-		this.name = name;
-		
-		this.w = 12;
-		this.h = 12;
+		this(name, id, Assets.getSprite(id));
 	}
 	
 	public ItemType(String name, String id, Sprite sprite) {
@@ -34,6 +35,8 @@ public class ItemType {
 		
 		this.w = 12;
 		this.h = 12;
+
+		types.put(id, this);
 	}
 	
 	public String getName() {
@@ -54,5 +57,16 @@ public class ItemType {
 	
 	public float getHeight() {
 		return h;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemType{" +
+				"w=" + w +
+				", h=" + h +
+				", id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", sprite=" + sprite +
+				'}';
 	}
 }

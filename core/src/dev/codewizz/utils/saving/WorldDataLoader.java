@@ -5,9 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
+import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Chunk;
 import dev.codewizz.world.World;
+import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.Flag;
 import dev.codewizz.world.settlement.Settlement;
 
@@ -16,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -59,7 +62,6 @@ public class WorldDataLoader {
         loadMainFile(mainFile);
 
         world.chunkTree = chunks;
-        //world.chunks.addAll(chunks.values().stream().filter(chunk -> !chunk.isInitialized()).toList());
         world.chunks.addAll(chunks.values());
         Collections.sort(world.chunks);
 
@@ -73,14 +75,12 @@ public class WorldDataLoader {
         loader.addDouble(world.noise.getSeed());
         loader.end();
 
-        loader.addByte(ByteUtils.toByte((byte)0, world.settlement != null, 0));
+        //loader.addByte(ByteUtils.toByte((byte)0, world.settlement != null, 0));
         if(world.settlement != null) {
             loader.addFloat(world.settlement.getX());
             loader.addFloat(world.settlement.getY());
 
-            //TODO: Serialize inventories...........
-
-
+            loader.addInventory(world.settlement.getInventory());
         }
         loader.end();
 
@@ -125,13 +125,21 @@ public class WorldDataLoader {
         world.noise.setSeed(ByteUtils.toDouble(general, 0));
 
         byte[] settlement = loader.take();
-        if(ByteUtils.toBoolean(settlement[0], 0)) {
-            float x = ByteUtils.toFloat(settlement, 1);
-            float y = ByteUtils.toFloat(settlement, 5);
+        //if(ByteUtils.toBoolean(settlement[0], 0)) {
+            float x = ByteUtils.toFloat(settlement, 0);
+            float y = ByteUtils.toFloat(settlement, 4);
             world.settlement = new Settlement(x, y);
 
+            Logger.log(Arrays.toString(settlement));
+
+            Pair<Inventory, Integer> result = loader.readInventory(settlement, 8);
+
+
+
+            world.settlement.inventory = result.getTypeA();
+
             world.settlement.getCell().setObject(new Flag());
-        }
+        //}
     }
 
     private void loadTiles(File tileFolder) {

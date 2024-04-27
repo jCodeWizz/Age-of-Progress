@@ -45,11 +45,6 @@ public class ChunkData extends DataSaveLoader {
     }
 
     public void load() {
-
-        System.out.println();
-        System.out.println(chunk.getIndex());
-        System.out.println(this.data.size());
-
         byte[] main = take();
         chunk.setGenerated(ByteUtils.toBoolean(main[0], 0));
         chunk.setInitialized(ByteUtils.toBoolean(main[0], 1));
