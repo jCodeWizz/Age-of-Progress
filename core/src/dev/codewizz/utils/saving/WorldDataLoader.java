@@ -7,6 +7,7 @@ import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.serialization.ByteUtils;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.Chunk;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
@@ -19,14 +20,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WorldDataLoader {
 
     public static HashMap<UUID, GameObject> objects;
+    private final HashMap<Vector2, GameObjectDataLoader> loaders;
     private final HashMap<Vector2, Chunk> chunks;
 
     private final World world;
@@ -34,6 +34,7 @@ public class WorldDataLoader {
     public WorldDataLoader(World world) {
         this.world = world;
 
+        loaders = new HashMap<>();
         objects = new HashMap<>();
         chunks = new HashMap<>();
 
@@ -51,6 +52,7 @@ public class WorldDataLoader {
     public WorldDataLoader(String name) {
         objects = new HashMap<>();
         chunks = new HashMap<>();
+        loaders = new HashMap<>();
 
         File mainFile = Gdx.files.external(Assets.pathFolderSaves + name + "/world.save").file();
         File tileFolder = Gdx.files.external(Assets.pathFolderSaves + name + "/tiles/").file();
@@ -123,11 +125,50 @@ public class WorldDataLoader {
     }
 
     private void saveObjects(String objectFolderPath) {
+        CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>(world.getGameObjects());
+
         for(Chunk chunk : world.chunks) {
+            if(!chunk.isGenerated()) continue;
 
+            GameObjectDataLoader loader = new GameObjectDataLoader();
+            loaders.put(chunk.getIndex(), loader);
 
+            Cell[][] grid = chunk.getGrid();
+            for(int i = 0; i < grid.length; i++) {
+                for(int j = 0; j  < grid[i].length; j++) {
+                    if(grid[i][j].getObject() != null) {
+                        GameObject object = grid[i][j].getObject();
+                        loader.save(object);
+                        objects.remove(object);
+                    }
+                }
+            }
+        }
 
+        for(Chunk chunk : world.chunks) {
+            if(!chunk.isGenerated()) continue;
 
+            GameObjectDataLoader loader = loaders.get(chunk.getIndex());
+
+            for(GameObject object : objects) {
+                if(chunk.getBounds().contains(object.getX(), object.getY())) {
+                    loader.save(object);
+                    objects.remove(object);
+                }
+            }
+
+            String name = (int) chunk.getIndex().x + "," + (int)chunk.getIndex().y + ".chunk";
+
+            File file = Gdx.files.external(objectFolderPath + name).file();
+            try {
+                Files.write(file.toPath(), loader.getTotalBytes());
+            } catch (IOException ignored) {
+                Logger.error("Error during saving of Chunk: " + chunk.getIndex());
+            }
+        }
+
+        if(!objects.isEmpty()) {
+            Logger.error("Not all objects were saved: " + objects.size());
         }
     }
 
