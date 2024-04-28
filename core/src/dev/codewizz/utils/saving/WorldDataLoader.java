@@ -8,6 +8,7 @@ import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Chunk;
+import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.Flag;
@@ -21,10 +22,11 @@ import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class WorldDataLoader {
 
-    private final HashMap<Vector2, GameObjectDataLoader> objectLoaders;
+    public static HashMap<UUID, GameObject> objects;
     private final HashMap<Vector2, Chunk> chunks;
 
     private final World world;
@@ -32,7 +34,7 @@ public class WorldDataLoader {
     public WorldDataLoader(World world) {
         this.world = world;
 
-        objectLoaders = new HashMap<>();
+        objects = new HashMap<>();
         chunks = new HashMap<>();
 
         String name = "test_world";
@@ -47,7 +49,7 @@ public class WorldDataLoader {
     }
 
     public WorldDataLoader(String name) {
-        objectLoaders = new HashMap<>();
+        objects = new HashMap<>();
         chunks = new HashMap<>();
 
         File mainFile = Gdx.files.external(Assets.pathFolderSaves + name + "/world.save").file();
@@ -121,6 +123,12 @@ public class WorldDataLoader {
     }
 
     private void saveObjects(String objectFolderPath) {
+        for(Chunk chunk : world.chunks) {
+
+
+
+
+        }
     }
 
     private void loadMainFile(File mainFile) {
@@ -194,11 +202,14 @@ public class WorldDataLoader {
                 }
 
                 loader.loadFromData(data);
+                loader.loadGameObjects();
 
-                String[] nameLoc = file.getName().split("\\.")[0].split(",");
+                //String[] nameLoc = file.getName().split("\\.")[0].split(",");
+                //Vector2 loc = new Vector2(Integer.parseInt(nameLoc[0]), Integer.parseInt(nameLoc[1]));
+                //TODO: use for adding objects to correct chunk? :)
 
-                Vector2 loc = new Vector2(Integer.parseInt(nameLoc[0]), Integer.parseInt(nameLoc[1]));
-                objectLoaders.put(loc, loader);
+                objects.putAll(loader.getLoaded());
+
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -47,11 +47,23 @@ public class GameObjectDataLoader {
 		}
 	}
 
+	public byte[] saveGameObjects() {
+
+	}
+
+	private void saveGameObject(GameObject object) {
+		GameObjectData data = new GameObjectData(object);
+	}
+
 	public boolean isLoaded(UUID uuid) {
 		return loaded.containsKey(uuid);
 	}
 
 	public GameObject getLoadedObject(UUID uuid) {
 		return loaded.get(uuid);
+	}
+
+	public Map<UUID, GameObject> getLoaded() {
+		return loaded;
 	}
 }

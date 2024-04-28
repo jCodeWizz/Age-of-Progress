@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.ChunkData;
+import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.utils.serialization.SerializableTile;
 import dev.codewizz.world.pathfinding.CellGraph;
@@ -171,9 +172,8 @@ public abstract class Tile implements SerializableTile {
 	public void load(byte[] data) {
 		if (data.length >= 16) {
 			UUID uuid = ByteUtils.toUUID(data, 0);
-
-
-
+			GameObject object = WorldDataLoader.objects.remove(uuid);
+			cell.setObject(object);
 		}
 	}
 }
