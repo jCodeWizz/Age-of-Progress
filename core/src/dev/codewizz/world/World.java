@@ -49,7 +49,7 @@ public class World {
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
 
-	private List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
+	public List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
 
 	public Settlement settlement;
 	public Nature nature;
@@ -58,7 +58,7 @@ public class World {
 
 	public WNoise noise = new WNoise();
 
-	public boolean showInfoSartMenu = true;
+	public boolean showInfoStartMenu = true;
 	private long start;
 
 	public World() {
@@ -103,18 +103,18 @@ public class World {
 				Event.dispatch(new CreateWorldEvent(Main.inst.world));
 				Logger.log(
 						"World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+
+				Thread generateThread = new Thread("chunk-generation") {
+					@Override
+					public void run() {
+						generate();
+					}
+				};
+
+				generateThread.start();
 			}
 		};
-
-		Thread generateThread = new Thread("chunk-generation") {
-			@Override
-			public void run() {
-				generate();
-			}
-		};
-
 		initThread.start();
-		generateThread.start();
 	}
 
 	private void init() {
@@ -132,6 +132,9 @@ public class World {
 	private void generate() {
 		while (Main.RUNNING && Main.PLAYING) {
 			if (!generationQueue.isEmpty()) {
+
+				Logger.log("???");
+
 				for (Chunk chunk : generationQueue) {
 					if (Main.RUNNING && Main.PLAYING) {
 						chunk.init();
@@ -147,7 +150,7 @@ public class World {
 
 	public void start(Settlement s) {
 		this.settlement = s;
-		this.showInfoSartMenu = false;
+		this.showInfoStartMenu = false;
 
 		/*
 		 * for (int i = 0; i < 5; i++) { this.settlement.addHermit(Utils.getRandom(-75,

@@ -174,7 +174,7 @@ public class GameLayer extends UILayer {
 		// INFO MENU START
 		startInfoMenu = new StartInfoMenu("startInfoMenu", WIDTH / 2 - 160 * UILayer.SCALE,
 				HEIGHT / 2 - 107 * UILayer.SCALE, 320, 214, this);
-		if (Main.inst.world.showInfoSartMenu) {
+		if (Main.inst.world.showInfoStartMenu) {
 			startInfoMenu.enable();
 		} else {
 			startInfoMenu.disable();

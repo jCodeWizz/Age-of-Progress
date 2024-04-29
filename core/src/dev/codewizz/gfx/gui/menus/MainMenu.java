@@ -45,7 +45,7 @@ public class MainMenu extends UIMenu {
 				
 				Main.inst.openWorld(World.openWorld("test_world"));
 				
-				boolean hideButtons = !Main.inst.world.showInfoSartMenu;
+				boolean hideButtons = !Main.inst.world.showInfoStartMenu;
 				
 				Main.inst.renderer.ui.getElement("manage-icon").setAvailable(hideButtons);
 				Main.inst.renderer.ui.getElement("path-icon").setAvailable(hideButtons);

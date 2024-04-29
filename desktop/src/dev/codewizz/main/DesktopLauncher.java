@@ -15,11 +15,12 @@ public class DesktopLauncher {
 		config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
 		config.useVsync(true);
 		
-		setupTextures();
+		//setupTextures();
 		
 		new Lwjgl3Application(new Main(), config);
 	}
-	
+
+	/*
 	private static void setupTextures() {
 		Settings settings = new Settings();
 		settings.maxWidth = 2048;
@@ -31,4 +32,5 @@ public class DesktopLauncher {
 		TexturePacker.process(settings, "assets/textures/particles", "assets/packs", "particles");
 		TexturePacker.process(settings, "assets/textures/items", "assets/packs", "items");
 	}
+	*/
 }

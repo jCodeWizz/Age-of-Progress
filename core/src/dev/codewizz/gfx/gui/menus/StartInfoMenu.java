@@ -91,7 +91,7 @@ private boolean[] states = null;
 		layer.getElement("manage-icon").setAvailable(states[3]);
 		layer.getElement("path-icon").setAvailable(states[4]);
 		
-		if(Main.inst.world.showInfoSartMenu) {
+		if(Main.inst.world.showInfoStartMenu) {
 			MouseInput.currentlyDrawingObject = new Flag(0, 0);
 		}
 	}

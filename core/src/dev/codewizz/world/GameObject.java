@@ -235,4 +235,8 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 				", text=" + text +
 				'}';
 	}
+
+	public void setUUID(UUID uuid) {
+		this.uuid = uuid;
+	}
 }
