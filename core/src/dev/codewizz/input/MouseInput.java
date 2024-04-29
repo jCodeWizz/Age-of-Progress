@@ -207,8 +207,6 @@ public class MouseInput implements InputProcessor {
 				
 				if(Main.inst.renderer.ui.menusClosed()) {
 
-					hoveringOverCell.setObject(new Tree(hoveringOverCell.x, hoveringOverCell.y));
-
 					if (GameLayer.selectedObject != null)
 						GameLayer.selectedObject.deselect();
 					

@@ -74,10 +74,6 @@ public class GameObjectDataLoader {
 
             index += bytes.length;
         }
-
-        Logger.log("R: " + index);
-        Logger.log("A: " + size);
-        Logger.log("");
         return total;
     }
 

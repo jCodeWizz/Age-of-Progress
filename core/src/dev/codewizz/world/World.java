@@ -132,9 +132,6 @@ public class World {
 	private void generate() {
 		while (Main.RUNNING && Main.PLAYING) {
 			if (!generationQueue.isEmpty()) {
-
-				Logger.log("???");
-
 				for (Chunk chunk : generationQueue) {
 					if (Main.RUNNING && Main.PLAYING) {
 						chunk.init();

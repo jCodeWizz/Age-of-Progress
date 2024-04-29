@@ -79,10 +79,6 @@ public class Chunk implements Comparable<Chunk> {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				grid[i][j].render(b);
-
-				if(grid[i][j].getObject() != null) {
-					Logger.log("object!!!");
-				}
 			}
 		}
 	}
