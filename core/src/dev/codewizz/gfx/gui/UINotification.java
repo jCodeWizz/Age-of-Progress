@@ -1,9 +1,11 @@
 package dev.codewizz.gfx.gui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.gui.menus.NotificationMenu;
+import dev.codewizz.utils.Assets;
 
 public class UINotification extends UIElement {
 
@@ -18,14 +20,18 @@ public class UINotification extends UIElement {
 	public NotificationMenu menu;
 	
 	public UINotification(String title, String description, String icon) {
+		this(title, description, Assets.getSprite(icon));
+	}
+
+	public UINotification(String title, String description, Sprite sprite) {
 		super("noti-" + (++NOT_COUNTER), 0, 0, NotificationMenu.notificationWidth, NotificationMenu.notificationHeight);
 
-		
+
 		this.title = new UIText("noti-" + NOT_COUNTER + "-title", 0, 0, title, 10);
 		this.background = new UIImage("noti-" + NOT_COUNTER + "-background", 0, 0, w, h, "notification");
 		this.description = new UIText("noti-" + NOT_COUNTER + "-description", 0, 0, description, 6);
-		this.icon = new UIImage("noti-" + NOT_COUNTER + "-icon", 0, 0, 8 * UILayer.SCALE, 8 * UILayer.SCALE, icon);
-		
+		this.icon = new UIImage("noti-" + NOT_COUNTER + "-icon", 0, 0, 8 * UILayer.SCALE, 8 * UILayer.SCALE, sprite);
+
 	}
 	
 	public void setPosition(int x, int y) {
