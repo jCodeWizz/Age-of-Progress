@@ -3,6 +3,8 @@ package dev.codewizz.gfx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.sun.tools.javac.util.StringUtils;
+import dev.codewizz.utils.Logger;
 
 public class Shaders {
 
@@ -18,7 +20,16 @@ public class Shaders {
 	public static ShaderProgram defaultShader;
 	
 	public static void init() {
-		outlineShader = new ShaderProgram(Gdx.files.internal("shaders/outline.vertex"), Gdx.files.internal("shaders/outline.fragment"));
+		//outlineShader = new ShaderProgram(Gdx.files.internal("shaders/outline.vert").readString(), Gdx.files.internal("shaders/outline.frag").readString());
+		String s = Gdx.files.internal("shaders/outline.frag").readString();
+
+		Logger.log(s);
+		Logger.log(fragmentShaderOutline);
+		Logger.log((s.equals(fragmentShaderOutline)));
+
+		Logger.log(difference(s, fragmentShaderOutline));
+
+		outlineShader = new ShaderProgram(vertexShaderOutline, fragmentShaderOutline);
 		defaultShader = SpriteBatch.createDefaultShader();
 	}
 	
@@ -37,15 +48,10 @@ public class Shaders {
 			+ "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" //
 			+ "   gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" //
 			+ "}\n";
+
 	private static String fragmentShaderOutline = "#version 140\r\n"
-			+ "#ifdef GL_ES\n" //
-			+ "#define LOWP lowp\n" //
-			+ "precision mediump float;\n" //
-			+ "#else\n" //
-			+ "#define LOWP \n" //
-			+ "#endif\n" //
-			+ "in LOWP vec4 v_color;\n" //
-			+ "in vec2 v_texCoords;\n" //
+			+ "in vec4 v_color;\r\n" //
+			+ "in vec2 v_texCoords;\r\n" //
 			+ "out vec4 pixel;\r\n"
 			+ "uniform sampler2D u_texture;\r\n" //
 			+ "uniform float outline_thickness = .2;\r\n"
@@ -81,4 +87,38 @@ public class Shaders {
 			+ "        }\r\n"
 			+ "    }\r\n"
 			+ "}";
+
+	public static String difference(String str1, String str2) {
+		if (str1 == null) {
+			return str2;
+		}
+		if (str2 == null) {
+			return str1;
+		}
+		int at = indexOfDifference(str1, str2);
+		if (at == -1) {
+			return "";
+		}
+		return str2.substring(at);
+	}
+
+	public static int indexOfDifference(CharSequence cs1, CharSequence cs2) {
+		if (cs1 == cs2) {
+			return -1;
+		}
+		if (cs1 == null || cs2 == null) {
+			return 0;
+		}
+		int i;
+		for (i = 0; i < cs1.length() && i < cs2.length(); ++i) {
+			if (cs1.charAt(i) != cs2.charAt(i)) {
+				break;
+			}
+		}
+		if (i < cs2.length() || i < cs1.length()) {
+			return i;
+		}
+		return -1;
+	}
+
 }
