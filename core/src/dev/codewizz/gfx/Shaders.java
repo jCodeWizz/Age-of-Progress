@@ -1,5 +1,6 @@
 package dev.codewizz.gfx;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
@@ -17,7 +18,7 @@ public class Shaders {
 	public static ShaderProgram defaultShader;
 	
 	public static void init() {
-		outlineShader = new ShaderProgram(vertexShaderOutline, fragmentShaderOutline);
+		outlineShader = new ShaderProgram(Gdx.files.internal("shaders/outline.vertex"), Gdx.files.internal("shaders/outline.fragment"));
 		defaultShader = SpriteBatch.createDefaultShader();
 	}
 	
