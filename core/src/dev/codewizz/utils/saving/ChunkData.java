@@ -78,11 +78,6 @@ public class ChunkData extends DataSaveLoader {
 
 
                      if(otherData.length > 0) {
-                         Logger.log(typeString);
-                         Logger.log(typeString.length() + 1);
-                         Logger.log(data.length);
-
-
                          cell.tile.load(otherData);
                      }
                  } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {

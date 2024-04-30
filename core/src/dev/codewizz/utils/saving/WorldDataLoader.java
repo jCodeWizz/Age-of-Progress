@@ -232,7 +232,6 @@ public class WorldDataLoader {
 
         for(GameObject object : objects.values()) {
             world.addObject(object);
-            Logger.log(object.getUUID());
         }
     }
 
@@ -254,7 +253,6 @@ public class WorldDataLoader {
                 //TODO: use for adding objects to correct chunk? :)
 
                 objects.putAll(loader.getLoaded());
-                Logger.log(objects.size());
             }
         } catch (Exception e) {
             e.printStackTrace();

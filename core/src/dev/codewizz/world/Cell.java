@@ -392,9 +392,6 @@ public class Cell {
 	}
 
 	public void setObject(GameObject object) {
-		Logger.log("Setting object");
-
-
 		if (object != null) {
 			if(this.object != null) {
 				Main.inst.world.removeObject(this.object);
