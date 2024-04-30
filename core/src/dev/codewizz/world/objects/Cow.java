@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.gfx.Shaders;
+import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -100,6 +102,17 @@ public class Cow extends Animal implements SerializableObject {
 
 	@Override
 	public void render(SpriteBatch b) {
+
+
+
+
+		b.setShader(Shaders.roofShader);
+
+		Shaders.roofShader.setUniformf("mx", MouseInput.coords.x);
+		Shaders.roofShader.setUniformf("my", MouseInput.coords.y);
+		Shaders.roofShader.setUniformf("viewportWidth", Main.inst.camera.cam.viewportWidth);
+		Shaders.roofShader.setUniformf("viewportHeight", Main.inst.camera.cam.viewportHeight);
+
 		if(this.damageCoolDown >= 0f)
 			b.setColor(1f, 0f, 0f, 1f);
 		
@@ -119,6 +132,8 @@ public class Cow extends Animal implements SerializableObject {
 		
 		if(this.damageCoolDown >= 0f)
 			b.setColor(1f, 1f, 1f, 1f);
+
+		b.setShader(Shaders.defaultShader);
 	}
 
 	@Override
