@@ -29,9 +29,6 @@ public class Renderer {
 	public SpriteBatch objectBatch;
 	public SpriteBatch uiBatch;
 
-	public ShaderProgram outlineShader;
-	public ShaderProgram defaultShader;
-	
 	public UILayer ui;
 
 	private com.badlogic.gdx.physics.box2d.World world = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,0),false);
@@ -71,7 +68,7 @@ public class Renderer {
 		 * OBJECT PART DONE CONTINUE TO UI
 		 * 
 		 */
-		if(!Main.inst.world.nature.day || Main.inst.world.nature.day && Main.inst.world.nature.transition) {
+		if(!Main.inst.world.nature.day || Main.inst.world.nature.transition) {
 			rayHandler.setCombinedMatrix(Main.inst.camera.cam);
 			rayHandler.updateAndRender();
 		}

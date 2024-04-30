@@ -254,11 +254,12 @@ public class World {
 					b.setShader(Shaders.outlineShader);
 					object.render(b);
 					b.setShader(Shaders.defaultShader);
+				} else {
+					object.render(b);
 				}
+			} else {
+				object.render(b);
 			}
-
-			object.render(b);
-
 		}
 
 		for (Particle p : particles) {
