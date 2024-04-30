@@ -1,12 +1,15 @@
 package dev.codewizz.world;
 
 import java.awt.Polygon;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.UUID;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.saving.ChunkData;
 import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
@@ -161,7 +164,10 @@ public abstract class Tile implements SerializableTile {
 		data.addString(type.substring(6));
 
 		if (this.cell.getObject() != null) {
-			byte[] uuid = ByteUtils.toBytes(this.cell.getObject().getId());
+			byte[] uuid = ByteUtils.toBytes(this.cell.getObject().getUUID());
+			Logger.log(this.cell.getObject().getUUID());
+			Logger.log(Arrays.toString(uuid));
+
 			data.addArray(uuid);
 		}
 
@@ -170,10 +176,26 @@ public abstract class Tile implements SerializableTile {
 
 	@Override
 	public void load(byte[] data) {
+
+		Logger.log(data.length + " " + cell.x + " " + cell.y);
+
 		if (data.length >= 16) {
 			UUID uuid = ByteUtils.toUUID(data, 0);
+
+			Logger.log(uuid);
+			Logger.log(Arrays.toString(data));
+
+			for(Map.Entry<UUID, GameObject> entry : WorldDataLoader.objects.entrySet()) {
+				Logger.log(entry.getKey().toString() + " : " + entry.getValue().id);
+			}
+
 			GameObject object = WorldDataLoader.objects.remove(uuid);
+
+			Logger.log(object == null);
+
 			cell.setObject(object);
+
+			Logger.log(cell.getObject() == null);
 		}
 	}
 }

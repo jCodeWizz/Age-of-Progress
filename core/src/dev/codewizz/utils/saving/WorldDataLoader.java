@@ -17,7 +17,6 @@ import dev.codewizz.world.settlement.Settlement;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
@@ -61,8 +60,8 @@ public class WorldDataLoader {
         world = new World();
         Main.inst.world = world;
 
-        loadTiles(tileFolder);
         loadObjects(objectFolder);
+        loadTiles(tileFolder);
         loadMainFile(mainFile);
 
         world.chunkTree = chunks;
@@ -70,7 +69,7 @@ public class WorldDataLoader {
         Collections.sort(world.chunks);
 
         world.setup();
-        world.showInfoSartMenu = false;
+        world.showInfoStartMenu = false;
     }
 
     private void saveMainFile(String mainFilePath) {
@@ -230,6 +229,11 @@ public class WorldDataLoader {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        for(GameObject object : objects.values()) {
+            world.addObject(object);
+            Logger.log(object.getUUID());
+        }
     }
 
     private void loadObjects(File objectFolder) {
@@ -250,7 +254,7 @@ public class WorldDataLoader {
                 //TODO: use for adding objects to correct chunk? :)
 
                 objects.putAll(loader.getLoaded());
-
+                Logger.log(objects.size());
             }
         } catch (Exception e) {
             e.printStackTrace();

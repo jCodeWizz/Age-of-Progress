@@ -321,6 +321,9 @@ public class QuadTree<T> {
      */
     private boolean insert(Node<T> parent, Point<T> point) {
         Boolean result = false;
+
+        if(parent == null) return result;
+
         switch (parent.getNodeType()) {
             case EMPTY:
                 this.setPointForNode(parent, point);

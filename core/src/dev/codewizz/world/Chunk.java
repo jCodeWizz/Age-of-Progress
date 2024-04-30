@@ -5,13 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.GenerateChunkEvent;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
 import dev.codewizz.world.objects.Rock;
 import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.tiles.*;
 
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.List;
 
 public class Chunk implements Comparable<Chunk> {
@@ -78,6 +79,10 @@ public class Chunk implements Comparable<Chunk> {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid[i].length; j++) {
 				grid[i][j].render(b);
+
+				if(grid[i][j].getObject() != null) {
+					Logger.log("object!!!");
+				}
 			}
 		}
 	}

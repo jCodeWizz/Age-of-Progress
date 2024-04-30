@@ -50,6 +50,7 @@ public class GameObjectData extends DataSaveLoader{
 		try {
 			object = type.getConstructor().newInstance();
 			boolean success = load(loader, object);
+			object.setUUID(uuid);
 			return new Pair<>(object, success);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 			Logger.error("Couldn't load " + type.toString() + " because: ");

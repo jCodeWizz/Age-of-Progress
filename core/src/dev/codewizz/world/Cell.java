@@ -15,6 +15,7 @@ import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.tiles.GrassTile;
@@ -391,7 +392,14 @@ public class Cell {
 	}
 
 	public void setObject(GameObject object) {
+		Logger.log("Setting object");
+
+
 		if (object != null) {
+			if(this.object != null) {
+				Main.inst.world.removeObject(this.object);
+				this.object.setCell(null);
+			}
 			object.setCell(this);
 			Main.inst.world.addObject(object);
 		}

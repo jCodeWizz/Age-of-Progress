@@ -1,5 +1,6 @@
 package dev.codewizz.utils.saving;
 
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.Chunk;
@@ -70,11 +71,20 @@ public class ChunkData extends DataSaveLoader {
                      cell.tile.setCell(cell);
 
 
-                     int length = data.length - typeString.length();
+                     int length = data.length - typeString.length() - 1;
                      byte[] otherData = new byte[length];
-                     System.arraycopy(data, typeString.length(), otherData, 0, otherData.length);
+                     System.arraycopy(data, typeString.length() + 1, otherData, 0, otherData.length);
 
-                     cell.tile.load(otherData);
+
+
+                     if(otherData.length > 0) {
+                         Logger.log(typeString);
+                         Logger.log(typeString.length() + 1);
+                         Logger.log(data.length);
+
+
+                         cell.tile.load(otherData);
+                     }
                  } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                      throw new RuntimeException(e);
                  }

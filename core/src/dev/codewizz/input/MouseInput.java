@@ -24,6 +24,7 @@ import dev.codewizz.world.Tile;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.ConstructionObject;
 import dev.codewizz.world.objects.IBuy;
+import dev.codewizz.world.objects.Tree;
 
 public class MouseInput implements InputProcessor {
 
@@ -205,6 +206,9 @@ public class MouseInput implements InputProcessor {
 				}
 				
 				if(Main.inst.renderer.ui.menusClosed()) {
+
+					hoveringOverCell.setObject(new Tree(hoveringOverCell.x, hoveringOverCell.y));
+
 					if (GameLayer.selectedObject != null)
 						GameLayer.selectedObject.deselect();
 					
