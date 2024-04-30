@@ -149,11 +149,9 @@ public class World {
 		this.settlement = s;
 		this.showInfoStartMenu = false;
 
-		/*
-		 * for (int i = 0; i < 5; i++) { this.settlement.addHermit(Utils.getRandom(-75,
-		 * 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY()); }
-		 */
-		this.settlement.addHermit(Utils.getRandom(-75, 75) + s.getX(), Utils.getRandom(-75, 75) + s.getY());
+		for(int i = 0; i < 6; i++) {
+			this.settlement.addHermit(Utils.getRandom(-30, 30) + s.getX(), Utils.getRandom(-30, 30) + s.getY());
+		}
 	}
 
 	public void renderTiles(SpriteBatch b) {
@@ -254,7 +252,7 @@ public class World {
 			if (object instanceof GameObject) {
 				if (((GameObject) object).isSelected()) {
 					b.setShader(Shaders.outlineShader);
-					((GameObject) object).render(b);
+					object.render(b);
 					b.setShader(Shaders.defaultShader);
 				}
 			}

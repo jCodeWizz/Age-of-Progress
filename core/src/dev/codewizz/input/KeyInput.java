@@ -1,5 +1,6 @@
 package dev.codewizz.input;
 
+import dev.codewizz.gfx.gui.menus.DebugMenu;
 import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -116,6 +117,11 @@ public class KeyInput implements InputProcessor {
 			pixmap.dispose();
 
 			return true;
+		}
+
+		if(key == Input.Keys.F3) {
+			DebugMenu m = (DebugMenu) Main.inst.renderer.ui.getElement("debugMenu");
+			m.closeDebugUI();
 		}
 		
 		return false;
