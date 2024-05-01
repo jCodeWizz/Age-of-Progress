@@ -23,10 +23,12 @@ public class Shaders {
 	public static ShaderProgram outlineShader;
 	public static ShaderProgram defaultShader;
 	public static ShaderProgram roofShader;
+	public static ShaderProgram waterShader;
 
 	public static void init() {
 		outlineShader = new ShaderProgram(Gdx.files.internal("shaders/outline.vert").readString(), Gdx.files.internal("shaders/outline.frag").readString());
 		roofShader = new ShaderProgram(Gdx.files.internal("shaders/roof.vert").readString(), Gdx.files.internal("shaders/roof.frag").readString());
-        defaultShader = SpriteBatch.createDefaultShader();
+		waterShader = new ShaderProgram(Gdx.files.internal("shaders/water.vert").readString(), Gdx.files.internal("shaders/water.frag").readString());
+		defaultShader = SpriteBatch.createDefaultShader();
 	}
 }

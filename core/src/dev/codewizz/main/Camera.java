@@ -3,6 +3,7 @@ package dev.codewizz.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import dev.codewizz.gfx.Shaders;
 
 public class Camera {
 

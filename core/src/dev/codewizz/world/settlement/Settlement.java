@@ -1,5 +1,6 @@
 package dev.codewizz.world.settlement;
 
+import dev.codewizz.world.items.ItemType;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -39,6 +40,10 @@ public class Settlement {
 
 	private Settlement() {
 		this.inventory = new Inventory(-1);
+
+
+		inventory.addItem(new Item(ItemType.WOOD, 100));
+		inventory.addItem(new Item(ItemType.PLANKS, 100));
 	}
 
 	public Settlement(Cell cell) {

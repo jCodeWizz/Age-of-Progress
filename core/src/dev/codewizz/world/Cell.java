@@ -151,7 +151,7 @@ public class Cell {
 	}
 
 	public void render(SpriteBatch b) {
-		b.draw(tile.getCurrentSprite(), x, y);
+		tile.render(b);
 
 		if (text != null) {
 			text.render(b);

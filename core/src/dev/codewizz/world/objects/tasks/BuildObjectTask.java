@@ -77,6 +77,6 @@ public class BuildObjectTask extends Task {
 
 	@Override
 	public String getName() {
-		return "Building with " + i.getType().toString() + " on " + object.getToPlace().getName();
+		return "Building with " + i.getType().getName() + " on " + object.getToPlace().getName();
 	}
 }

@@ -140,6 +140,6 @@ public class CraftTask extends Task {
 
 	@Override
 	public String getName() {
-		return "Crafting " + recipe.getResult().getType().toString();
+		return "Crafting " + recipe.getResult().getType().getName();
 	}
 }

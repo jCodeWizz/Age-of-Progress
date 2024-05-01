@@ -61,6 +61,8 @@ public class World {
 	public boolean showInfoStartMenu = true;
 	private long start;
 
+	public float timer = 0;
+
 	public World() {
 
 		start = System.currentTimeMillis();
@@ -155,6 +157,8 @@ public class World {
 	}
 
 	public void renderTiles(SpriteBatch b) {
+
+		timer += Gdx.graphics.getDeltaTime();
 
 		Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(0, 0, 0));
 		Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0));

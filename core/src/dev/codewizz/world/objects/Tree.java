@@ -1,5 +1,7 @@
 package dev.codewizz.world.objects;
 
+import dev.codewizz.gfx.Shaders;
+import dev.codewizz.utils.Logger;
 import java.awt.Polygon;
 
 import com.badlogic.gdx.graphics.Color;
