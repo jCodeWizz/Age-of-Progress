@@ -83,7 +83,7 @@ public class KeyInput implements InputProcessor {
 			MouseInput.area = AreaSelector.harvest();
 		}
 		
-		if(key == Input.Keys.R) {
+		if(key == Input.Keys.U) {
 			Settlement s = Main.inst.world.settlement;
 			
 			if(s != null) {
@@ -123,7 +123,6 @@ public class KeyInput implements InputProcessor {
 			DebugMenu m = (DebugMenu) Main.inst.renderer.ui.getElement("debugMenu");
 			m.closeDebugUI();
 		}
-		
 		return false;
 	}
 

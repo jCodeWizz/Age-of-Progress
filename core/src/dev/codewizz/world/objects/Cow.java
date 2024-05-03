@@ -89,10 +89,18 @@ public class Cow extends Animal implements SerializableObject {
 		
 		if(this.isSelected()) {
 			this.deselect();
-			
+
+			System.out.println("s: " + Main.inst.world.settlement.areas.size());
+
 			if(FarmArea.anyAvailable()) {
+
+				System.out.println("avai");
+
 				FarmArea a = FarmArea.findArea(this);
 				if(a != null) {
+
+					System.out.println("not null, starting");
+
 					Main.inst.world.settlement.addTask(new CaptureAnimalTask(this, a), moving);
 				}
 			}

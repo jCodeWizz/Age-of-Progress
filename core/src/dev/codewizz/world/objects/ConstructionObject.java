@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class ConstructionObject extends GameObject {
 
-	public static boolean FREE = false;
+	public static boolean FREE = true;
 	
 	private GameObject toPlace;
 	private boolean placed;

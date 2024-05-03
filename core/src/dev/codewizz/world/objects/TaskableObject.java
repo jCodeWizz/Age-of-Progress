@@ -73,7 +73,9 @@ public abstract class TaskableObject extends Entity {
 	
 	public void finishCurrentTask() {
 		agent.stop();
-		tree.removeFirst();
+		if(!tree.isEmpty()) {
+			tree.removeFirst();
+		}
 		currentTask = null;
 	}
 	

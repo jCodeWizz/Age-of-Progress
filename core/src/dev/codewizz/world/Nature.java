@@ -70,8 +70,8 @@ public class Nature {
 	public void onNight() {
 		if(Main.inst.world.settlement != null) {
 			for(Hermit h : Main.inst.world.settlement.members) {
-				SleepTask t = new SleepTask();
-				h.addTask(t, true);
+				//SleepTask t = new SleepTask();
+				//h.addTask(t, true);
 			}
 		}
 		

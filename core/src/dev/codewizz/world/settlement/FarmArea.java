@@ -6,6 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.Animal;
+import dev.codewizz.world.tiles.EmptyTile;
 
 public class FarmArea {
 
@@ -16,7 +17,7 @@ public class FarmArea {
 	private List<Cell> entrances;
 	
 	private List<Animal> animals;
-	private String prefered = "";
+	private String preferred = "";
 	
 	private boolean valid = false;
 
@@ -29,11 +30,11 @@ public class FarmArea {
 	
 	
 	public boolean checkArea(Cell cell) {
-		Cell[] cells = cell.getNeighbours();
+		Cell[] cells = cell.getAllNeighbours();
 		for(int i = 0; i < cells.length; i++) {
-			if(cells[i].getObject() == null || (cells[i].getObject().getId().equals("aop:fence") && cells[i].getObject().getId().equals("aop:fence-post"))) {
+			if(cells[i] != null && (cells[i].getObject() == null || (cells[i].getObject().getId().equals("aop:fence") || cells[i].getObject().getId().equals("aop:fence-post") || cells[i].getObject().getId().equals("aop:fence-gate")))) {
 				checkCell(cells[i]);
-				
+
 				if(checkValid()) {
 					return true;
 				}
@@ -133,7 +134,7 @@ public class FarmArea {
 			}
 		}
 		
-		return true;
+		return false;
 	}
 	
 	public static FarmArea findArea(Animal animal) {
@@ -147,7 +148,7 @@ public class FarmArea {
 			
 			if(valid && area.hasSpace()) {
 				
-				if(area.getPrefered().equals(animal.getId())) {
+				if(area.getPreferred().equals(animal.getId())) {
 					return area;
 				}
 			} else {
@@ -156,8 +157,8 @@ public class FarmArea {
 		}
 		
 		for(FarmArea area : options) {
-			if(area.getPrefered().equals("")) {
-				area.setPrefered(animal.getId());
+			if(area.getPreferred().equals("")) {
+				area.setPreferred(animal.getId());
 				return area;
 			}
 		}
@@ -189,12 +190,12 @@ public class FarmArea {
 		return animals;
 	}
 	
-	public String getPrefered() {
-		return prefered;
+	public String getPreferred() {
+		return preferred;
 	}
 	
-	public void setPrefered(String s) {
-		this.prefered = s;
+	public void setPreferred(String s) {
+		this.preferred = s;
 	}
 
 	public List<Cell> getArea() {

@@ -1,5 +1,6 @@
 package dev.codewizz.world.objects.tasks;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 
 import dev.codewizz.main.Main;
@@ -31,6 +32,9 @@ public class CaptureAnimalTask extends Task {
 	
 	@Override
 	public void finish() {
+
+		System.out.println("Finished!");
+
 		hermit.setTaskAnimation(null);
 		hermit.finishCurrentTask();
 	
@@ -48,8 +52,13 @@ public class CaptureAnimalTask extends Task {
 	@Override
 	public void start(TaskableObject object) {
 		this.hermit = (Hermit) object;
-		
+
+		System.out.println("Starting");
+
 		if(area == null) {
+
+			System.out.println("Didn't find area");
+
 			stop();
 		}
 		
@@ -62,6 +71,9 @@ public class CaptureAnimalTask extends Task {
 
 	@Override
 	public void reach() {
+
+		System.out.println("reached");
+
 		if(!reachedAnimal) {
 			if(Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
 				reachedAnimal = true;
@@ -87,12 +99,17 @@ public class CaptureAnimalTask extends Task {
 
 			}
 		} else {
-			
+
+			System.out.println("trying to join in area");
+
 			boolean s = area.join(animal);
 			if(!s) {
 				if(FarmArea.anyAvailable()) {
 					area = FarmArea.findArea(animal);
 					if(area != null) {
+
+						System.out.println("joining");
+
 						s = area.join(animal);
 					} else {
 						stop();
@@ -103,6 +120,9 @@ public class CaptureAnimalTask extends Task {
 			if(!s) {
 				stop();
 			} else {
+
+				System.out.println("first ttry");
+
 				animal.setX(area.getArea().get(0).getMiddlePoint().x);
 				animal.setY(area.getArea().get(0).getMiddlePoint().y);
 				
@@ -126,7 +146,7 @@ public class CaptureAnimalTask extends Task {
 	public void update(float d) {
 		
 		if(reachedAnimal) {
-			if(counter < 3f) counter += d;
+			if(counter < 2f) counter += d;
 			else {
 				hermit.setSpeed(animal.getSpeed());
 			}
