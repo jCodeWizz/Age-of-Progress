@@ -1,5 +1,6 @@
 package dev.codewizz.world.settlement;
 
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.world.items.ItemType;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -89,7 +90,7 @@ public class Settlement {
 
 		hermit.setSettlement(this);
 		members.add(hermit);
-		Main.inst.world.addObject(hermit);
+		Main.inst.world.addObject(hermit, Reason.FORCED);
 
 		((NotificationMenu) Main.inst.renderer.ui.getElement("notification-menu")).addNotification(new UINotification(
 				"A new Hermit arrived!", "Give " + hermit.getName() + " a warm welcome! (And a meal!)", "people-icon"));

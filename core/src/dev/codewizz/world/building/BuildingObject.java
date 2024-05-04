@@ -3,6 +3,7 @@ package dev.codewizz.world.building;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
@@ -58,7 +59,7 @@ public class BuildingObject extends GameObject {
 		}
 		
 		walls[i] = (Wall) wall;
-		Main.inst.world.addObject(walls[i]);
+		Main.inst.world.addObject(walls[i], Reason.FORCED);
 	}
 	
 	@Override

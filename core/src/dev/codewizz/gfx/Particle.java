@@ -10,8 +10,8 @@ import dev.codewizz.utils.Utils;
 
 public class Particle {
 
-	private static Sprite DEFAULT = Assets.getSprite("particle-default");
-	public static Sprite LEAVE = Assets.getSprite("particle-leave");
+	private static final Sprite DEFAULT = Assets.getSprite("particle-default");
+	public static final Sprite LEAVE = Assets.getSprite("particle-leave");
 	
 	private float gravity = 1f;
 	private float x, y, w, h, velX, velY, traveled, distance = 0f;

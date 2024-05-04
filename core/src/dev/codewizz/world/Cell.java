@@ -13,6 +13,7 @@ import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Logger;
@@ -398,7 +399,7 @@ public class Cell {
 				this.object.setCell(null);
 			}
 			object.setCell(this);
-			Main.inst.world.addObject(object);
+			Main.inst.world.addObject(object, Reason.FORCED);
 		}
 		
 		this.object = object;

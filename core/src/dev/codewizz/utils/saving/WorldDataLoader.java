@@ -3,6 +3,7 @@ package dev.codewizz.utils.saving;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
@@ -231,7 +232,7 @@ public class WorldDataLoader {
         }
 
         for(GameObject object : objects.values()) {
-            world.addObject(object);
+            world.addObject(object, Reason.FORCED);
         }
     }
 

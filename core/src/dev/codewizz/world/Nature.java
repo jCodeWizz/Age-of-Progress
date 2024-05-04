@@ -6,6 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import box2dLight.PointLight;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Animal;
 import dev.codewizz.world.objects.Cow;
@@ -116,7 +117,7 @@ public class Nature {
 			a.setX(cell.x);
 			a.setY(cell.y);
 			
-			world.addObject(a);
+			world.addObject(a, Reason.ANIMAL_NATURE);
 			animals.add(a);
 			
 			return true;

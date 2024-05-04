@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import box2dLight.PointLight;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -73,7 +74,7 @@ public class Building extends GameObject implements IBuy, SerializableObject {
 	
 	public void leave(Hermit hermit) {
 		inside.remove(hermit);
-		Main.inst.world.addObject(hermit);
+		Main.inst.world.addObject(hermit, Reason.FORCED);
 		hermit.getCurrentTask().finish();
 	}
 

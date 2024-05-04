@@ -18,11 +18,7 @@ import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Shaders;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
-import dev.codewizz.modding.events.AddObjectEvent;
-import dev.codewizz.modding.events.CreateWorldEvent;
-import dev.codewizz.modding.events.Event;
-import dev.codewizz.modding.events.LoadWorldEvent;
-import dev.codewizz.modding.events.RemoveObjectEvent;
+import dev.codewizz.modding.events.*;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
@@ -411,9 +407,9 @@ public class World {
 		objects.add(item);
 	}
 
-	public boolean addObject(GameObject object) {
+	public boolean addObject(GameObject object, Reason reason) {
 
-		boolean proceed = Event.dispatch(new AddObjectEvent(object));
+		boolean proceed = Event.dispatch(new AddObjectEvent(object, reason));
 
 		if (proceed)
 			objects.add(object);
