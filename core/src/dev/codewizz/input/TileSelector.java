@@ -108,6 +108,8 @@ public class TileSelector {
 				Cell c3 = this.start;
 				Cell c4 = Main.inst.world.getCellWorldIndex(end.getWorldIndexX(), start.getWorldIndexY());
 
+				if(c1 == null || c2 == null || c3 == null || c4 == null) { return; }
+
 				if(c3.y < c1.y && c2.x > c4.x) {
 					Cell t = c1;
 					c1 = c3;

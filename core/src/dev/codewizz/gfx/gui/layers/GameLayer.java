@@ -7,18 +7,7 @@ import dev.codewizz.gfx.gui.UIElement;
 import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.menus.BuildingMenu;
-import dev.codewizz.gfx.gui.menus.ConstructionMenu;
-import dev.codewizz.gfx.gui.menus.DebugMenu;
-import dev.codewizz.gfx.gui.menus.NotificationMenu;
-import dev.codewizz.gfx.gui.menus.PathingMenu;
-import dev.codewizz.gfx.gui.menus.PauseMenu;
-import dev.codewizz.gfx.gui.menus.PeopleMenu;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
-import dev.codewizz.gfx.gui.menus.SettingsGameMenu;
-import dev.codewizz.gfx.gui.menus.SettlementMenu;
-import dev.codewizz.gfx.gui.menus.StartInfoMenu;
-import dev.codewizz.gfx.gui.menus.ToolMenu;
+import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.GameObject;
 
@@ -26,6 +15,7 @@ public class GameLayer extends UILayer {
 
 	private PathingMenu pathingMenu;
 	private BuildingMenu buildingMenu;
+	private StructureMenu structureMenu;
 	private PauseMenu pauseMenu;
 	private SettingsGameMenu settingsMenu;
 	private SelectMenu selectMenu;
@@ -142,6 +132,11 @@ public class GameLayer extends UILayer {
 		buildingMenu = new BuildingMenu("buildingMenu", 0, 0, 128, 260, this);
 		buildingMenu.disable();
 		elements.add(buildingMenu);
+
+		// CONSTRUCTION MENU
+		structureMenu = new StructureMenu("structureMenu", 0, 0, 128, 260, this);
+		structureMenu.disable();
+		elements.add(structureMenu);
 
 		// SETTLEMENT MENU
 		settlementMenu = new SettlementMenu("settlementMenu", UILayer.WIDTH / 2 - (531 / 2) * UILayer.SCALE,

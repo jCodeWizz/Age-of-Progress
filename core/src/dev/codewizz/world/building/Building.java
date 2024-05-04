@@ -12,7 +12,7 @@ import dev.codewizz.world.objects.tasks.GatherTask;
 
 public class Building {
 
-	private List<Room> rooms = new CopyOnWriteArrayList<>();
+	private final List<Room> rooms = new CopyOnWriteArrayList<>();
 	
 	public void addRoom(Room room) {
 		rooms.add(room);
@@ -39,8 +39,6 @@ public class Building {
 		}
 		
 		for(BuildingObject o : edges) {
-			
-			
 			o.init();
 		}
 		

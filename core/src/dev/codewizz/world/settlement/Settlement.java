@@ -94,7 +94,7 @@ public class Settlement {
 
 		((NotificationMenu) Main.inst.renderer.ui.getElement("notification-menu")).addNotification(new UINotification(
 				"A new Hermit arrived!", "Give " + hermit.getName() + " a warm welcome! (And a meal!)", "people-icon"));
-		;
+
 		
 		Event.dispatch(new HermitJoinEvent(hermit, this));
 
