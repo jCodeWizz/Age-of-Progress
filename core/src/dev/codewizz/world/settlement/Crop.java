@@ -84,12 +84,10 @@ public abstract class Crop {
 		
 		public float time;
 		public Sprite sprite;
-		public String text;
-		
+
 		public CropStage(float time, Sprite sprite) {
 			this.time = time;
 			this.sprite = sprite;
-			this.text = "Crop Stage";
 		}
 	}
 }

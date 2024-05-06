@@ -129,15 +129,15 @@ public class ModHandler {
 						if(folder.equalsIgnoreCase("/textures/tiles/")) {
 							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
 						} else if(folder.equalsIgnoreCase("/textures/objects/")) {
-							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							Assets.addSpriteToAtlas("objects", info.getId() + ":" + name , s);
 						} else if(folder.equalsIgnoreCase("/textures/entities/")) {
-							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							Assets.addSpriteToAtlas("entities", info.getId() + ":" + name , s);
 						} else if(folder.equalsIgnoreCase("/textures/particles/")) {
-							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							Assets.addSpriteToAtlas("particles", info.getId() + ":" + name , s);
 						} else if(folder.equalsIgnoreCase("/textures/items/")) {
-							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							Assets.addSpriteToAtlas("items", info.getId() + ":" + name , s);
 						} else if(folder.equalsIgnoreCase("/textures/ui/icons/")) {
-							Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name , s);
+							Assets.addSpriteToAtlas("ui", info.getId() + ":" + name , s);
 						} else {
 							Logger.error("Trying to load: " + entry.getName() + " from mod: " + info.getId().toUpperCase() + " but it isn't in the correct folder!");
 						}

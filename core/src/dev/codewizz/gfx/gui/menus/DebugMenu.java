@@ -30,7 +30,7 @@ public class DebugMenu extends UIMenu {
     private UIImage fade1;
     private UIImage fade2;
 
-    private boolean close = false;
+    private boolean close = true;
 
     public DebugMenu(String id, int x, int y, int w, int h, UILayer layer) {
         super(id, x, y, w, h, layer);

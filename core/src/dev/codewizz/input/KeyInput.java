@@ -48,11 +48,6 @@ public class KeyInput implements InputProcessor {
 			return true;
 		}
 		
-		if(key == Input.Keys.B) {
-			Building b = new Building();
-			MouseInput.tileArea = TileSelector.room(b);
-		}
-		
 		if(key == Input.Keys.TAB) {
 			// enter debug mode
 			Main.DEBUG = true;

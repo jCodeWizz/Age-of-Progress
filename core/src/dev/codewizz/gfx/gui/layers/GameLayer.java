@@ -178,7 +178,7 @@ public class GameLayer extends UILayer {
 
 		debugMenu = new DebugMenu("debugMenu", 0, 0, 0, 0, this);
 		elements.add(debugMenu);
-		debugMenu.enable();
+		debugMenu.disable();
 
 		// NOTIFICATION MENU
 		notificationMenu = new NotificationMenu("notification-menu",
