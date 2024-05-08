@@ -1,8 +1,6 @@
 package dev.codewizz.world.objects.tasks;
 
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.objects.Animal;
@@ -13,148 +11,128 @@ import dev.codewizz.world.settlement.FarmArea;
 
 public class CaptureAnimalTask extends Task {
 
-	private final float REACH = 1000f;
-	
-	private Hermit hermit;
-	private Animal animal;
-	private FarmArea area;
-	
-	private boolean reachedAnimal = false;
-	
-	private float counter = 0f;
-	
-	public CaptureAnimalTask(Animal animal, FarmArea area) {
-		this.animal = animal;
-		this.area = area;
-		this.jobs.add(Jobs.Farmer);
-		animal.setTasked(true);
-	}
-	
-	@Override
-	public void finish() {
+    private final float REACH = 1000f;
 
-		System.out.println("Finished!");
+    private Hermit hermit;
+    private Animal animal;
+    private FarmArea area;
 
-		hermit.setTaskAnimation(null);
-		hermit.finishCurrentTask();
-	
-		animal.setTasked(false);
-	}
+    private boolean reachedAnimal = false;
 
-	@Override
-	public void stop() {
-		hermit.setTaskAnimation(null);
-		hermit.finishCurrentTask();
-		
-		animal.setTasked(false);
-	}
+    private float counter = 0f;
 
-	@Override
-	public void start(TaskableObject object) {
-		this.hermit = (Hermit) object;
+    public CaptureAnimalTask(Animal animal, FarmArea area) {
+        this.animal = animal;
+        this.area = area;
+        this.jobs.add(Jobs.Farmer);
+        animal.setTasked(true);
+    }
 
-		System.out.println("Starting");
+    @Override
+    public void finish() {
+        hermit.setTaskAnimation(null);
+        hermit.finishCurrentTask();
 
-		if(area == null) {
+        animal.setTasked(false);
+    }
 
-			System.out.println("Didn't find area");
+    @Override
+    public void stop() {
+        hermit.setTaskAnimation(null);
+        hermit.finishCurrentTask();
 
-			stop();
-		}
-		
-		hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
-		if(hermit.getAgent().path.isEmpty())
-			reach();
-		
-		started = true;
-	}
+        animal.setTasked(false);
+    }
 
-	@Override
-	public void reach() {
+    @Override
+    public void start(TaskableObject object) {
+        this.hermit = (Hermit) object;
 
-		System.out.println("reached");
+        if (area == null) {
+            stop();
+        }
 
-		if(!reachedAnimal) {
-			if(Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
-				reachedAnimal = true;
-				
-				hermit.getAgent().setGoal(area.getEntrances().get(0));
-				if(hermit.getAgent().path.isEmpty()) {
-					reach();
-				}
-				
-				animal.getAgent().stop();
-				animal.getAgent().setGoal(area.getEntrances().get(0));
-				if(animal.getAgent().path.isEmpty()) {
-					reach();
-				}
-			} else {
-				
-				hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
-				if(hermit.getAgent().path.isEmpty()) {
-					Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) + "/"+ REACH);
-					reachedAnimal = true;
-					reach();
-				}
+        hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
+		if (hermit.getAgent().path.isEmpty()) { reach(); }
 
-			}
-		} else {
+        started = true;
+    }
 
-			System.out.println("trying to join in area");
+    @Override
+    public void reach() {
+        if (!reachedAnimal) {
+            if (Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
+                reachedAnimal = true;
 
-			boolean s = area.join(animal);
-			if(!s) {
-				if(FarmArea.anyAvailable()) {
-					area = FarmArea.findArea(animal);
-					if(area != null) {
+                hermit.getAgent().setGoal(area.getEntrances().get(0));
+                if (hermit.getAgent().path.isEmpty()) {
+                    reach();
+                }
 
-						System.out.println("joining");
+                animal.getAgent().stop();
+                animal.getAgent().setGoal(area.getEntrances().get(0));
+                if (animal.getAgent().path.isEmpty()) {
+                    reach();
+                }
+            } else {
 
-						s = area.join(animal);
-					} else {
-						stop();
-					}
-				}
-			}
-			
-			if(!s) {
-				stop();
-			} else {
+                hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
+                if (hermit.getAgent().path.isEmpty()) {
+                    Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(),
+                                                                hermit.getX(),
+                                                                hermit.getY()) + "/" + REACH);
+                    reachedAnimal = true;
+                    reach();
+                }
 
-				System.out.println("first ttry");
+            }
+        } else {
+            boolean s = area.join(animal);
+            if (!s) {
+                if (FarmArea.anyAvailable()) {
+                    area = FarmArea.findArea(animal);
+                    if (area != null) {
+                        s = area.join(animal);
+                    } else {
+                        stop();
+                    }
+                }
+            }
 
-				animal.setX(area.getArea().get(0).getMiddlePoint().x);
-				animal.setY(area.getArea().get(0).getMiddlePoint().y);
-				
-				if(animal.isInHerd()) {
-					animal.getHerd().removeMember(animal);
-				}
-				
-				finish();
-			}
-			animal.getAgent().stop();
-			hermit.setSpeed(20f);
-		}
-	}
+            if (!s) {
+                stop();
+            } else {
+                animal.setX(area.getArea().get(0).getMiddlePoint().x);
+                animal.setY(area.getArea().get(0).getMiddlePoint().y);
 
-	@Override
-	public void reset() {
-		
-	}
+                if (animal.isInHerd()) {
+                    animal.getHerd().removeMember(animal);
+                }
 
-	@Override
-	public void update(float d) {
-		
-		if(reachedAnimal) {
-			if(counter < 2f) counter += d;
-			else {
+                finish();
+            }
+            animal.getAgent().stop();
+            hermit.setSpeed(20f);
+        }
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void update(float d) {
+
+        if (reachedAnimal) {
+			if (counter < 2f) { counter += d; } else {
 				hermit.setSpeed(animal.getSpeed());
 			}
-		}
-	}
+        }
+    }
 
-	@Override
-	public String getName() {
-		return "capturing animal for pen";
-	}
+    @Override
+    public String getName() {
+        return "capturing " + animal.getName() + " for pen";
+    }
 }

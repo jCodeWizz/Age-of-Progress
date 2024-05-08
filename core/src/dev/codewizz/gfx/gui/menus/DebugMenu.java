@@ -91,7 +91,7 @@ public class DebugMenu extends UIMenu {
 
         if (Main.inst.world.settlement != null) {
             settlement.setText(
-                    "Settlement>> Loc: { " + (int) Main.inst.world.settlement.getX() + " ; " + (int) Main.inst.world.settlement.getY() + " } | Size: " + Main.inst.world.settlement.members.size() + " | Areas: " + Main.inst.world.settlement.areas.size());
+                    "Settlement>> Size: " + Main.inst.world.settlement.members.size() + " | Area: " + Main.inst.world.settlement.areas.size() + " | Build: " + Main.inst.world.settlement.buildings.size());
         } else {
             settlement.setText("Settlement>> No Settlement");
         }

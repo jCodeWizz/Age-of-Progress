@@ -46,6 +46,7 @@ public class StructureMenu extends UIMenu {
             protected void onDeClick() {
                 Main.inst.world.settlement.buildings.add(current);
                 current = null;
+                close();
             }
         };
         elements.add(finish);
@@ -56,6 +57,8 @@ public class StructureMenu extends UIMenu {
             }
         };
         elements.add(add);
+
+        update();
     }
 
     @Override
@@ -69,8 +72,6 @@ public class StructureMenu extends UIMenu {
         if(current == null) {
             current = new Building();
         }
-
-        update(100, 100);
     }
 
     @Override
@@ -78,16 +79,18 @@ public class StructureMenu extends UIMenu {
 
     }
 
-    public void update(int x, int y) {
-        finish.setX(x + 3 * UILayer.SCALE);
-        add.setX(x + 3 * UILayer.SCALE);
+    public void update() {
+        int y = UILayer.HEIGHT/2 - h/2;
+
+        finish.setX(3 * UILayer.SCALE);
+        add.setX(3 * UILayer.SCALE);
 
         finish.setY(y + 3 * UILayer.SCALE);
         add.setY(y + 30 * UILayer.SCALE);
 
-        fade1.setX(x);
-        fade2.setX(x);
-        fade3.setX(x);
+        fade1.setX(0);
+        fade2.setX(0);
+        fade3.setX(0);
 
         fade1.setY(y);
         fade2.setY(y);
