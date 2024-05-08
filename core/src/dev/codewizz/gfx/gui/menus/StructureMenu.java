@@ -8,8 +8,9 @@ import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.CreateBuildingEvent;
+import dev.codewizz.modding.events.Event;
 import dev.codewizz.world.building.Building;
-
 import java.awt.*;
 
 public class StructureMenu extends UIMenu {
@@ -44,9 +45,11 @@ public class StructureMenu extends UIMenu {
         finish = new UIIcon("finish-icon", x + 3 * UILayer.SCALE, y, 22, 24, "done-icon") {
             @Override
             protected void onDeClick() {
-                Main.inst.world.settlement.buildings.add(current);
-                current = null;
-                close();
+                if(Event.dispatch(new CreateBuildingEvent(current))) {
+                    Main.inst.world.settlement.buildings.add(current);
+                    current = null;
+                    close();
+                }
             }
         };
         elements.add(finish);
