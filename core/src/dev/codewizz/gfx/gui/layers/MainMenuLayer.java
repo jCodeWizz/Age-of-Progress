@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
+import dev.codewizz.gfx.gui.menus.LoadWorldMenu;
 import dev.codewizz.gfx.gui.menus.MainMenu;
 import dev.codewizz.gfx.gui.menus.SettingsMainMenu;
 
@@ -11,6 +12,7 @@ public class MainMenuLayer extends UILayer {
 
 	private MainMenu mainMenu;
 	private SettingsMainMenu settingsMenu;
+	private LoadWorldMenu loadWorldMenu;
 	
 	@Override
 	public void setup() {
@@ -21,6 +23,10 @@ public class MainMenuLayer extends UILayer {
 		settingsMenu = new SettingsMainMenu("settings-menu-menu", 0, 0, 1920, 1080, this);
 		settingsMenu.disable();
 		elements.add(settingsMenu);
+
+		loadWorldMenu = new LoadWorldMenu("load-world-menu", 0, 0, 1920, 1080, this);
+		loadWorldMenu.disable();
+		elements.add(loadWorldMenu);
 
 		elements.add(new UIImage("main-menu-background", 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), "main-menu-background", 1));
 	}

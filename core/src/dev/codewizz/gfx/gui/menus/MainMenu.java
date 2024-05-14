@@ -10,6 +10,7 @@ import dev.codewizz.gfx.gui.UIIcon;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.World;
 
@@ -42,26 +43,20 @@ public class MainMenu extends UIMenu {
 		elements.add(new UIButton("start-button", startX + w/2 - (99*UILayer.SCALE)/2, Gdx.graphics.getHeight()/2 - (36/2)*UILayer.SCALE + 120*UILayer.SCALE, 99, 36, "Load World") {
 			@Override
 			protected void onDeClick() {
-				
-				Main.inst.openWorld(World.openWorld("test_world"));
-				
-				boolean hideButtons = !Main.inst.world.showInfoStartMenu;
-				
-				Main.inst.renderer.ui.getElement("manage-icon").setAvailable(hideButtons);
-				Main.inst.renderer.ui.getElement("path-icon").setAvailable(hideButtons);
-				Main.inst.renderer.ui.getElement("people-icon").setAvailable(hideButtons);
-				Main.inst.renderer.ui.getElement("tool-icon").setAvailable(hideButtons);
-				Main.inst.renderer.ui.getElement("construction-icon").setAvailable(hideButtons);
+
+				Logger.log(x);
+
+				layer.getElement("main-menu-menu").disable();
+				layer.getElement("load-world-menu").enable();
 			}
 		});
 		
 		elements.add(new UIButton("start-new-button", startX + w/2 - (99*UILayer.SCALE)/2, Gdx.graphics.getHeight()/2 - (36/2)*UILayer.SCALE + 60*UILayer.SCALE, 99, 36, "Create World") {
 			@Override
 			protected void onDeClick() {
-				
 				Main.inst.openWorld(new World());
 				Main.inst.world.setup();
-				
+
 				Main.inst.renderer.ui.getElement("manage-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("path-icon").setAvailable(false);
 				Main.inst.renderer.ui.getElement("construction-icon").setAvailable(false);
