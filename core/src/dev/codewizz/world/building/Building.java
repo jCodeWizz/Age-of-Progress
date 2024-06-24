@@ -19,7 +19,7 @@ public class Building {
 		
 		ArrayList<BuildingObject> edges = new ArrayList<>(); 
 		
-		for(Cell cell : room.getArea()) {
+		for(Cell cell : new ArrayList<>(room.getArea())) {
 			if(cell.object == null) {
 				cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
 				cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
@@ -30,6 +30,7 @@ public class Building {
 					if(o.isEdge()) {
 						edges.add(o);
 					}
+					room.getArea().remove(cell);
 				} else {
 					cell.object.destroy();
 					cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));

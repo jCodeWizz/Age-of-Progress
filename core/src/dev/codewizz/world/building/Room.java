@@ -26,4 +26,8 @@ public class Room {
 	public List<Cell> getArea() {
 		return area;
 	}
+
+	public void removeCell(Cell cell) {
+		area.remove(cell);
+	}
 }
