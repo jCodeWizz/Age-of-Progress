@@ -53,13 +53,15 @@ public class BuildingObject extends GameObject {
 		}
 	}
 	
-	private void setWall(int i, GameObject wall) {
+	public void setWall(int i, GameObject wall) {
 		if(walls[i] != null) {
 			walls[i].destroy();
 		}
 		
-		walls[i] = (Wall) wall;
-		Main.inst.world.addObject(walls[i], Reason.FORCED);
+		if(wall != null) {
+			walls[i] = (Wall) wall;
+			Main.inst.world.addObject(walls[i], Reason.FORCED);
+		}
 	}
 	
 	@Override
@@ -87,5 +89,9 @@ public class BuildingObject extends GameObject {
 	
 	public boolean isEdge() {
 		return edge;
+	}
+
+	public Wall[] getWalls() {
+		return walls;
 	}
 }

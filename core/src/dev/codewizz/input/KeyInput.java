@@ -12,10 +12,15 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 
+import dev.codewizz.gfx.gui.menus.StructureMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Direction;
 import dev.codewizz.world.World;
 import dev.codewizz.world.building.Building;
+import dev.codewizz.world.building.BuildingObject;
+import dev.codewizz.world.building.Wall;
+import dev.codewizz.world.building.WallDoor;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
@@ -76,6 +81,29 @@ public class KeyInput implements InputProcessor {
 		
 		if(key == Input.Keys.H) {
 			MouseInput.area = AreaSelector.harvest();
+		}
+
+		if(key == Input.Keys.G) {
+			BuildingObject o = (BuildingObject) MouseInput.hoveringOverCell.getObject();
+			Wall[] walls = o.getWalls();
+
+			for(int i = 0; i < walls.length; i++) {
+				if(walls[i] != null) {
+					if(i == 0) {
+						//o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 32, o.getCell(), Direction.North).flip());
+						o.setWall(i, null);
+					} else if(i == 1) {
+						//o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 16, o.getCell(), Direction.East));
+						o.setWall(i, null);
+					} else if(i == 2) {
+						//o.setWall(i, new WallDoor(o.getX(), o.getY() + 16, o.getCell(), Direction.South).flip());
+						o.setWall(i, null);
+					} else if(i == 3) {
+						//o.setWall(i, new WallDoor(o.getX(), o.getY() + 32, o.getCell(), Direction.West));
+						o.setWall(i, null);
+					}
+				}
+			}
 		}
 		
 		if(key == Input.Keys.U) {

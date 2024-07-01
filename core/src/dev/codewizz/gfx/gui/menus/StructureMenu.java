@@ -11,6 +11,8 @@ import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.world.building.Building;
+import dev.codewizz.world.tiles.EmptyTile;
+
 import java.awt.*;
 
 public class StructureMenu extends UIMenu {

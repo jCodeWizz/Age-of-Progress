@@ -6,14 +6,15 @@ import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-		
+import dev.codewizz.world.tiles.EmptyTile;
+
 public class Wall extends GameObject {
 		
 	private static final Sprite TEXTURE = Assets.getSprite("wall");
 	private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-flipped");
 		
-	private Cell cell;
-	private Direction facing;
+	protected Cell cell;
+	protected Direction facing;
 		
 	public Wall(float x, float y, Cell cell, Direction dir) {
 		super(x, y);
@@ -23,17 +24,32 @@ public class Wall extends GameObject {
 		this.sortHeight = 4;
 		this.cell = cell;
 		this.facing = dir;
-		
+
+		onPlace();
+	}
+
+	public void onPlace() {
 		cell.blockPath(facing);
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() + 1));
-	}	
-		
+
+		Cell neighbour = cell.getNeighbour(facing);
+		neighbour.blockPath(facing.other());
+		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
+		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
+
+	}
+
 	@Override
 	public void onDestroy() {
 		cell.unblockPath(facing);
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() + 1));
+
+		Cell neighbour = cell.getNeighbour(facing);
+		neighbour.unblockPath(facing.other());
+		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
+		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
 	}	
 		
 	@Override
