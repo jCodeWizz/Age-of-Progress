@@ -19,6 +19,7 @@ import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.GrassTile;
 
 public class Cell {
@@ -108,27 +109,35 @@ public class Cell {
 	}
 	
 	public void blockPath(Direction dir) {
-		Cell[] n = this.getAllNeighbours();
-		Cell other = n[dir.getIndex()];
+		Cell other = getAllNeighbours()[dir.getIndex()];
 		
 		this.acceptConnections[dir.getIndex()] = false;
 		
 		if(other != null && other.connectedTo[(dir.getIndex() + 4) % 8]) {
 			other.connectedTo[(dir.getIndex() + 4) % 8] = false;
 			Main.inst.world.cellGraph.removeConnection(other, this);
+
+			if(this.connectedTo[dir.getIndex()]) {
+				this.connectedTo[dir.getIndex()] = false;
+				Main.inst.world.cellGraph.removeConnection(this, other);
+			}
 		}
 	}
 	
 	public void unblockPath(Direction dir) {
-		Cell[] n = this.getAllNeighbours();
-		Cell other = n[dir.getIndex()];
+		Cell other = getAllNeighbours()[dir.getIndex()];
 		
 		this.acceptConnections[dir.getIndex()] = true;
-		
+
 		if(other != null && other.acceptConnections[(dir.getIndex() + 4) % 8] && !other.connectedTo[(dir.getIndex() + 4) % 8]) {
-			other.connectedTo[(dir.getIndex() + 4) % 8] = true;
+			other.connectedTo[dir.other().getIndex()] = true;
 			Main.inst.world.cellGraph.connectCells(other, this, other.tile.getCost());
-		} 
+
+			if(this.acceptConnections[dir.getIndex()] && !this.connectedTo[dir.getIndex()]) {
+				this.connectedTo[dir.getIndex()] = true;
+				Main.inst.world.cellGraph.connectCells(this, other, this.tile.getCost());
+			}
+		}
 	}
 
 	public boolean setTile(Tile tile) {

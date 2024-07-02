@@ -55,7 +55,8 @@ public class BuildingObject extends GameObject {
 	
 	public void setWall(int i, GameObject wall) {
 		if(walls[i] != null) {
-			walls[i].destroy();
+			walls[i].onDestroy();
+			Main.inst.world.removeObject(walls[i]);
 		}
 		
 		if(wall != null) {

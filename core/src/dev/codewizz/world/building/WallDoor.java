@@ -2,7 +2,10 @@ package dev.codewizz.world.building;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
+import dev.codewizz.world.tiles.EmptyTile;
+import dev.codewizz.world.tiles.FlowerTile;
 
 public class WallDoor extends Wall {
 

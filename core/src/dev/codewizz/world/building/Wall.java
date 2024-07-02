@@ -33,7 +33,7 @@ public class Wall extends GameObject {
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() + 1));
 
-		Cell neighbour = cell.getNeighbour(facing);
+		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];;
 		neighbour.blockPath(facing.other());
 		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
 		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
@@ -46,11 +46,12 @@ public class Wall extends GameObject {
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() + 1));
 
-		Cell neighbour = cell.getNeighbour(facing);
+		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];;
+
 		neighbour.unblockPath(facing.other());
 		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
 		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
-	}	
+	}
 		
 	@Override
 	public void update(float d) {
