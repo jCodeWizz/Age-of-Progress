@@ -45,13 +45,13 @@ public class World {
 	private List<Renderable> objects = new CopyOnWriteArrayList<>();
 	public List<Particle> particles = new CopyOnWriteArrayList<>();
 
-	public List<Chunk> generationQueue = new CopyOnWriteArrayList<Chunk>();
+	public List<Chunk> generationQueue = new CopyOnWriteArrayList<>();
+	private Thread generationThread;
 
 	public Settlement settlement;
 	public Nature nature;
 
 	public CellGraph cellGraph;
-
 	public WNoise noise = new WNoise();
 
 	public boolean showInfoStartMenu = true;
@@ -81,7 +81,9 @@ public class World {
 	}
 
 	public Chunk addChunk(int indexX, int indexY) {
-		if(chunkTree.containsKey(new Vector2(indexX, indexY))) { return null; }
+		if (chunkTree.containsKey(new Vector2(indexX, indexY))) {
+			return null;
+		}
 
 		Chunk c = new Chunk(this, indexX, indexY);
 
@@ -99,17 +101,20 @@ public class World {
 			public void run() {
 				init();
 				Event.dispatch(new CreateWorldEvent(Main.inst.world));
-				Logger.log(
-						"World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
+				Logger.log("World creation time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 
-				Thread generateThread = new Thread("chunk-generation") {
+				generationThread = new Thread("chunk-generation") {
 					@Override
 					public void run() {
-						generate();
+						try {
+							generate();
+						} catch (InterruptedException e) {
+							Logger.log("Stopping world generation!");
+						}
 					}
 				};
 
-				generateThread.start();
+				generationThread.start();
 			}
 		};
 		initThread.start();
@@ -127,16 +132,19 @@ public class World {
 		// nature.spawnHerd();
 	}
 
-	private void generate() {
-		while (Main.RUNNING && Main.PLAYING) {
-			if (!generationQueue.isEmpty()) {
-				for (Chunk chunk : generationQueue) {
-					if (Main.RUNNING && Main.PLAYING) {
-						chunk.init();
-						chunk.generate();
-						generationQueue.remove(chunk);
-					} else {
-						break;
+	private void generate() throws InterruptedException {
+		synchronized (this) {
+			while (Main.RUNNING && Main.PLAYING) {
+				wait();
+				if (!generationQueue.isEmpty()) {
+					for (Chunk chunk : generationQueue) {
+						if (Main.RUNNING && Main.PLAYING) {
+							chunk.init();
+							chunk.generate();
+							generationQueue.remove(chunk);
+						} else {
+							break;
+						}
 					}
 				}
 			}
@@ -147,7 +155,7 @@ public class World {
 		this.settlement = s;
 		this.showInfoStartMenu = false;
 
-		for(int i = 0; i < 6; i++) {
+		for (int i = 0; i < 6; i++) {
 			this.settlement.addHermit(Utils.getRandom(-30, 30) + s.getX(), Utils.getRandom(-30, 30) + s.getY());
 		}
 	}
@@ -173,22 +181,24 @@ public class World {
 				if (!chunk.isGenerated()) {
 					chunk.markGenerated();
 					generationQueue.add(chunk);
-
+					synchronized (this) {
+						this.notifyAll();
+					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(1, 0))) {
 						addChunk((int) chunk.getIndex().x + 1, (int) chunk.getIndex().y);
-						//c.init();
+						// c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, 1))) {
 						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y + 1);
-						//c.init();
+						// c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(-1, 0))) {
 						addChunk((int) chunk.getIndex().x - 1, (int) chunk.getIndex().y);
-						//c.init();
+						// c.init();
 					}
 					if (!chunkTree.containsKey(new Vector2(chunk.getIndex()).add(0, -1))) {
 						addChunk((int) chunk.getIndex().x, (int) chunk.getIndex().y - 1);
-						//c.init();
+						// c.init();
 					}
 				} else {
 					chunk.load();
@@ -199,7 +209,7 @@ public class World {
 		}
 
 		if (!Main.PAUSED) {
-			if (MouseInput.hoveringOverCell != null) {
+			if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || MouseInput.tileArea.start == null || MouseInput.tileArea.start != MouseInput.tileArea.end)) {
 				if (MouseInput.clear) {
 					b.draw(Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
 							MouseInput.hoveringOverCell.y);
@@ -208,10 +218,10 @@ public class World {
 							MouseInput.hoveringOverCell.y);
 				}
 				/*
-				 * 
+				 *
 				 * TODO: Need to add a good way to select a tile and place it. This will be
 				 * great when starting to work on menus.
-				 * 
+				 *
 				 */
 			}
 		}
@@ -441,5 +451,9 @@ public class World {
 
 	public Nature getNature() {
 		return this.nature;
+	}
+
+	public void stop() {
+		generationThread.interrupt();
 	}
 }

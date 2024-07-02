@@ -144,7 +144,10 @@ public class Main extends ApplicationAdapter {
 	
 	public static void exit() {
 		RUNNING = false;
-		
+
+		if(Main.inst.world != null) {
+			Main.inst.world.stop();
+		}
 		Main.inst.client.stop();
 		Main.inst.handler.stop();
 		
