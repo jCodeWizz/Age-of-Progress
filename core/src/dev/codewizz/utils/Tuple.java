@@ -29,6 +29,6 @@ public class Tuple<T, Q, K> {
 
     @Override
     public String toString() {
-        return "<" + typeA + "," + typeB + ">";
+        return "Tuple{" + "typeA=" + typeA + ", typeB=" + typeB + ", typeC=" + typeC + '}';
     }
 }

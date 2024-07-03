@@ -1,5 +1,8 @@
 package dev.codewizz.world.objects.tasks;
 
+import dev.codewizz.utils.saving.TaskData;
+import dev.codewizz.utils.saving.TaskDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,6 +28,31 @@ public abstract class Task {
 	
 	public Task() {
 		
+	}
+
+	public void load(TaskDataLoader loader, TaskData taskData) {
+		byte[] data = taskData.take();
+
+		byte b = data[0];
+
+		tasking = ByteUtils.toBoolean(b, 0);
+		started = ByteUtils.toBoolean(b, 1);
+		shouldRestart = ByteUtils.toBoolean(b, 2);
+	}
+
+	public TaskData save(TaskData data) {
+		byte b = 0;
+		b = ByteUtils.toByte(b, tasking, 0);
+		b = ByteUtils.toByte(b, started, 1);
+		b = ByteUtils.toByte(b, shouldRestart, 2);
+
+		data.addByte(b);
+
+
+		//todo fix job saving, maybe rewriting job system here.
+
+		data.end();
+		return data;
 	}
 	
 	public void addJob(Jobs job) {

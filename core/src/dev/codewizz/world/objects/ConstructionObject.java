@@ -81,6 +81,8 @@ public class ConstructionObject extends GameObject {
 
 		byte[] data = object.take();
 
+		placed = ByteUtils.toBoolean(data[0], 0);
+
 		UUID toPlaceUUID = ByteUtils.toUUID(data, 1);
 		if (loader.isLoaded(toPlaceUUID)) {
 			this.toPlace = loader.getLoadedObject(toPlaceUUID);
