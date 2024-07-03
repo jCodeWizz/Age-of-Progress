@@ -209,7 +209,7 @@ public class World {
 		}
 
 		if (!Main.PAUSED) {
-			if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || MouseInput.tileArea.start == null || MouseInput.tileArea.start != MouseInput.tileArea.end)) {
+			if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || (MouseInput.tileArea.start == null || MouseInput.tileArea.cells.size() == 0))) {
 				if (MouseInput.clear) {
 					b.draw(Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
 							MouseInput.hoveringOverCell.y);
