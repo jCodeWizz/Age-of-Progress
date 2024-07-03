@@ -1,5 +1,6 @@
 package dev.codewizz.modding;
 
+import dev.codewizz.console.CommandExecutor;
 import dev.codewizz.modding.annotations.EventCall;
 import dev.codewizz.modding.annotations.Priorities;
 import dev.codewizz.modding.annotations.Priority;
@@ -16,6 +17,7 @@ public class Registers {
     public static final HashMap<String, Pair<ModInfo, JavaMod>> mods = new HashMap<>();
     public static final HashMap<String, Class<? extends Tile>> tiles = new HashMap<>();
     public static final HashMap<String, Class<? extends GameObject>> objects = new HashMap<>();
+    public static final HashMap<String, CommandExecutor> commands = new HashMap<>();
     public static HashMap<String, EventMethod> events = new HashMap<>();
 
     public static Tile createTile(String id) {
@@ -102,5 +104,15 @@ public class Registers {
         }
 
         return valid;
+    }
+
+    public static boolean registerCommand(String name, CommandExecutor e) {
+        if(commands.containsKey(name)) {
+            Logger.error("Tried to register new command: " + name + " but it already exists!");
+            return false;
+        }
+
+        commands.put(name, e);
+        return true;
     }
 }
