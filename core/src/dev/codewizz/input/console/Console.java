@@ -20,6 +20,7 @@ public class Console {
         Registers.registerCommand("createobject", new CreateObjectCommand());
         Registers.registerCommand("registers", new RegistersCommand());
         Registers.registerCommand("removeobject", new RemoveObjectCommand());
+        Registers.registerCommand("additem", new AddItemCommand());
     }
 
     public void start() {

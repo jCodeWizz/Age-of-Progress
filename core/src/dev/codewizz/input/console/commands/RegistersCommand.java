@@ -49,26 +49,8 @@ public class RegistersCommand implements CommandExecutor {
                         Logger.log(value);
                     }
                 }
-
-
-
-
-
-
-
-
             }
-
-
-
-
         }
-
-
-
-
-
-
 
         return false;
     }
