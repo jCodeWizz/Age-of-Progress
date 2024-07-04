@@ -16,6 +16,8 @@ public abstract class Animal extends TaskableObject {
 	private Herd herd;
 	private boolean inHerd = false;
 	protected int wanderDistance = 6;
+	private float wanderTimer = Utils.getRandom(8, 12);
+
 	
 	public Animal() {
 		super();
@@ -37,60 +39,40 @@ public abstract class Animal extends TaskableObject {
 	@Override
 	public void update(float d) {
 		super.update(d);
-		
-		if(!agent.moving) {
-			if(Utils.RANDOM.nextInt(1000) == 0) {
+
+		if(wanderTimer > 0) {
+			wanderTimer -= d;
+		} else {
+			wanderTimer = Utils.getRandom(8, 12);
+
+			if(!agent.moving) {
 				if(inHerd) {
-					if(herd.getLeader().equals(this)) {
-						Cell currentCell = Main.inst.world.getCell(x, y);
-						
-						if(currentCell == null) return;
-						
-						int offX = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.indexX;
-						int offY = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.indexY;
-						
-						offX = MathUtils.clamp(offX, 0, World.WORLD_SIZE_W-1);
-						offY = MathUtils.clamp(offY, 0, World.WORLD_SIZE_H-1);
-						
-						Cell goalCell = Main.inst.world.getCell(offX * 32, offY * 16);
-						CellGraph c = Main.inst.world.cellGraph;
-						int s = c.getConnections(goalCell).size;
-						if(s == 0) {
-							return;
-						}
-					
-						tree.addLast(new MoveTask(goalCell));
-						herd.leaderMoved();
-					} else {
-						Cell cell = herd.newPath();
-						
-						CellGraph c = Main.inst.world.cellGraph;
-						int s = c.getConnections(cell).size;
-						if(s == 0) {
-							return;
-						}
-						
-						tree.addLast(new MoveTask(cell));
+					Cell cell = herd.newPath();
+					CellGraph c = Main.inst.world.cellGraph;
+					int s = c.getConnections(cell).size;
+					if(s == 0) {
+						return;
 					}
+
+					tree.addLast(new MoveTask(cell));
 				} else {
 					Cell currentCell = Main.inst.world.getCell(x, y);
-					
+
 					if(currentCell == null) return;
-					
-					int offX = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.indexX;
-					int offY = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.indexY;
-					
-					offX = MathUtils.clamp(offX, 0, World.WORLD_SIZE_W-1);
-					offY = MathUtils.clamp(offY, 0, World.WORLD_SIZE_H-1);
-					
-					Cell goalCell = Main.inst.world.getCell(offX * 32, offY * 16);
-					
+
+
+					int offX = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.getWorldIndexX();
+					int offY = Utils.getRandom(-wanderDistance, wanderDistance) + currentCell.getWorldIndexY();
+
+					Cell goalCell = Main.inst.world.getCellWorldIndex(offX, offY);
+					if(goalCell == null) return;
+
 					CellGraph c = Main.inst.world.cellGraph;
 					int s = c.getConnections(goalCell).size;
 					if(s == 0) {
 						return;
 					}
-					
+
 					tree.addLast(new MoveTask(goalCell));
 				}
 			}

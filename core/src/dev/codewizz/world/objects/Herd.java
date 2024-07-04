@@ -42,10 +42,15 @@ public class Herd {
 	public Cell newPath() {
 		Cell cell = Main.inst.world.getCell(leader.getX(), leader.getY());
 
-		int indexX = cell.indexX + Utils.getRandom(-offset, offset);
-		int indexY = cell.indexY + Utils.getRandom(-offset, offset);
-		
-		return Main.inst.world.getCell(indexX * 32, indexY * 16);
+		int indexX = cell.getWorldIndexX() + Utils.getRandom(-offset, offset);
+		int indexY = cell.getWorldIndexY() + Utils.getRandom(-offset, offset);
+
+		Cell c = Main.inst.world.getCellWorldIndex(indexX, indexY);
+		if(c == null) {
+			return cell;
+		} else {
+			return c;
+		}
 	}
 
 	public void attackHerd() {
