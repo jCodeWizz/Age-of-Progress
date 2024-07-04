@@ -1,4 +1,4 @@
-package dev.codewizz.console;
+package dev.codewizz.input.console;
 
 import dev.codewizz.world.World;
 
