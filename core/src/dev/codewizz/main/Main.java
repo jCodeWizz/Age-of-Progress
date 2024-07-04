@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.kotcrab.vis.ui.VisUI;
 
-import dev.codewizz.console.Console;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.MainMenuLayer;

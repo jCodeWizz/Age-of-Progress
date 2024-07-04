@@ -1,6 +1,6 @@
 package dev.codewizz.modding;
 
-import dev.codewizz.console.CommandExecutor;
+import dev.codewizz.input.console.CommandExecutor;
 import dev.codewizz.modding.annotations.EventCall;
 import dev.codewizz.modding.annotations.Priorities;
 import dev.codewizz.modding.annotations.Priority;
