@@ -1,6 +1,6 @@
-package dev.codewizz.console.commands;
+package dev.codewizz.input.console.commands;
 
-import dev.codewizz.console.CommandExecutor;
+import dev.codewizz.input.console.CommandExecutor;
 import dev.codewizz.world.World;
 
 public class TimeCommand implements CommandExecutor {
@@ -15,11 +15,13 @@ public class TimeCommand implements CommandExecutor {
             if(args[0].equalsIgnoreCase(DAY)) {
                 world.nature.timeCounter = 0;
                 world.nature.transition = false;
+                world.nature.day = true;
                 return true;
             }
             if(args[0].equalsIgnoreCase(NIGHT)) {
                 world.nature.timeCounter = 0;
                 world.nature.transition = false;
+                world.nature.day = false;
                 return true;
             }
         }
