@@ -19,6 +19,7 @@ public class Console {
         Registers.registerCommand("instabuild", new InstaBuildCommand());
         Registers.registerCommand("createobject", new CreateObjectCommand());
         Registers.registerCommand("registers", new RegistersCommand());
+        Registers.registerCommand("removeobject", new RemoveObjectCommand());
     }
 
     public void start() {
@@ -26,7 +27,11 @@ public class Console {
             public void run() {
                 scanner = new Scanner(System.in);
 
-                while(Main.PLAYING || Main.RUNNING) {
+
+                Logger.log(Main.PLAYING + " " + Main.RUNNING + " " + this.isInterrupted());
+
+
+                while((Main.PLAYING || Main.RUNNING) && !this.isInterrupted()) {
                     try {
                         String command = scanner.nextLine();
                         Logger.log("Executing command: '" + command + "'!");
@@ -55,6 +60,7 @@ public class Console {
                         }
 
                     } catch (NoSuchElementException ignored) {
+                        Logger.log("V: " + Main.PLAYING + " " + Main.RUNNING);
                     } catch (Exception e) {
                         Logger.error("Exception while executing command: ");
                         e.printStackTrace();

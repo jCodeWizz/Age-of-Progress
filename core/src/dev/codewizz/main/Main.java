@@ -149,6 +149,7 @@ public class Main extends ApplicationAdapter {
 
     public static void exit() {
         RUNNING = false;
+        PLAYING = false;
 
         if (Main.inst.world != null) {
             Main.inst.world.stop();
