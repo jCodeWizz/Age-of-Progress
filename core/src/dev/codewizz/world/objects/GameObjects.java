@@ -17,6 +17,7 @@ public class GameObjects {
 		Registers.registerGameObject("aop:flag", Flag.class);
 		Registers.registerGameObject("aop:hermit", Hermit.class);
 		Registers.registerGameObject("aop:mushrooms", Mushrooms.class);
+		Registers.registerGameObject("aop:pine-tree", PineTree.class);
 		Registers.registerGameObject("aop:rock", Rock.class);
 		Registers.registerGameObject("aop:stump", Stump.class);
 		Registers.registerGameObject("aop:tree", Tree.class);

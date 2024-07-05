@@ -5,9 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.GenerateChunkEvent;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.objects.Mushrooms;
+import dev.codewizz.world.objects.PineTree;
 import dev.codewizz.world.objects.Rock;
 import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.tiles.*;
@@ -194,9 +194,12 @@ public class Chunk implements Comparable<Chunk> {
 					float e = 5f;
 					float n = (float) world.noise.noise((cell.indexX + this.index.x * SIZE)* e, (cell.indexY + this.index.y * SIZE) * e);
 
-					if (n > 0.4f) {
-						if(cell.object == null)
+					if (n > 0.4f && cell.object == null) {
+						if(Utils.getRandom(1, 4) < 3) {
 							cell.setObject(new Tree(cell.x, cell.y));
+						} else {
+							cell.setObject(new PineTree(cell.x, cell.y));
+						}
 					}
 				}
 			}
