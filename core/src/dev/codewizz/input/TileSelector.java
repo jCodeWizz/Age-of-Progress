@@ -146,14 +146,14 @@ public class TileSelector {
 			
 			@Override
 			public boolean checkCellClear(Cell cell) {
-				return cell.getObject() == null || (cell.object.getId().equals("aop:buildingobject") && ((BuildingObject)cell.object).isEdge());
+				return cell.getObject() == null;
 			}
 			
 			
 			@Override
 			public boolean checkClear() {
 				for(Cell cell : this.cells) {
-					if(cell.getObject() != null && cell.object.getId().equals("aop:buildingobject") && !((BuildingObject)cell.object).isEdge()) {
+					if(cell.getObject() != null) {
 						return false;
 					}
 				}

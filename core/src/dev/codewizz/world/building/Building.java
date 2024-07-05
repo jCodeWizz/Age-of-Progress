@@ -17,32 +17,13 @@ public class Building {
 	public void addRoom(Room room) {
 		rooms.add(room);
 		
-		ArrayList<BuildingObject> edges = new ArrayList<>(); 
-		
 		for(Cell cell : new ArrayList<>(room.getArea())) {
 			if(cell.object == null) {
 				cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
 				cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
-			} else {
-				
-				if(cell.object.getId().equals("aop:buildingobject")) {
-					BuildingObject o = (BuildingObject) cell.object;
-					if(o.isEdge()) {
-						edges.add(o);
-					}
-					room.getArea().remove(cell);
-				} else {
-					cell.object.destroy();
-					cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
-					cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
-				}
 			}
 		}
-		
-		for(BuildingObject o : edges) {
-			o.init();
-		}
-		
+
 		for(Cell cell : room.getArea()) {
 			if(cell.getObject() != null && cell.getObject() instanceof IGatherable) {
 				Main.inst.world.settlement.addTask(new GatherTask(cell.getObject()), true);
