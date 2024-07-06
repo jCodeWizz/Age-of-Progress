@@ -99,7 +99,7 @@ public class Renderer {
 	}
 	
 	public PointLight addLight(float x, float y, float radius) {
-		PointLight light = new PointLight(this.rayHandler, 10, new Color(0.8f, 0.8f, 0.5f, 0.75f), radius, x, y);
+		PointLight light = new PointLight(this.rayHandler, 16, new Color(0.8f, 0.8f, 0.5f, 0.75f), radius, x, y);
 		light.setStaticLight(true);
 		light.setXray(true);
 		lights.add(light);
