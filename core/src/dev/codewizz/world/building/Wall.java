@@ -15,7 +15,6 @@ public class Wall extends GameObject {
 	private static final Sprite TEXTURE = Assets.getSprite("wall");
 	private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-flipped");
 		
-	protected Cell cell;
 	protected Direction facing;
 		
 	public Wall(float x, float y, Cell cell, Direction dir) {

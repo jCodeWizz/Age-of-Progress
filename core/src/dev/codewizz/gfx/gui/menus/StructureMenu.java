@@ -10,6 +10,7 @@ import dev.codewizz.modding.events.Event;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
+import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.tiles.EmptyTile;
 
@@ -24,6 +25,7 @@ public class StructureMenu extends UIMenu {
     private UIIcon finish;
     private UIIcon add;
     private UIIconToggle door;
+    private UIIconToggle remove;
 
     private Building current;
 
@@ -35,7 +37,7 @@ public class StructureMenu extends UIMenu {
     public void setup() {
         this.x = 100;
         this.y = 100;
-        this.h = (3+27*(3)) * UILayer.SCALE;
+        this.h = (3 + 27 * (4)) * UILayer.SCALE;
 
         fade1 = new UIImage("back-1-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
         fade2 = new UIImage("back-2-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
@@ -48,7 +50,7 @@ public class StructureMenu extends UIMenu {
         finish = new UIIcon("finish-icon", x + 3 * UILayer.SCALE, y, 22, 24, "done-icon") {
             @Override
             protected void onDeClick() {
-                if(Event.dispatch(new CreateBuildingEvent(current))) {
+                if (Event.dispatch(new CreateBuildingEvent(current))) {
                     Main.inst.world.settlement.buildings.add(current);
                     current = null;
                     close();
@@ -68,16 +70,33 @@ public class StructureMenu extends UIMenu {
         };
         elements.add(door);
 
+        remove = new UIIconToggle("remove-icon", x + 3 * UILayer.SCALE, y, 22, 24, "close-icon") {
+        };
+        elements.add(remove);
+
         update();
     }
 
     @Override
     public void clicked(GameObject object) {
-        if(object instanceof Wall && door.isToggled()) {
-            Wall wall = (Wall) object;
+        if (object instanceof Wall) {
+            if (door.isToggled()) {
+                Wall wall = (Wall) object;
 
-            if(wall.getId().equals("aop:wall")) {
-                wall.makeDoor();
+                if (wall.getId().equals("aop:wall")) {
+                    wall.makeDoor();
+                }
+            } else if (remove.isToggled()) {
+                Wall wall = (Wall) object;
+
+                Wall[] walls = ((BuildingObject)wall.getCell().getObject()).getWalls();
+
+                for(int i = 0; i < walls.length; i++) {
+                    if(walls[i] != null && walls[i].equals(wall)) {
+                        ((BuildingObject)wall.getCell().getObject()).setWall(i, null);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -90,7 +109,7 @@ public class StructureMenu extends UIMenu {
     @Override
     public void onOpen() {
 
-        if(current == null) {
+        if (current == null) {
             current = new Building();
         }
     }
@@ -101,15 +120,17 @@ public class StructureMenu extends UIMenu {
     }
 
     public void update() {
-        int y = UILayer.HEIGHT/2 - h/2;
+        int y = UILayer.HEIGHT / 2 - h / 2;
 
         finish.setX(3 * UILayer.SCALE);
         add.setX(3 * UILayer.SCALE);
         door.setX(3 * UILayer.SCALE);
+        remove.setX(3 * UILayer.SCALE);
 
         finish.setY(y + 3 * UILayer.SCALE);
         add.setY(y + 30 * UILayer.SCALE);
         door.setY(y + 57 * UILayer.SCALE);
+        remove.setY(y + 84 * UILayer.SCALE);
 
         fade1.setX(0);
         fade2.setX(0);
