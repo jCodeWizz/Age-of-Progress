@@ -11,8 +11,10 @@ import dev.codewizz.utils.Utils;
 public class Particle {
 
 	private static final Sprite DEFAULT = Assets.getSprite("particle-default");
-	public static final Sprite LEAVE = Assets.getSprite("particle-leave");
-	
+	public static final Sprite LEAF = Assets.getSprite("particle-leave");
+	public static final Sprite PINE_LEAF1 = Assets.getSprite("particle-pine-leaf-1");
+	public static final Sprite PINE_LEAF2 = Assets.getSprite("particle-pine-leaf-2");
+
 	private float gravity = 1f;
 	private float x, y, w, h, velX, velY, traveled, distance = 0f;
 	private float counter = 3f;
@@ -29,6 +31,10 @@ public class Particle {
 		this.color = Color.WHITE;
 		this.sprite = DEFAULT;
 		counter = 3f + Utils.RANDOM.nextFloat();
+	}
+
+	public Particle(float x, float y) {
+		this(x, y, -1, -1);
 	}
 	 
 	public void update(float dt) {
@@ -65,6 +71,9 @@ public class Particle {
 	}
 	
 	public Particle sprite(Sprite sprite) {
+		if(this.w == -1) w = sprite.getWidth();
+		if(this.h == -1) h = sprite.getHeight();
+
 		this.sprite = sprite;
 		return this;
 	}

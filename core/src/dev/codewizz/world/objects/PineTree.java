@@ -1,7 +1,5 @@
 package dev.codewizz.world.objects;
 
-import dev.codewizz.gfx.Shaders;
-import dev.codewizz.utils.Logger;
 import java.awt.Polygon;
 
 import com.badlogic.gdx.graphics.Color;
@@ -39,7 +37,7 @@ public class PineTree extends GameObject implements SerializableObject, IGathera
 
         this.sortHeight = 25f;
 
-        this.id = "aop:pione-tree";
+        this.id = "aop:pine-tree";
         this.name = "Pine Tree";
     }
 
@@ -86,22 +84,22 @@ public class PineTree extends GameObject implements SerializableObject, IGathera
     @Override
     public void onDestroy() {
         for (int i = 0; i < 20; i += 4) {
-            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 10, 17, 13)
-                    .color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 10)
+                    .sprite(Particle.PINE_LEAF1).counter(4, 5)
                     .velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 100 + Utils.getRandom(-15, 15));
             Main.inst.world.particles.add(p);
         }
 
         for (int i = 5; i < 13; i += 4) {
-            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100, 17, 13)
-                    .color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100)
+                    .sprite(Particle.PINE_LEAF2).counter(4, 5)
                     .velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 90 + Utils.getRandom(-15, 15));
             Main.inst.world.particles.add(p);
         }
 
         for (int i = 5; i < 13; i += 4) {
-            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 20, 17, 13)
-                    .color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+            Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 20)
+                    .sprite(Particle.PINE_LEAF1).counter(4, 5)
                     .velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 100 + 10 + Utils.getRandom(-15, 15));
             Main.inst.world.particles.add(p);
         }
@@ -109,7 +107,7 @@ public class PineTree extends GameObject implements SerializableObject, IGathera
         for (int i = 0; i < 20; i+=4) {
             for (int j = 0; j < 4; j+=2) {
                 Particle p = new Particle(x + 20 + Utils.getRandom(0, 15), y + 50 + i * 3, 4, 4)
-                        .color(new Color(0.463f, 0.345f, 0.227f, 1f))
+                        .color(new Color(0.464f, 0.345f, 0.227f, 1f))
                         .velocity(0, -4f)
                         .gravity(-2f, 20 + i * 3 + Utils.getRandom(-5, 5));
                 Main.inst.world.particles.add(p);

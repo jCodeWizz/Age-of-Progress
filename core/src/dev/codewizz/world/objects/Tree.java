@@ -1,7 +1,5 @@
 package dev.codewizz.world.objects;
 
-import dev.codewizz.gfx.Shaders;
-import dev.codewizz.utils.Logger;
 import java.awt.Polygon;
 
 import com.badlogic.gdx.graphics.Color;
@@ -87,21 +85,21 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 	public void onDestroy() {
 		for (int i = 0; i < 20; i += 4) {
 			Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 10, 17, 13)
-					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAF).counter(4, 5)
 					.velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 100 + Utils.getRandom(-15, 15));
 			Main.inst.world.particles.add(p);
 		}
 		
 		for (int i = 5; i < 13; i += 4) {
 			Particle p = new Particle(x + 40 + 4 * i - 50, y + 100, 17, 13)
-					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAF).counter(4, 5)
 					.velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 90 + Utils.getRandom(-15, 15));
 			Main.inst.world.particles.add(p);
 		}
 		
 		for (int i = 5; i < 13; i += 4) {
 			Particle p = new Particle(x + 40 + 4 * i - 50, y + 100 + 20, 17, 13)
-					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAVE).counter(4, 5)
+					.color(new Color(0.549f, 0.71f, 0.227f, 1f)).sprite(Particle.LEAF).counter(4, 5)
 					.velocity(0, -0.5f).gravity(-0.5f - Utils.RANDOM.nextFloat()*2, 100 + 10 + Utils.getRandom(-15, 15));
 			Main.inst.world.particles.add(p);
 		}
