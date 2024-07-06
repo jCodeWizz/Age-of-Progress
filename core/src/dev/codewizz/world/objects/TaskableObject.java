@@ -7,8 +7,12 @@ import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
+import dev.codewizz.main.Main;
+import dev.codewizz.utils.Tuple;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
+import dev.codewizz.utils.saving.WorldDataLoader;
+import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.pathfinding.Agent;
 
@@ -59,6 +63,14 @@ public abstract class TaskableObject extends Entity {
 	public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
 		super.load(loader, object, success);
 
+		byte[] data = object.take();
+
+		boolean moving = ByteUtils.toBoolean(data[0], 0);
+		speed = ByteUtils.toFloat(data, 1);
+
+		if(moving) {
+			WorldDataLoader.postCellSet.add(new Tuple<>(this, ByteUtils.toInteger(data, 5), ByteUtils.toInteger(data, 9)));
+		}
 		/*
 		 * Check to see if tasks are ready to load?
 		 */
@@ -68,7 +80,20 @@ public abstract class TaskableObject extends Entity {
 	
 	@Override
 	public GameObjectData save(GameObjectData object) {
-		return super.save(object);
+		super.save(object);
+
+		byte b = ByteUtils.toByte((byte) 0, agent.moving, 0);
+		object.addByte(b);
+		object.addFloat(speed);
+
+		if(agent.moving) {
+			object.addInteger(agent.goal.getWorldIndexX());
+			object.addInteger(agent.goal.getWorldIndexY());
+		}
+
+		object.end();
+
+		return object;
 	}
 	
 	public void finishCurrentTask() {

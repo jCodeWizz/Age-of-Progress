@@ -7,6 +7,7 @@ import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
+import dev.codewizz.utils.Tuple;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.Chunk;
@@ -14,6 +15,7 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.Flag;
+import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.settlement.Settlement;
 
 import java.io.File;
@@ -30,6 +32,9 @@ public class WorldDataLoader {
     private final HashMap<Vector2, Chunk> chunks;
 
     private final World world;
+
+    //TODO: very temp solution
+    public static final List<Tuple<TaskableObject, Integer, Integer>> postCellSet = new ArrayList<>();
 
     public WorldDataLoader(World world) {
         this.world = world;
@@ -61,9 +66,9 @@ public class WorldDataLoader {
         world = new World();
         Main.inst.world = world;
 
+        loadMainFile(mainFile);
         loadObjects(objectFolder);
         loadTiles(tileFolder);
-        loadMainFile(mainFile);
 
         world.chunkTree = chunks;
         world.chunks.addAll(chunks.values());
@@ -71,6 +76,12 @@ public class WorldDataLoader {
 
         world.setup();
         world.showInfoStartMenu = false;
+
+        if(world.settlement != null) world.settlement.getCell().setObject(new Flag(world.settlement.getCell().x, world.settlement.getCell().y));
+
+        for(Tuple<TaskableObject, Integer, Integer> t : postCellSet) {
+            t.typeA.getAgent().setGoal(world.getCellWorldIndex(t.typeB, t.typeC));
+        }
     }
 
     private void saveMainFile(String mainFilePath) {
@@ -194,8 +205,6 @@ public class WorldDataLoader {
             Pair<Inventory, Integer> result = loader.readInventory(settlement, 9);
 
             world.settlement.inventory = result.getTypeA();
-
-            world.settlement.getCell().setObject(new Flag());
         }
 
         byte[] nature = loader.take();

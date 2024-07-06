@@ -61,6 +61,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		super();
 		
 		this.id = "aop:hermit";
+		this.inventory = new Inventory(5);
 
 		this.setJob(new Worker());
 		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
