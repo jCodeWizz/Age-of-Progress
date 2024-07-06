@@ -81,17 +81,6 @@ public class Cow extends Animal implements SerializableObject {
         moving = vel.x != 0 || vel.y != 0;
 
         if (moving) { walkAnim.tick(d); }
-
-
-        if (this.isSelected()) {
-            this.deselect();
-            if (FarmArea.anyAvailable()) {
-                FarmArea a = FarmArea.findArea(this);
-                if (a != null) {
-                    Main.inst.world.settlement.addTask(new CaptureAnimalTask(this, a), moving);
-                }
-            }
-        }
     }
 
     @Override
