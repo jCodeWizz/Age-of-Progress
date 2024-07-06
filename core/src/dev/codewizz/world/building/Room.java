@@ -8,9 +8,11 @@ import dev.codewizz.world.Cell;
 public class Room {
 
 	private Cell[] corners = new Cell[4];
-	private List<Cell> area = new ArrayList<>();
-	
-	public Room(List<Cell> area, Cell c1, Cell c2, Cell c3, Cell c4) {
+	private List<Cell> area;
+	private Building building;
+
+	public Room(Building b, List<Cell> area, Cell c1, Cell c2, Cell c3, Cell c4) {
+		this.building = b;
 		this.area = area;
 	
 		corners[0] = c1;
@@ -29,5 +31,9 @@ public class Room {
 
 	public void removeCell(Cell cell) {
 		area.remove(cell);
+	}
+
+	public Building getBuilding() {
+		return building;
 	}
 }

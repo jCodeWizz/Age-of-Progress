@@ -14,6 +14,7 @@ public class BuildingObject extends GameObject {
 	
 	private boolean edge = false;
 	private Wall[] walls = new Wall[4];
+	private Room room;
 	
 	public BuildingObject(float x, float y, Cell cell, Room room) {
 		super(x, y);
@@ -23,6 +24,7 @@ public class BuildingObject extends GameObject {
 		this.h = 32;
 		
 		this.sortHeight = 16;
+		this.room = room;
 	}
 	
 	public void init() {
@@ -102,5 +104,9 @@ public class BuildingObject extends GameObject {
 
 	public Wall[] getWalls() {
 		return walls;
+	}
+
+	public Room getRoom() {
+		return room;
 	}
 }

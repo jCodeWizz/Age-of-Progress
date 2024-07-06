@@ -140,7 +140,7 @@ public class TileSelector {
 					c1 = t;
 				}
 
-				Room room = new Room(this.cells, c1, c2, c3, c4);
+				Room room = new Room(building, this.cells, c1, c2, c3, c4);
 				building.addRoom(room);
 			}
 			
