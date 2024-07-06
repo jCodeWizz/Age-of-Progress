@@ -90,13 +90,15 @@ public class KeyInput implements InputProcessor {
 			for(int i = 0; i < walls.length; i++) {
 				if(walls[i] != null) {
 					if(i == 0) {
-						o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 32, o.getCell(), Direction.North).flip());
+						o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 32, o.getCell(), Direction.North));
+						o.getWalls()[i].flip();
 						//o.setWall(i, null);
 					} else if(i == 1) {
 						o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 16, o.getCell(), Direction.East));
 						//o.setWall(i, null);
 					} else if(i == 2) {
-						o.setWall(i, new WallDoor(o.getX(), o.getY() + 16, o.getCell(), Direction.South).flip());
+						o.setWall(i, new WallDoor(o.getX(), o.getY() + 16, o.getCell(), Direction.South));
+						o.getWalls()[i].flip();
 						//o.setWall(i, null);
 					} else if(i == 3) {
 						o.setWall(i, new WallDoor(o.getX(), o.getY() + 32, o.getCell(), Direction.West));

@@ -1,6 +1,8 @@
 package dev.codewizz.world.building;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
@@ -8,6 +10,9 @@ import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.FlowerTile;
 
 public class WallDoor extends Wall {
+
+    private static final Sprite TEXTURE = Assets.getSprite("wall-door");
+    private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-door-flipped");
 
     public WallDoor(float x, float y, Cell cell, Direction dir) {
         super(x, y, cell, dir);
@@ -27,5 +32,10 @@ public class WallDoor extends Wall {
 
     @Override
     public void render(SpriteBatch b) {
+        if(flip) {
+            b.draw(TEXTURE_FLIP, (int)x, (int)y);
+        } else {
+            b.draw(TEXTURE, (int)x, (int)y);
+        }
     }
 }

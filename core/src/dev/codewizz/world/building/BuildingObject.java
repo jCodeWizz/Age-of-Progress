@@ -36,11 +36,13 @@ public class BuildingObject extends GameObject {
 					edge = true;
 					
 					if(i == 0) {
-						setWall(i, new Wall(x + 32, y + 32, this.cell, Direction.North).flip());
+						setWall(i, new Wall(x + 32, y + 32, this.cell, Direction.North));
+						walls[i].flip();
 					} else if(i == 1) {
 						setWall(i, new Wall(x + 32, y + 16, this.cell, Direction.East));
 					} else if(i == 2) {
-						setWall(i, new Wall(x, y + 16, this.cell, Direction.South).flip());
+						setWall(i, new Wall(x, y + 16, this.cell, Direction.South));
+						walls[i].flip();
 					} else if(i == 3) {
 						setWall(i, new Wall(x, y + 32, this.cell, Direction.West));
 					}
@@ -54,7 +56,7 @@ public class BuildingObject extends GameObject {
 		}
 	}
 	
-	public void setWall(int i, GameObject wall) {
+	public void setWall(int i, Wall wall) {
 		if(walls[i] != null) {
 			walls[i].onDestroy();
 			Main.inst.world.removeObject(walls[i]);

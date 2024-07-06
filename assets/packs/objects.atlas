@@ -111,7 +111,7 @@ rock-broken
   index: -1
 stump
   rotate: false
-  xy: 231, 112
+  xy: 192, 93
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -137,9 +137,23 @@ wall
   orig: 32, 46
   offset: 0, 0
   index: -1
-wall-flipped
+wall-door
   rotate: false
   xy: 80, 18
+  size: 32, 46
+  orig: 32, 46
+  offset: 0, 0
+  index: -1
+wall-door-flipped
+  rotate: false
+  xy: 124, 63
+  size: 32, 46
+  orig: 32, 46
+  offset: 0, 0
+  index: -1
+wall-flipped
+  rotate: false
+  xy: 158, 63
   size: 32, 46
   orig: 32, 46
   offset: 0, 0
