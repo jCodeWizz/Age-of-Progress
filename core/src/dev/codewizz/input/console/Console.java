@@ -31,7 +31,6 @@ public class Console {
         consoleThread = new Thread("console") {
             public void run() {
                 reader = new BufferedReader(new InputStreamReader(System.in));
-                Logger.log(Main.PLAYING + " " + Main.RUNNING + " " + this.isInterrupted());
 
                 while((Main.PLAYING || Main.RUNNING) && running && !Thread.currentThread().isInterrupted()) {
                     try {

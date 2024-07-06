@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 		
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.tiles.EmptyTile;
+import java.awt.*;
 
 public class Wall extends GameObject {
 		
@@ -52,7 +54,17 @@ public class Wall extends GameObject {
 		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
 		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
 	}
-		
+
+	@Override
+	public Polygon getHitBox() {
+		if(flip) {
+			return new Polygon( new int[] {(int)x, (int)x, (int)x + 32, (int)x + 32}, new int[] {(int)y + 16, (int)y + 48, (int)y + 32, (int)y}, 4) ;
+		} else {
+			return new Polygon( new int[] {(int)x, (int)x, (int)x + 32, (int)x + 32}, new int[] {(int)y, (int)y + 32, (int)y + 48, (int)y + 16}, 4) ;
+		}
+
+	}
+
 	@Override
 	public void update(float d) {
 		
@@ -66,4 +78,4 @@ public class Wall extends GameObject {
 			b.draw(TEXTURE, (int)x, (int)y);
 		}
 	}	
-}		
+}

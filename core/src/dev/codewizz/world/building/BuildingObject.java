@@ -8,6 +8,7 @@ import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.tiles.DirtTile;
+import java.awt.*;
 
 public class BuildingObject extends GameObject {
 	
@@ -64,7 +65,12 @@ public class BuildingObject extends GameObject {
 			Main.inst.world.addObject(walls[i], Reason.FORCED);
 		}
 	}
-	
+
+	@Override
+	public Polygon getHitBox() {
+		return new Polygon( new int[] {0}, new int[] {0}, 1) ;
+	}
+
 	@Override
 	public void update(float d) {
 	}
