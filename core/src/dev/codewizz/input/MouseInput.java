@@ -9,11 +9,13 @@ import com.badlogic.gdx.math.Vector3;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.UIElement;
+import dev.codewizz.gfx.gui.UIMenu;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
@@ -209,22 +211,32 @@ public class MouseInput implements InputProcessor {
                     return false;
                 }
 
-                if (Main.inst.renderer.ui.menusClosed()) {
+                if (GameLayer.selectedObject != null) { GameLayer.selectedObject.deselect(); }
 
-                    if (GameLayer.selectedObject != null) { GameLayer.selectedObject.deselect(); }
-
-                    for (Renderable o : Main.inst.world.getObjects()) {
-                        if (o instanceof GameObject) {
-                            GameObject obj = (GameObject) o;
-                            obj.setSelected(false);
-                            if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+                for (Renderable o : Main.inst.world.getObjects()) {
+                    if (o instanceof GameObject) {
+                        GameObject obj = (GameObject) o;
+                        obj.setSelected(false);
+                        if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+                            if (Main.inst.renderer.ui.menusClosed()) {
                                 obj.select();
                                 dragging[button] = false;
-                                break;
+                            } else {
+                                for (UIElement e : Main.inst.renderer.ui.elements) {
+                                    if (e instanceof UIMenu) {
+                                        UIMenu menu = (UIMenu) e;
+                                        if (menu.isEnabled()) {
+                                            menu.clicked(obj);
+                                        }
+                                    }
+                                }
                             }
+                            break;
                         }
                     }
                 }
+
+
             }
         }
 

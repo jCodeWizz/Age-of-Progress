@@ -81,6 +81,13 @@ done-icon
   orig: 22, 24
   offset: 0, 0
   index: -1
+door-icon
+  rotate: false
+  xy: 1984, 920
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
 farmer-icon
   rotate: false
   xy: 1931, 885
@@ -90,7 +97,7 @@ farmer-icon
   index: -1
 icon
   rotate: false
-  xy: 1984, 920
+  xy: 2008, 946
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -111,14 +118,14 @@ icon-board-extension
   index: -1
 icon-pressed
   rotate: false
-  xy: 2008, 946
+  xy: 802, 424
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-unavailable
   rotate: false
-  xy: 802, 424
+  xy: 2008, 920
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -146,7 +153,7 @@ main-menu-background
   index: -1
 manage-icon
   rotate: false
-  xy: 2008, 920
+  xy: 802, 398
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -160,7 +167,7 @@ notification
   index: -1
 path-icon
   rotate: false
-  xy: 802, 398
+  xy: 802, 372
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -174,14 +181,14 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 802, 372
+  xy: 802, 346
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 plus-icon
   rotate: false
-  xy: 802, 346
+  xy: 802, 320
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -265,14 +272,14 @@ tile-highlight2
   index: -1
 tool-icon
   rotate: false
-  xy: 802, 320
+  xy: 802, 294
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 802, 294
+  xy: 802, 268
   size: 22, 24
   orig: 22, 24
   offset: 0, 0

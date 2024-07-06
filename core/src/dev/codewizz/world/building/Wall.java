@@ -62,8 +62,24 @@ public class Wall extends GameObject {
 		} else {
 			return new Polygon( new int[] {(int)x, (int)x, (int)x + 32, (int)x + 32}, new int[] {(int)y, (int)y + 32, (int)y + 48, (int)y + 16}, 4) ;
 		}
+	}
+
+	public void makeDoor() {
+		WallDoor door = new WallDoor(x, y, cell, facing);
+		door.setFlip(flip);
+
+		BuildingObject o = (BuildingObject) cell.getObject();
+		Wall[] walls = o.getWalls();
+
+		for(int i = 0; i < walls.length; i++) {
+			if(walls[i] != null && walls[i].equals(this)) {
+				o.setWall(i, door);
+				break;
+			}
+		}
 
 	}
+
 
 	@Override
 	public void update(float d) {

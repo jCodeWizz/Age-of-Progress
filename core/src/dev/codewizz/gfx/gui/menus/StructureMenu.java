@@ -1,16 +1,16 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import dev.codewizz.gfx.gui.UIIcon;
-import dev.codewizz.gfx.gui.UIImage;
-import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.UIMenu;
+import dev.codewizz.gfx.gui.*;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
+import dev.codewizz.utils.Logger;
+import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
+import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.tiles.EmptyTile;
 
 import java.awt.*;
@@ -23,6 +23,7 @@ public class StructureMenu extends UIMenu {
 
     private UIIcon finish;
     private UIIcon add;
+    private UIIconToggle door;
 
     private Building current;
 
@@ -34,7 +35,7 @@ public class StructureMenu extends UIMenu {
     public void setup() {
         this.x = 100;
         this.y = 100;
-        this.h = (9+24*(2)) * UILayer.SCALE;
+        this.h = (3+27*(3)) * UILayer.SCALE;
 
         fade1 = new UIImage("back-1-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
         fade2 = new UIImage("back-2-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
@@ -63,7 +64,22 @@ public class StructureMenu extends UIMenu {
         };
         elements.add(add);
 
+        door = new UIIconToggle("door-icon", x + 3 * UILayer.SCALE, y, 22, 24, "door-icon") {
+        };
+        elements.add(door);
+
         update();
+    }
+
+    @Override
+    public void clicked(GameObject object) {
+        if(object instanceof Wall && door.isToggled()) {
+            Wall wall = (Wall) object;
+
+            if(wall.getId().equals("aop:wall")) {
+                wall.makeDoor();
+            }
+        }
     }
 
     @Override
@@ -89,9 +105,11 @@ public class StructureMenu extends UIMenu {
 
         finish.setX(3 * UILayer.SCALE);
         add.setX(3 * UILayer.SCALE);
+        door.setX(3 * UILayer.SCALE);
 
         finish.setY(y + 3 * UILayer.SCALE);
         add.setY(y + 30 * UILayer.SCALE);
+        door.setY(y + 57 * UILayer.SCALE);
 
         fade1.setX(0);
         fade2.setX(0);
