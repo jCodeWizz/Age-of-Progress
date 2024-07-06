@@ -1,10 +1,8 @@
 package dev.codewizz.world.objects.hermits;
 
-import java.awt.Polygon;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
@@ -15,14 +13,16 @@ import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
-import dev.codewizz.world.GameObject;
 import dev.codewizz.utils.serialization.SerializableObject;
+import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
 import dev.codewizz.world.objects.tasks.ClearInventoryTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
+
+import java.awt.*;
 
 public class Hermit extends TaskableObject implements SerializableObject {
 
@@ -146,7 +146,12 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		
 		job.render(b);
 	}
-	
+
+	@Override
+	public Vector2 getCenter() {
+		return new Vector2(x + 11, y + 3);
+	}
+
 	@Override
 	public Polygon getHitBox() {
 		return new Polygon( new int[] {(int)x+7, (int)x+7, (int)x + 17, (int)x + 17}, 

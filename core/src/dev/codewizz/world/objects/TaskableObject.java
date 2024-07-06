@@ -151,7 +151,7 @@ public abstract class TaskableObject extends Entity {
 				currentTask.start(this);
 			}
 		}
-		agent.update(d, x, y);
+		agent.update(d, getCenter());
 		
 		vel.x = agent.getDir().x * d * speed;
 		vel.y = agent.getDir().y * d * speed;
@@ -191,7 +191,7 @@ public abstract class TaskableObject extends Entity {
 	}
 
 	public Vector2 getCenter() {
-		return new Vector2(x+w/2, y+h/2);
+		return new Vector2(x+w/2f, y);
 	}
 
 	public Task getCurrentTask() {

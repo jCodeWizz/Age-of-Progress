@@ -4,11 +4,10 @@ import com.badlogic.gdx.ai.pfa.GraphPath;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-
 import dev.codewizz.main.Main;
 import dev.codewizz.world.Cell;
-import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
+import dev.codewizz.world.objects.TaskableObject;
 
 public class Agent {
 
@@ -20,28 +19,28 @@ public class Agent {
 
 	public Cell goal;
 
-	private GameObject object;
+	private TaskableObject object;
 
-	public Agent(GameObject object) {
+	public Agent(TaskableObject object) {
 		dir = new Vector2();
 		this.object = object;
 
 		graph = Main.inst.world.cellGraph;
 	}
 
-	public void update(float d, float x, float y) {
+	public void update(float d, Vector2 loc) {
 
 		if (graph == null)
 			graph = Main.inst.world.cellGraph;
 
-		checkDistance(x, y);
+		checkDistance(loc);
 	}
 
-	private void checkDistance(float x, float y) {
+	private void checkDistance(Vector2 loc) {
 		if (path.size > 0) {
 			Vector2 target = path.first().getMiddlePoint();
-			if (Vector2.dst(x, y, target.x, target.y) < 5) {
-				reachGoal(x, y);
+			if (Vector2.dst(loc.x, loc.y, target.x, target.y) < 2.5f) {
+				reachGoal(loc);
 			}
 		}
 	}
@@ -50,7 +49,7 @@ public class Agent {
 		return new Vector2();
 	}
 
-	private void reachGoal(float x, float y) {
+	private void reachGoal(Vector2 loc) {
 		Cell nextCell = path.first();
 
 		this.previousCell = nextCell;
@@ -59,7 +58,7 @@ public class Agent {
 		if (path.size == 0) {
 			reach();
 		} else {
-			setSpeedToNextCell(x, y);
+			setSpeedToNextCell(loc);
 		}
 	}
 
@@ -109,7 +108,7 @@ public class Agent {
 		int s = graph.getConnections(goal).size;
 		
 		if (!path.isEmpty() && s > 0) {
-			setSpeedToNextCell(object.getX(), object.getY());
+			setSpeedToNextCell(object.getCenter());
 			moving = true;
 			
 			return true;
@@ -118,9 +117,9 @@ public class Agent {
 		return false;
 	}
 
-	private void setSpeedToNextCell(float x, float y) {
+	private void setSpeedToNextCell(Vector2 loc) {
 		Cell nextCell = path.first();
-		float angle = MathUtils.atan2(nextCell.getMiddlePoint().y - y, nextCell.getMiddlePoint().x - x);
+		float angle = MathUtils.atan2(nextCell.getMiddlePoint().y - loc.y, nextCell.getMiddlePoint().x - loc.x);
 		dir.x = MathUtils.cos(angle);
 		dir.y = MathUtils.sin(angle);
 	}
