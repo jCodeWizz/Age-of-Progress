@@ -61,4 +61,8 @@ public class UIIconToggle extends UIElement {
 	public boolean isToggled() {
 		return toggled;
 	}
+
+	public void setToggled(boolean toggled) {
+		this.toggled = toggled;
+	}
 }

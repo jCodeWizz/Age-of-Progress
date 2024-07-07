@@ -50,7 +50,10 @@ public class StructureMenu extends UIMenu {
         finish = new UIIcon("finish-icon", x + 3 * UILayer.SCALE, y, 22, 24, "done-icon") {
             @Override
             protected void onDeClick() {
-                if (Event.dispatch(new CreateBuildingEvent(current))) {
+                if (!current.getRooms().isEmpty() && Event.dispatch(new CreateBuildingEvent(current))) {
+                    if(remove.isToggled()) { remove.setToggled(false); }
+                    if(door.isToggled()) { door.setToggled(false); }
+
                     Main.inst.world.settlement.buildings.add(current);
                     current = null;
                     close();
@@ -61,16 +64,28 @@ public class StructureMenu extends UIMenu {
         add = new UIIcon("add-icon", x + 3 * UILayer.SCALE, y, 22, 24, "plus-icon") {
             @Override
             protected void onDeClick() {
+                if(remove.isToggled()) { remove.setToggled(false); }
+                if(door.isToggled()) { door.setToggled(false); }
+
                 MouseInput.tileArea = TileSelector.room(current);
             }
         };
         elements.add(add);
 
         door = new UIIconToggle("door-icon", x + 3 * UILayer.SCALE, y, 22, 24, "door-icon") {
+            @Override
+            protected void onDeClick() {
+                if(remove.isToggled()) { remove.setToggled(false); }
+            }
         };
         elements.add(door);
 
         remove = new UIIconToggle("remove-icon", x + 3 * UILayer.SCALE, y, 22, 24, "close-icon") {
+
+            @Override
+            protected void onDeClick() {
+                if(door.isToggled()) { door.setToggled(false); }
+            }
         };
         elements.add(remove);
 
