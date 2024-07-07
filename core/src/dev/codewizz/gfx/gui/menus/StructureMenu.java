@@ -50,7 +50,7 @@ public class StructureMenu extends UIMenu {
         finish = new UIIcon("finish-icon", x + 3 * UILayer.SCALE, y, 22, 24, "done-icon") {
             @Override
             protected void onDeClick() {
-                if (Event.dispatch(new CreateBuildingEvent(current))) {
+                if (!current.getRooms().isEmpty() && Event.dispatch(new CreateBuildingEvent(current))) {
                     if(remove.isToggled()) { remove.setToggled(false); }
                     if(door.isToggled()) { door.setToggled(false); }
 
