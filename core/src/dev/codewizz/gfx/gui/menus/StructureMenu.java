@@ -1,18 +1,17 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.gfx.gui.*;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Wall;
-import dev.codewizz.world.tiles.EmptyTile;
 
 import java.awt.*;
 
@@ -26,6 +25,7 @@ public class StructureMenu extends UIMenu {
     private UIIcon add;
     private UIIconToggle door;
     private UIIconToggle remove;
+    private UIText info;
 
     private Building current;
 
@@ -37,7 +37,7 @@ public class StructureMenu extends UIMenu {
     public void setup() {
         this.x = 100;
         this.y = 100;
-        this.h = (3 + 27 * (4)) * UILayer.SCALE;
+        this.h = (8 + 27 * (4)) * UILayer.SCALE;
 
         fade1 = new UIImage("back-1-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
         fade2 = new UIImage("back-2-" + id, x, y, 28 * UILayer.SCALE, h, new Sprite(UILayer.fadeTex), 1);
@@ -74,6 +74,9 @@ public class StructureMenu extends UIMenu {
         };
         elements.add(remove);
 
+        info = new UIText("info-text", x + 3 * UILayer.SCALE, y, "", 2 * UILayer.SCALE);
+        elements.add(info);
+
         update();
     }
 
@@ -102,6 +105,15 @@ public class StructureMenu extends UIMenu {
     }
 
     @Override
+    public void render(SpriteBatch b) {
+        super.render(b);
+
+        if(current != null) {
+            info.setText(current.getName() + ", " + current.getRooms().size());
+        }
+    }
+
+    @Override
     public Rectangle getBounds() {
         return new Rectangle(x, y, w, h);
     }
@@ -126,11 +138,13 @@ public class StructureMenu extends UIMenu {
         add.setX(3 * UILayer.SCALE);
         door.setX(3 * UILayer.SCALE);
         remove.setX(3 * UILayer.SCALE);
+        info.setX(3 * UILayer.SCALE);
 
         finish.setY(y + 3 * UILayer.SCALE);
         add.setY(y + 30 * UILayer.SCALE);
         door.setY(y + 57 * UILayer.SCALE);
         remove.setY(y + 84 * UILayer.SCALE);
+        info.setY(y + 114 * UILayer.SCALE);
 
         fade1.setX(0);
         fade2.setX(0);

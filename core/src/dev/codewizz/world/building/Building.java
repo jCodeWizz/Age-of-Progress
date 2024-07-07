@@ -13,7 +13,15 @@ import dev.codewizz.world.objects.tasks.GatherTask;
 public class Building {
 
 	private final List<Room> rooms = new CopyOnWriteArrayList<>();
-	
+
+	private String name;
+	private String style;
+
+	public Building() {
+		name = "Build " + (Main.inst.world.settlement.buildings.size() + 1);
+		style = "default";
+	}
+
 	public void addRoom(Room room) {
 		rooms.add(room);
 		
@@ -35,5 +43,13 @@ public class Building {
 	
 	public List<Room> getRooms() {
 		return rooms;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getStyle() {
+		return style;
 	}
 }
