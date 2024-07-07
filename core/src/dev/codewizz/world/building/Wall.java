@@ -1,13 +1,13 @@
 package dev.codewizz.world.building;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-		
+import dev.codewizz.gfx.Particle;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.tiles.EmptyTile;
+
 import java.awt.*;
 
 public class Wall extends GameObject {
@@ -22,11 +22,15 @@ public class Wall extends GameObject {
 		
 		this.id = "aop:wall";
 		
-		this.sortHeight = 4;
+		if(dir == Direction.North || dir == Direction.West) {
+			this.sortHeight = -2;
+		} else {
+			this.sortHeight = 7;
+		}
+
+
 		this.cell = cell;
 		this.facing = dir;
-
-		onPlace();
 	}
 
 	public void onPlace() {
@@ -92,5 +96,5 @@ public class Wall extends GameObject {
 		} else {
 			b.draw(TEXTURE, (int)x, (int)y);
 		}
-	}	
+	}
 }

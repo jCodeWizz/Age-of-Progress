@@ -10,7 +10,7 @@ import dev.codewizz.utils.Utils;
 
 public class Particle {
 
-	private static final Sprite DEFAULT = Assets.getSprite("particle-default");
+	public static final Sprite DEFAULT = Assets.getSprite("particle-default");
 	public static final Sprite LEAF = Assets.getSprite("particle-leave");
 	public static final Sprite PINE_LEAF1 = Assets.getSprite("particle-pine-leaf-1");
 	public static final Sprite PINE_LEAF2 = Assets.getSprite("particle-pine-leaf-2");
