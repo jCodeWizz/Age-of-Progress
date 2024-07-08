@@ -213,11 +213,13 @@ public class MouseInput implements InputProcessor {
 
                 if (GameLayer.selectedObject != null) { GameLayer.selectedObject.deselect(); }
 
+                boolean found = false;
                 for (Renderable o : Main.inst.world.getObjects()) {
                     if (o instanceof GameObject) {
                         GameObject obj = (GameObject) o;
                         obj.setSelected(false);
                         if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+                            found = true;
                             if (Main.inst.renderer.ui.menusClosed()) {
                                 obj.select();
                                 dragging[button] = false;
@@ -235,8 +237,16 @@ public class MouseInput implements InputProcessor {
                         }
                     }
                 }
-
-
+                if (!found) {
+                    for (UIElement e : Main.inst.renderer.ui.elements) {
+                        if (e instanceof UIMenu) {
+                            UIMenu menu = (UIMenu) e;
+                            if (menu.isEnabled() && hoveringOverCell != null) {
+                                menu.clicked(hoveringOverCell);
+                            }
+                        }
+                    }
+                }
             }
         }
 

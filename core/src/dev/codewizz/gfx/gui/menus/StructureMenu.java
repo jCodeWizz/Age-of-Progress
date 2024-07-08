@@ -8,6 +8,7 @@ import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.BuildingObject;
@@ -93,6 +94,16 @@ public class StructureMenu extends UIMenu {
         elements.add(info);
 
         update();
+    }
+
+    @Override
+    public void clicked(Cell cell) {
+        if (cell.getObject() != null && cell.getObject() instanceof BuildingObject) {
+           BuildingObject o = (BuildingObject) cell.getObject();
+           if(!o.getRoom().getBuilding().equals(current)) {
+                current = o.getRoom().getBuilding();
+           }
+        }
     }
 
     @Override

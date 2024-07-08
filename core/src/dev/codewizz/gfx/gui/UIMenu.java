@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 
 public abstract class UIMenu extends UIElement {
@@ -44,7 +45,8 @@ public abstract class UIMenu extends UIElement {
 	}
 
 	public void clicked(GameObject object) {}
-	
+	public void clicked(Cell cell) {}
+
 	public void scroll(float amount) {
 		for(UIElement e : elements) {
 			if(e.id.contains("list")) {
