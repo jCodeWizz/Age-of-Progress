@@ -61,7 +61,7 @@ public class Item extends Renderable {
 	}
 
 	@Override
-	public float getSorthingHeight() {
+	public float getSortingHeight() {
 		return 0f;
 	}
 	

@@ -188,7 +188,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	}
 	
 	@Override
-	public float getSorthingHeight() {
+	public float getSortingHeight() {
 		return sortHeight;
 	}
 
