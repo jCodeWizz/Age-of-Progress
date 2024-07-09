@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.Animal;
 import dev.codewizz.world.objects.TaskableObject;
@@ -58,7 +59,13 @@ public class Agent {
 		if (path.size == 0) {
 			reach();
 		} else {
-			setSpeedToNextCell(loc);
+			if(Main.inst.world.cellGraph.getConnections(nextCell).size < 8) {
+				Cell goal = path.last();
+				stop();
+				setGoal(goal);
+			} else {
+				setSpeedToNextCell(loc);
+			}
 		}
 	}
 
