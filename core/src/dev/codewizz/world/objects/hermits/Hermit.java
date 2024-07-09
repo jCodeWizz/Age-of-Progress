@@ -1,14 +1,17 @@
 package dev.codewizz.world.objects.hermits;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.gui.UIImage;
 import dev.codewizz.gfx.gui.UILayer;
 import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -62,6 +65,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		
 		this.id = "aop:hermit";
 		this.inventory = new Inventory(5);
+		this.sortHeight = 5;
 
 		this.setJob(new Worker());
 		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
@@ -75,6 +79,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		
 		this.w = 24;
 		this.h = 36;
+		this.sortHeight = 5;
 		this.health = 10f;
 		this.maxHealth = 10f;
 		
@@ -145,6 +150,10 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		}
 		
 		job.render(b);
+
+		b.setColor(Color.RED);
+		b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
+		b.setColor(Color.WHITE);
 	}
 
 	@Override

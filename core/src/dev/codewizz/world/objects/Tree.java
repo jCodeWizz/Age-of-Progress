@@ -23,10 +23,10 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 	
 	public Tree() {
 		super();
-		
-		this.sortHeight = 25;
-		
+
+		this.sortHeight = 32f;
 		this.id = "aop:tree";
+		this.name = "Tree";
 	}
 	
 	public Tree(float x, float y) {
@@ -35,7 +35,7 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 		this.w = 64;
 		this.h = 64;
 
-		this.sortHeight = 25f;
+		this.sortHeight = 32f;
 
 		this.id = "aop:tree";
 		this.name = "Tree";
@@ -48,6 +48,11 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 	@Override
 	public void render(SpriteBatch b) {
 		b.draw(texture, x - 32, y + 25);
+
+		b.setColor(Color.GOLD);
+		b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
+		b.setColor(Color.WHITE);
+
 	}
 
 	@Override

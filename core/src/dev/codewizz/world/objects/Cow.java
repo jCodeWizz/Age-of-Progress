@@ -1,8 +1,10 @@
 package dev.codewizz.world.objects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.gfx.Particle;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -41,6 +43,7 @@ public class Cow extends Animal implements SerializableObject {
         this.w = 32;
         this.h = 32;
         this.wanderDistance = 6;
+        this.sortHeight = 3f;
 
         this.speed = 10f;
         this.health = 10f;
@@ -60,6 +63,7 @@ public class Cow extends Animal implements SerializableObject {
 
         this.speed = 10f;
         this.health = 10f;
+        this.sortHeight = 3f;
 
         createAnim();
     }
@@ -102,6 +106,10 @@ public class Cow extends Animal implements SerializableObject {
         }
 
         if (this.damageCoolDown >= 0f) { b.setColor(1f, 1f, 1f, 1f); }
+
+        b.setColor(Color.BLUE);
+        b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
+        b.setColor(Color.WHITE);
     }
 
     @Override

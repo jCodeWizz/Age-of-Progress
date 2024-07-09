@@ -23,7 +23,7 @@ public class Wall extends GameObject {
 		this.id = "aop:wall";
 		
 		if(dir == Direction.North || dir == Direction.West) {
-			this.sortHeight = -2;
+			this.sortHeight = 2;
 		} else {
 			this.sortHeight = 7;
 		}
