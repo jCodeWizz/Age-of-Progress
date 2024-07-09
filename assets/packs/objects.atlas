@@ -132,29 +132,29 @@ tree
   index: -1
 wall
   rotate: false
-  xy: 80, 66
-  size: 32, 46
-  orig: 32, 46
+  xy: 80, 64
+  size: 32, 48
+  orig: 32, 48
   offset: 0, 0
   index: -1
 wall-door
   rotate: false
-  xy: 80, 18
-  size: 32, 46
-  orig: 32, 46
+  xy: 80, 14
+  size: 32, 48
+  orig: 32, 48
   offset: 0, 0
   index: -1
 wall-door-flipped
   rotate: false
-  xy: 124, 63
-  size: 32, 46
-  orig: 32, 46
+  xy: 124, 61
+  size: 32, 48
+  orig: 32, 48
   offset: 0, 0
   index: -1
 wall-flipped
   rotate: false
-  xy: 158, 63
-  size: 32, 46
-  orig: 32, 46
+  xy: 158, 61
+  size: 32, 48
+  orig: 32, 48
   offset: 0, 0
   index: -1

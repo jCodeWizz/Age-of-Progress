@@ -55,7 +55,7 @@ dirt-tile
   index: -1
 empty-tile
   rotate: false
-  xy: 398, 18
+  xy: 464, 18
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
@@ -81,72 +81,79 @@ grass-tile
   orig: 64, 48
   offset: 0, 0
   index: -1
-sand-tile
+mud-tile
   rotate: false
   xy: 662, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-1
+sand-tile
   rotate: false
   xy: 728, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-2
+tiled-tile-1
   rotate: false
   xy: 794, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-3
+tiled-tile-2
   rotate: false
   xy: 860, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-4
+tiled-tile-3
   rotate: false
   xy: 926, 52
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-5
+tiled-tile-4
   rotate: false
   xy: 68, 2
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-6
+tiled-tile-5
   rotate: false
   xy: 134, 2
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-7
+tiled-tile-6
   rotate: false
   xy: 200, 2
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-tiled-tile-8
+tiled-tile-7
   rotate: false
   xy: 266, 2
   size: 64, 48
   orig: 64, 48
   offset: 0, 0
   index: -1
-water-tile
+tiled-tile-8
   rotate: false
   xy: 332, 2
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+water-tile
+  rotate: false
+  xy: 398, 2
   size: 64, 48
   orig: 64, 48
   offset: 0, 0

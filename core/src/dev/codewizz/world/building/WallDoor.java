@@ -1,7 +1,9 @@
 package dev.codewizz.world.building;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import dev.codewizz.gfx.Particle;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
@@ -34,5 +36,9 @@ public class WallDoor extends Wall {
         } else {
             b.draw(TEXTURE, (int)x, (int)y);
         }
+
+        b.setColor(Color.BLACK);
+        b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
+        b.setColor(Color.WHITE);
     }
 }

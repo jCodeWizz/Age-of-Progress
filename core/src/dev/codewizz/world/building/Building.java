@@ -9,6 +9,7 @@ import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.IGatherable;
 import dev.codewizz.world.objects.tasks.GatherTask;
+import dev.codewizz.world.tiles.MudTile;
 
 public class Building {
 
@@ -28,7 +29,7 @@ public class Building {
 		for(Cell cell : new ArrayList<>(room.getArea())) {
 			if(cell.object == null) {
 				cell.setObject(new BuildingObject(cell.x, cell.y, cell, room));
-				cell.tile.setCurrentSprite(Assets.getSprite("tiled-tile-2"));
+				cell.setTile(new MudTile());
 			}
 		}
 

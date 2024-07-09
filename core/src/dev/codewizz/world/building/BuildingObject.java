@@ -1,13 +1,13 @@
 package dev.codewizz.world.building;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.tiles.DirtTile;
+import dev.codewizz.world.tiles.MudTile;
+
 import java.awt.*;
 
 public class BuildingObject extends GameObject {
@@ -99,7 +99,7 @@ public class BuildingObject extends GameObject {
 		for(int i = 0; i < walls.length; i++) {
 			if(walls[i] != null) walls[i].destroy();
 		}
-		this.cell.setTile(new DirtTile());
+		this.cell.setTile(new MudTile());
 	}
 	
 	public boolean isEdge() {
