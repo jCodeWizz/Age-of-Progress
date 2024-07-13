@@ -69,6 +69,7 @@ public class Main extends ApplicationAdapter {
 
         handler.start();
 
+        Assets.checkGameFiles();
         Logger.log(
                 "Start time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 

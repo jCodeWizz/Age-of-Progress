@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import dev.codewizz.main.Main;
+import dev.codewizz.networking.NetworkProtocol;
 
 
 public class Assets {
@@ -22,11 +24,11 @@ public class Assets {
     public static File folderScreenshots;
 
     public static String pathFolderAgeOfProgress = "ageofprogress/";
-    public static String pathFolderMods = pathFolderAgeOfProgress + "/mods/";
-    public static String pathFolderSaves = pathFolderAgeOfProgress + "/saves/";
-    public static String pathFolderData = pathFolderAgeOfProgress + "/data/";
-    public static String pathFolderLogs = pathFolderData + "/logs/";
-    public static String pathFolderScreenshots = pathFolderAgeOfProgress + "/screenshots/";
+    public static String pathFolderMods = pathFolderAgeOfProgress + "mods/";
+    public static String pathFolderSaves = pathFolderAgeOfProgress + "saves/";
+    public static String pathFolderData = pathFolderAgeOfProgress + "data/";
+    public static String pathFolderLogs = pathFolderData + "logs/";
+    public static String pathFolderScreenshots = pathFolderAgeOfProgress + "screenshots/";
 
     public static HashMap<String, Sprite> sprites = new HashMap<>();
     public static HashMap<String, TextureAtlas> atlasses = new HashMap<>();
@@ -44,8 +46,15 @@ public class Assets {
             folderScreenshots = createFolder(pathFolderScreenshots);
         } catch (Exception e) {
             Logger.error("Couldn't find main game files: ");
-            Logger.error("Game will load, but saves, settings and mods will not be loaded.");
+            Logger.error("Game will load, but saves, settings and mods might not be loaded.");
             e.printStackTrace();
+        }
+    }
+
+    public static void checkGameFiles() {
+        if(!Gdx.files.external(pathFolderData + "names.txt").exists()) {
+            Logger.log("The 'names.txt' file wasn't found, attempting to download it...");
+            Main.inst.client.sendFileRequest(pathFolderData + "names.txt");
         }
     }
 
@@ -64,7 +73,7 @@ public class Assets {
             }
         }
 
-        //FIXME: Procedural tile generation needs fixing.
+        //TODO: Procedural tile generation needs fixing.
         procuderal.put("t", new Texture(Gdx.files.internal("textures/procuderal/path-tile.png")));
         procuderal.put("tTL",
                        new Texture(Gdx.files.internal("textures/procuderal/path-tile-TL.png")));
