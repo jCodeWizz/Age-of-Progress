@@ -12,8 +12,8 @@ import java.awt.*;
 
 public class Wall extends GameObject {
 		
-	private static final Sprite TEXTURE = Assets.getSprite("wall");
-	private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-flipped");
+	private static final Sprite TEXTURE = Assets.getSprite("stone-wall");
+	private static final Sprite TEXTURE_FLIP = Assets.getSprite("stone-wall-flipped");
 		
 	protected Direction facing;
 		

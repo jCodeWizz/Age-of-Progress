@@ -6,7 +6,7 @@ filter: Nearest, Nearest
 repeat: none
 bush
   rotate: false
-  xy: 213, 112
+  xy: 2, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -62,21 +62,21 @@ fence-gate-flipped
   index: -1
 fence-post
   rotate: false
-  xy: 433, 163
+  xy: 226, 47
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 flag
   rotate: false
-  xy: 467, 163
+  xy: 260, 96
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mushrooms
   rotate: false
-  xy: 2, 2
+  xy: 260, 78
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -109,9 +109,37 @@ rock-broken
   orig: 64, 32
   offset: 0, 0
   index: -1
+stone-wall
+  rotate: false
+  xy: 80, 15
+  size: 32, 47
+  orig: 32, 47
+  offset: 0, 0
+  index: -1
+stone-wall-door
+  rotate: false
+  xy: 433, 148
+  size: 32, 47
+  orig: 32, 47
+  offset: 0, 0
+  index: -1
+stone-wall-door-flipped
+  rotate: false
+  xy: 467, 148
+  size: 32, 47
+  orig: 32, 47
+  offset: 0, 0
+  index: -1
+stone-wall-flipped
+  rotate: false
+  xy: 226, 81
+  size: 32, 47
+  orig: 32, 47
+  offset: 0, 0
+  index: -1
 stump
   rotate: false
-  xy: 192, 93
+  xy: 20, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -139,21 +167,21 @@ wall
   index: -1
 wall-door
   rotate: false
-  xy: 80, 14
+  xy: 124, 61
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 wall-door-flipped
   rotate: false
-  xy: 124, 61
+  xy: 158, 61
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 wall-flipped
   rotate: false
-  xy: 158, 61
+  xy: 192, 61
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
