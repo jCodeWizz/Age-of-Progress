@@ -19,7 +19,7 @@ import dev.codewizz.utils.serialization.ByteUtils;
 
 public class Client {
 
-	private final static String SERVER_IP = "localhost";
+	private final static String SERVER_IP = "192.168.2.100";
 	private final static int SERVER_PORT = 25565;
 	private static InetAddress SERVER_ADDRESS;
 
