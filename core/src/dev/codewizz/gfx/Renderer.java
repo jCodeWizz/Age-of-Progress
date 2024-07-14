@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import dev.codewizz.gfx.gui.elements.UITextButton;
+import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.gfx.gui.layers.MainMenuLayer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.world.Nature;
@@ -32,6 +34,7 @@ public class Renderer {
 	public SpriteBatch objectBatch;
 
 	public Stage uiStage;
+	private Layer uiLayer;
 
 	private com.badlogic.gdx.physics.box2d.World world = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,0),false);
 	private RayHandler rayHandler = new RayHandler(world);
@@ -39,33 +42,14 @@ public class Renderer {
 	
 	public Renderer() {
 		uiStage = new Stage();
-
+		uiLayer = new MainMenuLayer();
+		uiLayer.open(uiStage);
 
 		Shaders.init();
 		tileBatch = new SpriteBatch();
 		objectBatch = new SpriteBatch();
 
 		rayHandler.setAmbientLight(0.2f);
-
-		Label l = new Label("Hey", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		l.setPosition(300, 300);
-		uiStage.addActor(l);
-
-		TextButton button = UITextButton.createTextButton("start");
-		button.setPosition(300, 300);
-		button.addListener((Event e) -> {
-			if(!(e instanceof InputEvent) || !(((InputEvent) e).getType().equals(InputEvent.Type.touchDown))) {
-				return false;
-			}
-
-			Main.inst.openWorld(new World());
-			Main.inst.world.setup();
-
-			return false;
-		});
-		uiStage.addActor(button);
-
-
 	}
 
 	public void render(World world, OrthographicCamera cam) {   
@@ -152,6 +136,14 @@ public class Renderer {
 		Gdx.gl.glLineWidth(1);
 
 	}
+
+	public void changeLayer(Layer layer) {
+		uiLayer.close(uiStage);
+		uiStage.clear();
+		uiLayer = layer;
+		layer.open(uiStage);
+	}
+
 
 	public void dispose() {
 		tileBatch.dispose();
