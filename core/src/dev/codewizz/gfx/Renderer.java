@@ -14,10 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import dev.codewizz.gfx.gui.UITextButton;
+import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Nature;
 import dev.codewizz.world.World;
 
