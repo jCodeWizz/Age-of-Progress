@@ -1,26 +1,22 @@
 package dev.codewizz.world;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-
 import dev.codewizz.gfx.Renderer;
-import dev.codewizz.gfx.gui.UIText;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.Reason;
 import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.world.pathfinding.CellGraph;
-import dev.codewizz.world.tiles.EmptyTile;
 import dev.codewizz.world.tiles.GrassTile;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cell {
 
@@ -34,8 +30,6 @@ public class Cell {
 
 	public boolean[] acceptConnections = { true, true, true, true, true, true, true, true };
 	public boolean[] connectedTo = { false, false, false, false, false, false, false, false };
-
-	public UIText text;
 
 	public Cell(World world, Chunk chunk, float x, float y, int indexX, int indexY) {
 		this.world = world;
@@ -162,10 +156,6 @@ public class Cell {
 
 	public void render(SpriteBatch b) {
 		tile.render(b);
-
-		if (text != null) {
-			text.render(b);
-		}
 	}
 
 	public Cell getCrossedNeighbour(Direction dir) {

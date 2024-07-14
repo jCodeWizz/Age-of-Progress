@@ -1,28 +1,25 @@
 package dev.codewizz.world.settlement;
 
-import dev.codewizz.modding.events.Reason;
-import dev.codewizz.world.items.ItemType;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-
 import dev.codewizz.gfx.Renderable;
-import dev.codewizz.gfx.gui.UINotification;
-import dev.codewizz.gfx.gui.menus.NotificationMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.HermitJoinEvent;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.GrowCropTask;
 import dev.codewizz.world.objects.tasks.HaulTask;
 import dev.codewizz.world.objects.tasks.Task;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Settlement {
 
@@ -92,10 +89,6 @@ public class Settlement {
 		members.add(hermit);
 		Main.inst.world.addObject(hermit, Reason.FORCED);
 
-		((NotificationMenu) Main.inst.renderer.ui.getElement("notification-menu")).addNotification(new UINotification(
-				"A new Hermit arrived!", "Give " + hermit.getName() + " a warm welcome! (And a meal!)", "people-icon"));
-
-		
 		Event.dispatch(new HermitJoinEvent(hermit, this));
 
 		return hermit;

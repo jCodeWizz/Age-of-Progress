@@ -6,12 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.Particle;
-import dev.codewizz.gfx.gui.UIImage;
-import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.UIText;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -57,9 +52,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 	
 	private int age = 101;
 	
-	private UIText nameText;
-	private UIImage jobIcon;
-	
 	public Hermit() {
 		super();
 		
@@ -68,7 +60,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		this.sortHeight = 5;
 
 		this.setJob(new Worker());
-		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
 	}
 	
 	public Hermit(float x, float y) {
@@ -89,7 +80,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		setSleepNeed();
 
 		this.setJob(new Worker());
-		jobIcon = new UIImage("job-icon", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 + 39 * UILayer.SCALE, 0, 30 * UILayer.SCALE, 30 * UILayer.SCALE, this.getJob().getIcon(), 1);
 	}
 	
 	@Override
@@ -165,24 +155,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 	public Polygon getHitBox() {
 		return new Polygon( new int[] {(int)x+7, (int)x+7, (int)x + 17, (int)x + 17}, 
 							new int[] {(int)y + 3, (int)y + 24, (int)y + 24, (int)y + 3}, 4) ;
-	}
-
-	@Override
-	public void renderUICard(SelectMenu m) {
-		super.renderUICard(m);
-		
-		nameText = (UIText)m.layer.getElement("name-text");
-	
-		m.elements.add(0, jobIcon);
-	}
-	
-	@Override
-	public void updateUICard(SelectMenu m) {
-		super.updateUICard(m);
-		if(nameText != null) nameText.setText(name + "   ( " + age + " )");
-		else nameText = (UIText) m.layer.getElement("name-text");
-
-		jobIcon.setSprite(this.getJob().getIcon());
 	}
 
 	public Settlement getSettlement() {

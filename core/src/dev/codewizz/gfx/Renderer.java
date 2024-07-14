@@ -1,24 +1,28 @@
 package dev.codewizz.gfx;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
-import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.layers.MainMenuLayer;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import dev.codewizz.gfx.gui.UITextButton;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Nature;
 import dev.codewizz.world.World;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Renderer {
 
@@ -27,23 +31,42 @@ public class Renderer {
 	
 	public SpriteBatch tileBatch;
 	public SpriteBatch objectBatch;
-	public SpriteBatch uiBatch;
 
-	public UILayer ui;
+	public Stage uiStage;
 
 	private com.badlogic.gdx.physics.box2d.World world = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,0),false);
 	private RayHandler rayHandler = new RayHandler(world);
 	public List<PointLight> lights = new CopyOnWriteArrayList<>();
 	
 	public Renderer() {
+		uiStage = new Stage();
+
+
 		Shaders.init();
 		tileBatch = new SpriteBatch();
 		objectBatch = new SpriteBatch();
-		uiBatch = new SpriteBatch();
 
-		ui = new MainMenuLayer();
-		
 		rayHandler.setAmbientLight(0.2f);
+
+		Label l = new Label("Hey", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		l.setPosition(300, 300);
+		uiStage.addActor(l);
+
+		TextButton button = UITextButton.createTextButton("start");
+		button.setPosition(300, 300);
+		button.addListener((Event e) -> {
+			if(!(e instanceof InputEvent) || !(((InputEvent) e).getType().equals(InputEvent.Type.touchDown))) {
+				return false;
+			}
+
+			Main.inst.openWorld(new World());
+			Main.inst.world.setup();
+
+			return false;
+		});
+		uiStage.addActor(button);
+
+
 	}
 
 	public void render(World world, OrthographicCamera cam) {   
@@ -92,10 +115,8 @@ public class Renderer {
 		
 		Gdx.gl.glLineWidth(5);
 
-		
-		uiBatch.begin();
-		ui.render(uiBatch);
-		uiBatch.end();
+		uiStage.act();
+		uiStage.draw();
 	}
 	
 	public PointLight addLight(float x, float y, float radius) {

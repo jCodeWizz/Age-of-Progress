@@ -3,11 +3,6 @@ package dev.codewizz.world.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
-
-import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.UIText;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
-import dev.codewizz.main.Main;
 import dev.codewizz.utils.Tuple;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -164,22 +159,6 @@ public abstract class TaskableObject extends Entity {
 		} else if(vel.x < 0){
 			facingRight = false;
 		}
-	}
-	
-	private UIText taskText = new UIText("task-text", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 - 69 * UILayer.SCALE, (6+20) * UILayer.SCALE, "", 8);
-	
-	@Override
-	public void renderUICard(SelectMenu m) {
-		super.renderUICard(m);
-		
-		m.elements.add(taskText); 
-	}
-	
-	@Override
-	public void updateUICard(SelectMenu m) {
-		super.updateUICard(m);
-
-		taskText.setText(this.getCurrentTaskText());
 	}
 	
 	public String getCurrentTaskText() {

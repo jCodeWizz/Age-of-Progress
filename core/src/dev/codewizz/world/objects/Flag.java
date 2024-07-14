@@ -86,11 +86,11 @@ public class Flag extends GameObject implements IBuy, SerializableObject {
 		Settlement s = new Settlement(cell);
 		Main.inst.world.start(s);
 		
-		Main.inst.renderer.ui.getElement("manage-icon").setAvailable(true);
-		Main.inst.renderer.ui.getElement("people-icon").setAvailable(true);
-		Main.inst.renderer.ui.getElement("construction-icon").setAvailable(true);
-		Main.inst.renderer.ui.getElement("tool-icon").setAvailable(true);
-		Main.inst.renderer.ui.getElement("path-icon").setAvailable(true);
+		//TODO: Main.inst.renderer.ui.getElement("manage-icon").setAvailable(true);
+		//TODO: Main.inst.renderer.ui.getElement("people-icon").setAvailable(true);
+		//TODO: Main.inst.renderer.ui.getElement("construction-icon").setAvailable(true);
+		//TODO: Main.inst.renderer.ui.getElement("tool-icon").setAvailable(true);
+		//TODO: Main.inst.renderer.ui.getElement("path-icon").setAvailable(true);
 		
 	}
 	

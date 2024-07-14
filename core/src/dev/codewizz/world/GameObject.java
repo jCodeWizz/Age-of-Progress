@@ -4,16 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
-import dev.codewizz.gfx.gui.UILayer;
-import dev.codewizz.gfx.gui.UIText;
-import dev.codewizz.gfx.gui.layers.GameLayer;
-import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.utils.serialization.SerializableObject;
-import dev.codewizz.world.objects.IBuy;
 
 import java.awt.*;
 import java.util.UUID;
@@ -31,8 +26,6 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	protected boolean selected = false;
 	protected String name = "Object";
 	
-	private UIText text;
-	
 	public GameObject() {
 		
 	}
@@ -47,22 +40,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	public abstract void update(float d);
 	public abstract void render(SpriteBatch b);
 	
-	public void renderUICard(SelectMenu m) {
-		if(this instanceof IBuy) {
-	
-			if(this.text == null) this.text = new UIText("description-text", ((UILayer.WIDTH / 2) - (146 * UILayer.SCALE) / 2)/2 - 69 * UILayer.SCALE, (6+20) * UILayer.SCALE, "", 6);
-			
-			
-			m.elements.add(text);
-		}
-	}
-	
-	public void updateUICard(SelectMenu m) {
-		if(this instanceof IBuy) {
-			text.setText(((IBuy) this).getMenuDescription());
-		}
-	}
-	
+
 	@Override
 	public GameObjectData save(GameObjectData object) {
 
@@ -114,16 +92,10 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	}
 	
 	public void select() {
-		Main.inst.renderer.ui.closeMenus();
-		GameLayer.selectedObject = this;
-		this.renderUICard((SelectMenu)Main.inst.renderer.ui.getElement("selectMenu"));
-		Main.inst.renderer.ui.getElement("selectMenu").enable();
 		selected = true;
 	}
 	
 	public void deselect() {
-		GameLayer.selectedObject = null;
-		Main.inst.renderer.ui.getElement("selectMenu").disable();
 		selected = false;
 	}
 	
@@ -232,7 +204,6 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 				", cell=" + cell +
 				", selected=" + selected +
 				", name='" + name + '\'' +
-				", text=" + text +
 				'}';
 	}
 

@@ -1,23 +1,14 @@
 package dev.codewizz.input;
 
-import dev.codewizz.gfx.gui.menus.DebugMenu;
-import java.nio.ByteBuffer;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.zip.Deflater;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
-
-import dev.codewizz.gfx.gui.menus.StructureMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.World;
-import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.building.WallDoor;
@@ -25,6 +16,11 @@ import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
+
+import java.nio.ByteBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.zip.Deflater;
 
 public class KeyInput implements InputProcessor {
 
@@ -42,11 +38,8 @@ public class KeyInput implements InputProcessor {
 				Main.exit();
 			}
 			
-			// closes all menus before going to main menu
+			//todo closes all menus before going to main menu
 			if(Main.PLAYING) {
-				if(!Main.inst.renderer.ui.closeMenus()) {
-					Main.inst.renderer.ui.getElement("pauseMenu").enable();
-				}
 			}
 			
 			
@@ -145,8 +138,6 @@ public class KeyInput implements InputProcessor {
 		}
 
 		if(key == Input.Keys.F3) {
-			DebugMenu m = (DebugMenu) Main.inst.renderer.ui.getElement("debugMenu");
-			m.closeDebugUI();
 		}
 		return false;
 	}

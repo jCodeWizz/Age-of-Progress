@@ -5,13 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.kotcrab.vis.ui.VisUI;
-
-import dev.codewizz.input.console.Console;
 import dev.codewizz.gfx.Renderer;
-import dev.codewizz.gfx.gui.layers.GameLayer;
-import dev.codewizz.gfx.gui.layers.MainMenuLayer;
 import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.modding.ModHandler;
 import dev.codewizz.networking.Client;
 import dev.codewizz.utils.Assets;
@@ -87,7 +84,7 @@ public class Main extends ApplicationAdapter {
          */
 
         inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(renderer.ui);
+        inputMultiplexer.addProcessor(renderer.uiStage);
         inputMultiplexer.addProcessor(keyInput);
         inputMultiplexer.addProcessor(mouseInput);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -128,7 +125,7 @@ public class Main extends ApplicationAdapter {
         this.world = world;
         PLAYING = true;
 
-        renderer.ui = new GameLayer();
+        //todo: move to game ui.
         setInputMultiplexer();
     }
 
@@ -144,7 +141,7 @@ public class Main extends ApplicationAdapter {
         PLAYING = false;
         this.world = null;
 
-        renderer.ui = new MainMenuLayer();
+        //todo: move to main menu ui
         setInputMultiplexer();
     }
 

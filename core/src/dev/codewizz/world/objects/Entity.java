@@ -1,8 +1,6 @@
 package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.Gdx;
-
-import dev.codewizz.gfx.gui.menus.SelectMenu;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
@@ -59,16 +57,6 @@ public abstract class Entity extends GameObject {
 		object.end();
 		
 		return object;
-	}
-	
-	@Override
-	public void renderUICard(SelectMenu m) {
-
-	}
-	
-	@Override
-	public void updateUICard(SelectMenu m) {
-
 	}
 	
 	public float getHealth() {

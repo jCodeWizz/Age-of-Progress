@@ -8,20 +8,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
-import dev.codewizz.gfx.gui.UIElement;
-import dev.codewizz.gfx.gui.UIMenu;
-import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.ConstructionObject;
 import dev.codewizz.world.objects.IBuy;
+
 import java.util.Collections;
 
 public class MouseInput implements InputProcessor {
@@ -36,7 +33,6 @@ public class MouseInput implements InputProcessor {
     public static AreaSelector area = null;
     public static TileSelector tileArea = null;
     public static boolean clear = false;
-    public static UIElement lastClickedUIElement;
     public static PointLight light;
     public static boolean rotate = false;
 
@@ -211,7 +207,7 @@ public class MouseInput implements InputProcessor {
                     return false;
                 }
 
-                if (GameLayer.selectedObject != null) { GameLayer.selectedObject.deselect(); }
+                //TODO: if (GameLayer.selectedObject != null) { GameLayer.selectedObject.deselect(); }
 
                 boolean found = false;
                 for (Renderable o : Main.inst.world.getObjects()) {
@@ -220,33 +216,34 @@ public class MouseInput implements InputProcessor {
                         obj.setSelected(false);
                         if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
                             found = true;
-                            if (Main.inst.renderer.ui.menusClosed()) {
+//                            if (Main.inst.renderer.ui.menusClosed()) {
                                 obj.select();
                                 dragging[button] = false;
-                            } else {
-                                for (UIElement e : Main.inst.renderer.ui.elements) {
-                                    if (e instanceof UIMenu) {
-                                        UIMenu menu = (UIMenu) e;
-                                        if (menu.isEnabled()) {
-                                            menu.clicked(obj);
-                                        }
-                                    }
-                                }
-                            }
+//                            } else {
+                                //todo
+//                                for (UIElement e : Main.inst.renderer.ui.elements) {
+//                                    if (e instanceof UIMenu) {
+//                                        UIMenu menu = (UIMenu) e;
+//                                        if (menu.isEnabled()) {
+//                                            menu.clicked(obj);
+//                                        }
+//                                    }
+//                                }
+//                            }
                             break;
                         }
                     }
                 }
-                if (!found) {
-                    for (UIElement e : Main.inst.renderer.ui.elements) {
-                        if (e instanceof UIMenu) {
-                            UIMenu menu = (UIMenu) e;
-                            if (menu.isEnabled() && hoveringOverCell != null) {
-                                menu.clicked(hoveringOverCell);
-                            }
-                        }
-                    }
-                }
+//                if (!found) {
+//                    for (UIElement e : Main.inst.renderer.ui.elements) {
+//                        if (e instanceof UIMenu) {
+//                            UIMenu menu = (UIMenu) e;
+//                            if (menu.isEnabled() && hoveringOverCell != null) {
+//                                menu.clicked(hoveringOverCell);
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
 
