@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
+import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
 import dev.codewizz.world.objects.TaskableObject;
 
@@ -19,6 +20,7 @@ public class Agent {
 	private Vector2 dir;
 
 	public Cell goal;
+	public GameObject goalObject;
 
 	private TaskableObject object;
 
@@ -56,15 +58,19 @@ public class Agent {
 		this.previousCell = nextCell;
 		path.removeFirst();
 
-		if (path.size == 0) {
+		if (path.size == 0 || (goalObject != null && loc.dst2(goalObject.getX(), goalObject.getY()) < 2.5f)) {
 			reach();
 		} else {
-			if(Main.inst.world.cellGraph.getConnections(nextCell).size < 8) {
-				Cell goal = path.last();
-				stop();
-				setGoal(goal);
+			if(goalObject != null) {
+				setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
 			} else {
-				setSpeedToNextCell(loc);
+				if(Main.inst.world.cellGraph.getConnections(nextCell).size < 8) {
+					Cell goal = path.last();
+					stop();
+					setGoal(goal);
+				} else {
+					setSpeedToNextCell(loc);
+				}
 			}
 		}
 	}
@@ -74,10 +80,7 @@ public class Agent {
 	}
 
 	private void reach() {
-		path.clear();
-		dir.x = 0;
-		dir.y = 0;
-		moving = false;
+		stop();
 		onReach();
 	}
 
@@ -86,13 +89,20 @@ public class Agent {
 		dir.x = 0;
 		dir.y = 0;
 		moving = false;
+		this.goalObject = null;
 	}
 
 	public void onReach() {
 
 	}
 
+	public void followObject(GameObject object) {
+		this.goalObject = object;
+		setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
+	}
+
 	public boolean setGoal(Cell goal) {
+		stop();
 		this.goal = goal;
 
 		previousCell = Main.inst.world.getCell(object.getX(), object.getY());
