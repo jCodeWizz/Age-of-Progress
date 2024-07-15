@@ -1,7 +1,6 @@
 package dev.codewizz.gfx.gui.layers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -12,7 +11,7 @@ import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 
-public class SettingsMenuLayer extends Layer{
+public class ExtrasMenuLayer extends Layer {
 
     @Override
     public void open(Stage stage) {
@@ -21,15 +20,13 @@ public class SettingsMenuLayer extends Layer{
         image.setSize(Gdx.graphics.getHeight(), Gdx.graphics.getHeight());
 
         Table table = new Table();
-        table.setFillParent(true); // Table fills the entire stage
+        table.setFillParent(true);
         stage.addActor(table);
 
         table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left().expandY();
 
         Table right = new Table();
         table.add(right).expand();
-
-
 
         Table back = new Table();
         back.setFillParent(true);
@@ -44,9 +41,9 @@ public class SettingsMenuLayer extends Layer{
             }
         });
         back.add(backButton).right().bottom().pad(0, 0, 10, 10).size(140, 60);
+
+
     }
-
-
 
     @Override
     public void update(float d) {

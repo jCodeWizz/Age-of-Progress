@@ -106,10 +106,6 @@ public class Cow extends Animal implements SerializableObject {
         }
 
         if (this.damageCoolDown >= 0f) { b.setColor(1f, 1f, 1f, 1f); }
-
-        b.setColor(Color.BLUE);
-        b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
-        b.setColor(Color.WHITE);
     }
 
     @Override

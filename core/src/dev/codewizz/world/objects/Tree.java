@@ -48,11 +48,6 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 	@Override
 	public void render(SpriteBatch b) {
 		b.draw(texture, x - 32, y + 25);
-
-		b.setColor(Color.GOLD);
-		b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
-		b.setColor(Color.WHITE);
-
 	}
 
 	@Override

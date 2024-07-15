@@ -28,7 +28,7 @@ public class UITextButton extends TextButton {
         defaultStyle.up = new NinePatchDrawable(buttonUpPatch);
         defaultStyle.down = new NinePatchDrawable(buttonDownPatch);
         defaultStyle.disabled = new NinePatchDrawable(buttonDisabledPatch);
-        defaultStyle.font = new BitmapFont();
+        defaultStyle.font = UILabel.buttonFont;
         defaultStyle.fontColor = Color.WHITE;
 
         buttonUpPatch.scale(Layer.scale, Layer.scale);
@@ -36,7 +36,7 @@ public class UITextButton extends TextButton {
         buttonDisabledPatch.scale(Layer.scale, Layer.scale);
     }
 
-    public UITextButton(String text, TextButtonStyle style) {
+    private UITextButton(String text, TextButtonStyle style) {
         super(text, style);
     }
 
@@ -53,5 +53,4 @@ public class UITextButton extends TextButton {
 
         this.getLabel().setY(this.getLabel().getY() - adjustment);
     }
-
 }

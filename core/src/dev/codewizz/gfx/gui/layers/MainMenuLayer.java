@@ -44,7 +44,7 @@ public class MainMenuLayer extends Layer {
         loadButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO: load idk
+                Main.inst.renderer.changeLayer(new LoadMenuLayer());
             }
         });
 
@@ -56,6 +56,14 @@ public class MainMenuLayer extends Layer {
             }
         });
 
+        TextButton extrasButton = UITextButton.create("Extras");
+        extrasButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Main.inst.renderer.changeLayer(new ExtrasMenuLayer());
+            }
+        });
+
         TextButton quitButton = UITextButton.create("Quit!");
         quitButton.addListener(new ClickListener() {
             @Override
@@ -64,7 +72,7 @@ public class MainMenuLayer extends Layer {
             }
         });
 
-        table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left().expandY(); // Image on the left
+        table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left().expandY();
 
         Table buttonTable = new Table();
         table.add(buttonTable).expand().fill();
@@ -75,6 +83,8 @@ public class MainMenuLayer extends Layer {
         buttonTable.row().padTop(20);
         addButton(settingButton, buttonTable);
         buttonTable.row().padTop(20);
+        addButton(extrasButton, buttonTable);
+        buttonTable.row().padTop(20);
         addButton(quitButton, buttonTable);
 
         // Separate table for the link button to be positioned at the bottom right corner
@@ -82,7 +92,6 @@ public class MainMenuLayer extends Layer {
         linkButtonTable.setFillParent(true);
         linkButtonTable.bottom().right();
         stage.addActor(linkButtonTable);
-
         Button linkButton = UIIconButton.create("discord-icon");
         linkButton.addListener(new ClickListener() {
             @Override

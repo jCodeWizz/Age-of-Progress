@@ -140,10 +140,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 		}
 		
 		job.render(b);
-
-		b.setColor(Color.RED);
-		b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
-		b.setColor(Color.WHITE);
 	}
 
 	@Override

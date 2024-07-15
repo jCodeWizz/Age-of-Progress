@@ -36,9 +36,5 @@ public class WallDoor extends Wall {
         } else {
             b.draw(TEXTURE, (int)x, (int)y);
         }
-
-        b.setColor(Color.BLACK);
-        b.draw(Particle.DEFAULT, x + w/2, y + sortHeight, 2, 2);
-        b.setColor(Color.WHITE);
     }
 }
