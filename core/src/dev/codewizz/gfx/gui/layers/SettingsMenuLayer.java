@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
@@ -30,30 +31,22 @@ public class SettingsMenuLayer extends Layer{
 
 
 
-        TextButton back = UITextButton.createTextButton("BackR");
-        back.addListener((Event e) -> {
-            if(!(e instanceof InputEvent) || !(((InputEvent) e).getType().equals(InputEvent.Type.touchDown))) {
-                return false;
+        TextButton back = UITextButton.create("BackR");
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Main.inst.renderer.changeLayer(new MainMenuLayer());
             }
-
-            Main.inst.renderer.changeLayer(new MainMenuLayer());
-
-            return false;
         });
-        TextButton back2 = UITextButton.createTextButton("BackL");
-        back2.addListener((Event e) -> {
-            if(!(e instanceof InputEvent) || !(((InputEvent) e).getType().equals(InputEvent.Type.touchDown))) {
-                return false;
+        TextButton back2 = UITextButton.create("BackL");
+        back2.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Main.inst.renderer.changeLayer(new MainMenuLayer());
             }
-
-            Main.inst.renderer.changeLayer(new MainMenuLayer());
-
-            return false;
         });
         buttonTableLeft.add(back2).bottom().left().padBottom(10).padLeft(10);
         buttonTableRight.add(back).bottom().right().padBottom(10).padRight(10);
-
-        table.setDebug(true);
     }
 
 
