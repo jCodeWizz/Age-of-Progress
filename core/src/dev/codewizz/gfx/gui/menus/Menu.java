@@ -33,11 +33,13 @@ public abstract class Menu extends Table {
     public void close() {
         open = false;
         base.setVisible(false);
+        onClose();
     }
 
     public void open() {
         open = true;
         base.setVisible(true);
+        onOpen();
     }
 
     public void toggle() {
@@ -47,6 +49,14 @@ public abstract class Menu extends Table {
 
     public boolean isOpen() {
         return open;
+    }
+
+    public void onOpen() {
+
+    }
+
+    public void onClose() {
+
     }
 
 

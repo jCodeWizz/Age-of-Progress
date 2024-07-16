@@ -12,10 +12,11 @@ import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.input.MouseInput;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Tile;
 import dev.codewizz.world.tiles.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,15 +47,12 @@ public class TileMenu extends Menu {
         tiledTiles.add(new TiledTile8());
     }
 
-
-
-
     private Image image;
     private Tile tile;
     private Label name;
     private Table showTable;
-
     private Table scrollTable;
+    private ScrollPane scrollPane;
 
     public TileMenu(Stage uiStage, Layer layer) {
         super(uiStage, layer);
@@ -103,8 +101,27 @@ public class TileMenu extends Menu {
 
         main.row();
         scrollTable = new Table();
-        main.add(scrollTable).expand().fill().top().width(384).height(378).padTop(0).colspan(2);  // Ensure scrollTable is aligned to the top
+        scrollPane = new ScrollPane(scrollTable);
+        scrollPane.setScrollingDisabled(true, false);
+        scrollPane.setOverscroll(false, true);
+        scrollPane.setScrollbarsVisible(true);
+        main.add(scrollPane).expand().fill().top().width(384).height(378).padTop(0).colspan(2);
         fillScrollTable(natureTiles);
+
+        scrollPane.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setKeyboardFocus(scrollPane);
+                stage.setScrollFocus(scrollPane);
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setKeyboardFocus(null);
+                stage.setScrollFocus(null);
+            }
+
+        });
 
         main.row();
         showTable = new Table();
@@ -120,7 +137,7 @@ public class TileMenu extends Menu {
 
     public void fillScrollTable(List<Tile> tiles) {
         scrollTable.clear();
-        scrollTable.top();  // Align the content of the scrollTable to the top
+        scrollTable.top();
 
         int buttonsPerRow = 4;
         float tableWidth = 375;
@@ -129,23 +146,29 @@ public class TileMenu extends Menu {
 
         int i = 0;
 
-        for (Tile tile : tiles) {
+        for (Tile t : tiles) {
             i++;
-            ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, tile.getCurrentSprite());
+            ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, t.getCurrentSprite());
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    changeTile(tile);
+                    tile = t;
+
+                    MouseInput.object = false;
+                    MouseInput.currentlyDrawingTileId = t.getId();
                 }
             });
             button.addListener(new InputListener() {
                 @Override
                 public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                    changeTile(tile);
+                    changeTile(t);
                 }
 
                 @Override
                 public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                    if (tile != null) {
+                        changeTile(tile);
+                    }
                 }
             });
 
@@ -157,9 +180,7 @@ public class TileMenu extends Menu {
         }
     }
 
-
     public void changeTile(Tile tile) {
-        this.tile = tile;
         showTable.clear();
 
         name.setText(tile.getName());
@@ -173,17 +194,26 @@ public class TileMenu extends Menu {
 
         float r = 280 / w;
         w = 280;
-        h*=r;
+        h *= r;
 
-        if(h > 300) {
+        if (h > 300) {
             w = tile.getCurrentSprite().getWidth();
             h = tile.getCurrentSprite().getHeight();
 
             r = 300 / h;
             h = 300;
-            w*=r;
+            w *= r;
         }
 
         showTable.add(image).expand().bottom().padBottom(10).size(w, h);
+    }
+
+    @Override
+    public void onClose() {
+        MouseInput.object = true;
+        MouseInput.currentlyDrawingTileId = "aop:base-tile";
+
+        stage.setKeyboardFocus(null);
+        stage.setScrollFocus(null);
     }
 }
