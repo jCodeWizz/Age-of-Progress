@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class UILabel extends Label {
 
     public final static LabelStyle defaultStyle = new LabelStyle();
+    public final static LabelStyle smallStyle = new LabelStyle();
 
     public static BitmapFont buttonFont;
     public static BitmapFont normalFont;
@@ -32,6 +33,9 @@ public class UILabel extends Label {
 
         defaultStyle.font = buttonFont;
         defaultStyle.fontColor = Color.WHITE;
+
+        smallStyle.font = normalFont;
+        smallStyle.fontColor = Color.WHITE;
     }
 
     private UILabel(CharSequence text, LabelStyle style) {
@@ -40,5 +44,9 @@ public class UILabel extends Label {
 
     public static UILabel create(String text) {
         return new UILabel(text, defaultStyle);
+    }
+
+    public static UILabel create(String text, LabelStyle style) {
+        return new UILabel(text, style);
     }
 }

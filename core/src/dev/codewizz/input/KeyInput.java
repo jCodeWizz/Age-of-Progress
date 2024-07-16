@@ -72,7 +72,7 @@ public class KeyInput implements InputProcessor {
 		if(key == Input.Keys.NUM_9) {
 			World.gameSpeed = 40;
 		}
-		
+
 		if(key == Input.Keys.H) {
 			MouseInput.area = AreaSelector.harvest();
 		}
@@ -85,6 +85,11 @@ public class KeyInput implements InputProcessor {
 		if(key == Input.Keys.Y) {
 			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
 			layer.objectMenu.toggle();
+		}
+
+		if(key == Input.Keys.B) {
+			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
+			layer.structureMenu.toggle();
 		}
 
 		if(key == Input.Keys.F2) {

@@ -38,6 +38,7 @@ public class ObjectMenu extends Menu {
     private Image image;
     private GameObject object;
     private Label name;
+    private Label text;
     private Table showTable;
     private Table scrollTable;
     private ScrollPane scrollPane;
@@ -117,6 +118,9 @@ public class ObjectMenu extends Menu {
         name = UILabel.create("");
         showTable.add(name).expand().left().top().padLeft(10);
         showTable.row();
+        text = UILabel.create("", UILabel.smallStyle);
+        showTable.add(text).expand().left().top().padLeft(10);
+        showTable.row();
 
         image = new Image();
 
@@ -173,7 +177,10 @@ public class ObjectMenu extends Menu {
         IBuy info = (IBuy) object;
 
         name.setText(info.getMenuName());
+        text.setText(info.getMenuDescription());
         showTable.add(name).expand().top().left().padLeft(10);
+        showTable.row();
+        showTable.add(text).expand().top().left().padLeft(10);
         showTable.row();
 
         image = new Image(info.getMenuSprite());
