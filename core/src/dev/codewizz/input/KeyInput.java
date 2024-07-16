@@ -82,6 +82,11 @@ public class KeyInput implements InputProcessor {
 			layer.tileMenu.toggle();
 		}
 
+		if(key == Input.Keys.Y) {
+			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
+			layer.objectMenu.toggle();
+		}
+
 		if(key == Input.Keys.F2) {
 			Pixmap pixmap = Pixmap.createFromFrameBuffer(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 			ByteBuffer pixels = pixmap.getPixels();
