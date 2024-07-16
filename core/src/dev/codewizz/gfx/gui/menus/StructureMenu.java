@@ -4,16 +4,34 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
+import dev.codewizz.gfx.gui.elements.UIIconToggle;
+import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.layers.Layer;
-import dev.codewizz.utils.Assets;
+import dev.codewizz.input.MouseInput;
+import dev.codewizz.input.TileSelector;
+import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.CreateBuildingEvent;
+import dev.codewizz.modding.events.Event;
+import dev.codewizz.world.Cell;
+import dev.codewizz.world.GameObject;
+import dev.codewizz.world.building.Building;
+import dev.codewizz.world.building.BuildingObject;
+import dev.codewizz.world.building.Wall;
 
-public class StructureMenu extends Menu {
+public class StructureMenu extends Menu implements IUpdateDataMenu {
+
+    private Building current;
+
+    private UIIconToggle doorIcon;
+    private UIIconToggle removeIcon;
+    private UILabel info;
 
     public StructureMenu(Stage stage, Layer layer) {
         super(stage, layer);
@@ -25,12 +43,54 @@ public class StructureMenu extends Menu {
         base.add(main).expand().left();
         main.setBackground(createBackground());
 
-        Button finishIcon = UIIconButton.create("done-icon");
-        Button addIcon = UIIconButton.create("plus-icon");
-        Button doorIcon = UIIconButton.create("door-icon");
-        Button removeIcon = UIIconButton.create("close-icon");
+        info = UILabel.create("", UILabel.smallStyle);
 
-        main.add(removeIcon).expand().left().size(66, 72).pad(10, 10, 5, 10);
+        removeIcon = UIIconToggle.create("close-icon");
+        doorIcon = UIIconToggle.create("door-icon");
+        doorIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                doorIcon.clicked();
+                removeIcon.setPressed(false);
+            }
+        });
+        removeIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                removeIcon.clicked();
+                doorIcon.setPressed(false);
+            }
+        });
+
+        Button addIcon = UIIconButton.create("plus-icon");
+        addIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                doorIcon.setPressed(false);
+                removeIcon.setPressed(false);
+
+                MouseInput.tileArea = TileSelector.room(current);
+            }
+        });
+
+        Button finishIcon = UIIconButton.create("done-icon");
+        finishIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                doorIcon.setPressed(false);
+                removeIcon.setPressed(false);
+
+                if (!current.getRooms().isEmpty() && Event.dispatch(new CreateBuildingEvent(current))) {
+                    Main.inst.world.settlement.buildings.add(current);
+                    current = null;
+                    close();
+                }
+            }
+        });
+
+        main.add(info).expand().left().pad(5, 10, 0, 10);
+        main.row();
+        main.add(removeIcon).expand().left().size(66, 72).pad(5, 10, 5, 10);
         main.row();
         main.add(doorIcon).expand().left().size(66, 72).pad(5, 10, 5, 10);
         main.row();
@@ -38,6 +98,7 @@ public class StructureMenu extends Menu {
         main.row();
         main.add(finishIcon).expand().left().size(66, 72).pad(5, 10, 10, 10);
 
+        updateData();
     }
 
     private TextureRegionDrawable createBackground() {
@@ -49,5 +110,55 @@ public class StructureMenu extends Menu {
         pixmap.dispose();
 
         return new TextureRegionDrawable(new TextureRegion(texture));
+    }
+
+    @Override
+    public void onOpen() {
+        if(current == null) {
+            current = new Building();
+        }
+    }
+
+    @Override
+    public void clickedOn(Cell cell) {
+        if (cell.getObject() != null && cell.getObject() instanceof BuildingObject) {
+            BuildingObject o = (BuildingObject) cell.getObject();
+            if(!o.getRoom().getBuilding().equals(current)) {
+                current = o.getRoom().getBuilding();
+            }
+        }
+    }
+
+    @Override
+    public void clickedOn(GameObject object) {
+        if (object instanceof Wall) {
+            if (doorIcon.isPressed()) {
+                Wall wall = (Wall) object;
+
+                if (wall.getId().equals("aop:wall")) {
+                    wall.makeDoor();
+                }
+            } else if (removeIcon.isPressed()) {
+                Wall wall = (Wall) object;
+
+                Wall[] walls = ((BuildingObject)wall.getCell().getObject()).getWalls();
+
+                for(int i = 0; i < walls.length; i++) {
+                    if(walls[i] != null && walls[i].equals(wall)) {
+                        ((BuildingObject)wall.getCell().getObject()).setWall(i, null);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateData() {
+        if(current == null) {
+            info.setText("");
+        } else {
+            info.setText(current.getName() + ", " + current.getRooms().size());
+        }
     }
 }

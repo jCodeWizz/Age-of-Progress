@@ -2,10 +2,9 @@ package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.gfx.gui.layers.Layer;
-import dev.codewizz.utils.Logger;
+import dev.codewizz.world.Cell;
+import dev.codewizz.world.GameObject;
 
 public abstract class Menu extends Table {
 
@@ -59,5 +58,11 @@ public abstract class Menu extends Table {
 
     }
 
+    public void clickedOn(Cell cell) {
 
+    }
+
+    public void clickedOn(GameObject object) {
+
+    }
 }

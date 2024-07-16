@@ -3,6 +3,7 @@ package dev.codewizz.gfx.gui.layers;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class GameLayer extends Layer {
         } else {
             updateTimer = 0.5f;
             for(Menu m : menus) {
-                if(m instanceof IUpdateDataMenu) {
+                if(m instanceof IUpdateDataMenu && m.isOpen()) {
                     ((IUpdateDataMenu) m).updateData();
                 }
             }
@@ -50,5 +51,14 @@ public class GameLayer extends Layer {
     @Override
     public void close(Stage stage) {
 
+    }
+
+    public boolean menusClosed() {
+        for(Menu m : menus) {
+            if(m.isOpen()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

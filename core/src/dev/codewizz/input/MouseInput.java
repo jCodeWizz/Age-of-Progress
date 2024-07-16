@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
+import dev.codewizz.gfx.gui.menus.Menu;
 import dev.codewizz.main.Camera;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
@@ -60,7 +62,7 @@ public class MouseInput implements InputProcessor {
                 if (object && Main.inst.world.settlement != null && currentlyDrawingObject != null) {
                     for (Item c : ((IBuy) currentlyDrawingObject).costs()) {
                         if (!Main.inst.world.settlement.inventory.containsItem(c,
-                                                                               c.getSize()) && !ConstructionObject.FREE) {
+                                c.getSize()) && !ConstructionObject.FREE) {
                             clear = false;
                         }
                     }
@@ -97,8 +99,8 @@ public class MouseInput implements InputProcessor {
                                 IBuy object = (IBuy) currentlyDrawingObject;
 
                                 GameObject toPlace = Registers.createGameObject(object.getId(),
-                                                                                hoveringOverCell.x,
-                                                                                hoveringOverCell.y);
+                                        hoveringOverCell.x,
+                                        hoveringOverCell.y);
 
                                 if (toPlace.getId().equals("aop:flag")) {
                                     toPlace.setFlip(rotate);
@@ -112,8 +114,8 @@ public class MouseInput implements InputProcessor {
                                     toPlace.setFlip(rotate);
                                     toPlace.setCell(hoveringOverCell);
                                     ConstructionObject b = new ConstructionObject(toPlace.getX(),
-                                                                                  toPlace.getY(),
-                                                                                  toPlace);
+                                            toPlace.getY(),
+                                            toPlace);
                                     hoveringOverCell.setObject(b);
                                 }
                             }
@@ -147,7 +149,9 @@ public class MouseInput implements InputProcessor {
     }
 
     public static void renderTileArea(SpriteBatch b) {
-        if (tileArea == null || tileArea.start == null || tileArea.end == null) { return; }
+        if (tileArea == null || tileArea.start == null || tileArea.end == null) {
+            return;
+        }
 
         boolean clear = tileArea.isClear();
 
@@ -171,9 +175,9 @@ public class MouseInput implements InputProcessor {
             if (area.start != null) {
                 Renderer.shapeRenderer.line(area.start, new Vector2(area.start.x, coords.y));
                 Renderer.shapeRenderer.line(new Vector2(area.start.x, coords.y),
-                                            new Vector2(coords.x, coords.y));
+                        new Vector2(coords.x, coords.y));
                 Renderer.shapeRenderer.line(new Vector2(coords.x, coords.y),
-                                            new Vector2(coords.x, area.start.y));
+                        new Vector2(coords.x, area.start.y));
                 Renderer.shapeRenderer.line(new Vector2(coords.x, area.start.y), area.start);
             }
         }
@@ -214,42 +218,40 @@ public class MouseInput implements InputProcessor {
                     if (o instanceof GameObject) {
                         GameObject obj = (GameObject) o;
                         obj.setSelected(false);
-                        if (obj.getHitBox().contains(coords.x, coords.y) && !obj.isSelected()) {
+                        if (obj.getHitBox().contains(coords.x, coords.y)) {
                             found = true;
-//                            if (Main.inst.renderer.ui.menusClosed()) {
+                            if (((GameLayer)Main.inst.renderer.uiLayer).menusClosed()) {
                                 obj.select();
                                 dragging[button] = false;
-//                            } else {
+                            } else {
                                 //todo
-//                                for (UIElement e : Main.inst.renderer.ui.elements) {
-//                                    if (e instanceof UIMenu) {
-//                                        UIMenu menu = (UIMenu) e;
-//                                        if (menu.isEnabled()) {
-//                                            menu.clicked(obj);
-//                                        }
-//                                    }
-//                                }
-//                            }
+                                for (Menu menu : ((GameLayer) Main.inst.renderer.uiLayer).menus) {
+                                    if (menu.isOpen()) {
+                                        menu.clickedOn(obj);
+                                    }
+                                }
+                            }
                             break;
                         }
                     }
                 }
-//                if (!found) {
-//                    for (UIElement e : Main.inst.renderer.ui.elements) {
-//                        if (e instanceof UIMenu) {
-//                            UIMenu menu = (UIMenu) e;
-//                            if (menu.isEnabled() && hoveringOverCell != null) {
-//                                menu.clicked(hoveringOverCell);
-//                            }
-//                        }
-//                    }
-//                }
+                if (!found) {
+                    for (Menu menu : ((GameLayer) Main.inst.renderer.uiLayer).menus) {
+                        if (menu.isOpen() && hoveringOverCell != null) {
+                            menu.clickedOn(hoveringOverCell);
+                        }
+                    }
+                }
             }
         }
 
         if (button == 1) {
-            if (area != null) { area = null; }
-            if (tileArea != null) { tileArea = null; }
+            if (area != null) {
+                area = null;
+            }
+            if (tileArea != null) {
+                tileArea = null;
+            }
         }
 
         return false;
@@ -289,7 +291,7 @@ public class MouseInput implements InputProcessor {
         if (Main.PLAYING && !Main.PAUSED) {
             if (Main.inst.camera != null) {
                 Main.inst.camera.zoom(Camera.zoomSpeed * amountY, Gdx.input.getX(),
-                                      Gdx.input.getY());
+                        Gdx.input.getY());
                 return true;
             }
         }

@@ -98,6 +98,8 @@ public class Renderer {
 		
 		Gdx.gl.glLineWidth(5);
 
+		uiLayer.update(Gdx.graphics.getDeltaTime());
+
 		uiStage.act();
 		uiStage.draw();
 	}

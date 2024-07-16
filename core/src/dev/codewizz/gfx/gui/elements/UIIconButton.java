@@ -42,9 +42,9 @@ public class UIIconButton extends Button {
 
     }
 
-    private final Sprite icon;
+    protected final Sprite icon;
 
-    private UIIconButton(String icon, ButtonStyle style) {
+    protected UIIconButton(String icon, ButtonStyle style) {
         super(style);
         this.icon = Assets.getSprite(icon);
     }
@@ -62,7 +62,7 @@ public class UIIconButton extends Button {
         super.draw(batch, parentAlpha);
 
         if (this.isPressed()) {
-            batch.draw(icon, this.getX(), this.getY() - Layer.scale * 2, getWidth(), getHeight()); //TODO: move scale var
+            batch.draw(icon, this.getX(), this.getY() - Layer.scale * 2, getWidth(), getHeight());
         } else {
             batch.draw(icon, this.getX(), this.getY(), getWidth(), getHeight());
         }
