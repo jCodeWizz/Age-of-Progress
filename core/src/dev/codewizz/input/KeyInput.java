@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
@@ -76,48 +77,11 @@ public class KeyInput implements InputProcessor {
 			MouseInput.area = AreaSelector.harvest();
 		}
 
-		if(key == Input.Keys.G) {
-			BuildingObject o = (BuildingObject) MouseInput.hoveringOverCell.getObject();
-			Wall[] walls = o.getWalls();
+		if(key == Input.Keys.T) {
+			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
+			layer.tileMenu.toggle();
+		}
 
-			for(int i = 0; i < walls.length; i++) {
-				if(walls[i] != null) {
-					if(i == 0) {
-						o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 32, o.getCell(), Direction.North));
-						o.getWalls()[i].flip();
-						//o.setWall(i, null);
-					} else if(i == 1) {
-						o.setWall(i, new WallDoor(o.getX() + 32, o.getY() + 16, o.getCell(), Direction.East));
-						//o.setWall(i, null);
-					} else if(i == 2) {
-						o.setWall(i, new WallDoor(o.getX(), o.getY() + 16, o.getCell(), Direction.South));
-						o.getWalls()[i].flip();
-						//o.setWall(i, null);
-					} else if(i == 3) {
-						o.setWall(i, new WallDoor(o.getX(), o.getY() + 32, o.getCell(), Direction.West));
-						//o.setWall(i, null);
-					}
-				}
-			}
-		}
-		
-		if(key == Input.Keys.U) {
-			Settlement s = Main.inst.world.settlement;
-			
-			if(s != null) {
-				
-				for(Hermit hermit : s.members) {
-					
-					Task task = new MoveTask(Main.inst.world.getCell(s.getX(), s.getY()));
-					hermit.addPrioTask(task);
-				}
-			}
-			
-			return true;
-		}
-		
-		
-		// create a screenshot
 		if(key == Input.Keys.F2) {
 			Pixmap pixmap = Pixmap.createFromFrameBuffer(0, 0, Gdx.graphics.getBackBufferWidth(), Gdx.graphics.getBackBufferHeight());
 			ByteBuffer pixels = pixmap.getPixels();
@@ -138,6 +102,7 @@ public class KeyInput implements InputProcessor {
 		}
 
 		if(key == Input.Keys.F3) {
+			//todo: debug menu
 		}
 		return false;
 	}

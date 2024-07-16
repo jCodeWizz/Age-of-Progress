@@ -34,7 +34,7 @@ public class Renderer {
 	public SpriteBatch objectBatch;
 
 	public Stage uiStage;
-	private Layer uiLayer;
+	public Layer uiLayer;
 
 	private com.badlogic.gdx.physics.box2d.World world = new com.badlogic.gdx.physics.box2d.World(new Vector2(0,0),false);
 	private RayHandler rayHandler = new RayHandler(world);

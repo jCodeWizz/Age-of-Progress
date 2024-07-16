@@ -14,6 +14,9 @@ import dev.codewizz.utils.Logger;
 public class UITextButton extends TextButton {
 
     public final static TextButtonStyle defaultStyle = new TextButtonStyle();
+    public final static TextButtonStyle smallStyle = new TextButtonStyle();
+
+    private float moveText = Layer.scale * 2;
 
     static {
         reload();
@@ -34,19 +37,38 @@ public class UITextButton extends TextButton {
         buttonUpPatch.scale(Layer.scale, Layer.scale);
         buttonDownPatch.scale(Layer.scale, Layer.scale);
         buttonDisabledPatch.scale(Layer.scale, Layer.scale);
+
+        NinePatch buttonUpPatchSmall = new NinePatch(Assets.getSprite("button"), border, border, border, border);
+        NinePatch buttonDownPatchSmall = new NinePatch(Assets.getSprite("button-pressed"), border, border, border, border);
+        NinePatch buttonDisabledPatchSmall = new NinePatch(Assets.getSprite("button-unavailable"), border, border, border, border);
+        smallStyle.up = new NinePatchDrawable(buttonUpPatchSmall);
+        smallStyle.down = new NinePatchDrawable(buttonDownPatchSmall);
+        smallStyle.disabled = new NinePatchDrawable(buttonDisabledPatchSmall);
+        smallStyle.font = UILabel.normalFont;
+        smallStyle.fontColor = Color.WHITE;
+    }
+
+    private UITextButton(String text) {
+        super(text, defaultStyle);
     }
 
     private UITextButton(String text, TextButtonStyle style) {
         super(text, style);
+
+        this.moveText = 2f;
     }
 
     public static UITextButton create(String text) {
-        return new UITextButton(text, defaultStyle);
+        return new UITextButton(text);
+    }
+
+    public static UITextButton create(String text, TextButtonStyle style) {
+        return new UITextButton(text, style);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        float adjustment = this.isPressed() ? -Layer.scale * 2 : Layer.scale * 2;
+        float adjustment = this.isPressed() ? -moveText : moveText;
         this.getLabel().setY(this.getLabel().getY() + adjustment);
 
         super.draw(batch, parentAlpha);

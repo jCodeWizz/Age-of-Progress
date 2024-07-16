@@ -22,7 +22,7 @@ public class UILabel extends Label {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 32;
         buttonFont = generator.generateFont(parameter);
-        parameter.size = 16;
+        parameter.size = 14;
         normalFont = generator.generateFont(parameter);
         generator.dispose();
     }

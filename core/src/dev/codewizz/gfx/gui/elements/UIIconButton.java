@@ -13,6 +13,7 @@ import dev.codewizz.utils.Assets;
 public class UIIconButton extends Button {
 
     public static ButtonStyle defaultStyle = new ButtonStyle();
+    public static ButtonStyle smallStyle = new ButtonStyle();
 
     static {
         reload();
@@ -21,16 +22,24 @@ public class UIIconButton extends Button {
     public static void reload() {
         int border = 5;
 
-        NinePatch buttonUpPatch = new NinePatch(Assets.getSprite("icon"), border, border, border, border);
-        NinePatch buttonDownPatch = new NinePatch(Assets.getSprite("icon-pressed"), border, border, border, border);
-        NinePatch buttonDisabledPatch = new NinePatch(Assets.getSprite("icon-unavailable"), border, border, border, border);
-        defaultStyle.up = new NinePatchDrawable(buttonUpPatch);
-        defaultStyle.down = new NinePatchDrawable(buttonDownPatch);
-        defaultStyle.disabled = new NinePatchDrawable(buttonDisabledPatch);
+        NinePatch buttonUpPatchDefault = new NinePatch(Assets.getSprite("icon"), border, border, border, border);
+        NinePatch buttonDownPatchDefault = new NinePatch(Assets.getSprite("icon-pressed"), border, border, border, border);
+        NinePatch buttonDisabledPatchDefault = new NinePatch(Assets.getSprite("icon-unavailable"), border, border, border, border);
+        defaultStyle.up = new NinePatchDrawable(buttonUpPatchDefault);
+        defaultStyle.down = new NinePatchDrawable(buttonDownPatchDefault);
+        defaultStyle.disabled = new NinePatchDrawable(buttonDisabledPatchDefault);
+        buttonUpPatchDefault.scale(Layer.scale, Layer.scale);
+        buttonDownPatchDefault.scale(Layer.scale, Layer.scale);
+        buttonDisabledPatchDefault.scale(Layer.scale, Layer.scale);
 
-        buttonUpPatch.scale(Layer.scale, Layer.scale);
-        buttonDownPatch.scale(Layer.scale, Layer.scale);
-        buttonDisabledPatch.scale(Layer.scale, Layer.scale);
+        NinePatch buttonUpPatchSmall = new NinePatch(Assets.getSprite("icon"), border, border, border, border);
+        NinePatch buttonDownPatchSmall = new NinePatch(Assets.getSprite("icon-pressed"), border, border, border, border);
+        NinePatch buttonDisabledPatchSmall = new NinePatch(Assets.getSprite("icon-unavailable"), border, border, border, border);
+        smallStyle.up = new NinePatchDrawable(buttonUpPatchSmall);
+        smallStyle.down = new NinePatchDrawable(buttonDownPatchSmall);
+        smallStyle.disabled = new NinePatchDrawable(buttonDisabledPatchSmall);
+
+
     }
 
     private final Sprite icon;
@@ -42,6 +51,10 @@ public class UIIconButton extends Button {
 
     public static UIIconButton create(String icon) {
         return new UIIconButton(icon, defaultStyle);
+    }
+
+    public static UIIconButton create(String icon, ButtonStyle style) {
+        return new UIIconButton(icon, style);
     }
 
     @Override
