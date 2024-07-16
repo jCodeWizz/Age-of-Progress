@@ -55,16 +55,24 @@ public class UIImageButton extends ImageButton {
 
         float x = this.getX() + 2;
         float y = this.getY() + 2;
-        float w = this.getWidth() - 4;
-        float h = this.getHeight() - 4;
+        float w = sprite.getWidth();
+        float h = sprite.getHeight();
+        float slotW = this.getWidth() - 4;
+        float slotH = this.getHeight() - 4;
 
-        if(sprite.getWidth() >= sprite.getHeight()) {
-            float r = sprite.getWidth() / w;
-            h = h * r;
-        } else {
-            float r = sprite.getHeight() / h;
-            w = w * r;
+        float r = slotW / sprite.getWidth();
+        w = slotW;
+        h *= r;
+
+        if (h > slotH) {
+            w = sprite.getWidth();
+            h = sprite.getHeight();
+
+            r = slotH / h;
+            h = slotH;
+            w *= r;
         }
+
 
         batch.draw(sprite, x, y, w, h);
     }

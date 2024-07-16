@@ -185,12 +185,12 @@ public class ObjectMenu extends Menu {
         w = 280;
         h *= r;
 
-        if (h > 300) {
+        if (h > 250) {
             w = info.getMenuSprite().getWidth();
             h = info.getMenuSprite().getHeight();
 
-            r = 300 / h;
-            h = 300;
+            r = 250 / h;
+            h = 250;
             w *= r;
         }
 

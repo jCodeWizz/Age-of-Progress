@@ -10,11 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UITextButton;
+import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.World;
+import dev.codewizz.world.objects.Flag;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -37,6 +40,8 @@ public class MainMenuLayer extends Layer {
                 Main.inst.renderer.changeLayer(new GameLayer());
                 Main.inst.openWorld(new World());
                 Main.inst.world.setup();
+
+                MouseInput.currentlyDrawingObject = new Flag(0, 0);
             }
         });
 
