@@ -23,6 +23,7 @@ public class GameLayer extends Layer {
     public StructureMenu structureMenu;
     public PeopleMenu peopleMenu;
     public SettlementMenu settlementMenu;
+    public PauseMenu pauseMenu;
 
     private float updateTimer = 0.5f;
 
@@ -30,19 +31,21 @@ public class GameLayer extends Layer {
 
     @Override
     public void open(Stage stage) {
+        setup();
+
         tileMenu = new TileMenu(Main.inst.renderer.uiStage, this);
         objectMenu = new ObjectMenu(Main.inst.renderer.uiStage, this);
         structureMenu = new StructureMenu(Main.inst.renderer.uiStage, this);
         peopleMenu = new PeopleMenu(Main.inst.renderer.uiStage, this);
         settlementMenu = new SettlementMenu(Main.inst.renderer.uiStage, this);
+        pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
 
         menus.add(tileMenu);
         menus.add(objectMenu);
         menus.add(structureMenu);
         menus.add(peopleMenu);
         menus.add(settlementMenu);
-
-        setup();
+        menus.add(pauseMenu);
     }
 
     @Override
@@ -62,15 +65,6 @@ public class GameLayer extends Layer {
     @Override
     public void close(Stage stage) {
 
-    }
-
-    public boolean menusClosed() {
-        for(Menu m : menus) {
-            if(m.isOpen()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private void setup() {
@@ -151,5 +145,22 @@ public class GameLayer extends Layer {
         if(menu instanceof IUpdateDataMenu) {
             ((IUpdateDataMenu) menu).updateData();
         }
+    }
+
+    public void closeMenus() {
+        for(Menu m : menus) {
+            if(m.isOpen()) {
+                m.close();
+            }
+        }
+    }
+
+    public boolean menusClosed() {
+        for(Menu m : menus) {
+            if(m.isOpen()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

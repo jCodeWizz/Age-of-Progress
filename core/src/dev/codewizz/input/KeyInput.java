@@ -41,6 +41,11 @@ public class KeyInput implements InputProcessor {
 			
 			//todo closes all menus before going to main menu
 			if(Main.PLAYING) {
+				if(((GameLayer)Main.inst.renderer.uiLayer).menusClosed()) {
+					((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).pauseMenu);
+				} else {
+					((GameLayer)Main.inst.renderer.uiLayer).closeMenus();
+				}
 			}
 			
 			
