@@ -1,8 +1,10 @@
 package dev.codewizz.gfx.gui.layers;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.menus.*;
@@ -88,18 +90,66 @@ public class GameLayer extends Layer {
         board.setBackground(new Image(Assets.getSprite("icon-board")).getDrawable());
 
         UIIconButton settlementIcon = UIIconButton.create("manage-icon");
-        UIIconButton tileIcon = UIIconButton.create("path-icon");
-        UIIconButton constructionIcon = UIIconButton.create("construction-icon");
-        UIIconButton peopleIcon = UIIconButton.create("people-icon");
-        UIIconButton toolIcon = UIIconButton.create("tool-icon");
+        settlementIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openMenu(settlementMenu);
+            }
+        });
 
+        UIIconButton tileIcon = UIIconButton.create("path-icon");
+        tileIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openMenu(tileMenu);
+            }
+        });
+
+        UIIconButton constructionIcon = UIIconButton.create("construction-icon");
+        constructionIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openMenu(objectMenu);
+            }
+        });
+
+        UIIconButton peopleIcon = UIIconButton.create("people-icon");
+        peopleIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openMenu(peopleMenu);
+            }
+        });
+
+        UIIconButton toolIcon = UIIconButton.create("tool-icon");
+        toolIcon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //todo: tool menu;
+            }
+        });
         board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 0, 0, 3 * Layer.scale);
         board.add(tileIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
         board.add(constructionIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
         board.add(peopleIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
         board.add(toolIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 0);
+    }
 
+    public void openMenu(Menu menu) {
+        for(Menu m : menus) {
+            if(m.isOpen()) {
+                if(m.equals(menu)) {
+                    m.close();
+                    return;
+                }
 
+                m.close();
+            }
+        }
 
+        menu.open();
+        if(menu instanceof IUpdateDataMenu) {
+            ((IUpdateDataMenu) menu).updateData();
+        }
     }
 }

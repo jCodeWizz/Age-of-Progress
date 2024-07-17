@@ -127,6 +127,8 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 current = o.getRoom().getBuilding();
             }
         }
+
+        updateData();
     }
 
     @Override
@@ -151,6 +153,8 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 }
             }
         }
+
+        updateData();
     }
 
     @Override
