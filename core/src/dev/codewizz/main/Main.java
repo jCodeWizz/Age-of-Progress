@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.kotcrab.vis.ui.VisUI;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.layers.MainMenuLayer;
 import dev.codewizz.input.KeyInput;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.console.Console;
@@ -95,7 +96,6 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.2f, 0.2f, 0.2f, 1);
         Gdx.graphics.setTitle("Age of Progress | FPS: " + Gdx.graphics.getFramesPerSecond());
 
-
         /*
          * update game
          *
@@ -139,9 +139,11 @@ public class Main extends ApplicationAdapter {
 
 
         PLAYING = false;
+        this.world.stop();
         this.world = null;
 
-        //todo: move to main menu ui
+        renderer.changeLayer(new MainMenuLayer());
+
         setInputMultiplexer();
     }
 
