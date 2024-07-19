@@ -110,13 +110,11 @@ public class TileMenu extends Menu {
         scrollPane.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                stage.setKeyboardFocus(scrollPane);
                 stage.setScrollFocus(scrollPane);
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                stage.setKeyboardFocus(null);
                 stage.setScrollFocus(null);
             }
 

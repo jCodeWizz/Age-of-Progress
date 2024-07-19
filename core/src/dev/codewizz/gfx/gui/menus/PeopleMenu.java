@@ -8,17 +8,22 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
+import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextField;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.world.objects.hermits.Hermit;
 
-public class PeopleMenu extends Menu {
+public class PeopleMenu extends Menu implements IUpdateDataMenu {
 
     private TextField searchField;
     private InputListener clickListener;
     private InputListener escapeKeyListener;
+
+    private Table list;
 
     public PeopleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -56,7 +61,7 @@ public class PeopleMenu extends Menu {
         searchField = UITextField.create("Name . . .");
         search.add(searchField).expand().left().fillY().width(Value.percentWidth(0.36f, search)).padLeft(7 * Layer.scale / 2f);
 
-        Table list = new Table();
+        list = new Table();
         left.add(list).expand().fill();
 
         Table right = new Table();
@@ -92,6 +97,8 @@ public class PeopleMenu extends Menu {
     public void onOpen() {
         stage.addListener(clickListener);
         stage.addListener(escapeKeyListener);
+
+        populateListTable();
     }
 
     @Override
@@ -99,5 +106,33 @@ public class PeopleMenu extends Menu {
         stage.removeListener(clickListener);
         stage.removeListener(escapeKeyListener);
         stage.setKeyboardFocus(null);
+    }
+
+    private void populateListTable() {
+        list.clear();
+        list.top().left();
+
+        int amount = 5;
+        float size = 1002f/amount;
+
+        int i = 0;
+
+        for(Hermit hermit : Main.inst.world.settlement.members) {
+            i++;
+
+            Table card = new Table();
+            list.add(card).size(size, size).left().top();
+            ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
+            card.add(button).expand().fill();
+
+            if(i % amount == 0) {
+                list.row();
+            }
+        }
+    }
+
+    @Override
+    public void updateData() {
+        populateListTable();
     }
 }
