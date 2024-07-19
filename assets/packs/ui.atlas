@@ -207,6 +207,13 @@ settlement-menu
   orig: 850, 478
   offset: 0, 0
   index: -1
+slider
+  rotate: false
+  xy: 1074, 769
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
 slot-background
   rotate: false
   xy: 1850, 1801

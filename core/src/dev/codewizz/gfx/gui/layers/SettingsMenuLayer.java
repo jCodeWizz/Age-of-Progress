@@ -1,18 +1,20 @@
 package dev.codewizz.gfx.gui.layers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import dev.codewizz.gfx.gui.elements.UITextButton;
+import dev.codewizz.gfx.gui.elements.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 
 public class SettingsMenuLayer extends Layer{
+
+    private UILabel uiScaleText;
 
     @Override
     public void open(Stage stage) {
@@ -27,9 +29,22 @@ public class SettingsMenuLayer extends Layer{
         table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left().expandY();
 
         Table right = new Table();
-        table.add(right).expand();
+        table.add(right).expand().fill();
 
+        uiScaleText = UILabel.create("UI Size: " + Layer.scale);
+        right.add(uiScaleText).expandX().left().top();
 
+        right.row();
+
+        Slider uiSize = UISlider.create(1, 4, 0.5f, false);
+        right.add(uiSize).expandX().width(200).height(20).left().top();
+        uiSize.setValue(Layer.scale);
+        right.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                changeUIScale(uiSize.getValue());
+            }
+        });
 
         Table back = new Table();
         back.setFillParent(true);
@@ -44,6 +59,17 @@ public class SettingsMenuLayer extends Layer{
             }
         });
         back.add(backButton).right().bottom().pad(0, 0, 10, 10).size(140, 60);
+    }
+
+    private void changeUIScale(float scale) {
+        Layer.scale = scale;
+        uiScaleText.setText("UI Scale: " + Layer.scale);
+
+        UIIconButton.reload();
+        UIIconToggle.reload();
+        UIImageButton.reload();
+        UISlider.reload();
+        UITextButton.reload();
     }
 
 
