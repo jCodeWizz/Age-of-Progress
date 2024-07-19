@@ -22,7 +22,7 @@ public class Camera {
 		 */
 		
 		
-		if(Main.PLAYING && !Main.PAUSED) {
+		if(Main.PLAYING && !Main.PAUSED && Main.inst.renderer.uiStage.getKeyboardFocus() == null) {
 			if(Gdx.input.isKeyPressed(Input.Keys.A)) {
 				move(d * -speed, 0);
 			}
