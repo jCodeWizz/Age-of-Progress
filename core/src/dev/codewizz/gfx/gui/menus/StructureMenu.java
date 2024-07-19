@@ -1,19 +1,14 @@
 package dev.codewizz.gfx.gui.menus;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIIconToggle;
 import dev.codewizz.gfx.gui.elements.UILabel;
-import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
@@ -33,7 +28,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     private UIIconToggle removeIcon;
     private UILabel info;
 
-    public StructureMenu(Stage stage, Layer layer) {
+    public StructureMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
     }
 
@@ -99,17 +94,6 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
         main.add(finishIcon).expand().left().size(66, 72).pad(5, 10, 10, 10);
 
         updateData();
-    }
-
-    private TextureRegionDrawable createBackground() {
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0, 0, 0, 0.7f));
-        pixmap.fill();
-
-        Texture texture = new Texture(pixmap);
-        pixmap.dispose();
-
-        return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
     @Override

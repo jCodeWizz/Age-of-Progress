@@ -5,12 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.kotcrab.vis.ui.widget.tabbedpane.Tab;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
+import dev.codewizz.gfx.gui.elements.UIIconMenu;
 import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 
 import java.util.ArrayList;
 
@@ -24,10 +23,14 @@ public class GameLayer extends Layer {
     public PeopleMenu peopleMenu;
     public SettlementMenu settlementMenu;
     public PauseMenu pauseMenu;
+    public UIIconMenu constructionMenu;
+    public UIIconMenu toolMenu;
 
     private float updateTimer = 0.5f;
 
-    private Table main;
+    public Table main;
+    private UIIconButton constructionMenuButton;
+    private UIIconButton toolMenuButton;
 
     @Override
     public void open(Stage stage) {
@@ -40,12 +43,17 @@ public class GameLayer extends Layer {
         settlementMenu = new SettlementMenu(Main.inst.renderer.uiStage, this);
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
 
+        constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
+        toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
+
         menus.add(tileMenu);
         menus.add(objectMenu);
         menus.add(structureMenu);
         menus.add(peopleMenu);
         menus.add(settlementMenu);
         menus.add(pauseMenu);
+        menus.add(constructionMenu);
+        menus.add(toolMenu);
     }
 
     @Override
@@ -99,11 +107,11 @@ public class GameLayer extends Layer {
             }
         });
 
-        UIIconButton constructionIcon = UIIconButton.create("construction-icon");
-        constructionIcon.addListener(new ClickListener() {
+        constructionMenuButton = UIIconButton.create("construction-icon");
+        constructionMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                openMenu(objectMenu);
+                openMenu(constructionMenu);
             }
         });
 
@@ -115,18 +123,19 @@ public class GameLayer extends Layer {
             }
         });
 
-        UIIconButton toolIcon = UIIconButton.create("tool-icon");
-        toolIcon.addListener(new ClickListener() {
+        toolMenuButton = UIIconButton.create("tool-icon");
+        toolMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //todo: tool menu;
+                openMenu(toolMenu);
             }
         });
+
         board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 0, 0, 3 * Layer.scale);
         board.add(tileIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
-        board.add(constructionIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
+        board.add(constructionMenuButton).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
         board.add(peopleIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
-        board.add(toolIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 0);
+        board.add(toolMenuButton).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 0);
     }
 
     public void openMenu(Menu menu) {

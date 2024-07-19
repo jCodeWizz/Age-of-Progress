@@ -6,12 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextButton;
-import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Tile;
@@ -54,7 +53,7 @@ public class TileMenu extends Menu {
     private Table scrollTable;
     private ScrollPane scrollPane;
 
-    public TileMenu(Stage uiStage, Layer layer) {
+    public TileMenu(Stage uiStage, GameLayer layer) {
         super(uiStage, layer);
     }
 

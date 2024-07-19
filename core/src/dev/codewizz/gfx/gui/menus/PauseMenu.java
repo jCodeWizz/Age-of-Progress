@@ -1,23 +1,18 @@
 package dev.codewizz.gfx.gui.menus;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.codewizz.gfx.gui.elements.UITextButton;
-import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.World;
 
 public class PauseMenu extends Menu {
 
-    public PauseMenu(Stage stage, Layer layer) {
+    public PauseMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
     }
 
@@ -56,17 +51,6 @@ public class PauseMenu extends Menu {
         base.row();
         base.add(quit).size(160, 80).padTop(15);
 
-    }
-
-    private TextureRegionDrawable createBackground() {
-        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0, 0, 0, 0.7f));
-        pixmap.fill();
-
-        Texture texture = new Texture(pixmap);
-        pixmap.dispose();
-
-        return new TextureRegionDrawable(new TextureRegion(texture));
     }
 
     @Override

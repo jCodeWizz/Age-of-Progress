@@ -6,19 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextButton;
-import dev.codewizz.gfx.gui.layers.Layer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.Tile;
 import dev.codewizz.world.objects.*;
-import dev.codewizz.world.objects.buildings.Building;
-import dev.codewizz.world.tiles.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +39,7 @@ public class ObjectMenu extends Menu {
     private Table scrollTable;
     private ScrollPane scrollPane;
 
-    public ObjectMenu(Stage uiStage, Layer layer) {
+    public ObjectMenu(Stage uiStage, GameLayer layer) {
         super(uiStage, layer);
     }
 
