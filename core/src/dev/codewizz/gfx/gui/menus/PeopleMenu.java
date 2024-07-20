@@ -123,7 +123,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                 i++;
 
                 Table card = new Table();
-                list.add(card).size(size, size).left().top();
+                list.add(card).size(size, size/2).left().top();
                 ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
                 button.addListener(new ClickListener() {
                     @Override
