@@ -12,7 +12,7 @@ import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 
-public abstract class Menu extends Table {
+public abstract class Menu {
 
     private boolean open = true;
 

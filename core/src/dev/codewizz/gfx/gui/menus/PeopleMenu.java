@@ -85,6 +85,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                     stage.setKeyboardFocus(null);
                     return false;
                 }
+                populateListTable();
                 return false;
             }
         };
@@ -113,22 +114,35 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         list.top().left();
 
         int amount = 5;
-        float size = 1002f/amount;
+        float size = 1002f / amount;
 
         int i = 0;
 
-        for(Hermit hermit : Main.inst.world.settlement.members) {
-            i++;
+        for (Hermit hermit : Main.inst.world.settlement.members) {
+            if (searchField.getText().isBlank() || hermit.getName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+                i++;
 
-            Table card = new Table();
-            list.add(card).size(size, size).left().top();
-            ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
-            card.add(button).expand().fill();
+                Table card = new Table();
+                list.add(card).size(size, size).left().top();
+                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
+                button.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        showHermit();
+                    }
+                });
+                card.add(button).expand().fill();
 
-            if(i % amount == 0) {
-                list.row();
+                if (i % amount == 0) {
+                    list.row();
+                }
             }
         }
+    }
+
+    private void showHermit() {
+
+
     }
 
     @Override

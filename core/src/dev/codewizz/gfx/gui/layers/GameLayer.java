@@ -107,7 +107,7 @@ public class GameLayer extends Layer {
             }
         });
 
-        constructionMenuButton = UIIconButton.create("construction-icon");
+        constructionMenuButton = UIIconButton.create("build-icon");
         constructionMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
