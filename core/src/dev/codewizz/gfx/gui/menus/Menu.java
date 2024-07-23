@@ -52,9 +52,9 @@ public abstract class Menu {
         else open();
     }
 
-    protected TextureRegionDrawable createBackground() {
+    protected TextureRegionDrawable createBackground(float alpha) {
         Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        pixmap.setColor(new Color(0, 0, 0, 0.7f));
+        pixmap.setColor(new Color(0, 0, 0, alpha));
         pixmap.fill();
 
         Texture texture = new Texture(pixmap);

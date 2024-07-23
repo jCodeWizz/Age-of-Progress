@@ -117,7 +117,7 @@ public class KeyInput implements InputProcessor {
 		}
 
 		if(key == Input.Keys.F3) {
-			//todo: debug menu
+			((GameLayer) Main.inst.renderer.uiLayer).debugMenu.toggle();
 		}
 		return false;
 	}

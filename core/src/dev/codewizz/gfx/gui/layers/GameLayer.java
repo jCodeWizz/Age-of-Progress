@@ -25,6 +25,7 @@ public class GameLayer extends Layer {
     public PauseMenu pauseMenu;
     public UIIconMenu constructionMenu;
     public UIIconMenu toolMenu;
+    public DebugMenu debugMenu;
 
     private float updateTimer = 0.5f;
 
@@ -42,6 +43,7 @@ public class GameLayer extends Layer {
         peopleMenu = new PeopleMenu(Main.inst.renderer.uiStage, this);
         settlementMenu = new SettlementMenu(Main.inst.renderer.uiStage, this);
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
+        debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -58,6 +60,10 @@ public class GameLayer extends Layer {
 
     @Override
     public void update(float d) {
+
+        if(debugMenu.isOpen()) debugMenu.updateData();
+
+
         if(updateTimer > 0) {
             updateTimer -= d;
         } else {
