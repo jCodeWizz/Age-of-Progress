@@ -68,6 +68,16 @@ public class World {
 		Main.inst.world = this;
 
 		nature = new Nature(this);
+
+
+		for(int i = 0; i < 1000; i++) {
+			WNoise n = new WNoise();
+			Logger.log(n.getSeed());
+		}
+
+
+
+
 	}
 
 	public static World openWorld(String name) {

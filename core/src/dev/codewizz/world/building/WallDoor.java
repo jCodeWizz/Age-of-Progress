@@ -10,8 +10,8 @@ import dev.codewizz.world.Cell;
 
 public class WallDoor extends Wall {
 
-    private static final Sprite TEXTURE = Assets.getSprite("stone-wall-door");
-    private static final Sprite TEXTURE_FLIP = Assets.getSprite("stone-wall-door-flipped");
+    private static final Sprite TEXTURE = Assets.getSprite("wall-door");
+    private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-door-flipped");
 
     public WallDoor(float x, float y, Cell cell, Direction dir) {
         super(x, y, cell, dir);
@@ -31,10 +31,10 @@ public class WallDoor extends Wall {
 
     @Override
     public void render(SpriteBatch b) {
-        if(flip) {
-            b.draw(TEXTURE_FLIP, (int)x, (int)y);
+        if (flip) {
+            b.draw(TEXTURE_FLIP, (int) x, (int) y);
         } else {
-            b.draw(TEXTURE, (int)x, (int)y);
+            b.draw(TEXTURE, (int) x, (int) y);
         }
     }
 }
