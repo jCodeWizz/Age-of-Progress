@@ -23,7 +23,7 @@ public abstract class UIIconMenu extends Menu {
         this.icons = new ArrayList<>();
 
         main = new Table();
-        main.setBackground(new TextureRegionDrawable(createBackground()));
+        main.setBackground(new TextureRegionDrawable(createBackground(0.7f)));
         base.add(main);
     }
 

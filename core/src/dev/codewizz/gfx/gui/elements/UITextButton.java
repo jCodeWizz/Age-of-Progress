@@ -2,14 +2,11 @@ package dev.codewizz.gfx.gui.elements;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 
 public class UITextButton extends TextButton {
 
@@ -44,7 +41,7 @@ public class UITextButton extends TextButton {
         smallStyle.up = new NinePatchDrawable(buttonUpPatchSmall);
         smallStyle.down = new NinePatchDrawable(buttonDownPatchSmall);
         smallStyle.disabled = new NinePatchDrawable(buttonDisabledPatchSmall);
-        smallStyle.font = UILabel.normalFont;
+        smallStyle.font = UILabel.smallFont;
         smallStyle.fontColor = Color.WHITE;
     }
 

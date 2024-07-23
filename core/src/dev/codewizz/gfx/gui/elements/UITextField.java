@@ -15,9 +15,9 @@ public class UITextField extends TextField {
     }
 
     public static void reload() {
-        defaultStyle.font = UILabel.normalFont;
+        defaultStyle.font = UILabel.smallFont;
         defaultStyle.fontColor = Color.WHITE;
-        defaultStyle.messageFont = UILabel.normalFont;
+        defaultStyle.messageFont = UILabel.smallFont;
         defaultStyle.messageFontColor = Color.WHITE;
         defaultStyle.cursor = new SpriteDrawable(Assets.getSprite("slider"));
     }

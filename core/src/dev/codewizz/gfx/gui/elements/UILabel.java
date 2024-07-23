@@ -10,9 +10,11 @@ public class UILabel extends Label {
 
     public final static LabelStyle defaultStyle = new LabelStyle();
     public final static LabelStyle smallStyle = new LabelStyle();
+    public final static LabelStyle mediumStyle = new LabelStyle();
 
     public static BitmapFont buttonFont;
-    public static BitmapFont normalFont;
+    public static BitmapFont smallFont;
+    public static BitmapFont mediumFont;
 
     static {
         reload();
@@ -24,7 +26,9 @@ public class UILabel extends Label {
         parameter.size = 32;
         buttonFont = generator.generateFont(parameter);
         parameter.size = 14;
-        normalFont = generator.generateFont(parameter);
+        smallFont = generator.generateFont(parameter);
+        parameter.size = 24;
+        mediumFont = generator.generateFont(parameter);
         generator.dispose();
     }
 
@@ -34,8 +38,11 @@ public class UILabel extends Label {
         defaultStyle.font = buttonFont;
         defaultStyle.fontColor = Color.WHITE;
 
-        smallStyle.font = normalFont;
+        smallStyle.font = smallFont;
         smallStyle.fontColor = Color.WHITE;
+
+        mediumStyle.font = mediumFont;
+        mediumStyle.fontColor = Color.WHITE;
     }
 
     private UILabel(CharSequence text, LabelStyle style) {
