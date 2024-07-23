@@ -27,7 +27,7 @@ public class GameLayer extends Layer {
     public UIIconMenu toolMenu;
     public DebugMenu debugMenu;
 
-    private float updateTimer = 0.5f;
+    private float updateTimer = 0.25f;
 
     public Table main;
     private UIIconButton constructionMenuButton;
@@ -45,7 +45,8 @@ public class GameLayer extends Layer {
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
 
-        constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
+        constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this,
+                                                constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
 
         menus.add(tileMenu);
@@ -61,15 +62,15 @@ public class GameLayer extends Layer {
     @Override
     public void update(float d) {
 
-        if(debugMenu.isOpen()) debugMenu.updateData();
+        if (debugMenu.isOpen()) { debugMenu.updateData(); }
 
 
-        if(updateTimer > 0) {
+        if (updateTimer > 0) {
             updateTimer -= d;
         } else {
-            updateTimer = 0.5f;
-            for(Menu m : menus) {
-                if(m instanceof IUpdateDataMenu && m.isOpen()) {
+            updateTimer = 0.25f;
+            for (Menu m : menus) {
+                if (m instanceof IUpdateDataMenu && m.isOpen()) {
                     ((IUpdateDataMenu) m).updateData();
                 }
             }
@@ -86,7 +87,8 @@ public class GameLayer extends Layer {
         backGround.setFillParent(true);
         Main.inst.renderer.uiStage.addActor(backGround);
         Table backGroundImage = new Table();
-        backGroundImage.setBackground(new Image(Assets.getSprite("icon-board-extension")).getDrawable());
+        backGroundImage.setBackground(
+                new Image(Assets.getSprite("icon-board-extension")).getDrawable());
         backGround.add(backGroundImage).expand().fillX().height(30 * Layer.scale).bottom();
 
         main = new Table();
@@ -137,17 +139,22 @@ public class GameLayer extends Layer {
             }
         });
 
-        board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 0, 0, 3 * Layer.scale);
-        board.add(tileIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
-        board.add(constructionMenuButton).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
-        board.add(peopleIcon).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
-        board.add(toolMenuButton).size(22 * Layer.scale, 24 * Layer.scale).pad(0, 3 * Layer.scale, 0, 0);
+        board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale)
+                .pad(0, 0, 0, 3 * Layer.scale);
+        board.add(tileIcon).size(22 * Layer.scale, 24 * Layer.scale)
+                .pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
+        board.add(constructionMenuButton).size(22 * Layer.scale, 24 * Layer.scale)
+                .pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
+        board.add(peopleIcon).size(22 * Layer.scale, 24 * Layer.scale)
+                .pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
+        board.add(toolMenuButton).size(22 * Layer.scale, 24 * Layer.scale)
+                .pad(0, 3 * Layer.scale, 0, 0);
     }
 
     public void openMenu(Menu menu) {
-        for(Menu m : menus) {
-            if(m.isOpen()) {
-                if(m.equals(menu)) {
+        for (Menu m : menus) {
+            if (m.isOpen()) {
+                if (m.equals(menu)) {
                     m.close();
                     return;
                 }
@@ -157,22 +164,22 @@ public class GameLayer extends Layer {
         }
 
         menu.open();
-        if(menu instanceof IUpdateDataMenu) {
+        if (menu instanceof IUpdateDataMenu) {
             ((IUpdateDataMenu) menu).updateData();
         }
     }
 
     public void closeMenus() {
-        for(Menu m : menus) {
-            if(m.isOpen()) {
+        for (Menu m : menus) {
+            if (m.isOpen()) {
                 m.close();
             }
         }
     }
 
     public boolean menusClosed() {
-        for(Menu m : menus) {
-            if(m.isOpen()) {
+        for (Menu m : menus) {
+            if (m.isOpen()) {
                 return false;
             }
         }

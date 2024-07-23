@@ -2,17 +2,19 @@ package dev.codewizz.gfx.gui.layers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 
-public class SettingsMenuLayer extends Layer{
+public class SettingsMenuLayer extends Layer {
 
     private UILabel uiScaleText;
 
@@ -26,7 +28,8 @@ public class SettingsMenuLayer extends Layer{
         table.setFillParent(true); // Table fills the entire stage
         stage.addActor(table);
 
-        table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left().expandY();
+        table.add(image).width(Gdx.graphics.getHeight()).height(Gdx.graphics.getHeight()).left()
+                .expandY();
 
         Table right = new Table();
         table.add(right).expand().fill();
@@ -36,7 +39,7 @@ public class SettingsMenuLayer extends Layer{
 
         right.row();
 
-        Slider uiSize = UISlider.create(1, 4, 0.5f, false);
+        Slider uiSize = UISlider.create(1, 6, 0.5f, false);
         right.add(uiSize).expandX().width(200).height(20).left().top();
         uiSize.setValue(Layer.scale);
         right.addListener(new ChangeListener() {
@@ -61,8 +64,8 @@ public class SettingsMenuLayer extends Layer{
         back.add(backButton).right().bottom().pad(0, 0, 10, 10).size(140, 60);
     }
 
-    private void changeUIScale(float scale) {
-        Layer.scale = scale;
+    private void changeUIScale(float newScale) {
+        Layer.scale = newScale;
         uiScaleText.setText("UI Scale: " + Layer.scale);
 
         UIIconButton.reload();
@@ -71,7 +74,6 @@ public class SettingsMenuLayer extends Layer{
         UISlider.reload();
         UITextButton.reload();
     }
-
 
 
     @Override

@@ -9,6 +9,7 @@ import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIIconToggle;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.layers.GameLayer;
+import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
@@ -85,13 +86,13 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
 
         main.add(info).expand().left().pad(5, 10, 0, 10);
         main.row();
-        main.add(removeIcon).expand().left().size(66, 72).pad(5, 10, 5, 10);
+        main.add(removeIcon).expand().left().size(22 * Layer.scale, 24 * Layer.scale).pad(5, 10, 5, 10);
         main.row();
-        main.add(doorIcon).expand().left().size(66, 72).pad(5, 10, 5, 10);
+        main.add(doorIcon).expand().left().size(22 * Layer.scale, 24 * Layer.scale).pad(5, 10, 5, 10);
         main.row();
-        main.add(addIcon).expand().left().size(66, 72).pad(5, 10, 5, 10);
+        main.add(addIcon).expand().left().size(22 * Layer.scale, 24 * Layer.scale).pad(5, 10, 5, 10);
         main.row();
-        main.add(finishIcon).expand().left().size(66, 72).pad(5, 10, 10, 10);
+        main.add(finishIcon).expand().left().size(22 * Layer.scale, 24 * Layer.scale).pad(5, 10, 10, 10);
 
         updateData();
     }

@@ -24,6 +24,14 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
     private InputListener escapeKeyListener;
 
     private Table list;
+    private Table left;
+    private boolean showList = true;
+
+    private Table right;
+    private Hermit show;
+    private UILabel showName;
+    private UILabel showTask;
+
 
     public PeopleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -49,9 +57,10 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                 close();
             }
         });
-        top.add(closeButton).expandX().right().size(22 * (Layer.scale / 2f), 24 * (Layer.scale / 2f)).padRight(1);
+        top.add(closeButton).expandX().right()
+                .size(22 * (Layer.scale / 2f), 24 * (Layer.scale / 2f)).padRight(1);
 
-        Table left = new Table();
+        left = new Table();
         main.add(left).expand().fillY().left().width(Value.percentWidth(0.787f, main));
 
         Table search = new Table();
@@ -59,13 +68,39 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         left.row();
 
         searchField = UITextField.create("Name . . .");
-        search.add(searchField).expand().left().fillY().width(Value.percentWidth(0.36f, search)).padLeft(7 * Layer.scale / 2f);
+        search.add(searchField).expand().left().fillY().width(Value.percentWidth(0.36f, search))
+                .padLeft(7 * Layer.scale / 2f);
 
         list = new Table();
         left.add(list).expand().fill();
 
-        Table right = new Table();
+        right = new Table();
         main.add(right).expand().fill().right().width(Value.percentWidth(0.213f, main));
+
+        right.top();
+
+        showName = UILabel.create("", UILabel.defaultStyle);
+        right.add(showName).center().top();
+        right.row();
+
+        showTask = UILabel.create("", UILabel.smallStyle);
+        right.add(showTask).center().top();
+        right.row();
+
+        UIIconButton job = UIIconButton.create("work-icon");
+        job.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                showList = !showList;
+
+                if (showList) {
+                    populateListTable();
+                } else {
+                    showJob();
+                }
+            }
+        });
+        right.add(job).expand().size(22 * Layer.scale, 24 * Layer.scale).bottom().pad(10);
 
         clickListener = new InputListener() {
             @Override
@@ -89,9 +124,6 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                 return false;
             }
         };
-
-        //main.setDebug(true);
-        //left.setDebug(true);
     }
 
     @Override
@@ -99,7 +131,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         stage.addListener(clickListener);
         stage.addListener(escapeKeyListener);
 
-        populateListTable();
+        updateData();
     }
 
     @Override
@@ -107,6 +139,9 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         stage.removeListener(clickListener);
         stage.removeListener(escapeKeyListener);
         stage.setKeyboardFocus(null);
+
+        showList = true;
+        right.setVisible(false);
     }
 
     private void populateListTable() {
@@ -114,21 +149,25 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         list.top().left();
 
         int amount = 5;
-        float size = 1002f / amount;
+        float size = left.getWidth() / amount;
 
         int i = 0;
 
         for (Hermit hermit : Main.inst.world.settlement.members) {
-            if (searchField.getText().isBlank() || hermit.getName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+            if (searchField.getText().isBlank() || hermit.getName().toLowerCase()
+                    .contains(searchField.getText().toLowerCase())) {
                 i++;
 
                 Table card = new Table();
-                list.add(card).size(size, size/2).left().top();
-                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
+                list.add(card).size(size, size / 2).left().top();
+                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle,
+                                                          hermit.getJob().getIcon());
                 button.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        show = hermit;
                         showHermit();
+                        right.setVisible(true);
                     }
                 });
                 card.add(button).expand().fill();
@@ -141,12 +180,22 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
     }
 
     private void showHermit() {
+        if (show != null) {
+            showName.setText(show.getName());
+            showTask.setText(show.getCurrentTaskText());
+        }
+    }
 
-
+    private void showJob() {
+        list.clear();
     }
 
     @Override
     public void updateData() {
-        populateListTable();
+        showHermit();
+
+        if (showList) {
+            populateListTable();
+        }
     }
 }

@@ -20,6 +20,7 @@ public class UITextField extends TextField {
         defaultStyle.messageFont = UILabel.smallFont;
         defaultStyle.messageFontColor = Color.WHITE;
         defaultStyle.cursor = new SpriteDrawable(Assets.getSprite("slider"));
+        defaultStyle.selection = new SpriteDrawable(Assets.getSprite("slider"));
     }
 
     private UITextField(String text, TextFieldStyle style) {
