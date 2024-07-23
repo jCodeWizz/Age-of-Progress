@@ -169,6 +169,7 @@ public class ObjectMenu extends Menu {
 
     public void changeTile(GameObject object) {
         showTable.clear();
+        showTable.top();
 
         IBuy info = (IBuy) object;
 

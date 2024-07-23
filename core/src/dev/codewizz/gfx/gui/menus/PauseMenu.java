@@ -18,7 +18,7 @@ public class PauseMenu extends Menu {
 
     @Override
     protected void setup() {
-        base.setBackground(new TextureRegionDrawable(createBackground()));
+        base.setBackground(new TextureRegionDrawable(createBackground(0.7f)));
 
         TextButton main = UITextButton.create("Main");
         TextButton back = UITextButton.create("Pause");

@@ -36,7 +36,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     protected void setup() {
         Table main = new Table();
         base.add(main).expand().left();
-        main.setBackground(createBackground());
+        main.setBackground(createBackground(0.7f));
 
         info = UILabel.create("", UILabel.smallStyle);
 
