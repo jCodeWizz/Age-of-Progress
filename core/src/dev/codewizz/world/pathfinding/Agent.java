@@ -13,131 +13,134 @@ import dev.codewizz.world.objects.TaskableObject;
 
 public class Agent {
 
-	private Cell previousCell;
-	public Queue<Cell> path = new Queue<Cell>();
-	public boolean moving = false;
-	private CellGraph graph;
-	private Vector2 dir;
+    private Cell previousCell;
+    public Queue<Cell> path = new Queue<Cell>();
+    public boolean moving = false;
+    private CellGraph graph;
+    private Vector2 dir;
 
-	public Cell goal;
-	public GameObject goalObject;
+    public Cell goal;
+    public GameObject goalObject;
 
-	private TaskableObject object;
+    private TaskableObject object;
 
-	public Agent(TaskableObject object) {
-		dir = new Vector2();
-		this.object = object;
+    public Agent(TaskableObject object) {
+        dir = new Vector2();
+        this.object = object;
 
-		graph = Main.inst.world.cellGraph;
-	}
+        graph = Main.inst.world.cellGraph;
+    }
 
-	public void update(float d, Vector2 loc) {
+    public void update(float d, Vector2 loc) {
 
-		if (graph == null)
-			graph = Main.inst.world.cellGraph;
+        if (graph == null) { graph = Main.inst.world.cellGraph; }
 
-		checkDistance(loc);
-	}
+        checkDistance(loc);
+        if (moving) {
+            setSpeedToNextCell(loc);
+        }
+    }
 
-	private void checkDistance(Vector2 loc) {
-		if (path.size > 0) {
-			Vector2 target = path.first().getMiddlePoint();
-			if (Vector2.dst(loc.x, loc.y, target.x, target.y) < 2.5f) {
-				reachGoal(loc);
-			}
-		}
-	}
+    private void checkDistance(Vector2 loc) {
+        if (path.size > 0) {
+            Vector2 target = path.first().getMiddlePoint();
+            if (Vector2.dst(loc.x, loc.y, target.x, target.y) < 2.5f) {
+                reachGoal(loc);
+            }
+        }
+    }
 
-	public Vector2 getMiddlePoint() {
-		return new Vector2();
-	}
+    public Vector2 getMiddlePoint() {
+        return new Vector2();
+    }
 
-	private void reachGoal(Vector2 loc) {
-		Cell nextCell = path.first();
+    private void reachGoal(Vector2 loc) {
+        Cell nextCell = path.first();
 
-		this.previousCell = nextCell;
-		path.removeFirst();
+        this.previousCell = nextCell;
+        path.removeFirst();
 
-		if (path.size == 0 || (goalObject != null && loc.dst2(goalObject.getX(), goalObject.getY()) < 2.5f)) {
-			reach();
-		} else {
-			if(goalObject != null) {
-				setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
-			} else {
-				if(Main.inst.world.cellGraph.getConnections(nextCell).size < 8) {
-					Cell goal = path.last();
-					stop();
-					setGoal(goal);
-				} else {
-					setSpeedToNextCell(loc);
-				}
-			}
-		}
-	}
+        if (path.size == 0 || (goalObject != null && loc.dst2(goalObject.getX(),
+                                                              goalObject.getY()) < 2.5f)) {
+            reach();
+        } else {
+            if (goalObject != null) {
+                setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
+            } else {
+                if (Main.inst.world.cellGraph.getConnections(nextCell).size < 8) {
+                    Cell goal = path.last();
+                    stop();
+                    setGoal(goal);
+                }
+            }
+        }
+    }
 
-	public Vector2 getDir() {
-		return dir;
-	}
+    public Vector2 getDir() {
+        return dir;
+    }
 
-	private void reach() {
-		stop();
-		onReach();
-	}
+    private void reach() {
+        stop();
+        onReach();
+    }
 
-	public void stop() {
-		path.clear();
-		dir.x = 0;
-		dir.y = 0;
-		moving = false;
-		this.goalObject = null;
-	}
+    public void stop() {
+        path.clear();
+        dir.x = 0;
+        dir.y = 0;
+        moving = false;
+        this.goalObject = null;
+    }
 
-	public void onReach() {
+    public void onReach() {
 
-	}
+    }
 
-	public void followObject(GameObject object) {
-		this.goalObject = object;
-		setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
-	}
+    public void followObject(GameObject object) {
+        this.goalObject = object;
+        setGoal(Main.inst.world.getCell(goalObject.getX(), goalObject.getY()));
+    }
 
-	public boolean setGoal(Cell goal) {
-		stop();
-		this.goal = goal;
+    public boolean setGoal(Cell goal) {
+        stop();
+        this.goal = goal;
 
-		previousCell = Main.inst.world.getCell(object.getX(), object.getY());
-		GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
-		for (int i = 1; i < graphPath.getCount(); i++) {
-			
-			if(object instanceof Animal) {
-				if(graphPath.get(i).getObject() != null) {
-					
-					if(graphPath.get(i).getObject().getId().equals("aop:fence-gate") && !object.isTasked()) {
-						stop();
-						return false;
-					}
-				}
-			}
-			
-			path.addLast(graphPath.get(i));
-		}
+        previousCell = Main.inst.world.getCell(object.getX(), object.getY());
+        GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
+        for (int i = 1; i < graphPath.getCount(); i++) {
 
-		int s = graph.getConnections(goal).size;
-		
-		if (!path.isEmpty() && s > 0) {
-			setSpeedToNextCell(object.getCenter());
-			moving = true;
-			
-			return true;
-		}
-		
-		return false;
-	}
+            if (object instanceof Animal) {
+                if (graphPath.get(i).getObject() != null) {
 
-	private void setSpeedToNextCell(Vector2 loc) {
-		Cell nextCell = path.first();
-		float angle = MathUtils.atan2(nextCell.getMiddlePoint().y - loc.y, nextCell.getMiddlePoint().x - loc.x);
-		dir.x = MathUtils.cos(angle);
-		dir.y = MathUtils.sin(angle);
-	}
+                    if (graphPath.get(i).getObject().getId()
+                            .equals("aop:fence-gate") && !object.isTasked()) {
+                        stop();
+                        return false;
+                    }
+                }
+            }
+
+            path.addLast(graphPath.get(i));
+        }
+
+        int s = graph.getConnections(goal).size;
+
+        if (!path.isEmpty() && s > 0) {
+            setSpeedToNextCell(object.getCenter());
+            moving = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void setSpeedToNextCell(Vector2 loc) {
+        Cell nextCell = path.first();
+        float angle = MathUtils.atan2(nextCell.getMiddlePoint().y - loc.y,
+                                      nextCell.getMiddlePoint().x - loc.x);
+        dir.x = MathUtils.cos(angle);
+        dir.y = MathUtils.sin(angle);
+    }
 }
