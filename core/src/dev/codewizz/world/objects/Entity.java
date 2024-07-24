@@ -38,7 +38,7 @@ public abstract class Entity extends GameObject {
 
         int count = 0;
         for (Renderable other : Main.inst.world.getObjects()) {
-			if (other == this || !(other instanceof Entity)) { continue; }
+            if (other == this || !(other instanceof Entity)) { continue; }
 
             float distance = Vector2.dst2(this.x, this.y, other.getX(), other.getY());
             if (distance > 0 && distance < desiredSeparation) {
@@ -62,7 +62,7 @@ public abstract class Entity extends GameObject {
             health -= damage;
             damageCoolDown = 0.2f;
 
-			if (health <= 0f) { destroy(); }
+            if (health <= 0f) { destroy(); }
         }
     }
 
