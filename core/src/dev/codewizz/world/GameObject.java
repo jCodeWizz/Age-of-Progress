@@ -178,6 +178,10 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 		return this;
 	}
 	
+	public Vector2 getFootPoint() {
+		return new Vector2(this.x + this.w/2f, this.y);
+	}
+	
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}

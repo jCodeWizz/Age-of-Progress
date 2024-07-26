@@ -38,20 +38,23 @@ public abstract class Entity extends GameObject {
 
         int count = 0;
         for (Renderable other : Main.inst.world.getObjects()) {
-            if (other == this || !(other instanceof Entity)) { continue; }
+            if (other == this || !(other instanceof TaskableObject)) { continue; }
 
-            float distance = Vector2.dst2(this.x, this.y, other.getX(), other.getY());
+            Vector2 a = new Vector2(((TaskableObject) this).getCenter());
+            Vector2 b = new Vector2(((TaskableObject) other).getCenter());
+
+            float distance = Vector2.dst2(a.x, a.y, b.x, b.y);
             if (distance > 0 && distance < desiredSeparation) {
-                Vector2 diff = new Vector2(this.x - other.getX(), this.y - other.getY());
-                diff.nor(); // Normalize the difference vector
-                diff.scl(200 / distance); // Weight by distance
+                Vector2 diff = new Vector2(a.sub(b));
+                diff.nor();
+                diff.scl(200 / distance);
                 force.add(diff);
                 count++;
             }
         }
 
         if (count > 0) {
-            force.scl(1.0f / count); // Average
+            force.scl(1.0f / count);
         }
 
         return force;

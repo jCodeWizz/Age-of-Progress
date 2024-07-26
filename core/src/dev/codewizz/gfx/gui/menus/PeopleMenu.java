@@ -7,15 +7,15 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import dev.codewizz.gfx.gui.elements.UIIconButton;
-import dev.codewizz.gfx.gui.elements.UIImageButton;
-import dev.codewizz.gfx.gui.elements.UILabel;
-import dev.codewizz.gfx.gui.elements.UITextField;
+import dev.codewizz.gfx.gui.elements.*;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.world.objects.hermits.Craftsman;
+import dev.codewizz.world.objects.hermits.Farmer;
 import dev.codewizz.world.objects.hermits.Hermit;
+import dev.codewizz.world.objects.hermits.Worker;
 
 public class PeopleMenu extends Menu implements IUpdateDataMenu {
 
@@ -188,6 +188,38 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
 
     private void showJob() {
         list.clear();
+
+
+        UITextButton farmer = UITextButton.create("Farmer");
+        farmer.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                show.setJob(new Farmer());
+            }
+        });
+        UITextButton crafter = UITextButton.create("Crafter");
+        crafter.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                show.setJob(new Craftsman());
+            }
+        });
+        UITextButton worker = UITextButton.create("Worker");
+        worker.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                show.setJob(new Worker());
+            }
+        });
+
+        list.center();
+
+        list.add(farmer).size(200, 100);
+        list.row();
+        list.add(crafter).size(200, 100);
+        list.row();
+        list.add(worker).size(200, 100);
+        list.row();
     }
 
     @Override
