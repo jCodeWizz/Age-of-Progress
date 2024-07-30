@@ -1,12 +1,10 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import dev.codewizz.gfx.gui.elements.*;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
@@ -31,7 +29,6 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
     private Hermit show;
     private UILabel showName;
     private UILabel showTask;
-
 
     public PeopleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -72,7 +69,15 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                 .padLeft(7 * Layer.scale / 2f);
 
         list = new Table();
-        left.add(list).expand().fill();
+
+        // Create a ScrollPane and add the list table to it
+        ScrollPane scrollPane = new ScrollPane(list);
+        scrollPane.setScrollingDisabled(true,
+                                        false); // Disable horizontal scrolling, enable vertical scrolling
+        scrollPane.setFadeScrollBars(false); // Optional: disable fade effect on scrollbars
+
+        left.add(scrollPane).expand().fill().padLeft(4 * (Layer.scale / 2f))
+                .padTop(2 * (Layer.scale / 2f)).padBottom(4 * (Layer.scale / 2f));
 
         right = new Table();
         main.add(right).expand().fill().right().width(Value.percentWidth(0.213f, main));
@@ -139,6 +144,8 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         stage.removeListener(clickListener);
         stage.removeListener(escapeKeyListener);
         stage.setKeyboardFocus(null);
+        stage.setScrollFocus(null);
+
 
         showList = true;
         right.setVisible(false);
@@ -148,20 +155,19 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         list.clear();
         list.top().left();
 
-        int amount = 5;
-        float size = left.getWidth() / amount;
+        int amount = 4;
+        float size = (left.getWidth() - 4 * (Layer.scale / 2f)) / amount;
 
         int i = 0;
 
         for (Hermit hermit : Main.inst.world.settlement.members) {
-            if (searchField.getText().isBlank() || hermit.getName().toLowerCase()
-                    .contains(searchField.getText().toLowerCase())) {
+            if (searchField.getText().isBlank() || hermit.getName().toLowerCase().contains(searchField.getText().toLowerCase())) {
                 i++;
 
                 Table card = new Table();
                 list.add(card).size(size, size / 2).left().top();
-                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle,
-                                                          hermit.getJob().getIcon());
+
+                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, hermit.getJob().getIcon());
                 button.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -170,7 +176,34 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                         right.setVisible(true);
                     }
                 });
-                card.add(button).expand().fill();
+
+                // Create a Stack to hold the button and the text
+                Stack stack = new Stack();
+                stack.add(button);
+
+                // Create a table for the text labels with padding
+                Table textTable = new Table();
+                textTable.setFillParent(true);
+
+                // Add the hermit's name with padding
+                UILabel nameLabel = UILabel.create(hermit.getName(), UILabel.mediumStyle);
+                nameLabel.setTouchable(Touchable.disabled);  // Disable input for label
+                textTable.add(nameLabel).expandX().right().top().pad(0, 0, 0, 10);
+                textTable.row();
+
+                // Add the hermit's task with padding
+                UILabel taskLabel = UILabel.create(hermit.getCurrentTaskText(), UILabel.smallStyle);
+                taskLabel.setTouchable(Touchable.disabled);  // Disable input for label
+                textTable.add(taskLabel).expandX().right().top().pad(0, 0, 0, 10);
+                textTable.row();
+
+                UILabel jobLabel = UILabel.create(hermit.getJob().getJob().name(), UILabel.smallStyle);
+                jobLabel.setTouchable(Touchable.disabled);
+                textTable.add(jobLabel).expand().right().bottom().pad(0, 0, 10, 10);
+
+                stack.add(textTable);
+
+                card.add(stack).expand().fill();
 
                 if (i % amount == 0) {
                     list.row();
@@ -178,6 +211,8 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
             }
         }
     }
+
+
 
     private void showHermit() {
         if (show != null) {

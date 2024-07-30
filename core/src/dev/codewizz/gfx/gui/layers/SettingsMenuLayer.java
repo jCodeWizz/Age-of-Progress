@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import dev.codewizz.gfx.gui.elements.*;
+import dev.codewizz.gfx.gui.elements.UILabel;
+import dev.codewizz.gfx.gui.elements.UISlider;
+import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 
@@ -68,11 +70,7 @@ public class SettingsMenuLayer extends Layer {
         Layer.scale = newScale;
         uiScaleText.setText("UI Scale: " + Layer.scale);
 
-        UIIconButton.reload();
-        UIIconToggle.reload();
-        UIImageButton.reload();
-        UISlider.reload();
-        UITextButton.reload();
+        Layer.reload();
     }
 
 

@@ -157,7 +157,7 @@ public class World {
         this.settlement = s;
         this.showInfoStartMenu = false;
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 40; i++) {
             this.settlement.addHermit(Utils.getRandom(-30, 30) + s.getX(),
                                       Utils.getRandom(-30, 30) + s.getY());
         }
