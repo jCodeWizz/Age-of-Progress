@@ -75,6 +75,17 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         scrollPane.setScrollingDisabled(true,
                                         false); // Disable horizontal scrolling, enable vertical scrolling
         scrollPane.setFadeScrollBars(false); // Optional: disable fade effect on scrollbars
+        scrollPane.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setScrollFocus(scrollPane);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setScrollFocus(null);
+            }
+        });
+
 
         left.add(scrollPane).expand().fill().padLeft(4 * (Layer.scale / 2f))
                 .padTop(2 * (Layer.scale / 2f)).padBottom(4 * (Layer.scale / 2f));
@@ -123,6 +134,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
             public boolean keyDown(InputEvent event, int keycode) {
                 if (keycode == Input.Keys.ESCAPE) {
                     stage.setKeyboardFocus(null);
+                    stage.setScrollFocus(null);
                     return false;
                 }
                 populateListTable();
@@ -171,6 +183,10 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
                 button.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
+                        if(show != null) {
+                            show.setSelected(false);
+                            hermit.setSelected(true);
+                        }
                         show = hermit;
                         showHermit();
                         right.setVisible(true);

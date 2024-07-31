@@ -45,7 +45,7 @@ public class MoveTask extends Task {
 	
 	@Override
 	public String getName() {
-		if(object.getId().equals("aop:cow")) {
+		if(object != null && object.getId().equals("aop:cow")) {
 			return "Mooo-ving";
 		} else {
 			return "Moving";
