@@ -113,7 +113,7 @@ public class Main extends ApplicationAdapter {
             renderer.render(world, camera.cam);
         }
 
-        renderer.renderUI();
+        renderer.renderUI(camera.cam);
 
         if (DEBUG && PLAYING) {
             renderer.renderDebug(world, camera.cam);

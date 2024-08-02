@@ -1,5 +1,6 @@
 package dev.codewizz.gfx.gui.layers;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import dev.codewizz.gfx.gui.elements.*;
 
@@ -22,6 +23,8 @@ public abstract class Layer {
     public abstract void update(float d);
 
     public abstract void close(Stage stage);
+
+    public void render(SpriteBatch b) {}
 
 
 }

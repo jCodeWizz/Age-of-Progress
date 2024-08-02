@@ -1,5 +1,7 @@
 package dev.codewizz.gfx.gui.menus;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,10 +17,12 @@ import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.BuildingObject;
+import dev.codewizz.world.building.Room;
 import dev.codewizz.world.building.Wall;
 
 public class StructureMenu extends Menu implements IUpdateDataMenu {
@@ -76,11 +80,12 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 doorIcon.setPressed(false);
                 removeIcon.setPressed(false);
 
-                if (!current.getRooms().isEmpty() && Event.dispatch(new CreateBuildingEvent(current))) {
+                if (!current.getRooms().isEmpty() && !Main.inst.world.settlement.buildings.contains(current) && Event.dispatch(new CreateBuildingEvent(current))) {
                     Main.inst.world.settlement.buildings.add(current);
-                    current = null;
-                    close();
                 }
+
+                current = null;
+                close();
             }
         });
 
@@ -95,6 +100,19 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
         main.add(finishIcon).expand().left().size(22 * Layer.scale, 24 * Layer.scale).pad(5, 10, 10, 10);
 
         updateData();
+    }
+
+    @Override
+    public void render(SpriteBatch b) {
+        if(current != null) {
+            b.setColor(current.getColor());
+            for(Room room : current.getRooms()) {
+                for(Cell cell : room.getArea()) {
+                    b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
+                }
+            }
+            b.setColor(Color.WHITE);
+        }
     }
 
     @Override

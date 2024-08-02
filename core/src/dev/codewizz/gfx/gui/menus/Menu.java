@@ -3,6 +3,7 @@ package dev.codewizz.gfx.gui.menus;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -48,8 +49,7 @@ public abstract class Menu {
     }
 
     public void toggle() {
-        if(open) close();
-        else open();
+        if (open) { close(); } else { open(); }
     }
 
     protected TextureRegionDrawable createBackground(float alpha) {
@@ -80,6 +80,10 @@ public abstract class Menu {
     }
 
     public void clickedOn(GameObject object) {
+
+    }
+
+    public void render(SpriteBatch b) {
 
     }
 }

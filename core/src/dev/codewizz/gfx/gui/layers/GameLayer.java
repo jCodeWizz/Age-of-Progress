@@ -1,5 +1,6 @@
 package dev.codewizz.gfx.gui.layers;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -70,9 +71,18 @@ public class GameLayer extends Layer {
         } else {
             updateTimer = 0.25f;
             for (Menu m : menus) {
-                if (m instanceof IUpdateDataMenu && m.isOpen()) {
+                if (m.isOpen() && m instanceof IUpdateDataMenu) {
                     ((IUpdateDataMenu) m).updateData();
                 }
+            }
+        }
+    }
+
+    @Override
+    public void render(SpriteBatch b) {
+        for (Menu m : menus) {
+            if (m.isOpen()) {
+                m.render(b);
             }
         }
     }
