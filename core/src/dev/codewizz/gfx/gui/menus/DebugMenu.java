@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
-import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.input.MouseInput;
