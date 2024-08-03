@@ -85,6 +85,8 @@ public class GameLayer extends Layer {
                 m.render(b);
             }
         }
+
+        if(debugMenu.isOpen()) debugMenu.render(b);
     }
 
     @Override
