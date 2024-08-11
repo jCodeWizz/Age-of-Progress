@@ -1,6 +1,7 @@
 package dev.codewizz.world.building;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Direction;
@@ -40,17 +41,13 @@ public class BuildingObject extends GameObject {
 					if(i == 0) {
 						setWall(i, new Wall(x + 32, y + 32, this.cell, Direction.North));
 						walls[i].flip();
-						walls[i].onPlace();
 					} else if(i == 1) {
 						setWall(i, new Wall(x + 32, y + 16, this.cell, Direction.East));
-						walls[i].onPlace();
 					} else if(i == 2) {
 						setWall(i, new Wall(x, y + 16, this.cell, Direction.South));
 						walls[i].flip();
-						walls[i].onPlace();
 					} else if(i == 3) {
 						setWall(i, new Wall(x, y + 32, this.cell, Direction.West));
-						walls[i].onPlace();
 					}
 				} else {
 					if(walls[i] != null) {
@@ -65,12 +62,12 @@ public class BuildingObject extends GameObject {
 	public void setWall(int i, Wall wall) {
 		if(walls[i] != null) {
 			walls[i].onDestroy();
-			Main.inst.world.removeObject(walls[i]);
+			((GameLayer) Main.inst.renderer.uiLayer).structureMenu.objects.remove(walls[i]);
 		}
-		
+
 		if(wall != null) {
-			walls[i] = (Wall) wall;
-			Main.inst.world.addObject(walls[i], Reason.FORCED);
+			walls[i] = wall;
+			((GameLayer) Main.inst.renderer.uiLayer).structureMenu.objects.add(walls[i]);
 		}
 	}
 

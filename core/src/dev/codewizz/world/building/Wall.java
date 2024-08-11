@@ -2,21 +2,26 @@ package dev.codewizz.world.building;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.codewizz.gfx.Particle;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.objects.IBuy;
 
 import java.awt.*;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Wall extends GameObject {
+public class Wall extends GameObject implements IBuy {
 		
 	private static final Sprite TEXTURE = Assets.getSprite("wall");
 	private static final Sprite TEXTURE_FLIP = Assets.getSprite("wall-flipped");
 		
 	protected Direction facing;
-		
+	private final List<Item> costs = new CopyOnWriteArrayList<>();
+
 	public Wall(float x, float y, Cell cell, Direction dir) {
 		super(x, y);
 		
@@ -31,14 +36,18 @@ public class Wall extends GameObject {
 
 		this.cell = cell;
 		this.facing = dir;
+
+		costs.add(new Item(ItemType.PLANKS, 2));
 	}
 
-	public void onPlace() {
+	@Override
+	public void onPlace(Cell cell) {
 		cell.blockPath(facing);
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.blockPath(Direction.getFromIndex(facing.getIndex() + 1));
 
-		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];;
+		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];
+
 		neighbour.blockPath(facing.other());
 		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
 		neighbour.blockPath(Direction.getFromIndex(facing.getIndex() + 1).other());
@@ -51,7 +60,7 @@ public class Wall extends GameObject {
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() - 1));
 		cell.unblockPath(Direction.getFromIndex(facing.getIndex() + 1));
 
-		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];;
+		Cell neighbour = cell.getAllNeighbours()[facing.getIndex()];
 
 		neighbour.unblockPath(facing.other());
 		neighbour.unblockPath(Direction.getFromIndex(facing.getIndex() - 1).other());
@@ -80,9 +89,7 @@ public class Wall extends GameObject {
 				break;
 			}
 		}
-
 	}
-
 
 	@Override
 	public void update(float d) {
@@ -96,5 +103,35 @@ public class Wall extends GameObject {
 		} else {
 			b.draw(TEXTURE, (int)x, (int)y);
 		}
+	}
+
+	@Override
+	public Sprite getMenuSprite() {
+		return TEXTURE;
+	}
+
+	@Override
+	public String getMenuName() {
+		return "Wooden Wall";
+	}
+
+	@Override
+	public String getMenuDescription() {
+		return "A simple wooden wall";
+	}
+
+	@Override
+	public boolean continues() {
+		return false;
+	}
+
+	@Override
+	public boolean available() {
+		return false;
+	}
+
+	@Override
+	public List<Item> costs() {
+		return costs;
 	}
 }

@@ -106,7 +106,7 @@ public class MouseInput implements InputProcessor {
                                     toPlace.setFlip(rotate);
                                     hoveringOverCell.setObject(toPlace);
                                     ((IBuy) toPlace).onPlace(hoveringOverCell);
-                                    dragging[0] = object.conintues() && object.available();
+                                    dragging[0] = object.continues() && object.available();
                                     if (!object.available()) {
                                         currentlyDrawingObject = null;
                                     }

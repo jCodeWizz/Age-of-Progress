@@ -17,6 +17,7 @@ import dev.codewizz.input.TileSelector;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
+import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
@@ -24,6 +25,11 @@ import dev.codewizz.world.building.Building;
 import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Room;
 import dev.codewizz.world.building.Wall;
+import dev.codewizz.world.objects.ConstructionObject;
+import dev.codewizz.world.objects.IBuy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StructureMenu extends Menu implements IUpdateDataMenu {
 
@@ -32,6 +38,8 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     private UIIconToggle doorIcon;
     private UIIconToggle removeIcon;
     private UILabel info;
+
+    public List<GameObject> objects = new ArrayList<>();
 
     public StructureMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -82,6 +90,11 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
 
                 if (!current.getRooms().isEmpty() && !Main.inst.world.settlement.buildings.contains(current) && Event.dispatch(new CreateBuildingEvent(current))) {
                     Main.inst.world.settlement.buildings.add(current);
+
+                    for(GameObject object : objects) {
+                        ConstructionObject c = new ConstructionObject((Wall) object);
+                        Main.inst.world.addObject(c, Reason.FORCED);
+                    }
                 }
 
                 current = null;
@@ -111,6 +124,11 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                     b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
                 }
             }
+
+            for(GameObject object : objects) {
+                object.render(b);
+            }
+
             b.setColor(Color.WHITE);
         }
     }

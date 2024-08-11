@@ -2,10 +2,13 @@ package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Reason;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.tasks.BuildObjectTask;
@@ -17,6 +20,7 @@ public class ConstructionObject extends GameObject {
 
     private GameObject toPlace;
     private boolean placed;
+    private boolean inBuilding = false;
 
     public Inventory costs;
 
@@ -37,8 +41,19 @@ public class ConstructionObject extends GameObject {
         }
     }
 
+    public ConstructionObject(Wall wall) {
+        this(wall.getX(), wall.getY(), wall);
+
+        this.cell = wall.getCell();
+        inBuilding = true;
+    }
+
     private void placeObject() {
-        toPlace.getCell().setObject(toPlace);
+        if(inBuilding) {
+            Main.inst.world.addObject(toPlace, Reason.FORCED);
+        } else {
+            toPlace.getCell().setObject(toPlace);
+        }
         ((IBuy) toPlace).onPlace(toPlace.getCell());
         placed = true;
     }
@@ -46,7 +61,11 @@ public class ConstructionObject extends GameObject {
     @Override
     public void update(float d) {
         if (costs.isEmpty() && !placed) {
-            this.destroy();
+            if(inBuilding) {
+                Main.inst.world.removeObject(toPlace);
+            } else {
+                this.destroy();
+            }
             placeObject();
         }
     }

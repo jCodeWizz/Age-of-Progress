@@ -72,7 +72,7 @@ public class Flag extends GameObject implements IBuy, SerializableObject {
 	}
 
 	@Override
-	public boolean conintues() {
+	public boolean continues() {
 		return false;
 	}
 
