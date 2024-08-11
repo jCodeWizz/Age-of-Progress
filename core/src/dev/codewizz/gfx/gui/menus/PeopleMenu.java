@@ -158,7 +158,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         stage.setKeyboardFocus(null);
         stage.setScrollFocus(null);
 
-
+        searchField.setText("");
         showList = true;
         right.setVisible(false);
     }

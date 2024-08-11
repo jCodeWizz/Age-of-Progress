@@ -40,8 +40,8 @@ public abstract class Entity extends GameObject {
         for (Renderable other : Main.inst.world.getObjects()) {
             if (other == this || !(other instanceof TaskableObject)) { continue; }
 
-            Vector2 a = new Vector2(((TaskableObject) this).getCenter());
-            Vector2 b = new Vector2(((TaskableObject) other).getCenter());
+            Vector2 a = new Vector2(getFootPoint());
+            Vector2 b = new Vector2(((TaskableObject)other).getFootPoint());
 
             float distance = Vector2.dst2(a.x, a.y, b.x, b.y);
             if (distance > 0 && distance < desiredSeparation) {

@@ -143,11 +143,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 	}
 
 	@Override
-	public Vector2 getCenter() {
-		return new Vector2(x + 11, y + 3);
-	}
-
-	@Override
 	public Polygon getHitBox() {
 		return new Polygon( new int[] {(int)x+7, (int)x+7, (int)x + 17, (int)x + 17}, 
 							new int[] {(int)y + 3, (int)y + 24, (int)y + 24, (int)y + 3}, 4) ;

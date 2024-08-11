@@ -52,12 +52,6 @@ public class KeyInput implements InputProcessor {
 			return true;
 		}
 		
-		if(key == Input.Keys.TAB) {
-			// enter debug mode
-			Main.DEBUG = true;
-			return true;
-		}
-		
 		if(key == Input.Keys.R) {
 			MouseInput.rotate = !MouseInput.rotate;
 		}
@@ -124,12 +118,6 @@ public class KeyInput implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int key) {
-		
-		// exit debug mode
-		if(key == Input.Keys.TAB) {
-			Main.DEBUG = false;
-			return true;
-		}
 		return false;
 	}
 

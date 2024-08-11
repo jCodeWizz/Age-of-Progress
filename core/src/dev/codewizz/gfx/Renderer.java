@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Renderer {
 
-    private static ShapeRenderer debugRenderer = new ShapeRenderer();
+    public static ShapeRenderer debugRenderer = new ShapeRenderer();
     public static ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     public SpriteBatch tileBatch;
@@ -156,5 +156,9 @@ public class Renderer {
 
     public static void drawDebugLine(Vector2 start, Vector2 end) {
         debugRenderer.line(start, end);
+    }
+
+    public static void drawDebugLine(Vector2 start, Vector2 end, float width) {
+        debugRenderer.rectLine(start, end, width);
     }
 }

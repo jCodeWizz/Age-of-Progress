@@ -79,6 +79,12 @@ public class DebugMenu extends Menu implements IUpdateDataMenu {
     @Override
     public void onOpen() {
         updateData();
+        Main.DEBUG = true;
+    }
+
+    @Override
+    public void onClose() {
+        Main.DEBUG = false;
     }
 
     @Override
