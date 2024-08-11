@@ -21,6 +21,7 @@ public class GameLayer extends Layer {
     public TileMenu tileMenu;
     public ObjectMenu objectMenu;
     public StructureMenu structureMenu;
+    public ManageStructureMenu manageStructureMenu;
     public PeopleMenu peopleMenu;
     public SettlementMenu settlementMenu;
     public PauseMenu pauseMenu;
@@ -43,6 +44,7 @@ public class GameLayer extends Layer {
         tileMenu = new TileMenu(Main.inst.renderer.uiStage, this);
         objectMenu = new ObjectMenu(Main.inst.renderer.uiStage, this);
         structureMenu = new StructureMenu(Main.inst.renderer.uiStage, this);
+        manageStructureMenu = new ManageStructureMenu(Main.inst.renderer.uiStage, this);
         peopleMenu = new PeopleMenu(Main.inst.renderer.uiStage, this);
         settlementMenu = new SettlementMenu(Main.inst.renderer.uiStage, this);
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
@@ -55,6 +57,7 @@ public class GameLayer extends Layer {
         menus.add(tileMenu);
         menus.add(objectMenu);
         menus.add(structureMenu);
+        menus.add(manageStructureMenu);
         menus.add(peopleMenu);
         menus.add(settlementMenu);
         menus.add(pauseMenu);

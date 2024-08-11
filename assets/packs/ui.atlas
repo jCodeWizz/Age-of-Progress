@@ -158,6 +158,13 @@ manage-icon
   orig: 22, 24
   offset: 0, 0
   index: -1
+new-build-icon
+  rotate: false
+  xy: 326, 247
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
 notification
   rotate: false
   xy: 2, 81
@@ -167,7 +174,7 @@ notification
   index: -1
 path-icon
   rotate: false
-  xy: 326, 247
+  xy: 1598, 1658
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -181,14 +188,14 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 1598, 1658
+  xy: 1632, 1692
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 plus-icon
   rotate: false
-  xy: 1632, 1692
+  xy: 1698, 1742
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -279,14 +286,14 @@ tile-highlight2
   index: -1
 tool-icon
   rotate: false
-  xy: 1698, 1742
+  xy: 1937, 1828
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 1937, 1828
+  xy: 1874, 1775
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
