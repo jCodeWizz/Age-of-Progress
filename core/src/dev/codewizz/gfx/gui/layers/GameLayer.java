@@ -26,6 +26,7 @@ public class GameLayer extends Layer {
     public PauseMenu pauseMenu;
     public UIIconMenu constructionMenu;
     public UIIconMenu toolMenu;
+    public UIIconMenu areaMenu;
     public DebugMenu debugMenu;
 
     private float updateTimer = 0.25f;
@@ -33,6 +34,7 @@ public class GameLayer extends Layer {
     public Table main;
     private UIIconButton constructionMenuButton;
     private UIIconButton toolMenuButton;
+    private UIIconButton areaMenuButton;
 
     @Override
     public void open(Stage stage) {
@@ -46,9 +48,9 @@ public class GameLayer extends Layer {
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
 
-        constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this,
-                                                constructionMenuButton);
+        constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
+        areaMenu = new AreaMenu(Main.inst.renderer.uiStage, this, areaMenuButton);
 
         menus.add(tileMenu);
         menus.add(objectMenu);
@@ -58,6 +60,7 @@ public class GameLayer extends Layer {
         menus.add(pauseMenu);
         menus.add(constructionMenu);
         menus.add(toolMenu);
+        menus.add(areaMenu);
     }
 
     @Override
@@ -119,11 +122,11 @@ public class GameLayer extends Layer {
             }
         });
 
-        UIIconButton tileIcon = UIIconButton.create("path-icon");
-        tileIcon.addListener(new ClickListener() {
+        areaMenuButton = UIIconButton.create("area-icon");
+        areaMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                openMenu(tileMenu);
+                openMenu(areaMenu);
             }
         });
 
@@ -153,7 +156,7 @@ public class GameLayer extends Layer {
 
         board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale)
                 .pad(0, 0, 0, 3 * Layer.scale);
-        board.add(tileIcon).size(22 * Layer.scale, 24 * Layer.scale)
+        board.add(areaMenuButton).size(22 * Layer.scale, 24 * Layer.scale)
                 .pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);
         board.add(constructionMenuButton).size(22 * Layer.scale, 24 * Layer.scale)
                 .pad(0, 3 * Layer.scale, 0, 3 * Layer.scale);

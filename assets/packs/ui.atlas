@@ -4,9 +4,16 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-build-icon
+area-icon
   rotate: false
   xy: 1850, 1775
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+build-icon
+  rotate: false
+  xy: 1084, 823
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -48,14 +55,14 @@ buyslot-pressed
   index: -1
 close-icon
   rotate: false
-  xy: 1084, 823
+  xy: 1137, 876
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 construction-icon
   rotate: false
-  xy: 1137, 876
+  xy: 2, 2
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -69,21 +76,21 @@ craftsman-icon
   index: -1
 discord-icon
   rotate: false
-  xy: 2, 2
+  xy: 55, 55
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 done-icon
   rotate: false
-  xy: 55, 55
+  xy: 854, 668
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 door-icon
   rotate: false
-  xy: 854, 668
+  xy: 922, 694
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -97,7 +104,7 @@ farmer-icon
   index: -1
 icon
   rotate: false
-  xy: 922, 694
+  xy: 1006, 720
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -118,14 +125,14 @@ icon-board-extension
   index: -1
 icon-pressed
   rotate: false
-  xy: 1006, 720
+  xy: 1342, 1426
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 icon-unavailable
   rotate: false
-  xy: 1342, 1426
+  xy: 1410, 1452
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -146,7 +153,7 @@ main-menu
   index: -1
 manage-icon
   rotate: false
-  xy: 1410, 1452
+  xy: 260, 197
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -160,7 +167,7 @@ notification
   index: -1
 path-icon
   rotate: false
-  xy: 260, 197
+  xy: 326, 247
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -174,14 +181,14 @@ path-menu
   index: -1
 people-icon
   rotate: false
-  xy: 326, 247
+  xy: 1598, 1658
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 plus-icon
   rotate: false
-  xy: 1598, 1658
+  xy: 1632, 1692
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
@@ -272,14 +279,14 @@ tile-highlight2
   index: -1
 tool-icon
   rotate: false
-  xy: 1632, 1692
+  xy: 1698, 1742
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
   index: -1
 work-icon
   rotate: false
-  xy: 1698, 1742
+  xy: 1937, 1828
   size: 22, 24
   orig: 22, 24
   offset: 0, 0
