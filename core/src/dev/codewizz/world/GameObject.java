@@ -84,11 +84,12 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	
 	public void destroy() {
 		if(cell != null) cell.setObject(null);
-		
+
 		if(this.isSelected()) this.deselect();
 		
 		onDestroy();
 		Main.inst.world.removeObject(this);
+		cell = null;
 	}
 	
 	public void select() {

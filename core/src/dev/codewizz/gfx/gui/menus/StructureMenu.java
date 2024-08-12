@@ -1,5 +1,6 @@
 package dev.codewizz.gfx.gui.menus;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,15 +22,10 @@ import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
-import dev.codewizz.world.building.Building;
-import dev.codewizz.world.building.BuildingObject;
-import dev.codewizz.world.building.Room;
-import dev.codewizz.world.building.Wall;
+import dev.codewizz.world.building.*;
 import dev.codewizz.world.objects.ConstructionObject;
-import dev.codewizz.world.objects.IBuy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StructureMenu extends Menu implements IUpdateDataMenu {
 
@@ -39,7 +35,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     private UIIconToggle removeIcon;
     private UILabel info;
 
-    public List<GameObject> objects = new ArrayList<>();
+    public CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>();
 
     public StructureMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -91,10 +87,12 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 if (!current.getRooms().isEmpty() && !Main.inst.world.settlement.buildings.contains(current) && Event.dispatch(new CreateBuildingEvent(current))) {
                     Main.inst.world.settlement.buildings.add(current);
 
-                    for(GameObject object : objects) {
+                    for (GameObject object : objects) {
                         ConstructionObject c = new ConstructionObject((Wall) object);
                         Main.inst.world.addObject(c, Reason.FORCED);
                     }
+
+                    objects.clear();
                 }
 
                 current = null;
@@ -115,17 +113,32 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
         updateData();
     }
 
+
     @Override
     public void render(SpriteBatch b) {
-        if(current != null) {
-            b.setColor(current.getColor());
-            for(Room room : current.getRooms()) {
-                for(Cell cell : room.getArea()) {
-                    b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
+        if (current != null) {
+            if (Gdx.input.isButtonJustPressed(0)) {
+                for (GameObject object : objects) {
+                    if (object.getHitBox().contains(MouseInput.coords.x, MouseInput.coords.y)) {
+                        clickedOn(object);
+                    }
                 }
             }
 
-            for(GameObject object : objects) {
+
+            for (Building building : Main.inst.world.settlement.buildings) {
+                if(!building.equals(current)) {
+                    b.setColor(building.getColor());
+                    for (Room room : building.getRooms()) {
+                        for (Cell cell : room.getArea()) {
+                            b.draw(Assets.getSprite("tile-highlight"), cell.x, cell.y);
+                        }
+                    }
+                }
+            }
+
+            b.setColor(new Color(Color.WHITE).sub(0, 0, 0, 0.4f));
+            for (GameObject object : objects) {
                 object.render(b);
             }
 
@@ -135,7 +148,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
 
     @Override
     public void onOpen() {
-        if(current == null) {
+        if (current == null) {
             current = new Building();
         }
     }
@@ -144,7 +157,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     public void clickedOn(Cell cell) {
         if (cell.getObject() != null && cell.getObject() instanceof BuildingObject) {
             BuildingObject o = (BuildingObject) cell.getObject();
-            if(!o.getRoom().getBuilding().equals(current)) {
+            if (!o.getRoom().getBuilding().equals(current)) {
                 current = o.getRoom().getBuilding();
             }
         }
@@ -159,16 +172,43 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 Wall wall = (Wall) object;
 
                 if (wall.getId().equals("aop:wall")) {
-                    wall.makeDoor();
+                    WallDoor door = new WallDoor(wall.getX(), wall.getY(), wall.getCell(), wall.getFacing());
+                    door.setFlip(wall.isFlip());
+
+                    BuildingObject o = (BuildingObject) wall.getCell().getObject();
+
+                    Wall[] walls = o.getWalls();
+
+                    for (int i = 0; i < walls.length; i++) {
+                        if (walls[i] != null && walls[i].equals(wall)) {
+                            walls[i].onDestroy();
+                            walls[i] = door;
+
+
+                            if (objects.contains(object)) {
+                                objects.remove(object);
+                                objects.add(door);
+                            } else {
+                                Main.inst.world.removeObject(object);
+                                Main.inst.world.addObject(door, Reason.FORCED);
+                            }
+                            break;
+                        }
+                    }
                 }
             } else if (removeIcon.isPressed()) {
                 Wall wall = (Wall) object;
 
-                Wall[] walls = ((BuildingObject)wall.getCell().getObject()).getWalls();
+                Wall[] walls = ((BuildingObject) wall.getCell().getObject()).getWalls();
 
-                for(int i = 0; i < walls.length; i++) {
-                    if(walls[i] != null && walls[i].equals(wall)) {
-                        ((BuildingObject)wall.getCell().getObject()).setWall(i, null);
+                for (int i = 0; i < walls.length; i++) {
+                    if (walls[i] != null && walls[i].equals(wall)) {
+                        ((BuildingObject) wall.getCell().getObject()).getWalls()[i] = null;
+                        if (objects.contains(object)) {
+                            objects.remove(object);
+                        } else {
+                            Main.inst.world.removeObject(object);
+                        }
                         break;
                     }
                 }
@@ -180,7 +220,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
 
     @Override
     public void updateData() {
-        if(current == null) {
+        if (current == null) {
             info.setText("");
         } else {
             info.setText(current.getName() + ", " + current.getRooms().size());

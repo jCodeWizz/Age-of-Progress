@@ -51,6 +51,7 @@ public class ConstructionObject extends GameObject {
     private void placeObject() {
         if(inBuilding) {
             Main.inst.world.addObject(toPlace, Reason.FORCED);
+            Main.inst.world.removeObject(this);
         } else {
             toPlace.getCell().setObject(toPlace);
         }
