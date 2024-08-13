@@ -24,6 +24,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.*;
 import dev.codewizz.world.objects.ConstructionObject;
+import dev.codewizz.world.objects.tasks.DestroyObjectTask;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -207,7 +208,8 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                         if (objects.contains(object)) {
                             objects.remove(object);
                         } else {
-                            Main.inst.world.removeObject(object);
+                            DestroyObjectTask t = new DestroyObjectTask(object);
+                            Main.inst.world.settlement.addTask(t, false);
                         }
                         break;
                     }

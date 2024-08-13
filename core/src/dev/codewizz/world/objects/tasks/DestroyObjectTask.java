@@ -36,7 +36,7 @@ public class DestroyObjectTask extends Task {
                 Main.inst.world.addItem(item.size(Math.round(i.getSize()/2f)));
             }
         }
-
+        toDestroy.update(1);
         toDestroy.destroy();
     }
 

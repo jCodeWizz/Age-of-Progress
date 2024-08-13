@@ -4,6 +4,7 @@ public class Timer {
 
     private float time;
     private float maxTime;
+    private boolean finished;
 
     private boolean repeat;
 
@@ -17,10 +18,12 @@ public class Timer {
     public void update(float d) {
         if (time > 0) {
             time -= d;
-        } else {
+        } else if (!finished) {
             timer();
             if (repeat) {
                 time = maxTime;
+            } else {
+                finished = true;
             }
         }
     }

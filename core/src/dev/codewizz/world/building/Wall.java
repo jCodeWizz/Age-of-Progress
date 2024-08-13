@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
@@ -78,7 +79,7 @@ public class Wall extends GameObject implements IBuy {
 
     @Override
     public void update(float d) {
-
+        Logger.log("IS NULL: " + (cell == null));
     }
 
     @Override
