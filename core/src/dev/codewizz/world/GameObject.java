@@ -97,6 +97,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 		selected = true;
 		((GameLayer) Main.inst.renderer.uiLayer).openMenu(((GameLayer) Main.inst.renderer.uiLayer).selectMenu);
 		((GameLayer) Main.inst.renderer.uiLayer).selectMenu.setSelected(this);
+		((GameLayer) Main.inst.renderer.uiLayer).selectMenu.updateData();
 	}
 	
 	public void deselect() {
