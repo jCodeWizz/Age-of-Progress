@@ -4,6 +4,7 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Timer;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.IBuy;
 import dev.codewizz.world.objects.TaskableObject;
@@ -37,7 +38,15 @@ public class DestroyObjectTask extends Task {
             }
         }
         toDestroy.update(1);
-        toDestroy.destroy();
+
+        if(toDestroy instanceof Wall) {
+            toDestroy.onDestroy();
+            Main.inst.world.removeObject(toDestroy);
+            toDestroy.setCell(null);
+            if(toDestroy.isSelected()) toDestroy.deselect();
+        } else {
+            toDestroy.destroy();
+        }
     }
 
     @Override

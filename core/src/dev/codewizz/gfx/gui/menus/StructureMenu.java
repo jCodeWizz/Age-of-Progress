@@ -25,7 +25,9 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.*;
 import dev.codewizz.world.objects.ConstructionObject;
 import dev.codewizz.world.objects.tasks.DestroyObjectTask;
+import dev.codewizz.world.objects.tasks.Task;
 
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StructureMenu extends Menu implements IUpdateDataMenu {
@@ -37,6 +39,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
     private UILabel info;
 
     public CopyOnWriteArrayList<GameObject> objects = new CopyOnWriteArrayList<>();
+    private HashMap<GameObject, Task> changes = new HashMap<>();
 
     public StructureMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -93,6 +96,11 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                         Main.inst.world.addObject(c, Reason.FORCED);
                     }
 
+                    for (Task t : changes.values()) {
+                        Main.inst.world.settlement.addTask(t, false);
+                    }
+
+                    changes.clear();
                     objects.clear();
                 }
 
@@ -120,12 +128,12 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
         if (current != null) {
             if (Gdx.input.isButtonJustPressed(0)) {
                 for (GameObject object : objects) {
-                    if (object.getHitBox().contains(MouseInput.coords.x, MouseInput.coords.y)) {
+                    if (object.getHitBox().contains(MouseInput.coords.x, MouseInput.coords.y) && object instanceof Wall) {
                         clickedOn(object);
+                        break;
                     }
                 }
             }
-
 
             for (Building building : Main.inst.world.settlement.buildings) {
                 if(!building.equals(current)) {
@@ -160,6 +168,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
             BuildingObject o = (BuildingObject) cell.getObject();
             if (!o.getRoom().getBuilding().equals(current)) {
                 current = o.getRoom().getBuilding();
+                changes.clear();
             }
         }
 
@@ -208,8 +217,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                         if (objects.contains(object)) {
                             objects.remove(object);
                         } else {
-                            DestroyObjectTask t = new DestroyObjectTask(object);
-                            Main.inst.world.settlement.addTask(t, false);
+                            changes.put(object, new DestroyObjectTask(object));
                         }
                         break;
                     }

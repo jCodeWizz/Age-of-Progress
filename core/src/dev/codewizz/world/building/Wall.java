@@ -79,7 +79,6 @@ public class Wall extends GameObject implements IBuy {
 
     @Override
     public void update(float d) {
-        Logger.log("IS NULL: " + (cell == null));
     }
 
     @Override
