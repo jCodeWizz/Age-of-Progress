@@ -130,10 +130,6 @@ public class MouseInput implements InputProcessor {
                         }
 
                     }
-
-                    if (Main.DEBUG) {
-                        Cell.printDebugInfo(hoveringOverCell);
-                    }
                 }
             }
 

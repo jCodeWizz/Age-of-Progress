@@ -20,6 +20,7 @@ import dev.codewizz.modding.events.CreateBuildingEvent;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.Reason;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.*;
@@ -89,9 +90,25 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                 doorIcon.setPressed(false);
                 removeIcon.setPressed(false);
 
-                if (!current.getRooms().isEmpty() && !Main.inst.world.settlement.buildings.contains(current) && Event.dispatch(new CreateBuildingEvent(current))) {
+
+                if (!Main.inst.world.settlement.buildings.contains(current) && !current.getRooms().isEmpty() && Event.dispatch(new CreateBuildingEvent(current))) {
                     Main.inst.world.settlement.buildings.add(current);
 
+                    for (Task t : changes.values()) {
+                        Main.inst.world.settlement.addTask(t, false);
+                    }
+
+                    for (GameObject object : objects) {
+                        ConstructionObject c = new ConstructionObject((Wall) object);
+                        Main.inst.world.addObject(c, Reason.FORCED);
+                    }
+
+                    changes.clear();
+                    objects.clear();
+
+                    current = null;
+                    close();
+                } else if (Main.inst.world.settlement.buildings.contains(current)) {
                     for (GameObject object : objects) {
                         ConstructionObject c = new ConstructionObject((Wall) object);
                         Main.inst.world.addObject(c, Reason.FORCED);
@@ -103,10 +120,13 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
 
                     changes.clear();
                     objects.clear();
+
+                    current = null;
+                    close();
                 }
 
-                current = null;
-                close();
+                //TODO: add error message when not closing menu.
+
             }
         });
 
@@ -170,6 +190,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
             if (!o.getRoom().getBuilding().equals(current)) {
                 current = o.getRoom().getBuilding();
                 changes.clear();
+                Logger.log("Cleared changes");
             }
         }
 
@@ -200,8 +221,7 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                                 objects.remove(object);
                                 objects.add(door);
                             } else {
-                                ChangeObjectTask t = new ChangeObjectTask(door, object);
-                                changes.put(object, t);
+                                changes.put(object, new ChangeObjectTask(door, object));
                             }
                             break;
                         }
