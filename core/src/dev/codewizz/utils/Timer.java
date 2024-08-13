@@ -18,7 +18,7 @@ public class Timer {
         if (time > 0) {
             time -= d;
         } else {
-            finish();
+            timer();
             if (repeat) {
                 time = maxTime;
             }
@@ -37,5 +37,5 @@ public class Timer {
         this.repeat = repeat;
     }
 
-    public void finish() {}
+    public void timer() {}
 }
