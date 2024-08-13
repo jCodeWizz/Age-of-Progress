@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -94,9 +95,13 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	
 	public void select() {
 		selected = true;
+		((GameLayer) Main.inst.renderer.uiLayer).openMenu(((GameLayer) Main.inst.renderer.uiLayer).selectMenu);
+		((GameLayer) Main.inst.renderer.uiLayer).selectMenu.setSelected(this);
 	}
 	
 	public void deselect() {
+		((GameLayer) Main.inst.renderer.uiLayer).closeMenus();
+		((GameLayer) Main.inst.renderer.uiLayer).selectMenu.setSelected(null);
 		selected = false;
 	}
 	

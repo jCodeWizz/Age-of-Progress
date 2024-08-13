@@ -11,6 +11,7 @@ import dev.codewizz.gfx.gui.elements.UIIconMenu;
 import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Timer;
 
 import java.util.ArrayList;
 
@@ -29,13 +30,28 @@ public class GameLayer extends Layer {
     public UIIconMenu toolMenu;
     public UIIconMenu areaMenu;
     public DebugMenu debugMenu;
+    public SelectMenu selectMenu;
 
-    private float updateTimer = 0.25f;
+    private final Timer updateTimer;
 
     public Table main;
     private UIIconButton constructionMenuButton;
     private UIIconButton toolMenuButton;
     private UIIconButton areaMenuButton;
+
+    public GameLayer() {
+        updateTimer = new Timer(0.2f) {
+            @Override
+            public void timer() {
+                for (Menu m : menus) {
+                    if (m.isOpen() && m instanceof IUpdateDataMenu) {
+                        ((IUpdateDataMenu) m).updateData();
+                    }
+                }
+            }
+        };
+        updateTimer.setRepeat(true);
+    }
 
     @Override
     public void open(Stage stage) {
@@ -49,6 +65,7 @@ public class GameLayer extends Layer {
         settlementMenu = new SettlementMenu(Main.inst.renderer.uiStage, this);
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
+        selectMenu = new SelectMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -64,24 +81,13 @@ public class GameLayer extends Layer {
         menus.add(constructionMenu);
         menus.add(toolMenu);
         menus.add(areaMenu);
+        menus.add(selectMenu);
     }
 
     @Override
     public void update(float d) {
-
         if (debugMenu.isOpen()) { debugMenu.updateData(); }
-
-
-        if (updateTimer > 0) {
-            updateTimer -= d;
-        } else {
-            updateTimer = 0.25f;
-            for (Menu m : menus) {
-                if (m.isOpen() && m instanceof IUpdateDataMenu) {
-                    ((IUpdateDataMenu) m).updateData();
-                }
-            }
-        }
+        updateTimer.update(d);
     }
 
     @Override
