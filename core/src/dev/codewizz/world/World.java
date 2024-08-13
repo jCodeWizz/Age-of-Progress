@@ -1,23 +1,16 @@
 package dev.codewizz.world;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
 import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Shaders;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.*;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
@@ -29,6 +22,13 @@ import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class World {
 
@@ -64,7 +64,7 @@ public class World {
         start = System.currentTimeMillis();
 
         tree = new QuadTree<>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2,
-                              WORLD_SIZE_HP * 2);
+                WORLD_SIZE_HP * 2);
         cellGraph = new CellGraph();
         Main.inst.world = this;
 
@@ -159,7 +159,7 @@ public class World {
 
         for (int i = 0; i < 5; i++) {
             this.settlement.addHermit(Utils.getRandom(-30, 30) + s.getX(),
-                                      Utils.getRandom(-30, 30) + s.getY());
+                    Utils.getRandom(-30, 30) + s.getY());
         }
     }
 
@@ -167,12 +167,12 @@ public class World {
 
         timer += Gdx.graphics.getDeltaTime();
 
-        Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(0, 0, 0));
-        Vector3 p2 = Main.inst.camera.cam.unproject(
-                new Vector3(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0));
+        float border = Gdx.graphics.getHeight() / 8f;
 
-        Rectangle r = new Rectangle((int) p1.x, (int) p2.y, (int) (p2.x - p1.x),
-                                    (int) -(p2.y - p1.y));
+        Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(-border, -border, 0));
+        Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth() + border, Gdx.graphics.getHeight() + border, 0));
+
+        Rectangle r = new Rectangle((int) p1.x, (int) p2.y, (int) (p2.x - p1.x), (int) -(p2.y - p1.y));
 
         for (Chunk chunk : chunks) {
 
@@ -217,10 +217,10 @@ public class World {
             if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || (MouseInput.tileArea.start == null || MouseInput.tileArea.cells.size() == 0))) {
                 if (MouseInput.clear) {
                     b.draw(Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
-                           MouseInput.hoveringOverCell.y);
+                            MouseInput.hoveringOverCell.y);
                 } else {
                     b.draw(Assets.getSprite("tile-highlight2"), MouseInput.hoveringOverCell.x,
-                           MouseInput.hoveringOverCell.y);
+                            MouseInput.hoveringOverCell.y);
                 }
                 /*
                  *
@@ -288,7 +288,9 @@ public class World {
             MouseInput.currentlyDrawingObject.setY(MouseInput.hoveringOverCell.y);
             MouseInput.currentlyDrawingObject.setFlip(MouseInput.rotate);
 
-            if (MouseInput.hoveringOverCell.object == null) { b.setColor(1f, 1f, 1f, 0.5f); } else {
+            if (MouseInput.hoveringOverCell.object == null) {
+                b.setColor(1f, 1f, 1f, 0.5f);
+            } else {
                 b.setColor(1f, 0.2f, 0.2f, 0.5f);
             }
 
@@ -334,7 +336,9 @@ public class World {
 
         Cell cell = getCell(x, y);
 
-        if (cell == null) { return cells; }
+        if (cell == null) {
+            return cells;
+        }
 
         // if filter is on, tiletype should not be in list. if filer is off, tiletype
         // should be in list if (!evaluateTile(cell, filter, t)) {
@@ -371,7 +375,9 @@ public class World {
         } else {
             chunkX = (int) Math.floor((float) worldIndexX / 8f);
             indexX = Math.abs(worldIndexX % 8);
-            if (indexX != 0) { indexX = Chunk.SIZE - indexX; }
+            if (indexX != 0) {
+                indexX = Chunk.SIZE - indexX;
+            }
         }
 
         if (worldIndexY >= 0) {
@@ -380,7 +386,9 @@ public class World {
         } else {
             chunkY = (int) Math.floor((float) worldIndexY / 8f);
             indexY = Math.abs(worldIndexY % 8);
-            if (indexY != 0) { indexY = Chunk.SIZE - indexY; }
+            if (indexY != 0) {
+                indexY = Chunk.SIZE - indexY;
+            }
         }
 
         Chunk c = chunkTree.get(new Vector2(chunkX, chunkY));
@@ -422,7 +430,9 @@ public class World {
 
         boolean proceed = Event.dispatch(new AddObjectEvent(object, reason));
 
-        if (proceed) { objects.add(object); }
+        if (proceed) {
+            objects.add(object);
+        }
 
         return proceed;
     }
@@ -431,7 +441,9 @@ public class World {
 
         boolean proceed = Event.dispatch(new RemoveObjectEvent(object));
 
-        if (proceed) { objects.remove(object); }
+        if (proceed) {
+            objects.remove(object);
+        }
 
         return proceed;
     }
