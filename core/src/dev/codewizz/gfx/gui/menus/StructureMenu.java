@@ -24,6 +24,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.*;
 import dev.codewizz.world.objects.ConstructionObject;
+import dev.codewizz.world.objects.tasks.ChangeObjectTask;
 import dev.codewizz.world.objects.tasks.DestroyObjectTask;
 import dev.codewizz.world.objects.tasks.Task;
 
@@ -199,8 +200,8 @@ public class StructureMenu extends Menu implements IUpdateDataMenu {
                                 objects.remove(object);
                                 objects.add(door);
                             } else {
-                                Main.inst.world.removeObject(object);
-                                Main.inst.world.addObject(door, Reason.FORCED);
+                                ChangeObjectTask t = new ChangeObjectTask(door, object);
+                                changes.put(object, t);
                             }
                             break;
                         }
