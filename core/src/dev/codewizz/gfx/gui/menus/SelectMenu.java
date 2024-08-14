@@ -43,6 +43,10 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
         this.selected = selected;
     }
 
+    public GameObject getSelected() {
+        return selected;
+    }
+
     @Override
     public void updateData() {
         if (selected != null) {
