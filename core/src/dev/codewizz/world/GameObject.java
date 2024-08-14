@@ -2,9 +2,12 @@ package dev.codewizz.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.layers.GameLayer;
+import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -105,7 +108,19 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 		((GameLayer) Main.inst.renderer.uiLayer).selectMenu.setSelected(null);
 		selected = false;
 	}
-	
+
+	private UILabel nameLabel;
+
+	public void setupSelectMenu(Table top, Table bottom) {
+		nameLabel = UILabel.create(name);
+
+		top.add(nameLabel).expand().fill().center().left().padLeft(6 * Layer.scale);
+	}
+
+	public void updateSelectMenu() {
+		nameLabel.setText(name);
+	}
+
 	public Rectangle getBounds() {
 		return new Rectangle((int)x, (int)y, w, h);
 	}

@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.gui.elements.UILabel;
+import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.utils.Tuple;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -185,6 +188,23 @@ public abstract class TaskableObject extends Entity {
         } else {
             return this.getCurrentTask().getName();
         }
+    }
+
+    private UILabel taskLabel;
+
+    @Override
+    public void setupSelectMenu(Table top, Table bottom) {
+        super.setupSelectMenu(top, bottom);
+
+        taskLabel = UILabel.create(getCurrentTaskText(), UILabel.smallStyle);
+        bottom.add(taskLabel).expand().fillX().left().top().padLeft(6 * Layer.scale).padTop(3 * Layer.scale);
+    }
+
+    @Override
+    public void updateSelectMenu() {
+        super.updateSelectMenu();
+
+        taskLabel.setText(getCurrentTaskText());
     }
 
     public Task getCurrentTask() {

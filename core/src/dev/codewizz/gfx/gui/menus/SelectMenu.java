@@ -15,7 +15,8 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
 
     private GameObject selected;
 
-    private UILabel name;
+    private Table top;
+    private Table bottom;
 
     public SelectMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -27,20 +28,24 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
         base.add(main).expand().size(150 * Layer.scale, 50 * Layer.scale).bottom().left().padLeft(Gdx.graphics.getHeight() * 0.05f);
         main.setBackground(new Image(Assets.getSprite("select-menu-background")).getDrawable());
 
-        Table top = new Table();
+        top = new Table();
         main.add(top).expand().fillX().top().left().height(Value.percentHeight(0.35f, main));
 
         main.row();
 
-        Table bottom = new Table();
+        bottom = new Table();
         main.add(bottom).expand().fillX().bottom().left().height(Value.percentHeight(0.65f, main));
-
-        name = UILabel.create("");
-        top.add(name).expand().fill().center().left().padLeft(6 * Layer.scale);
     }
 
     public void setSelected(GameObject selected) {
         this.selected = selected;
+
+        if(selected != null) {
+            selected.setupSelectMenu(top, bottom);
+        } else {
+            top.clear();
+            bottom.clear();
+        }
     }
 
     public GameObject getSelected() {
@@ -50,7 +55,7 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
     @Override
     public void updateData() {
         if (selected != null) {
-           name.setText(selected.getName());
+           selected.updateSelectMenu();
         }
     }
 }
