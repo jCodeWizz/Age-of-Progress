@@ -14,7 +14,7 @@ public class Shaders {
 
 	/*
 	 * 
-	 * This is a util class that holds all of the shaders.
+	 * This is a util class that holds all the shaders.
 	 * 
 	 */
 	
@@ -24,11 +24,13 @@ public class Shaders {
 	public static ShaderProgram defaultShader;
 	public static ShaderProgram roofShader;
 	public static ShaderProgram waterShader;
+	public static ShaderProgram shadowShader;
 
 	public static void init() {
 		outlineShader = new ShaderProgram(Gdx.files.internal("shaders/outline.vert").readString(), Gdx.files.internal("shaders/outline.frag").readString());
 		roofShader = new ShaderProgram(Gdx.files.internal("shaders/roof.vert").readString(), Gdx.files.internal("shaders/roof.frag").readString());
 		waterShader = new ShaderProgram(Gdx.files.internal("shaders/water.vert").readString(), Gdx.files.internal("shaders/water.frag").readString());
+		shadowShader = new ShaderProgram(Gdx.files.internal("shaders/shadow.vert").readString(), Gdx.files.internal("shaders/shadow.frag").readString());
 		defaultShader = SpriteBatch.createDefaultShader();
 	}
 }

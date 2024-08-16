@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Particle;
+import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.Shaders;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
@@ -49,20 +51,9 @@ public class Tree extends GameObject implements SerializableObject, IGatherable 
 
 	@Override
 	public void render(SpriteBatch b) {
-		texture.setPosition(x - 32, y + 25);
-		texture.setSize(126, (int) (126 * Math.cos(Math.toRadians(50))));
-		float[] v = texture.getVertices();
+		Renderer.renderShadow(b, texture, x - 32, y + 25);
 
-
-		v[5] += 30;
-		v[10] += 30;
-
-
-		b.setColor(Color.RED);
-		b.draw(texture.getTexture(), v, 0, v.length);
-		b.setColor(Color.WHITE);
-
-		if(Gdx.input.isKeyPressed(Input.Keys.X)) {
+		if(!Gdx.input.isKeyPressed(Input.Keys.X)) {
 			b.draw(texture, x - 32, y + 25);
 		}
 	}

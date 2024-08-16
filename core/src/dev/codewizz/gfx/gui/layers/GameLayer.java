@@ -1,13 +1,17 @@
 package dev.codewizz.gfx.gui.layers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIIconMenu;
+import dev.codewizz.gfx.gui.elements.UISlider;
 import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
@@ -118,6 +122,29 @@ public class GameLayer extends Layer {
         main = new Table();
         main.setFillParent(true);
         Main.inst.renderer.uiStage.addActor(main);
+
+        UISlider slider = UISlider.create(0, 90, 1, false);
+        slider.setValue(45);
+        slider.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Renderer.angle = (int)slider.getValue();
+            }
+        });
+        main.add(slider).width(100);
+
+        UISlider slider2 = UISlider.create(-200, 200, 1, false);
+        slider2.setValue(30);
+        slider2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Renderer.offset = (int)slider2.getValue();
+            }
+        });
+        main.add(slider2).width(100);
+
+
+        main.row();
 
         Table board = new Table();
         main.add(board).expand().size(146 * Layer.scale, 30 * Layer.scale).bottom();

@@ -5,6 +5,7 @@ import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -160,5 +161,25 @@ public class Renderer {
 
     public static void drawDebugLine(Vector2 start, Vector2 end, float width) {
         debugRenderer.rectLine(start, end, width);
+    }
+
+    public static int offset = 30;
+    public static int angle = 45;
+
+    public static void renderShadow(SpriteBatch b, Sprite s, float x, float y) {
+        renderShadow(b, s, x, y, s.getRegionWidth(), s.getRegionHeight());
+    }
+
+    public static void renderShadow(SpriteBatch b, Sprite s, float x, float y, float w, float h) {
+        b.setShader(Shaders.shadowShader);
+
+        s.setBounds(x, y, w, (int) (h * Math.cos(Math.toRadians(angle))));
+        float[] v = s.getVertices();
+
+        v[5] += offset;
+        v[10] += offset;
+
+        b.draw(s.getTexture(), v, 0, v.length);
+        b.setShader(Shaders.defaultShader);
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Particle;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
@@ -47,6 +48,7 @@ public class PineTree extends GameObject implements SerializableObject, IGathera
 
     @Override
     public void render(SpriteBatch b) {
+        Renderer.renderShadow(b, texture, x, y + 25);
         b.draw(texture, x, y + 25);
     }
 

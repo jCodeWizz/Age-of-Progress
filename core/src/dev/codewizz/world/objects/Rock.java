@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import dev.codewizz.gfx.Particle;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
@@ -52,8 +53,10 @@ public class Rock extends GameObject implements SerializableObject, IGatherable 
 	@Override
 	public void render(SpriteBatch b) {
 		if(broken) {
+			Renderer.renderShadow(b, texture2, x + 8, y + 25);
 			b.draw(texture2, x + 8, y + 25);
 		} else {
+			Renderer.renderShadow(b, texture, x + 8, y + 25);
 			b.draw(texture, x + 8, y + 25);
 		}
 	}
