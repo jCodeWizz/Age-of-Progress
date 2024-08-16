@@ -28,7 +28,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	protected Cell cell;
 	
 	protected boolean selected = false;
-	protected String name = "Object";
+	protected String name = "Unnamed Object";
 	
 	public GameObject() {
 		
