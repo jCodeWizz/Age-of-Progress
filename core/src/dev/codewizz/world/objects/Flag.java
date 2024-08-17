@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
@@ -45,8 +46,10 @@ public class Flag extends GameObject implements IBuy, SerializableObject {
 
 	@Override
 	public void render(SpriteBatch b) {
+		Renderer.renderShadow(b, texture, x + 15, y + 26);
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.TAB)) {
-			
+			//TODO: wtf?
 			Cell cell = MouseInput.hoveringOverCell;
 			if(cell != null) {
 				Main.inst.world.settlement.addTask(new MoveTask(cell), false);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.Particle;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.saving.GameObjectData;
@@ -89,6 +90,8 @@ public class Cow extends Animal implements SerializableObject {
 
     @Override
     public void render(SpriteBatch b) {
+        Renderer.renderShadow(b, walkAnim.getFrame(), x, y);
+
         if (this.damageCoolDown >= 0f) { b.setColor(1f, 0f, 0f, 1f); }
 
         if (facingRight) {
