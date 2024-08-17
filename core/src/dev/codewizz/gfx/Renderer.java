@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -171,6 +173,7 @@ public class Renderer {
     }
 
     public static void renderShadow(SpriteBatch b, Sprite s, float x, float y, float w, float h) {
+        ShaderProgram currentShader = b.getShader();
         b.setShader(Shaders.shadowShader);
 
         s.setBounds(x, y, w, (int) (h * Math.cos(Math.toRadians(angle))));
@@ -180,6 +183,6 @@ public class Renderer {
         v[10] += offset;
 
         b.draw(s.getTexture(), v, 0, v.length);
-        b.setShader(Shaders.defaultShader);
+        b.setShader(currentShader);
     }
 }
