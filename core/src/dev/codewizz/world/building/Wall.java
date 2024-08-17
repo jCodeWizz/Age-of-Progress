@@ -2,6 +2,7 @@ package dev.codewizz.world.building;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.Logger;
@@ -84,8 +85,10 @@ public class Wall extends GameObject implements IBuy {
     @Override
     public void render(SpriteBatch b) {
         if (flip) {
+            Renderer.renderShadow(b, TEXTURE_FLIP, x, y);
             b.draw(TEXTURE_FLIP, (int) x, (int) y);
         } else {
+            Renderer.renderShadow(b, TEXTURE, x, y);
             b.draw(TEXTURE, (int) x, (int) y);
         }
     }

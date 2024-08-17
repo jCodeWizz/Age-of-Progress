@@ -90,20 +90,23 @@ public class Cow extends Animal implements SerializableObject {
 
     @Override
     public void render(SpriteBatch b) {
-        Renderer.renderShadow(b, walkAnim.getFrame(), x, y);
 
         if (this.damageCoolDown >= 0f) { b.setColor(1f, 0f, 0f, 1f); }
 
         if (facingRight) {
             if (moving) {
+                Renderer.renderShadow(b, walkAnim.getFrame(), x, y, w, h);
                 b.draw(walkAnim.getFrame(), x, y, w, h);
             } else {
+                Renderer.renderShadow(b, Assets.getSprite("cow-idle"), x, y, w, h);
                 b.draw(Assets.getSprite("cow-idle"), x, y, w, h);
             }
         } else {
             if (moving) {
+                Renderer.renderShadow(b, walkAnim.getFrame(), x + 32, y, -w, h);
                 b.draw(walkAnim.getFrame(), x + 32, y, -w, h);
             } else {
+                Renderer.renderShadow(b, Assets.getSprite("cow-idle"), x + 32, y, -w, h);
                 b.draw(Assets.getSprite("cow-idle"), x + 32, y, -w, h);
             }
         }
