@@ -1,0 +1,29 @@
+{
+  "id": "aop:carrot",
+  "stageCount": 4,
+  "stages": {
+    "1": {
+      "texture": "farm-tile",
+      "time": 1
+    },
+    "2": {
+      "texture": "carrot-farm-tile",
+      "time": 2
+    },
+    "3": {
+      "texture": "carrot2-farm-tile",
+      "time": 2
+    },
+    "4": {
+      "texture": "carrot3-farm-tile",
+      "time": 2
+    }
+  },
+  "result": {
+    "1": {
+      "id": "aop:carrot",
+      "min": 1,
+      "max": 4
+    }
+  }
+}
