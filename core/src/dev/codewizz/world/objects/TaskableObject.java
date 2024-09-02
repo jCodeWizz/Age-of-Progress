@@ -138,8 +138,6 @@ public abstract class TaskableObject extends Entity {
 				currentTask = tree.first();
 			}
 		} else {
-			// TODO: maybe add a check to see if Hermit can take a task
-			// TODO: on second note, I don't care about that.
 			if(currentTask.isStarted()) {
 				currentTask.update(d);
 			} else {

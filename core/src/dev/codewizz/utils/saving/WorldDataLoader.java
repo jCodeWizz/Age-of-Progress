@@ -261,7 +261,7 @@ public class WorldDataLoader {
                 //String[] nameLoc = file.getName().split("\\.")[0].split(",");
                 //Vector2 loc = new Vector2(Integer.parseInt(nameLoc[0]), Integer.parseInt(nameLoc[1]));
                 //TODO: use for adding objects to correct chunk? :)
-
+                //NOTE ^ objects connected to chunk is only relevant on unload not load, so probably useless?
                 objects.putAll(loader.getLoaded());
             }
         } catch (Exception e) {

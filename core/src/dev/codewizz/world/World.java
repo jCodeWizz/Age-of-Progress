@@ -1,23 +1,16 @@
 package dev.codewizz.world;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
 import dev.codewizz.gfx.Particle;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Shaders;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.*;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Logger;
@@ -29,6 +22,12 @@ import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class World {
 
@@ -222,12 +221,6 @@ public class World {
                     b.draw(Assets.getSprite("tile-highlight2"), MouseInput.hoveringOverCell.x,
                            MouseInput.hoveringOverCell.y);
                 }
-                /*
-                 *
-                 * TODO: Need to add a good way to select a tile and place it. This will be
-                 * great when starting to work on menus.
-                 *
-                 */
             }
         }
 

@@ -39,7 +39,6 @@ public class KeyInput implements InputProcessor {
 				Main.exit();
 			}
 			
-			//todo closes all menus before going to main menu
 			if(Main.PLAYING) {
 				if(((GameLayer)Main.inst.renderer.uiLayer).menusClosed()) {
 					((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).pauseMenu);
@@ -171,7 +170,6 @@ public class KeyInput implements InputProcessor {
 
 	@Override
 	public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }
