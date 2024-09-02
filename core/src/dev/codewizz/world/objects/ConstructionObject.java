@@ -23,7 +23,7 @@ public class ConstructionObject extends GameObject {
     public ConstructionObject(float x, float y, GameObject toPlace) {
         super(x, y);
 
-        this.id = "aop:construction";
+        this.id = "aop:constructionobject";
 
         this.toPlace = toPlace;
         this.costs = new Inventory(-1);

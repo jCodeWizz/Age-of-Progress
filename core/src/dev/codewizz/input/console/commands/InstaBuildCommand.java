@@ -9,7 +9,7 @@ public class InstaBuildCommand implements CommandExecutor {
 
     @Override
     public boolean execute(String command, World world, String[] args) {
-        if(MouseInput.hoveringOverCell != null && MouseInput.hoveringOverCell.getObject() != null && MouseInput.hoveringOverCell.getObject().getId().equals("aop:construction")) {
+        if(MouseInput.hoveringOverCell != null && MouseInput.hoveringOverCell.getObject() != null && MouseInput.hoveringOverCell.getObject().getId().equals("aop:constructionobject")) {
             ConstructionObject object = (ConstructionObject) MouseInput.hoveringOverCell.getObject();
 
             //TODO: figure out a way to finish builds. (Clear task ass wel etc.)
