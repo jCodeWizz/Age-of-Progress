@@ -164,5 +164,7 @@ public class Main extends ApplicationAdapter {
         VisUI.dispose();
         renderer.dispose();
         Assets.dispose();
+
+        exit();
     }
 }
