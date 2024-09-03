@@ -131,6 +131,7 @@ public class ModHandler {
                         Pixmap m = new Pixmap(bytes, 0, bytes.length);
                         Sprite s = new Sprite(new Texture(m));
 
+                        //TODO: fix asset loading for mods
 
                         if (folder.equalsIgnoreCase("/textures/tiles/")) {
                             Assets.addSpriteToAtlas("tiles", info.getId() + ":" + name, s);

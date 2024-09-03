@@ -1,6 +1,7 @@
 package dev.codewizz.utils;
 
 import com.badlogic.gdx.audio.Sound;
+import dev.codewizz.world.settlement.Crop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -104,6 +105,16 @@ public class Assets {
                        new Texture(Gdx.files.internal("textures/tiles/tiled-tile-7.png")));
         procuderal.put("aop:tiled-tile-8",
                        new Texture(Gdx.files.internal("textures/tiles/tiled-tile-8.png")));
+    }
+
+    public static void load() {
+        String data = Gdx.files.internal("data/crops/carrot.json").readString();
+        Crop.readCropFromJson(data);
+
+
+
+
+
     }
 
     public static BufferedImage getImage(String name) {

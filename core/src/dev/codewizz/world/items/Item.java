@@ -80,4 +80,11 @@ public class Item extends Renderable {
 	public void setY(float y) {
 		this.y = y;
 	}
+
+	public Item copy() {
+		Item i = new Item(item, size);
+		i.x = this.x;
+		i.y = this.y;
+		return i;
+	}
 }

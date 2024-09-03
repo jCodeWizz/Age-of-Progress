@@ -1,0 +1,16 @@
+{
+  "type": "crafter",
+  "time": 3,
+  "cost": [
+    {
+      "id": "aop:wood",
+      "count": 1
+    }
+  ],
+  "result": [
+    {
+      "id": "aop:plank",
+      "count": 2
+    }
+  ]
+}

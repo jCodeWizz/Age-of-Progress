@@ -48,10 +48,8 @@ public class Main extends ApplicationAdapter {
         Assets.setup();
         Logger.setup();
         Assets.create();
+        Assets.load();
         client = new Client();
-
-        VisUI.load();
-
         camera = new Camera();
         renderer = new Renderer();
         mouseInput = new MouseInput();

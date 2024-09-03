@@ -217,7 +217,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 	}
 
 	public Vector2 getCenter() {
-		return new Vector2();
+		return new Vector2(x + (w/2f), y);
 	}
 
 	@Override

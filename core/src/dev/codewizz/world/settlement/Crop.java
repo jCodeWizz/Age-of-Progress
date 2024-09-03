@@ -1,30 +1,37 @@
 package dev.codewizz.world.settlement;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.world.Cell;
+import dev.codewizz.world.Nature;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemDrop;
+import dev.codewizz.world.items.ItemType;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public abstract class Crop {
+public class Crop {
 
-    protected CropStage[] stages;
-    protected int currentStage = 0;
+    public static HashMap<String, CropType> cropTypes = new HashMap<>();
 
-    protected Cell cell;
-    protected float counter = 0f;
-    protected boolean tasked = false;
+    CropStage[] stages;
+    private int currentStage = 0;
 
-    protected String id;
+    ArrayList<ItemDrop> drops = new ArrayList<>();
+
+    private Cell cell;
+    float counter = 0f;
+    boolean tasked = false;
+
+    String id;
 
     public Crop(Cell cell) {
         this.cell = cell;
     }
-
-    public abstract ArrayList<Item> getItems();
 
     public void onHarvest() { }
 
@@ -36,7 +43,8 @@ public abstract class Crop {
 
     public void harvest() {
 
-        for (Item i : getItems()) {
+        for (ItemDrop d : drops) {
+            Item i = d.get();
 
             i.setX(cell.x + Utils.getRandom(16, 48));
             i.setY(cell.y + Utils.getRandom(20, 40));
@@ -81,5 +89,32 @@ public abstract class Crop {
         return stages[index];
     }
 
+    public static void readCropFromJson(String json) {
 
+        JsonValue root = new JsonReader().parse(json);
+
+        String id = root.getString("id");
+        int stageCount = root.getInt("stageCount");
+        JsonValue stages = root.get("stages");
+        int dropCount = root.getInt("resultCount");
+        CropStage[] st = new CropStage[stageCount];
+
+        for (int i = 0; i < stageCount; i++) {
+            JsonValue stage = stages.get(i);
+            CropStage s = new CropStage(
+                    stage.getInt("time") * (Nature.DAY_TIME + Nature.TRANSITION_TIME),
+                    Assets.getSprite(stage.getString("texture")));
+            st[i] = s;
+        }
+
+        ArrayList<ItemDrop> d = new ArrayList<>();
+        JsonValue drops = root.get("result");
+        for (int i = 0; i < dropCount; i++) {
+            JsonValue drop = drops.get(i);
+            d.add(new ItemDrop(ItemType.types.get(drop.getString("id")), drop.getInt("min"), drop.getInt("max")));
+        }
+
+        CropType crop = new CropType(id, st, d);
+        cropTypes.put(id, crop);
+    }
 }
