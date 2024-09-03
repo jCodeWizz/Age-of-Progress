@@ -85,7 +85,8 @@ public abstract class TaskableObject extends Entity {
         speed = ByteUtils.toFloat(data, 1);
 
         if (moving) {
-            WorldDataLoader.postCellSet.add(new Tuple<>(this, ByteUtils.toInteger(data, 5), ByteUtils.toInteger(data, 9)));
+            WorldDataLoader.postCellSet.add(
+                    new Tuple<>(this, ByteUtils.toInteger(data, 5), ByteUtils.toInteger(data, 9)));
         }
         /*
          * Check to see if tasks are ready to load?
@@ -150,43 +151,43 @@ public abstract class TaskableObject extends Entity {
         this.getCurrentTask().start(this);
     }
 
-	@Override
-	public void update(float d) {
-		super.update(d);
-		
-		if(currentTask == null) {
-			if(!tree.isEmpty()) {
-				currentTask = tree.first();
-			}
-		} else {
-			if(currentTask.isStarted()) {
-				currentTask.update(d);
-			} else {
-				currentTask.start(this);
-			}
-		}
-		agent.update(d, getCenter());
-		
-		vel.x = agent.getDir().x * d * speed;
-		vel.y = agent.getDir().y * d * speed;
-		
-		x += vel.x;
-		y += vel.y;
-		
-		if(vel.x > 0) {
-			facingRight = true;
-		} else if(vel.x < 0){
-			facingRight = false;
-		}
-	}
-	
-	public String getCurrentTaskText() {
-		if(this.getCurrentTask() == null) {
-			return "Idle";
-		} else {
-			return this.getCurrentTask().getName();
-		}
-	}
+    @Override
+    public void update(float d) {
+        super.update(d);
+
+        if (currentTask == null) {
+            if (!tree.isEmpty()) {
+                currentTask = tree.first();
+            }
+        } else {
+            if (currentTask.isStarted()) {
+                currentTask.update(d);
+            } else {
+                currentTask.start(this);
+            }
+        }
+        agent.update(d, getCenter());
+
+        vel.x = agent.getDir().x * d * speed;
+        vel.y = agent.getDir().y * d * speed;
+
+        x += vel.x;
+        y += vel.y;
+
+        if (vel.x > 0) {
+            facingRight = true;
+        } else if (vel.x < 0) {
+            facingRight = false;
+        }
+    }
+
+    public String getCurrentTaskText() {
+        if (this.getCurrentTask() == null) {
+            return "Idle";
+        } else {
+            return this.getCurrentTask().getName();
+        }
+    }
 
     private UILabel taskLabel;
 
@@ -195,7 +196,8 @@ public abstract class TaskableObject extends Entity {
         super.setupSelectMenu(top, bottom);
 
         taskLabel = UILabel.create(getCurrentTaskText(), UILabel.smallStyle);
-        bottom.add(taskLabel).expand().fillX().left().top().padLeft(6 * Layer.scale).padTop(3 * Layer.scale);
+        bottom.add(taskLabel).expand().fillX().left().top().padLeft(6 * Layer.scale)
+                .padTop(3 * Layer.scale);
     }
 
     @Override

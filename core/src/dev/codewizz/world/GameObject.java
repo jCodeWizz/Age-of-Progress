@@ -216,6 +216,10 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 		return uuid;
 	}
 
+	public Vector2 getCenter() {
+		return new Vector2();
+	}
+
 	@Override
 	public String toString() {
 		return "GameObject{" +
