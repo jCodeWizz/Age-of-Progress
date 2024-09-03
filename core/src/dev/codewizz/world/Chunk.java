@@ -2,7 +2,9 @@ package dev.codewizz.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import dev.codewizz.gfx.Renderable;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.GenerateChunkEvent;
 import dev.codewizz.utils.Utils;
@@ -13,6 +15,7 @@ import dev.codewizz.world.objects.Tree;
 import dev.codewizz.world.tiles.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chunk implements Comparable<Chunk> {
@@ -29,6 +32,8 @@ public class Chunk implements Comparable<Chunk> {
 	private boolean loaded;
 	private boolean initialized;
 	private boolean generated;
+
+	private List<Renderable> objects = new ArrayList<>();
 	
 	public Chunk(World world, int indexX, int indexY) {
 		grid = new Cell[SIZE][SIZE];
@@ -99,6 +104,22 @@ public class Chunk implements Comparable<Chunk> {
 	
 	public void load() {
 		this.loaded = true;
+		Main.inst.world.getObjects().addAll(objects);
+		objects.clear();
+	}
+
+	public void unload() {
+		this.loaded = false;
+
+		objects.clear();
+
+		for (Renderable object : Main.inst.world.getObjects()) {
+			if (bounds.contains(object.getX(), object.getY())) {
+				objects.add(object);
+			}
+		}
+
+		Main.inst.world.getObjects().removeAll(objects);
 	}
 	
 	private void spawnResources() {
@@ -212,10 +233,6 @@ public class Chunk implements Comparable<Chunk> {
 	
 	public Rectangle getBounds() {
 		return bounds;
-	}
-	
-	public void unload() {
-		this.loaded = false;
 	}
 	
 	public Cell[][] getGrid() {

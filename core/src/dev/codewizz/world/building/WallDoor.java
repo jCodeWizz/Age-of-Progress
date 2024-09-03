@@ -1,9 +1,7 @@
 package dev.codewizz.world.building;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import dev.codewizz.gfx.Particle;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.Cell;
@@ -18,7 +16,7 @@ public class WallDoor extends Wall {
     }
 
     @Override
-    public void onPlace() {
+    public void onPlace(Cell cell) {
         cell.blockPath(Direction.getFromIndex(facing.getIndex() - 1));
         cell.blockPath(Direction.getFromIndex(facing.getIndex() + 1));
     }

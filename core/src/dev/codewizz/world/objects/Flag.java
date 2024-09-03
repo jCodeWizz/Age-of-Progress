@@ -69,10 +69,10 @@ public class Flag extends GameObject implements IBuy, SerializableObject {
         return id;
     }
 
-    @Override
-    public boolean conintues() {
-        return false;
-    }
+	@Override
+	public boolean continues() {
+		return false;
+	}
 
     @Override
     public String getMenuDescription() {

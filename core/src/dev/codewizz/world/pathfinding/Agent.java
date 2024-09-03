@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.main.Main;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
@@ -22,7 +21,7 @@ public class Agent {
     public Cell goal;
     public GameObject goalObject;
 
-    private TaskableObject object;
+    private final TaskableObject object;
 
     public Agent(TaskableObject object) {
         dir = new Vector2();
@@ -33,7 +32,9 @@ public class Agent {
 
     public void update(float d, Vector2 loc) {
 
-        if (graph == null) { graph = Main.inst.world.cellGraph; }
+        if (graph == null) {
+            graph = Main.inst.world.cellGraph;
+        }
 
         checkDistance(loc);
         if (moving) {
@@ -50,10 +51,6 @@ public class Agent {
         }
     }
 
-    public Vector2 getMiddlePoint() {
-        return new Vector2();
-    }
-
     private void reachGoal(Vector2 loc) {
         Cell nextCell = path.first();
 
@@ -61,7 +58,7 @@ public class Agent {
         path.removeFirst();
 
         if (path.size == 0 || (goalObject != null && loc.dst2(goalObject.getX(),
-                                                              goalObject.getY()) < 2.5f)) {
+                goalObject.getY()) < 2.5f)) {
             reach();
         } else {
             if (goalObject != null) {
@@ -127,7 +124,7 @@ public class Agent {
         int s = graph.getConnections(goal).size;
 
         if (!path.isEmpty() && s > 0) {
-            setSpeedToNextCell(object.getCenter());
+            setSpeedToNextCell(object.getFootPoint());
             moving = true;
 
             return true;
@@ -139,7 +136,7 @@ public class Agent {
     private void setSpeedToNextCell(Vector2 loc) {
         Cell nextCell = path.first();
         float angle = MathUtils.atan2(nextCell.getMiddlePoint().y - loc.y,
-                                      nextCell.getMiddlePoint().x - loc.x);
+                nextCell.getMiddlePoint().x - loc.x);
         dir.x = MathUtils.cos(angle);
         dir.y = MathUtils.sin(angle);
     }

@@ -138,7 +138,7 @@ public class Building extends GameObject implements IBuy, SerializableObject {
 	}
 
 	@Override
-	public boolean conintues() {
+	public boolean continues() {
 		return false;
 	}
 

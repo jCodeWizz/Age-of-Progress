@@ -116,7 +116,7 @@ public class Fence extends GameObject implements SerializableObject, IBuy {
     }
 
     @Override
-    public boolean conintues() {
+    public boolean continues() {
         return false;
     }
 

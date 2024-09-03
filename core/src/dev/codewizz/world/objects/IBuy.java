@@ -13,7 +13,7 @@ public interface IBuy {
 	public String getMenuName();
 	public String getMenuDescription();
 	public String getId();
-	public boolean conintues();
+	public boolean continues();
 	public boolean available();
 	public void onPlace(Cell cell);
 	public List<Item> costs();

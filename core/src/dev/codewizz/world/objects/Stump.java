@@ -92,7 +92,7 @@ public class Stump extends GameObject implements SerializableObject, IBuy {
 	}
 
 	@Override
-	public boolean conintues() {
+	public boolean continues() {
 		return false;
 	}
 

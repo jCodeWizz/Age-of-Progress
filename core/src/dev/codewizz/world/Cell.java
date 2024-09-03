@@ -354,23 +354,6 @@ public class Cell {
 				new Vector2(getXPoints()[0], getYPoints()[0]));
 	}
 
-	public static void printDebugInfo(Cell cell) {
-		System.out.println("CELL: [" + cell.indexX + "][" + cell.indexY + "]");
-		System.out.println(" - X: " + cell.x + " Y: " + cell.y);
-		System.out.println(" INDEX: " + cell.index);
-
-		Array<Connection<Cell>> links = Main.inst.world.cellGraph.getConnections(cell);
-
-		if (links != null) {
-			for (int i = 0; i < links.size; i++) {
-				System.out.println(" - Link[" + i + "] " + links.get(i).getCost());
-			}
-		}
-
-		System.out.println("TILE: [" + cell.tile.getName() + "]");
-		System.out.println(" - COST: " + cell.tile.cost);
-	}
-
 	public Tile getTile() {
 		return tile;
 	}

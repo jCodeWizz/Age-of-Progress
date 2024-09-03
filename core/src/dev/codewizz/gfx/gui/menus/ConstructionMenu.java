@@ -28,7 +28,7 @@ public class ConstructionMenu extends UIIconMenu {
             }
         });
 
-        UIIconButton structureMenu = UIIconButton.create("build-icon");
+        UIIconButton structureMenu = UIIconButton.create("new-build-icon");
         structureMenu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -36,8 +36,17 @@ public class ConstructionMenu extends UIIconMenu {
             }
         });
 
+        UIIconButton manageStructureMenu = UIIconButton.create("build-icon");
+        manageStructureMenu.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                layer.openMenu(layer.manageStructureMenu);
+            }
+        });
+
         addIcon(tileMenu);
         addIcon(objectMenu);
         addIcon(structureMenu);
+        addIcon(manageStructureMenu);
     }
 }
