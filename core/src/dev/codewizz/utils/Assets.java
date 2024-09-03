@@ -1,9 +1,12 @@
 package dev.codewizz.utils;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import dev.codewizz.world.settlement.Crop;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
@@ -13,6 +16,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import dev.codewizz.main.Main;
 import dev.codewizz.networking.NetworkProtocol;
+import java.util.List;
+import java.util.logging.FileHandler;
 
 
 public class Assets {
@@ -108,11 +113,7 @@ public class Assets {
     }
 
     public static void load() {
-        String data = Gdx.files.internal("data/crops/carrot.json").readString();
-        Crop.readCropFromJson(data);
-
-
-
+        Crop.readCropFromJson(Gdx.files.internal("data/crops/carrot.json").readString());
 
 
     }
