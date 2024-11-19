@@ -71,7 +71,7 @@ public class Main extends ApplicationAdapter {
 
         console = new Console();
         console.start();
-		console.register();
+        console.register();
     }
 
     public void setInputMultiplexer() {
@@ -152,7 +152,7 @@ public class Main extends ApplicationAdapter {
         if (Main.inst.world != null) {
             Main.inst.world.stop();
         }
-		Main.inst.console.stop();
+        Main.inst.console.stop();
         Main.inst.client.stop();
         Main.inst.handler.stop();
 

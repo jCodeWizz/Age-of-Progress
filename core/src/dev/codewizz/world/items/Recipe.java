@@ -1,22 +1,36 @@
 package dev.codewizz.world.items;
 
-public enum Recipe {
+import java.util.ArrayList;
 
-    Planks(new Item(ItemType.PLANKS, 5), new Item(ItemType.WOOD, 1));
+public class Recipe {
 
-    private final Item result;
-    private final Item[] costs;
+    private String type;
+    private float time;
 
-    Recipe(Item result, Item... costs) {
-        this.result = result;
+    private ArrayList<Item> costs;
+    private ArrayList<Item> result;
+
+    public Recipe(String type, float time, ArrayList<Item> costs, ArrayList<Item> result) {
+        this.type = type;
+        this.time = time;
         this.costs = costs;
+        this.result = result;
     }
 
-    public Item getResult() {
+    public String getType() {
+        return type;
+    }
+
+    public float getTime() {
+        return time;
+    }
+
+    public ArrayList<Item> getCosts() {
+        return costs;
+    }
+
+    public ArrayList<Item> getResult() {
         return result;
     }
 
-    public Item[] getCosts() {
-        return costs;
-    }
 }
