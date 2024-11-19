@@ -115,7 +115,13 @@ public class Assets {
 
     public static void load() {
         Crop.readCropFromJson(Gdx.files.internal("data/crops/carrot.json").readString());
-        Registers.registerRecipe("plank", Gdx.files.internal("data/recipes/plank.json").readString());
+
+
+        File root = new File("assets/data/recipes/");
+        for (File f : root.listFiles()) {
+            String name = f.getName();
+            Registers.registerRecipe(name.split("\\.")[0], Gdx.files.internal("data/recipes/" + name).readString());
+        }
     }
 
     public static BufferedImage getImage(String name) {
