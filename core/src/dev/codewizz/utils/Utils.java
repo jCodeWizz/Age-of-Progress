@@ -1,17 +1,18 @@
 package dev.codewizz.utils;
 
-import java.awt.Desktop;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+
+import java.awt.*;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Random;
 import java.util.stream.Stream;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 
 public class Utils {
 
@@ -125,6 +126,9 @@ public class Utils {
 
         try (Stream<String> lines = Files.lines(Paths.get(nameFile.getAbsolutePath()))) {
             name = lines.skip(RANDOM.nextInt(7940)).findFirst().get();
+        } catch (NoSuchFileException e) {
+            name = "ptr1500";
+            Logger.error("names.txt file not found, restart game please!");
         } catch (Exception e) {
             name = "ptr1500";
             e.printStackTrace();
