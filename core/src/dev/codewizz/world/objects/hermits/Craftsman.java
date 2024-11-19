@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Queue;
 
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.items.Item;
@@ -29,7 +30,7 @@ public class Craftsman extends Job {
 
         if (!hermit.getSettlement().inventory.containsItem(
                 new Item(ItemType.PLANKS, 10)) && queue.size < 10) {
-            CraftTask task = new CraftTask(Recipe.Planks);
+            CraftTask task = new CraftTask(Registers.recipes.get("plank"));
             queue.addLast(task);
             hermit.getSettlement().addTask(task, true);
         }

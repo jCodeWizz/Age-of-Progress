@@ -1,5 +1,7 @@
 package dev.codewizz.modding;
 
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import dev.codewizz.input.console.CommandExecutor;
 import dev.codewizz.modding.annotations.EventCall;
 import dev.codewizz.modding.annotations.Priorities;
@@ -8,9 +10,15 @@ import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Pair;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.Tile;
+import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.items.Recipe;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Registers {
 
@@ -19,6 +27,7 @@ public class Registers {
     public static final HashMap<String, Class<? extends GameObject>> objects = new HashMap<>();
     public static final HashMap<String, CommandExecutor> commands = new HashMap<>();
     public static HashMap<String, EventMethod> events = new HashMap<>();
+    public static HashMap<String, Recipe> recipes = new HashMap<>();
 
     public static Tile createTile(String id) {
         if (!tiles.containsKey(id)) {
@@ -113,6 +122,34 @@ public class Registers {
         }
 
         commands.put(name, e);
+        return true;
+    }
+
+    public static boolean registerRecipe(String name, String json) {
+        JsonValue root = new JsonReader().parse(json);
+        String type = root.getString("type");
+        float time = root.getFloat("time");
+
+        JsonValue costs = root.get("cost");
+        JsonValue results = root.get("result");
+
+        Item[] itemCosts = new Item[costs.size];
+        Item[] itemResults = new Item[results.size];
+
+        for (int i = 0; i < costs.size; i++) {
+            JsonValue cost = costs.get(i);
+            Item item = new Item(ItemType.types.get(cost.getString("id")) , cost.getInt("count", 1));
+            itemCosts[i] = item;
+        }
+
+        for (int i = 0; i < results.size; i++) {
+            JsonValue result = results.get(i);
+            Item item = new Item(ItemType.types.get(result.getString("id")) , result.getInt("count", 1));
+            itemResults[i] = item;
+        }
+
+        Recipe recipe = new Recipe(type, time, itemCosts, itemResults);
+        recipes.put(name, recipe);
         return true;
     }
 }

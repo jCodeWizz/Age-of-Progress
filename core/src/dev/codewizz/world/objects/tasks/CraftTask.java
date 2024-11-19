@@ -59,7 +59,7 @@ public class CraftTask extends Task {
 			for (int i = 0; i < recipe.getCosts().length; i++) {
 				hermit.getInventory().removeItem(recipe.getCosts()[i]);
 			}
-			hermit.getInventory().addItem(new Item(recipe.getResult().getType(), recipe.getResult().getSize()));
+			hermit.getInventory().addItem(new Item(recipe.getResult()[0].getType(), recipe.getResult()[0].getSize()));
 
 			finish();
 		} else {
@@ -140,6 +140,6 @@ public class CraftTask extends Task {
 
 	@Override
 	public String getName() {
-		return "Crafting " + recipe.getResult().getType().getName();
+		return "Crafting " + recipe.getResult()[0].getType().getName();
 	}
 }

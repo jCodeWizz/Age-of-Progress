@@ -7,10 +7,10 @@ public class Recipe {
     private String type;
     private float time;
 
-    private ArrayList<Item> costs;
-    private ArrayList<Item> result;
+    private Item[] costs;
+    private Item[] result;
 
-    public Recipe(String type, float time, ArrayList<Item> costs, ArrayList<Item> result) {
+    public Recipe(String type, float time, Item[] costs, Item[] result) {
         this.type = type;
         this.time = time;
         this.costs = costs;
@@ -25,11 +25,11 @@ public class Recipe {
         return time;
     }
 
-    public ArrayList<Item> getCosts() {
+    public Item[] getCosts() {
         return costs;
     }
 
-    public ArrayList<Item> getResult() {
+    public Item[] getResult() {
         return result;
     }
 

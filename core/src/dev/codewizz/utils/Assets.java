@@ -3,6 +3,7 @@ package dev.codewizz.utils;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import dev.codewizz.modding.Registers;
 import dev.codewizz.world.settlement.Crop;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -114,8 +115,7 @@ public class Assets {
 
     public static void load() {
         Crop.readCropFromJson(Gdx.files.internal("data/crops/carrot.json").readString());
-
-
+        Registers.registerRecipe("plank", Gdx.files.internal("data/recipes/plank.json").readString());
     }
 
     public static BufferedImage getImage(String name) {
