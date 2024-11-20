@@ -30,7 +30,7 @@ public class Craftsman extends Job {
 
         if (!hermit.getSettlement().inventory.containsItem(
                 new Item(ItemType.PLANKS, 10)) && queue.size < 10) {
-            CraftTask task = new CraftTask(Registers.recipes.get("plank"));
+            CraftTask task = new CraftTask(Registers.recipes.get("planks"));
             queue.addLast(task);
             hermit.getSettlement().addTask(task, true);
         }

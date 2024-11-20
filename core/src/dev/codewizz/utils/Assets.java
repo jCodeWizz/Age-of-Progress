@@ -4,6 +4,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import dev.codewizz.modding.Registers;
+import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.settlement.Crop;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -116,11 +117,14 @@ public class Assets {
     public static void load() {
         Crop.readCropFromJson(Gdx.files.internal("data/crops/carrot.json").readString());
 
-
-        File root = new File("assets/data/recipes/");
-        for (File f : root.listFiles()) {
-            String name = f.getName();
-            Registers.registerRecipe(name.split("\\.")[0], Gdx.files.internal("data/recipes/" + name).readString());
+        for (ItemType type : ItemType.types.values()) {
+            String name = type.getId().split(":")[1];
+            Logger.log(name);
+            if (Gdx.files.internal("data/recipes/" + name + ".json").exists()) {
+                String json = Gdx.files.internal("data/recipes/" + name + ".json").readString();
+                Registers.registerRecipe(name, json);
+                Logger.log("Registered");
+            }
         }
     }
 
