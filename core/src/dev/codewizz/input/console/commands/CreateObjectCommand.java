@@ -10,6 +10,11 @@ import dev.codewizz.world.World;
 public class CreateObjectCommand implements CommandExecutor {
 
     @Override
+    public String getUsage() {
+        return "createobject [object_id] {x:0} {y:0} {object_count:1}";
+    }
+
+    @Override
     public boolean execute(String command, World world, String[] args) {
         if (args.length > 0) {
             String id = args[0];

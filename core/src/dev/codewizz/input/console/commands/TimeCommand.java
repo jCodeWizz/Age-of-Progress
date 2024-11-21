@@ -9,16 +9,21 @@ public class TimeCommand implements CommandExecutor {
     private final static String NIGHT = "NIGHT";
 
     @Override
-    public boolean execute(String command, World world, String[] args) {
-        if(args.length > 0) {
+    public String getUsage() {
+        return "time [DAY|NIGHT]";
+    }
 
-            if(args[0].equalsIgnoreCase(DAY)) {
+    @Override
+    public boolean execute(String command, World world, String[] args) {
+        if (args.length > 0) {
+
+            if (args[0].equalsIgnoreCase(DAY)) {
                 world.nature.timeCounter = 0;
                 world.nature.transition = false;
                 world.nature.day = true;
                 return true;
             }
-            if(args[0].equalsIgnoreCase(NIGHT)) {
+            if (args[0].equalsIgnoreCase(NIGHT)) {
                 world.nature.timeCounter = 0;
                 world.nature.transition = false;
                 world.nature.day = false;

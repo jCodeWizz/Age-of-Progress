@@ -1,18 +1,16 @@
 package dev.codewizz.input.console.commands;
 
 import dev.codewizz.input.console.CommandExecutor;
-import dev.codewizz.modding.JavaMod;
-import dev.codewizz.modding.ModInfo;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Logger;
-import dev.codewizz.utils.Pair;
-import dev.codewizz.world.Tile;
 import dev.codewizz.world.World;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RegistersCommand implements CommandExecutor {
+
+    @Override
+    public String getUsage() {
+        return "registers [list] [register_name]";
+    }
 
     @Override
     public boolean execute(String command, World world, String[] args) {

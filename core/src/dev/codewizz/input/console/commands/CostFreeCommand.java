@@ -8,14 +8,19 @@ import dev.codewizz.world.objects.ConstructionObject;
 public class CostFreeCommand implements CommandExecutor {
 
     @Override
+    public String getUsage() {
+        return "costfree {true|false}";
+    }
+
+    @Override
     public boolean execute(String command, World world, String[] args) {
 
-        if(args.length == 0) {
+        if (args.length == 0) {
             ConstructionObject.FREE = !ConstructionObject.FREE;
         } else {
             try {
                 ConstructionObject.FREE = Boolean.parseBoolean(args[0]);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 Logger.error("Couldn't parse '" + args[0] + "' to a boolean!");
                 return false;
             }

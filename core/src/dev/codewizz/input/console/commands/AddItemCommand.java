@@ -9,12 +9,17 @@ import dev.codewizz.world.items.ItemType;
 public class AddItemCommand implements CommandExecutor {
 
     @Override
+    public String getUsage() {
+        return "additem [item_id] {item_count:1}";
+    }
+
+    @Override
     public boolean execute(String command, World world, String[] args) {
-        if(args.length > 0) {
+        if (args.length > 0) {
             String id = args[0].contains(":") ? args[0] : "aop:" + args[0];
             int amount = 1;
 
-            if(args.length > 1) {
+            if (args.length > 1) {
                 try {
                     amount = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
@@ -22,7 +27,7 @@ public class AddItemCommand implements CommandExecutor {
                 }
             }
 
-            if(!ItemType.types.containsKey(id)) {
+            if (!ItemType.types.containsKey(id)) {
                 Logger.error("Couldn't find " + id + " as an item!");
                 return false;
             }
