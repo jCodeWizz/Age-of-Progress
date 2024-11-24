@@ -96,9 +96,9 @@ public class DebugMenu extends Menu implements IUpdateDataMenu {
         settlement.setText("Settlement >> Size: " + world.settlement.members.size() + " | Area: " + world.settlement.areas.size() + " | Structure: " + world.settlement.buildings.size());
 
         if (world.nature.transition) {
-            time.setText("Time >> Day: " + world.nature.day + " C: " + world.nature.dayCounter + " | " + (int)world.nature.timeCounter + "/" + Nature.TRANSITION_TIME + " T: " + world.nature.transition + " | Light: " + world.nature.light);
+            time.setText("Time >> Day: " + world.nature.day + " C: " + world.nature.dayCounter + " | " + (int)world.nature.timeCounter + "/" + (int)Nature.TRANSITION_TIME + " T: " + world.nature.transition + " | Light: " + world.nature.light);
         } else {
-            time.setText("Time >> Day: " + world.nature.day + " C: " + world.nature.dayCounter +  " | " + (int)world.nature.timeCounter + "/" + Nature.DAY_TIME + " T: " + world.nature.transition + " | Light: " + world.nature.light);
+            time.setText("Time >> Day: " + world.nature.day + " C: " + world.nature.dayCounter +  " | " + (int)world.nature.timeCounter + "/" + (int)Nature.DAY_TIME + " T: " + world.nature.transition + " | Light: " + world.nature.light);
         }
 
         if (MouseInput.hoveringOverCell != null) {
