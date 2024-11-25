@@ -1,25 +1,19 @@
 package dev.codewizz.utils;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
-import dev.codewizz.modding.Registers;
-import dev.codewizz.world.items.ItemType;
-import dev.codewizz.world.settlement.Crop;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import dev.codewizz.main.Main;
-import dev.codewizz.networking.NetworkProtocol;
-import java.util.List;
-import java.util.logging.FileHandler;
+import dev.codewizz.modding.Registers;
+import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.settlement.Crop;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.HashMap;
 
 
 public class Assets {
@@ -119,11 +113,10 @@ public class Assets {
 
         for (ItemType type : ItemType.types.values()) {
             String name = type.getId().split(":")[1];
-            Logger.log(name);
             if (Gdx.files.internal("data/recipes/" + name + ".json").exists()) {
+                Logger.log("Automatically registered recipe for: '" + type.getId() + "'");
                 String json = Gdx.files.internal("data/recipes/" + name + ".json").readString();
                 Registers.registerRecipe(name, json);
-                Logger.log("Registered");
             }
         }
     }
@@ -143,11 +136,7 @@ public class Assets {
     }
 
     public static TextureAtlas getAtlas(String s) {
-        if (atlasses.containsKey(s)) {
-            return atlasses.get(s);
-        } else {
-            return null;
-        }
+        return atlasses.getOrDefault(s, null);
     }
 
     public static Sprite addSpriteToAtlas(String atlas, String s, Sprite sprite) {
