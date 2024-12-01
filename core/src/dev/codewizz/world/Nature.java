@@ -10,6 +10,7 @@ import dev.codewizz.world.objects.Cow;
 import dev.codewizz.world.objects.Herd;
 import dev.codewizz.world.objects.hermits.Hermit;
 
+import dev.codewizz.world.objects.tasks.SleepTask;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -74,8 +75,8 @@ public class Nature {
     public void onNight() {
         if (Main.inst.world.settlement != null) {
             for (Hermit h : Main.inst.world.settlement.members) {
-                //SleepTask t = new SleepTask();
-                //h.addTask(t, true);
+                SleepTask t = new SleepTask();
+                h.addTask(t, true);
             }
         }
 
@@ -114,7 +115,8 @@ public class Nature {
     }
 
     public boolean addAnimal(Animal a) {
-        List<Cell> cells = world.findCell(a.getX(), a.getY(), 4, false, "aop:grass-tile", "aop:flower-tile");
+        List<Cell> cells = world.findCell(a.getX(), a.getY(), 4, false, "aop:grass-tile",
+                                          "aop:flower-tile");
         if (!cells.isEmpty()) {
             Cell cell = cells.get(cells.size() - 1);
 

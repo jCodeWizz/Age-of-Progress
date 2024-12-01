@@ -14,6 +14,7 @@ import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.SerializableObject;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.Nature;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
@@ -48,7 +49,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
     //private float hunger = 1f;
     //private float thirst = 1f;
 
-    private float sleepNeed = 10f;
+    private float sleepNeed = Nature.DAY_TIME + Nature.TRANSITION_TIME;
 
     private int age = 101;
 
