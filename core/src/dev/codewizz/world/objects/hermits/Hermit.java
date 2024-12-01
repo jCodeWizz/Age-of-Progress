@@ -38,16 +38,8 @@ public class Hermit extends TaskableObject implements SerializableObject {
     private Job job;
     private Inventory inventory;
 
-    //private float intelligence = 1f;
-    //private float strength = 1f;
-    //private float speed = 1f;
-    //private float willpower = 1f;
-    private float sleep = 1f;
     private float healthy = Utils.RANDOM.nextFloat();
     private float body = Utils.RANDOM.nextFloat();
-    //private float social = 1f;
-    //private float hunger = 1f;
-    //private float thirst = 1f;
 
     private float sleepNeed = Nature.DAY_TIME + Nature.TRANSITION_TIME;
 
@@ -78,7 +70,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
         this.speed = 20f;
 
         setMaxHealth(0f);
-        setSleepNeed();
 
         this.setJob(new Worker());
     }
@@ -177,10 +168,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 
         float d = this.getMaxHealth() / a;
         this.setHealth(this.getHealth() * d);
-    }
-
-    public void setSleepNeed() {
-        this.sleepNeed = sleep * 100f;
     }
 
     public float getSleepNeed() {
