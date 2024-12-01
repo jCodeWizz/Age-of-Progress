@@ -127,8 +127,8 @@ public abstract class TaskableObject extends Entity {
         }
     }
 
-    public void addTask(Task task, boolean prio) {
-        if (prio) {
+    public void addTask(Task task, boolean priority) {
+        if (priority) {
             tree.addFirst(task);
         } else {
             tree.addLast(task);

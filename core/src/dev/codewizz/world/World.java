@@ -29,13 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 public class World {
 
     public static final int WORLD_SIZE_W = 128;
@@ -70,7 +63,7 @@ public class World {
         start = System.currentTimeMillis();
 
         tree = new QuadTree<>(-WORLD_SIZE_WP * 2, -WORLD_SIZE_HP * 2, WORLD_SIZE_WP * 2,
-                WORLD_SIZE_HP * 2);
+                              WORLD_SIZE_HP * 2);
         cellGraph = new CellGraph();
         Main.inst.world = this;
 
@@ -165,7 +158,7 @@ public class World {
 
         for (int i = 0; i < 5; i++) {
             this.settlement.addHermit(Utils.getRandom(-30, 30) + s.getX(),
-                    Utils.getRandom(-30, 30) + s.getY());
+                                      Utils.getRandom(-30, 30) + s.getY());
         }
     }
 
@@ -176,9 +169,12 @@ public class World {
         float border = Gdx.graphics.getHeight() / 8f;
 
         Vector3 p1 = Main.inst.camera.cam.unproject(new Vector3(-border, -border, 0));
-        Vector3 p2 = Main.inst.camera.cam.unproject(new Vector3(Gdx.graphics.getWidth() + border, Gdx.graphics.getHeight() + border, 0));
+        Vector3 p2 = Main.inst.camera.cam.unproject(
+                new Vector3(Gdx.graphics.getWidth() + border, Gdx.graphics.getHeight() + border,
+                            0));
 
-        Rectangle r = new Rectangle((int) p1.x, (int) p2.y, (int) (p2.x - p1.x), (int) -(p2.y - p1.y));
+        Rectangle r = new Rectangle((int) p1.x, (int) p2.y, (int) (p2.x - p1.x),
+                                    (int) -(p2.y - p1.y));
 
         for (Chunk chunk : chunks) {
 
@@ -223,10 +219,10 @@ public class World {
             if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || (MouseInput.tileArea.start == null || MouseInput.tileArea.cells.size() == 0))) {
                 if (MouseInput.clear) {
                     b.draw(Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
-                            MouseInput.hoveringOverCell.y);
+                           MouseInput.hoveringOverCell.y);
                 } else {
                     b.draw(Assets.getSprite("tile-highlight2"), MouseInput.hoveringOverCell.x,
-                            MouseInput.hoveringOverCell.y);
+                           MouseInput.hoveringOverCell.y);
                 }
             }
         }
@@ -251,7 +247,14 @@ public class World {
                 for (int i = 0; i < gameSpeed; i++) {
                     object.update(Gdx.graphics.getDeltaTime());
                 }
+
+                if (object instanceof GameObject && ((GameObject) object).getId()
+                        .equalsIgnoreCase("aop:hermit")) {
+                    Logger.log("Ticked object");
+                }
             }
+
+            Logger.log("Ticked all objects");
 
             for (Particle p : particles) {
                 for (int i = 0; i < gameSpeed; i++) {
