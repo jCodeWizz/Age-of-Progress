@@ -3,21 +3,21 @@ package dev.codewizz.world.objects.hermits;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Queue;
-
 import dev.codewizz.gfx.Animation;
+import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
-import dev.codewizz.world.items.Recipe;
 import dev.codewizz.world.objects.tasks.CraftTask;
 
 public class Craftsman extends Job {
 
-    public static Queue<CraftTask> queue = new Queue<CraftTask>();
+    public static int PLANKS_LIMIT = 30;
 
-    private static Sprite icon = Assets.getSprite("craftsman-icon");
+    private static final Sprite icon = Assets.getSprite("craftsman-icon");
+    public static final Queue<CraftTask> CRAFT_QUEUE = new Queue<>();
 
     public Craftsman() {
         this.job = Jobs.Craftsman;
@@ -28,11 +28,22 @@ public class Craftsman extends Job {
     @Override
     public void update(float dt) {
 
-        if (!hermit.getSettlement().inventory.containsItem(
-                new Item(ItemType.PLANKS, 10)) && queue.size < 10) {
-            CraftTask task = new CraftTask(Registers.recipes.get("planks"));
-            queue.addLast(task);
-            hermit.getSettlement().addTask(task, true);
+        if (!Main.inst.world.settlement.inventory.containsItem(new Item(ItemType.PLANKS), PLANKS_LIMIT)) {
+
+            boolean found = false;
+
+            for (CraftTask task : CRAFT_QUEUE) {
+                if (task.getRecipe().getResult()[0].getType().getId().equals("aop:planks")) {
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                CraftTask task = new CraftTask(Registers.recipes.get("aop:planks"));
+                CRAFT_QUEUE.addLast(task);
+                Main.inst.world.settlement.addTask(task, true);
+
+            }
         }
     }
 

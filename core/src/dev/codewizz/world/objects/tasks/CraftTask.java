@@ -50,13 +50,11 @@ public class CraftTask extends Task {
 		}
 		hermit.getInventory().addItem(new Item(recipe.getResult()[0].getType(), recipe.getResult()[0].getSize()));
 
-		Craftsman.queue.removeValue(this, false);
 		hermit.finishCurrentTask();
 	}
 
 	@Override
 	public void stop() {
-		Craftsman.queue.removeValue(this, false);
 		hermit.getAgent().stop();
 		hermit.finishCurrentTask();
 
@@ -73,6 +71,7 @@ public class CraftTask extends Task {
 
 	@Override
 	public void start(TaskableObject object) {
+		Craftsman.CRAFT_QUEUE.removeValue(this, false);
 		this.hermit = (Hermit) object;
 
 		hermit.getAgent().setGoal(hermit.getSettlement().getCell());
@@ -173,7 +172,9 @@ public class CraftTask extends Task {
 		pickup = true;
 	}
 
-
+	public Recipe getRecipe() {
+		return recipe;
+	}
 
 	@Override
 	public String getName() {

@@ -70,6 +70,16 @@ public class Inventory {
 
 		return false;
 	}
+
+	public int getSizeOf(ItemType type) {
+		for (Item items : items) {
+			if (items.getType().equals(type)) {
+				return items.getSize();
+			}
+		}
+
+		return 0;
+	}
 	
 	public boolean roomFor(Item i) {
 		return (getSizeAvailable() > 0 || containsItem(i, 1));

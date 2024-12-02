@@ -116,7 +116,7 @@ public class Assets {
             if (Gdx.files.internal("data/recipes/" + name + ".json").exists()) {
                 Logger.log("Automatically registered recipe for: '" + type.getId() + "'");
                 String json = Gdx.files.internal("data/recipes/" + name + ".json").readString();
-                Registers.registerRecipe(name, json);
+                Registers.registerRecipe(type.getId(), json);
             }
         }
     }
