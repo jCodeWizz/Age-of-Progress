@@ -247,14 +247,7 @@ public class World {
                 for (int i = 0; i < gameSpeed; i++) {
                     object.update(Gdx.graphics.getDeltaTime());
                 }
-
-                if (object instanceof GameObject && ((GameObject) object).getId()
-                        .equalsIgnoreCase("aop:hermit")) {
-                    Logger.log("Ticked object");
-                }
             }
-
-            Logger.log("Ticked all objects");
 
             for (Particle p : particles) {
                 for (int i = 0; i < gameSpeed; i++) {

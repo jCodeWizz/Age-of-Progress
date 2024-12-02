@@ -61,8 +61,6 @@ public class SleepTask extends Task {
             if (hermit.getSleepNeed() <= 0f) {
                 finish();
             }
-
-            Logger.log("Ticked");
             hermit.setSleepNeed(hermit.getSleepNeed() - d);
         }
     }
