@@ -1,6 +1,7 @@
 package dev.codewizz.world.objects.tasks;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
@@ -8,10 +9,22 @@ import dev.codewizz.world.objects.hermits.Hermit;
 public class ClearInventoryTask extends Task {
 
 	private Hermit hermit;
+	private Timer timer;
+	private boolean reached;
+
+	public ClearInventoryTask() {
+		timer = new Timer(0.5f) {
+			@Override
+			public void timer() {
+				dropItem();
+			}
+		};
+	}
 	
 	@Override
 	public void finish() {
 		hermit.finishCurrentTask();
+		timer.cancel();
 	}
 
 	@Override
@@ -37,11 +50,7 @@ public class ClearInventoryTask extends Task {
 
 	@Override
 	public void reach() {
-		for(Item item : hermit.getInventory().getItems()) {
-			Main.inst.world.settlement.getInventory().addItem(item);
-			hermit.getInventory().removeItem(item);
-		}
-		finish();
+		reached = true;
 	}
 
 	@Override
@@ -51,7 +60,23 @@ public class ClearInventoryTask extends Task {
 
 	@Override
 	public void update(float d) {
-		
+		if (reached) {
+			timer.update(d);
+		}
+
+		if (hermit.getInventory().isEmpty()) {
+			finish();
+		}
+	}
+
+	public void dropItem() {
+		Item i = hermit.getInventory().getItems().get(0);
+		Main.inst.world.settlement.getInventory().addItem(i);
+		hermit.getInventory().removeItem(i);
+
+		if (!hermit.getInventory().isEmpty()) {
+			timer.reset();
+		}
 	}
 
 	@Override

@@ -87,4 +87,12 @@ public class Item extends Renderable {
 		i.y = this.y;
 		return i;
 	}
+
+	@Override
+	public String toString() {
+		return "Item{" +
+				"item=" + item +
+				", size=" + size +
+				'}';
+	}
 }

@@ -20,7 +20,7 @@ public class DestroyObjectTask extends Task {
     public DestroyObjectTask(GameObject object) {
         this.toDestroy = object;
 
-        dTime = new Timer(60f) {
+        dTime = new Timer(5f) {
             @Override
             public void timer() {
                 finish();

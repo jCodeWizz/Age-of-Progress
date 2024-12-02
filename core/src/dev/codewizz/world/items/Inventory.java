@@ -90,4 +90,12 @@ public class Inventory {
 	public List<Item> getItems() {
 		return this.items;
 	}
+
+	@Override
+	public String toString() {
+		return "Inventory{" +
+				"items=" + items +
+				", size=" + size +
+				'}';
+	}
 }

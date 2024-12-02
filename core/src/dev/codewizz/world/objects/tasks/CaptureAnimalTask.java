@@ -3,6 +3,7 @@ package dev.codewizz.world.objects.tasks;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.objects.Animal;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
@@ -14,18 +15,25 @@ public class CaptureAnimalTask extends Task {
     private final float REACH = 1000f;
 
     private Hermit hermit;
-    private Animal animal;
+    private final Animal animal;
     private FarmArea area;
 
     private boolean reachedAnimal = false;
+    private final Timer timer;
 
-    private float counter = 0f;
 
     public CaptureAnimalTask(Animal animal, FarmArea area) {
         this.animal = animal;
         this.area = area;
         this.jobs.add(Jobs.Farmer);
         animal.setTasked(true);
+
+        timer = new Timer(2f) {
+            @Override
+            public void timer() {
+                hermit.setSpeed(animal.getSpeed());
+            }
+        };
     }
 
     @Override
@@ -53,7 +61,9 @@ public class CaptureAnimalTask extends Task {
         }
 
         hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
-		if (hermit.getAgent().path.isEmpty()) { reach(); }
+        if (hermit.getAgent().path.isEmpty()) {
+            reach();
+        }
 
         started = true;
     }
@@ -79,8 +89,8 @@ public class CaptureAnimalTask extends Task {
                 hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
                 if (hermit.getAgent().path.isEmpty()) {
                     Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(),
-                                                                hermit.getX(),
-                                                                hermit.getY()) + "/" + REACH);
+                            hermit.getX(),
+                            hermit.getY()) + "/" + REACH);
                     reachedAnimal = true;
                     reach();
                 }
@@ -125,9 +135,7 @@ public class CaptureAnimalTask extends Task {
     public void update(float d) {
 
         if (reachedAnimal) {
-			if (counter < 2f) { counter += d; } else {
-				hermit.setSpeed(animal.getSpeed());
-			}
+            timer.update(d);
         }
     }
 

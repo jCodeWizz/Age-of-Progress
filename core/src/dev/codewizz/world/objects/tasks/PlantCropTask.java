@@ -5,6 +5,7 @@ import dev.codewizz.gfx.Animation;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
@@ -14,20 +15,27 @@ import dev.codewizz.world.tiles.FarmTile;
 
 public class PlantCropTask extends Task {
 
-    private static Sprite frame0 = Assets.getSprite("hermit-axe-1");
-    private static Sprite frame1 = Assets.getSprite("hermit-axe-2");
+    private static final Sprite frame0 = Assets.getSprite("hermit-axe-1");
+    private static final Sprite frame1 = Assets.getSprite("hermit-axe-2");
 
     private Hermit hermit;
-    private Cell cell;
-    private Animation animation = new Animation(-10f, 0, 0.1f, frame0, frame1);
-    private float counter = 0f;
-    private float duration = 2f;
+    private final Cell cell;
+    private final Animation animation = new Animation(-10f, 0, 0.1f, frame0, frame1);
     private boolean reached = false;
+
+    private final Timer timer;
 
     public PlantCropTask(Cell cell) {
         super(Jobs.Farmer);
 
         this.cell = cell;
+
+        timer = new Timer(2f) {
+            @Override
+            public void timer() {
+                finish();
+            }
+        };
     }
 
     @Override
@@ -47,6 +55,8 @@ public class PlantCropTask extends Task {
         hermit.getAgent().stop();
         hermit.setTaskAnimation(null);
         hermit.finishCurrentTask();
+
+        timer.cancel();
     }
 
     @Override
@@ -75,11 +85,7 @@ public class PlantCropTask extends Task {
     @Override
     public void update(float d) {
         if (reached) {
-            if (counter < duration) {
-                counter += d;
-            } else {
-                finish();
-            }
+            timer.update(d);
         }
     }
 

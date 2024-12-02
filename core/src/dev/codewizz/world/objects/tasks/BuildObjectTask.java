@@ -1,6 +1,7 @@
 package dev.codewizz.world.objects.tasks;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.ConstructionObject;
 import dev.codewizz.world.objects.TaskableObject;
@@ -11,10 +12,30 @@ public class BuildObjectTask extends Task {
 	private ConstructionObject object;
 	private Hermit hermit;
 	private Item i;
+
+	private final Timer timerFinish;
+	private boolean finishing;
+
+	private final Timer timerGrab;
+	private boolean grabbing;
 	
 	public BuildObjectTask(ConstructionObject object, Item i) {
 		this.object = object;
 		this.i = i;
+
+		timerFinish = new Timer(2f) {
+			@Override
+			public void timer() {
+				finish();
+			}
+		};
+
+		timerGrab = new Timer(.5f) {
+			@Override
+			public void timer() {
+				grab();
+			}
+		};
 	}
 	
 	@Override
@@ -36,7 +57,10 @@ public class BuildObjectTask extends Task {
 		hermit.setTaskAnimation(null);
 		hermit.finishCurrentTask();
 		hermit.getAgent().stop();
-		
+
+		timerFinish.cancel();
+		timerGrab.cancel();
+
 		Main.inst.world.settlement.addTask(new BuildObjectTask(object, i), true);
 	}
 
@@ -52,7 +76,7 @@ public class BuildObjectTask extends Task {
 	@Override
 	public void reach() {
 		if(hermit.getInventory().containsItem(i)) {
-			finish();
+			finishing = true;
 		} else {
 			if(Main.inst.world.settlement.inventory.containsItem(i)) {
 				if(!hermit.getInventory().addItem(i)) {
@@ -62,9 +86,13 @@ public class BuildObjectTask extends Task {
 				stop();
 			}
 
-			Main.inst.world.settlement.inventory.removeItem(i);
-			hermit.getAgent().setGoal(object.getCell());
+			grabbing = true;
 		}
+	}
+
+	public void grab() {
+		Main.inst.world.settlement.inventory.removeItem(i);
+		hermit.getAgent().setGoal(object.getCell());
 	}
 
 	@Override
@@ -73,6 +101,13 @@ public class BuildObjectTask extends Task {
 
 	@Override
 	public void update(float d) {
+		if (finishing) {
+			timerFinish.update(d);
+		}
+
+		if (grabbing) {
+			timerGrab.update(d);
+		}
 	}
 
 	@Override

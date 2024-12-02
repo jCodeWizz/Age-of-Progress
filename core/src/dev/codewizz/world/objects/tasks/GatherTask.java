@@ -4,6 +4,7 @@ import dev.codewizz.gfx.Animation;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.IGatherable;
@@ -18,14 +19,19 @@ public class GatherTask extends Task {
 	private Hermit hermit;
 	private Animation animation = new Animation(-10f, 0, 0.1f, Assets.getSprite("hermit-axe-1"), Assets.getSprite("hermit-axe-2"));
 	
-	private float counter = 0;
+	private Timer timer;
 	private boolean reached = false;
 	
 	public GatherTask(GameObject object) {
 		this.object = object;
-		
-		counter = (float)((IGatherable) object).duration();
-		
+
+		timer = new Timer((float)((IGatherable) object).duration()) {
+			@Override
+			public void timer() {
+				finish();
+			}
+		};
+
 		cell = Main.inst.world.getCell(object.getX() + 30, object.getY() + 30);
 		
 		if(cell == null) stop();
@@ -43,6 +49,7 @@ public class GatherTask extends Task {
 		hermit.getAgent().stop();
 		hermit.setTaskAnimation(null);
 		hermit.finishCurrentTask();
+		timer.cancel();
 	}
 
 	@Override
@@ -64,11 +71,7 @@ public class GatherTask extends Task {
 	@Override
 	public void update(float d) {
 		if(reached) {
-			counter -= 1f * d;
-			
-			if(counter <= 0) {
-				finish();
-			}
+			timer.update(d);
 		}
 	}
 
@@ -79,7 +82,7 @@ public class GatherTask extends Task {
 
 	@Override
 	public void reset() {
-		counter = (float)((IGatherable) object).duration();
+		timer.reset();
 		reached = false;
 	}
 }

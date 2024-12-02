@@ -1,6 +1,7 @@
 package dev.codewizz.world.objects.tasks;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Timer;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.Recipe;
@@ -12,17 +13,43 @@ import dev.codewizz.world.objects.hermits.Jobs;
 public class CraftTask extends Task {
 
 	private Hermit hermit;
-	private Recipe recipe;
+	private final Recipe recipe;
 
 	private boolean pickup = false;
+
+	private final Timer pickupTimer;
+	private boolean pickingup;
+
+	private final Timer craftTimer;
+	private boolean crafting;
 
 	public CraftTask(Recipe recipe) {
 		super(Jobs.Craftsman);
 		this.recipe = recipe;
+
+		craftTimer = new Timer(recipe.getTime()) {
+			@Override
+			public void timer() {
+				finish();
+			}
+		};
+
+		pickupTimer = new Timer(.5f) {
+			@Override
+			public void timer() {
+				doPickup();
+			}
+		};
+
 	}
 
 	@Override
 	public void finish() {
+		for (int i = 0; i < recipe.getCosts().length; i++) {
+			hermit.getInventory().removeItem(recipe.getCosts()[i]);
+		}
+		hermit.getInventory().addItem(new Item(recipe.getResult()[0].getType(), recipe.getResult()[0].getSize()));
+
 		Craftsman.queue.removeValue(this, false);
 		hermit.finishCurrentTask();
 	}
@@ -39,6 +66,9 @@ public class CraftTask extends Task {
 				Main.inst.world.addItem(item);
 			}
 		}
+
+		craftTimer.cancel();
+		pickupTimer.cancel();
 	}
 
 	@Override
@@ -55,16 +85,8 @@ public class CraftTask extends Task {
 	@Override
 	public void reach() {
 		if (pickup) {
-
-			for (int i = 0; i < recipe.getCosts().length; i++) {
-				hermit.getInventory().removeItem(recipe.getCosts()[i]);
-			}
-			hermit.getInventory().addItem(new Item(recipe.getResult()[0].getType(), recipe.getResult()[0].getSize()));
-
-			finish();
+			crafting = true;
 		} else {
-			pickup = true;
-
 			for (int i = 0; i < recipe.getCosts().length; i++) {
 				if (!hermit.getSettlement().getInventory().containsItem(recipe.getCosts()[i],
 						recipe.getCosts()[i].getSize())) {
@@ -73,21 +95,7 @@ public class CraftTask extends Task {
 				}
 			}
 
-			for (int i = 0; i < recipe.getCosts().length; i++) {
-				hermit.getSettlement().getInventory().removeItem(recipe.getCosts()[i]);
-				hermit.getInventory().addItem(recipe.getCosts()[i]);
-			}
-
-			for (GameObject object : hermit.getSettlement().objects) {
-				if (object.getId().equals("aop:stump")) {
-
-					hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25));
-					if (hermit.getAgent().path.isEmpty())
-						reach();
-
-					break;
-				}
-			}
+			pickingup = true;
 		}
 	}
 
@@ -103,6 +111,7 @@ public class CraftTask extends Task {
 		for (GameObject object : hermit.getSettlement().objects) {
 			if (object.getId().equals("aop:stump")) {
 				found = true;
+				break;
 			}
 		}
 
@@ -135,8 +144,36 @@ public class CraftTask extends Task {
 
 	@Override
 	public void update(float d) {
+		if (crafting) {
+			craftTimer.update(d);
+		}
 
+		if (pickingup) {
+			pickupTimer.update(d);
+		}
 	}
+
+	public void doPickup() {
+		for (int i = 0; i < recipe.getCosts().length; i++) {
+			hermit.getSettlement().getInventory().removeItem(recipe.getCosts()[i]);
+			hermit.getInventory().addItem(recipe.getCosts()[i]);
+		}
+
+		for (GameObject object : hermit.getSettlement().objects) {
+			if (object.getId().equals("aop:stump")) {
+
+				hermit.getAgent().setGoal(Main.inst.world.getCell(object.getX() + 24, object.getY() + 25));
+				if (hermit.getAgent().path.isEmpty())
+					reach();
+
+				break;
+			}
+		}
+
+		pickup = true;
+	}
+
+
 
 	@Override
 	public String getName() {

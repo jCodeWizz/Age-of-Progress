@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -210,6 +211,9 @@ public class Hermit extends TaskableObject implements SerializableObject {
 
     @Override
     public void updateSelectMenu() {
+        Logger.log(inventory);
+
+
         super.updateSelectMenu();
         nameLabel.setText(this.getName() + " (" + age + ")");
         headIcon.setDrawable(new SpriteDrawable(this.job.getIcon()));
@@ -244,4 +248,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
     public Inventory getInventory() {
         return this.inventory;
     }
+
+
 }
