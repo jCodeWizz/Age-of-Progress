@@ -213,7 +213,7 @@ public class MouseInput implements InputProcessor {
                 for (Renderable o : Main.inst.world.getObjects()) {
                     if (o instanceof GameObject) {
                         GameObject obj = (GameObject) o;
-                        if(obj.isSelected()) obj.setSelected(true);
+                        if(obj.isSelected()) obj.setSelected(false);
                         if (obj.getHitBox().contains(coords.x, coords.y) && !found) {
                             found = true;
                             if (((GameLayer)Main.inst.renderer.uiLayer).menusClosed()) {
