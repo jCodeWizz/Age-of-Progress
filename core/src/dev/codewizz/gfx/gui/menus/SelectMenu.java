@@ -58,4 +58,9 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
            selected.updateSelectMenu();
         }
     }
+
+    @Override
+    public void onClose() {
+        selected = null;
+    }
 }
