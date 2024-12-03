@@ -115,9 +115,6 @@ public abstract class TaskableObject extends Entity {
 
     public void finishCurrentTask() {
         agent.stop();
-        if (!tree.isEmpty()) {
-            tree.removeFirst();
-        }
         currentTask = null;
     }
 
@@ -135,29 +132,14 @@ public abstract class TaskableObject extends Entity {
         }
     }
 
-    public void addPrioTask(Task t) {
-        if (this.getCurrentTask() != null) {
-            Task task = this.getCurrentTask();
-            task.stop();
-            if (task.shouldRestart()) {
-                task.reset();
-                task.setStarted(false);
-                addTask(task, true);
-            }
-        }
-
-        this.getTree().addFirst(t);
-        this.setCurrentTask(t);
-        this.getCurrentTask().start(this);
-    }
-
     @Override
     public void update(float d) {
         super.update(d);
 
         if (currentTask == null) {
             if (!tree.isEmpty()) {
-                currentTask = tree.first();
+                currentTask = tree.removeFirst();
+                currentTask.start(this);
             }
         } else {
             if (currentTask.isStarted()) {

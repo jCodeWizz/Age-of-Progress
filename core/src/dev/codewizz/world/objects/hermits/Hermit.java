@@ -211,9 +211,6 @@ public class Hermit extends TaskableObject implements SerializableObject {
 
     @Override
     public void updateSelectMenu() {
-        Logger.log(inventory);
-
-
         super.updateSelectMenu();
         nameLabel.setText(this.getName() + " (" + age + ")");
         headIcon.setDrawable(new SpriteDrawable(this.job.getIcon()));
