@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
-import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.utils.Assets;
@@ -41,6 +40,8 @@ public class SelectMenu extends Menu implements IUpdateDataMenu {
         this.selected = selected;
 
         if(selected != null) {
+            top.clear();
+            bottom.clear();
             selected.setupSelectMenu(top, bottom);
         } else {
             top.clear();
