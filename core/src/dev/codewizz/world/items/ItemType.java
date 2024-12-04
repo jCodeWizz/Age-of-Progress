@@ -13,12 +13,11 @@ public class ItemType {
 	public final static HashMap<String, ItemType> types = new HashMap<>();
 
 	public final static ItemType CARROT = new ItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"));
-	public final static ItemType CLAY = new ItemType("Clay", "aop:clay", Assets.getSprite("item-clay"));
 	public final static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("mushrooms"));
 	public final static ItemType PLANKS = new ItemType("Planks", "aop:planks", Assets.getSprite("item-plank"));
 	public final static ItemType STONE = new ItemType("Stone", "aop:stone", Assets.getSprite("item-stone"));
-	public final static ItemType WHEAT = new ItemType("Wheat", "aop:wheat", Assets.getSprite("item-wheat"));
 	public final static ItemType WOOD = new ItemType("Wood", "aop:wood", Assets.getSprite("item-wood"));
+	public final static ItemType AXE = new ItemType("Crude Axe", "aop:crude_axe", Assets.getSprite("axe"));
 	
 	private final float w, h;
 	private final String id, name;
