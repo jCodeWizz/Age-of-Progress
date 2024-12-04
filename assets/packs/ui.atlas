@@ -249,6 +249,62 @@ slot-background-pressed
   orig: 51, 51
   offset: 0, 0
   index: -1
+speed-0
+  rotate: false
+  xy: 1903, 1808
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-0-pressed
+  rotate: false
+  xy: 1108, 837
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-1
+  rotate: false
+  xy: 1084, 811
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-1-pressed
+  rotate: false
+  xy: 1137, 864
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-2
+  rotate: false
+  xy: 383, 280
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+speed-2-pressed
+  rotate: false
+  xy: 1664, 1722
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+speed-3
+  rotate: false
+  xy: 1490, 1479
+  size: 21, 10
+  orig: 21, 10
+  offset: 0, 0
+  index: -1
+speed-3-pressed
+  rotate: false
+  xy: 1547, 1498
+  size: 21, 10
+  orig: 21, 10
+  offset: 0, 0
+  index: -1
 tab-button
   rotate: false
   xy: 1490, 1491

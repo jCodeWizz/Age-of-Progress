@@ -5,6 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import dev.codewizz.gfx.gui.elements.UIToggle;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
@@ -55,16 +59,24 @@ public class KeyInput implements InputProcessor {
 			MouseInput.rotate = !MouseInput.rotate;
 		}
 		
-		if(key == Input.Keys.NUM_3) { 
-			World.gameSpeed = 3;
+		if(key == Input.Keys.NUM_3) {
+			UIToggle t = ((GameLayer)Main.inst.renderer.uiLayer).speed3;
+			t.setChecked(true);
+			World.gameSpeed = 5;
 		}
 		if(key == Input.Keys.NUM_2) {
-			World.gameSpeed = 2;
+			UIToggle t = ((GameLayer)Main.inst.renderer.uiLayer).speed2;
+			t.setChecked(true);
+			World.gameSpeed = 3;
 		}
 		if(key == Input.Keys.NUM_1) {
+			UIToggle t = ((GameLayer)Main.inst.renderer.uiLayer).speed1;
+			t.setChecked(true);
 			World.gameSpeed = 1;
 		}
 		if(key == Input.Keys.NUM_0) {
+			UIToggle t = ((GameLayer)Main.inst.renderer.uiLayer).speed0;
+			t.setChecked(true);
 			World.gameSpeed = 0;
 		}
 		if(key == Input.Keys.NUM_9) {
