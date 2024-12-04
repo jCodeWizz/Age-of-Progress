@@ -7,8 +7,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.world.Cell;
@@ -44,6 +48,12 @@ public class Stump extends GameObject implements SerializableObject, IBuy {
 		this.name = "Stump";
 		
 		costs.add(new Item(ItemType.WOOD, 3));
+	}
+
+	@Override
+	public void onClick() {
+		((GameLayer) Main.inst.renderer.uiLayer).craftMenu.open(this);
+		selected = true;
 	}
 
 	@Override

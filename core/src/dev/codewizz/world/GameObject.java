@@ -86,6 +86,8 @@ public abstract class GameObject extends Renderable implements SerializableObjec
         }
     }
 
+    public void onClick() {}
+
     public void onDestroy() { }
 
     public void destroy() {

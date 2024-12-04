@@ -35,6 +35,7 @@ public class GameLayer extends Layer {
     public UIIconMenu areaMenu;
     public DebugMenu debugMenu;
     public SelectMenu selectMenu;
+    public CraftMenu craftMenu;
 
     private final Timer updateTimer;
 
@@ -75,6 +76,7 @@ public class GameLayer extends Layer {
         pauseMenu = new PauseMenu(Main.inst.renderer.uiStage, this);
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
         selectMenu = new SelectMenu(Main.inst.renderer.uiStage, this);
+        craftMenu = new CraftMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -91,6 +93,7 @@ public class GameLayer extends Layer {
         menus.add(toolMenu);
         menus.add(areaMenu);
         menus.add(selectMenu);
+        menus.add(craftMenu);
     }
 
     @Override

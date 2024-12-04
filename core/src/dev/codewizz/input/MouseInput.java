@@ -216,6 +216,7 @@ public class MouseInput implements InputProcessor {
                         if(obj.isSelected()) obj.setSelected(false);
                         if (obj.getHitBox().contains(coords.x, coords.y) && !found) {
                             found = true;
+                            obj.onClick();
                             if (((GameLayer)Main.inst.renderer.uiLayer).menusClosed()) {
                                 obj.select();
                                 dragging[button] = false;
