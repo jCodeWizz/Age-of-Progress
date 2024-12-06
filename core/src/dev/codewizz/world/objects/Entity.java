@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.gfx.Renderable;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
@@ -55,8 +56,8 @@ public abstract class Entity extends GameObject {
 
         if (count > 0) {
             force.scl(1.0f / count);
+            force.add(Utils.RANDOM.nextFloat(), Utils.RANDOM.nextFloat());
         }
-
         return force;
     }
 
