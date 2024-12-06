@@ -7,13 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import dev.codewizz.gfx.gui.elements.UIIconButton;
-import dev.codewizz.gfx.gui.elements.UIIconMenu;
-import dev.codewizz.gfx.gui.elements.UIImageButton;
-import dev.codewizz.gfx.gui.elements.UIToggle;
+import dev.codewizz.gfx.gui.elements.*;
 import dev.codewizz.gfx.gui.menus.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Timer;
 import dev.codewizz.world.World;
 
@@ -37,6 +35,7 @@ public class GameLayer extends Layer {
     public SelectMenu selectMenu;
     public CraftMenu craftMenu;
     private NotificationMenu notificationMenu;
+    private ResourceMenu resourceMenu;
 
     private final Timer updateTimer;
 
@@ -79,6 +78,7 @@ public class GameLayer extends Layer {
         selectMenu = new SelectMenu(Main.inst.renderer.uiStage, this);
         craftMenu = new CraftMenu(Main.inst.renderer.uiStage, this);
         notificationMenu = new NotificationMenu(Main.inst.renderer.uiStage, this);
+        resourceMenu = new ResourceMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -97,8 +97,10 @@ public class GameLayer extends Layer {
         menus.add(selectMenu);
         menus.add(craftMenu);
         menus.add(notificationMenu);
+        menus.add(resourceMenu);
 
         notificationMenu.open();
+        resourceMenu.open();
     }
 
     @Override
@@ -237,7 +239,7 @@ public class GameLayer extends Layer {
         bottomRightTable.add(speed0).size(9 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
         bottomRightTable.add(speed1).size(9 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
         bottomRightTable.add(speed2).size(15 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
-        bottomRightTable.add(speed3).size(21 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 50 * Layer.scale);
+        bottomRightTable.add(speed3).size(21 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 250 * Layer.scale);
 
         Main.inst.renderer.uiStage.addActor(bottomRightTable);
     }
