@@ -154,7 +154,7 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
 
         int i = 0;
 
-        for (Item item : Main.inst.world.settlement.inventory.getItems()) {
+        for (Item item : Main.inst.world.settlement.inventory.getItems().values()) {
             if (searchField.getText().isBlank() || item.item.getName().toLowerCase().contains(searchField.getText().toLowerCase())) {
                 i++;
 

@@ -59,7 +59,7 @@ public class CraftTask extends Task {
 		hermit.finishCurrentTask();
 
 		if (pickup) {
-			for (Item i : hermit.getInventory().getItems()) {
+			for (Item i : hermit.getInventory().getItems().values()) {
 				Item item = new Item(hermit.getX(), hermit.getY(), i.getType()).size(i.getSize());
 				Main.inst.world.addItem(item);
 			}
@@ -133,7 +133,7 @@ public class CraftTask extends Task {
 	@Override
 	public void reset() {
 		if (pickup) {
-			for (Item i : hermit.getInventory().getItems()) {
+			for (Item i : hermit.getInventory().getItems().values()) {
 				Item item = new Item(hermit.getX(), hermit.getY(), i.getType()).size(i.getSize());
 				Main.inst.world.addItem(item);
 			}

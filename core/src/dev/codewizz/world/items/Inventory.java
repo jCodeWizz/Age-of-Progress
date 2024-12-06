@@ -1,29 +1,28 @@
 package dev.codewizz.world.items;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Inventory {
 
-	public List<Item> items;
+	public HashMap<String, Item> items;
 	public int size;
 
 	public Inventory(int size) {
 		this.size = size;
 
-		items = new CopyOnWriteArrayList<>();
+		items = new HashMap<>();
 	}
 
 	public boolean addItem(Item i) {
-		for (Item items : items) {
-			if (items.getType().equals(i.getType())) {
-				items.size(items.getSize() + i.getSize());
-				return true;
-			}
+		if (items.containsKey(i.getType().getId())) {
+			items.get(i.getType().getId()).size(items.get(i.getType().getId()).getSize() + i.getSize());
+			return true;
 		}
 
 		if(size == -1 || items.size() < size) {
-			items.add(i);
+			items.put(i.getType().getId(), i);
 			return true;
 		}
 		
@@ -36,35 +35,25 @@ public class Inventory {
 
 	public boolean containsItem(Item i, int count) {
 
-		for (Item items : items) {
-			if (items.getType().equals(i.getType())) {
-				if (items.getSize() >= count) {
-					return true;
-				}
-			}
-		}
+		if (items.containsKey(i.getType().getId())) {
+            return items.get(i.getType().getId()).getSize() >= count;
+        }
 
 		return false;
 	}
 	
 	public boolean removeItem(Item i) {
-
 		if (containsItem(i, i.getSize())) {
+			Item item = items.get(i.getType().getId());
 
-			for (Item items : items) {
-
-				if (items.getType().equals(i.getType())) {
-
-					if (items.getSize() > i.getSize()) {
-						items.size(items.getSize() - i.getSize());
-						return true;
-					} else if (items.getSize() == i.getSize()) {
-						this.items.remove(items);
-						return true;
-					} else {
-						return false;
-					}
-				}
+			if (item.getSize() > i.getSize()) {
+				item.size(item.getSize() - i.getSize());
+				return true;
+			} else if (item.getSize() == i.getSize()) {
+				this.items.remove(item.getType().getId());
+				return true;
+			} else {
+				return false;
 			}
 		}
 
@@ -72,10 +61,9 @@ public class Inventory {
 	}
 
 	public int getSizeOf(ItemType type) {
-		for (Item items : items) {
-			if (items.getType().equals(type)) {
-				return items.getSize();
-			}
+
+		if (items.containsKey(type.getId())) {
+			return items.get(type.getId()).getSize();
 		}
 
 		return 0;
@@ -96,8 +84,12 @@ public class Inventory {
 	public void setSize(int size) {
 		this.size = size;
 	}
+
+	public List<Item> itemList() {
+		return new ArrayList<>(items.values());
+	}
 	
-	public List<Item> getItems() {
+	public HashMap<String, Item> getItems() {
 		return this.items;
 	}
 

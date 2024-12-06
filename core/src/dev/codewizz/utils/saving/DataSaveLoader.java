@@ -113,7 +113,7 @@ public abstract class DataSaveLoader {
     public void addInventory(Inventory inventory) {
         addInteger(inventory.size);
         addInteger(inventory.getItems().size());
-        for(Item item : inventory.getItems()) {
+        for(Item item : inventory.getItems().values()) {
             addItem(item);
         }
     }

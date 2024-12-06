@@ -37,6 +37,7 @@ public class CraftMenu extends Menu {
     @Override
     protected void setup() {
         recipes.add(Registers.recipes.get("aop:crude_axe"));
+        recipes.add(Registers.recipes.get("aop:planks"));
 
 
         main = new Table();

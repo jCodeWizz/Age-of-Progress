@@ -69,7 +69,7 @@ public class HaulTask extends Task {
             i.setTasked(false);
         }
 
-        for (Item i : hermit.getInventory().getItems()) {
+        for (Item i : hermit.getInventory().getItems().values()) {
             i.setX(hermit.getX());
             i.setY(hermit.getY());
             i.setTasked(false);
@@ -99,7 +99,7 @@ public class HaulTask extends Task {
     public void reach() {
         if (items.isEmpty()) {
 
-            for (Item item : hermit.getInventory().getItems()) {
+            for (Item item : hermit.getInventory().itemList()) {
                 Main.inst.world.settlement.getInventory().addItem(item);
                 hermit.getInventory().removeItem(item);
             }
