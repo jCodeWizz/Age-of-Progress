@@ -17,6 +17,8 @@ public abstract class Menu {
 
     private boolean open = true;
 
+    protected boolean shouldClose = true;
+
     protected Stage stage;
     protected Table base;
     protected GameLayer layer;
@@ -85,5 +87,9 @@ public abstract class Menu {
 
     public void render(SpriteBatch b) {
 
+    }
+
+    public boolean shouldClose() {
+        return shouldClose;
     }
 }

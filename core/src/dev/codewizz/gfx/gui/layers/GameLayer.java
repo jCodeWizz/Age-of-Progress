@@ -36,6 +36,7 @@ public class GameLayer extends Layer {
     public DebugMenu debugMenu;
     public SelectMenu selectMenu;
     public CraftMenu craftMenu;
+    private NotificationMenu notificationMenu;
 
     private final Timer updateTimer;
 
@@ -77,6 +78,7 @@ public class GameLayer extends Layer {
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
         selectMenu = new SelectMenu(Main.inst.renderer.uiStage, this);
         craftMenu = new CraftMenu(Main.inst.renderer.uiStage, this);
+        notificationMenu = new NotificationMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -94,6 +96,9 @@ public class GameLayer extends Layer {
         menus.add(areaMenu);
         menus.add(selectMenu);
         menus.add(craftMenu);
+        menus.add(notificationMenu);
+
+        notificationMenu.open();
     }
 
     @Override
@@ -239,7 +244,7 @@ public class GameLayer extends Layer {
 
     public void openMenu(Menu menu) {
         for (Menu m : menus) {
-            if (m.isOpen()) {
+            if (m.isOpen() && m.shouldClose()) {
                 if (m.equals(menu)) {
                     m.close();
                     return;
@@ -257,7 +262,7 @@ public class GameLayer extends Layer {
 
     public void closeMenus() {
         for (Menu m : menus) {
-            if (m.isOpen()) {
+            if (m.isOpen() && m.shouldClose()) {
                 m.close();
             }
         }
@@ -265,7 +270,7 @@ public class GameLayer extends Layer {
 
     public boolean menusClosed() {
         for (Menu m : menus) {
-            if (m.isOpen()) {
+            if (m.isOpen() && m.shouldClose()) {
                 return false;
             }
         }

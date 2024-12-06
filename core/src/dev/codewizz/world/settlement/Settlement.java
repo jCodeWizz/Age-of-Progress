@@ -3,6 +3,7 @@ package dev.codewizz.world.settlement;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.gfx.Renderable;
+import dev.codewizz.gfx.gui.menus.NotificationMenu;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.HermitJoinEvent;
@@ -73,8 +74,6 @@ public class Settlement {
     }
 
     public Hermit addHermit(float x, float y) {
-
-
         Hermit hermit = new Hermit(x, y);
 
         hermit.setSettlement(this);
@@ -82,6 +81,8 @@ public class Settlement {
         Main.inst.world.addObject(hermit, Reason.FORCED);
 
         Event.dispatch(new HermitJoinEvent(hermit, this));
+
+        NotificationMenu.makeNotification(hermit.getJob().getIcon(), "A new hermit joined!", "Give " + hermit.getName() + " a warm welcome");
 
         return hermit;
     }
