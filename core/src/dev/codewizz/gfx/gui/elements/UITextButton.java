@@ -31,6 +31,7 @@ public class UITextButton extends TextButton {
         defaultStyle.disabled = new NinePatchDrawable(buttonDisabledPatch);
         defaultStyle.font = UILabel.buttonFont;
         defaultStyle.fontColor = Color.WHITE;
+        defaultStyle.downFontColor = Color.LIGHT_GRAY;
 
         buttonUpPatch.scale(Layer.scale, Layer.scale);
         buttonDownPatch.scale(Layer.scale, Layer.scale);
@@ -44,9 +45,11 @@ public class UITextButton extends TextButton {
         smallStyle.disabled = new NinePatchDrawable(buttonDisabledPatchSmall);
         smallStyle.font = UILabel.smallFont;
         smallStyle.fontColor = Color.WHITE;
+        smallStyle.downFontColor = Color.LIGHT_GRAY;
 
         resourceStyle.font = UILabel.mediumFont;
         resourceStyle.fontColor = Color.WHITE;
+        resourceStyle.downFontColor = Color.LIGHT_GRAY;
     }
 
     private UITextButton(String text) {

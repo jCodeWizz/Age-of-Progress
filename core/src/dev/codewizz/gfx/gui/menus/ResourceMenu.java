@@ -1,16 +1,19 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UILabel;
+import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.objects.hermits.Craftsman;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,6 +70,29 @@ public class ResourceMenu extends Menu implements IUpdateDataMenu {
         UILabel label = UILabel.create("0", UILabel.defaultStyle);
 
         Table input = new Table();
+
+
+
+        UILabel limit = UILabel.create("  " + Craftsman.PLANKS_LIMIT + "  ", UILabel.mediumStyle);
+
+        UITextButton more = UITextButton.create(">", UITextButton.resourceStyle);
+        more.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Craftsman.PLANKS_LIMIT += 5;
+                limit.setText("  " + Craftsman.PLANKS_LIMIT + "  ");
+            }
+        });
+        UITextButton less = UITextButton.create("<", UITextButton.resourceStyle);
+        less.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Craftsman.PLANKS_LIMIT -= 5;
+                limit.setText("  " + Craftsman.PLANKS_LIMIT + "  ");
+            }
+        });
+
+        input.add(less, limit, more);
 
         resource.add(image).size(12 * Layer.scale).left().top().pad(Layer.scale);
         resource.add(label).left().top();
