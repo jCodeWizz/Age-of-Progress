@@ -12,6 +12,7 @@ public class UITextButton extends TextButton {
 
     public final static TextButtonStyle defaultStyle = new TextButtonStyle();
     public final static TextButtonStyle smallStyle = new TextButtonStyle();
+    public final static TextButtonStyle resourceStyle = new TextButtonStyle();
 
     private float moveText = Layer.scale * 2;
 
@@ -43,6 +44,9 @@ public class UITextButton extends TextButton {
         smallStyle.disabled = new NinePatchDrawable(buttonDisabledPatchSmall);
         smallStyle.font = UILabel.smallFont;
         smallStyle.fontColor = Color.WHITE;
+
+        resourceStyle.font = UILabel.mediumFont;
+        resourceStyle.fontColor = Color.WHITE;
     }
 
     private UITextButton(String text) {
