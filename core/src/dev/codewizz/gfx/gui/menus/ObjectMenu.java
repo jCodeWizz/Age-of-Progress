@@ -11,9 +11,11 @@ import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextButton;
 import dev.codewizz.gfx.gui.layers.GameLayer;
+import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.input.MouseInput;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
+import dev.codewizz.world.items.Item;
 import dev.codewizz.world.objects.*;
 
 import java.util.ArrayList;
@@ -169,16 +171,25 @@ public class ObjectMenu extends Menu {
 
     public void changeTile(GameObject object) {
         showTable.clear();
-        showTable.top();
+        Stack s = new Stack();
+        showTable.add(s).expand().fill();
+
+        Table bottom = new Table();
+        Table top = new Table();
+        s.add(bottom);
+        s.add(top);
+
+        bottom.top();
+        top.top().right();
 
         IBuy info = (IBuy) object;
 
         name.setText(info.getMenuName());
         text.setText(info.getMenuDescription());
-        showTable.add(name).expand().top().left().padLeft(10);
-        showTable.row();
-        showTable.add(text).expand().top().left().padLeft(10);
-        showTable.row();
+        bottom.add(name).expand().top().left().padLeft(10);
+        bottom.row();
+        bottom.add(text).expand().top().left().padLeft(10);
+        bottom.row();
 
         image = new Image(info.getMenuSprite());
 
@@ -198,7 +209,15 @@ public class ObjectMenu extends Menu {
             w *= r;
         }
 
-        showTable.add(image).expand().bottom().padBottom(10).size(w, h);
+        bottom.add(image).expand().bottom().padBottom(10).size(w, h);
+
+        for (Item i : info.costs()) {
+            Image image = new Image(i.getType().getSprite());
+            top.add(UILabel.create(i.getSize() + "x ", UILabel.mediumStyle)).top().right();
+            top.add(image).top().right().size(16 * Layer.scale);
+            top.row();
+        }
+
     }
 
     @Override

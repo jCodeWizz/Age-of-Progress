@@ -13,11 +13,11 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
-import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.GrowCropTask;
 import dev.codewizz.world.objects.tasks.HaulTask;
 import dev.codewizz.world.objects.tasks.Task;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -45,11 +45,6 @@ public class Settlement {
         this.x = cell.x + 32;
         this.y = cell.y + 32;
         this.cell = cell;
-
-        inventory.addItem(new Item(ItemType.PLANKS, 999));
-        inventory.addItem(new Item(ItemType.WOOD, 999));
-        inventory.addItem(new Item(ItemType.STONE, 999));
-
     }
 
     public Settlement(float x, float y) {
