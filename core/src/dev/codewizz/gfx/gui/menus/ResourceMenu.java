@@ -63,45 +63,49 @@ public class ResourceMenu extends Menu implements IUpdateDataMenu {
         labels.put(type, label);
     }
 
-    private void  addResource(Table right, ItemType type) {
+    private void addResource(Table right, ItemType type) {
         Table resource = new Table();
+
+        Table info = new Table();
+        resource.add(info).expand().size(37 * Layer.scale, 47 * Layer.scale);
+
+        Table limit = new Table();
+        resource.add(limit).expand().size(37 * Layer.scale, 47 * Layer.scale).padLeft(Layer.scale);
 
         Image image = new Image(type.getSprite());
         UILabel label = UILabel.create("0", UILabel.defaultStyle);
 
-        Table input = new Table();
+        info.add(image).size(12 * Layer.scale).left().top().pad(Layer.scale);
+        info.add(label).left().top();
 
-
-
-        UILabel limit = UILabel.create("  " + Craftsman.PLANKS_LIMIT + "  ", UILabel.mediumStyle);
-
-        UITextButton more = UITextButton.create(">", UITextButton.resourceStyle);
-        more.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Craftsman.PLANKS_LIMIT += 5;
-                limit.setText("  " + Craftsman.PLANKS_LIMIT + "  ");
-            }
-        });
         UITextButton less = UITextButton.create("<", UITextButton.resourceStyle);
-        less.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Craftsman.PLANKS_LIMIT -= 5;
-                limit.setText("  " + Craftsman.PLANKS_LIMIT + "  ");
-            }
-        });
+        UITextButton more = UITextButton.create(">", UITextButton.resourceStyle);
+        UILabel lim = UILabel.create(Craftsman.PLANKS_LIMIT + "", UILabel.mediumStyle);
 
-        input.add(less, limit, more);
-
-        resource.add(image).size(12 * Layer.scale).left().top().pad(Layer.scale);
-        resource.add(label).left().top();
-        resource.add(input).expand().left().top();
+        limit.add(less).expandX().left();
+        limit.add(lim).expandX().center();
+        limit.add(more).expandX().right();
 
         right.add(resource).expand().left().top();
         right.row();
 
         labels.put(type, label);
+
+        less.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Craftsman.PLANKS_LIMIT -= 5;
+                lim.setText(Craftsman.PLANKS_LIMIT + "");
+            }
+        });
+
+        more.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Craftsman.PLANKS_LIMIT += 5;
+                lim.setText(Craftsman.PLANKS_LIMIT + "");
+            }
+        });
     }
 
     @Override
