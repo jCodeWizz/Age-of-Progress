@@ -12,7 +12,7 @@ public class ItemType {
 
 	public final static HashMap<String, ItemType> types = new HashMap<>();
 
-	public final static ItemType CARROT = new ItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"));
+	public final static FoodItemType CARROT = new FoodItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"), 3);
 	public final static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("mushrooms"));
 	public final static ItemType PLANKS = new ItemType("Planks", "aop:planks", Assets.getSprite("item-plank"));
 	public final static ItemType STONE = new ItemType("Stone", "aop:stone", Assets.getSprite("item-stone"));

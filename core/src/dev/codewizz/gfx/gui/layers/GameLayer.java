@@ -1,5 +1,6 @@
 package dev.codewizz.gfx.gui.layers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -239,7 +240,7 @@ public class GameLayer extends Layer {
         bottomRightTable.add(speed0).size(9 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
         bottomRightTable.add(speed1).size(9 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
         bottomRightTable.add(speed2).size(15 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 0);
-        bottomRightTable.add(speed3).size(21 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 250 * Layer.scale);
+        bottomRightTable.add(speed3).size(21 * Layer.scale, 10 * Layer.scale).pad(0, 2 * Layer.scale, 5 * Layer.scale, 153 * Layer.scale + Gdx.graphics.getWidth() * 0.01f);
 
         Main.inst.renderer.uiStage.addActor(bottomRightTable);
     }

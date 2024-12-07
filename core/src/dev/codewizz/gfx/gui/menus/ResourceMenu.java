@@ -21,6 +21,7 @@ import java.util.Map;
 public class ResourceMenu extends Menu implements IUpdateDataMenu {
 
     private HashMap<ItemType, UILabel> labels;
+    public Table main;
 
     public ResourceMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -32,8 +33,8 @@ public class ResourceMenu extends Menu implements IUpdateDataMenu {
     protected void setup() {
         labels = new HashMap<>();
 
-        Table main = new Table();
-        base.add(main).expand().size(150 * Layer.scale, 50 * Layer.scale).bottom().right().padRight(Gdx.graphics.getHeight() * 0.05f);
+        main = new Table();
+        base.add(main).expand().size(150 * Layer.scale, 50 * Layer.scale).bottom().right().padRight(Gdx.graphics.getWidth() * 0.01f);
         main.setBackground(new Image(Assets.getSprite("resource-menu-background")).getDrawable());
 
         Table left = new Table();
