@@ -12,6 +12,7 @@ public class GameObjects {
         Registers.registerGameObject("aop:bush", Bush.class);
 		Registers.registerGameObject("aop:constructionobject", ConstructionObject.class);
         Registers.registerGameObject("aop:cow", Cow.class);
+        Registers.registerGameObject("aop:feeding-tub", FeedingTub.class);
         Registers.registerGameObject("aop:fence", Fence.class);
         Registers.registerGameObject("aop:fence-gate", FenceGate.class);
         Registers.registerGameObject("aop:fence-post", FencePost.class);
@@ -23,6 +24,7 @@ public class GameObjects {
         Registers.registerGameObject("aop:stump", Stump.class);
         Registers.registerGameObject("aop:tree", Tree.class);
         Registers.registerGameObject("aop:wolf", Wolf.class);
+        Registers.registerGameObject("aop:workbench", Workbench.class);
     }
 
 }
