@@ -1,22 +1,11 @@
 package dev.codewizz.gfx.gui.elements;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 
 public class UITextTooltip extends TextTooltip {
 
-    public final static TextTooltipStyle defaultStyle = new TextTooltipStyle(UILabel.mediumStyle, null);
-
-    static {
-        reload();
-    }
-
-    public static void reload() {
-    }
-
-    private UITextTooltip(String text) {
-        this(text, defaultStyle);
-    }
+    public final static TextTooltipStyle defaultStyle = new TextTooltipStyle(UILabel.smallStyle, null);
+    public final static TextTooltipStyle mediumStyle = new TextTooltipStyle(UILabel.mediumStyle, null);
 
     private UITextTooltip(String text, TextTooltipStyle style) {
         super(text, style);
