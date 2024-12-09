@@ -6,8 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UIImageButton;
+import dev.codewizz.gfx.gui.elements.UITextTooltip;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
@@ -52,6 +54,7 @@ public class CraftMenu extends Menu {
                 }
             });
             main.add(button).size(64, 64);
+            button.addListener(UITextTooltip.create("Craft " + recipe.getResult()[0].getSize() +  "x " + recipe.getResult()[0].getType().getName()));
         }
 
         base.add(main).expand().size(64, 64);
