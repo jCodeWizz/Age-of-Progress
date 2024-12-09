@@ -4,21 +4,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UIImageButton;
 import dev.codewizz.gfx.gui.elements.UITextTooltip;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
-import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Recipe;
 import dev.codewizz.world.objects.tasks.CraftTask;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +37,8 @@ public class CraftMenu extends Menu {
         main = new Table();
 
         for (Recipe recipe : recipes) {
-            UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, recipe.getResult()[0].item.getSprite());
+            UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle,
+                                                        recipe.getResult()[0].item.getSprite());
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -50,7 +46,9 @@ public class CraftMenu extends Menu {
                 }
             });
             main.add(button).size(64, 64);
-            button.addListener(UITextTooltip.create("Craft " + recipe.getResult()[0].getSize() +  "x " + recipe.getResult()[0].getType().getName()));
+            button.addListener(UITextTooltip.create(
+                    "Craft " + recipe.getResult()[0].getSize() + "x " + recipe.getResult()[0].getType()
+                            .getName()));
         }
 
         base.add(main).expand().size(64, 64);
@@ -60,7 +58,8 @@ public class CraftMenu extends Menu {
         super.open();
 
         focus = object;
-        Vector3 coords = Main.inst.camera.cam.project(new Vector3(focus.getX() + 40, focus.getY() + 20, 0));
+        Vector3 coords = Main.inst.camera.cam.project(
+                new Vector3(focus.getX() + 50, focus.getY() + 20, 0));
         main.setPosition((int) coords.x, (int) coords.y);
     }
 
@@ -68,7 +67,8 @@ public class CraftMenu extends Menu {
     public void render(SpriteBatch b) {
         super.render(b);
 
-        Vector3 coords = Main.inst.camera.cam.project(new Vector3(focus.getX() + 40, focus.getY() + 20, 0));
+        Vector3 coords = Main.inst.camera.cam.project(
+                new Vector3(focus.getX() + 50, focus.getY() + 20, 0));
         main.setPosition((int) coords.x, (int) coords.y);
     }
 }
