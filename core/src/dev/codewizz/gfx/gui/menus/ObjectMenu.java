@@ -31,6 +31,8 @@ public class ObjectMenu extends Menu {
         settlement.add(new FenceGate());
         settlement.add(new FencePost());
         settlement.add(new Stump());
+        settlement.add(new FeedingTub());
+        settlement.add(new Workbench());
     }
 
     private Image image;
