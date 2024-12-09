@@ -32,8 +32,6 @@ public class CraftMenu extends Menu {
 
     public CraftMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
-
-
     }
 
     @Override
@@ -41,9 +39,7 @@ public class CraftMenu extends Menu {
         recipes.add(Registers.recipes.get("aop:crude_axe"));
         recipes.add(Registers.recipes.get("aop:planks"));
 
-
         main = new Table();
-        Logger.log(recipes.size());
 
         for (Recipe recipe : recipes) {
             UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, recipe.getResult()[0].item.getSprite());
