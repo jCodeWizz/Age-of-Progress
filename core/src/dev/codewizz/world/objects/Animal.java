@@ -14,7 +14,7 @@ import dev.codewizz.world.pathfinding.CellGraph;
 public abstract class Animal extends TaskableObject {
 
 	private Herd herd;
-	private boolean inHerd = false;
+	private boolean inHerd = false, captured = false;
 	protected int wanderDistance = 6;
 	private float wanderTimer = Utils.getRandom(8, 12);
 
@@ -103,6 +103,14 @@ public abstract class Animal extends TaskableObject {
 		 */
 
 		return success;
+	}
+
+	public boolean isCaptured() {
+		return captured;
+	}
+
+	public void setCaptured(boolean captured) {
+		this.captured = captured;
 	}
 
 	public int getWanderDistance() {

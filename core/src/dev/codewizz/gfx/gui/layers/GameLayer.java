@@ -35,6 +35,7 @@ public class GameLayer extends Layer {
     public DebugMenu debugMenu;
     public SelectMenu selectMenu;
     public CraftMenu craftMenu;
+    public FarmMenu farmMenu;
     private NotificationMenu notificationMenu;
     private ResourceMenu resourceMenu;
 
@@ -78,6 +79,7 @@ public class GameLayer extends Layer {
         debugMenu = new DebugMenu(Main.inst.renderer.uiStage, this);
         selectMenu = new SelectMenu(Main.inst.renderer.uiStage, this);
         craftMenu = new CraftMenu(Main.inst.renderer.uiStage, this);
+        farmMenu = new FarmMenu(Main.inst.renderer.uiStage, this);
         notificationMenu = new NotificationMenu(Main.inst.renderer.uiStage, this);
         resourceMenu = new ResourceMenu(Main.inst.renderer.uiStage, this);
 
@@ -97,6 +99,7 @@ public class GameLayer extends Layer {
         menus.add(areaMenu);
         menus.add(selectMenu);
         menus.add(craftMenu);
+        menus.add(farmMenu);
         menus.add(notificationMenu);
         menus.add(resourceMenu);
 

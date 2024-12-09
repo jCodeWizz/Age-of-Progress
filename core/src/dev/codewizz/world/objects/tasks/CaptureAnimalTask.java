@@ -42,6 +42,7 @@ public class CaptureAnimalTask extends Task {
         hermit.finishCurrentTask();
 
         animal.setTasked(false);
+        animal.setCaptured(true);
     }
 
     @Override
