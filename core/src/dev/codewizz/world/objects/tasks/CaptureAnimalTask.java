@@ -43,6 +43,7 @@ public class CaptureAnimalTask extends Task {
 
         animal.setTasked(false);
         animal.setCaptured(true);
+        animal.setArea(area);
     }
 
     @Override
@@ -118,6 +119,7 @@ public class CaptureAnimalTask extends Task {
 
                 if (animal.isInHerd()) {
                     animal.getHerd().removeMember(animal);
+                    animal.setIsInHerd(false);
                 }
 
                 finish();

@@ -1,15 +1,14 @@
 package dev.codewizz.world.objects;
 
-import com.dongbat.jbump.util.MathUtils;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
-import dev.codewizz.world.World;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.settlement.FarmArea;
 
 public abstract class Animal extends TaskableObject {
 
@@ -17,7 +16,7 @@ public abstract class Animal extends TaskableObject {
 	private boolean inHerd = false, captured = false;
 	protected int wanderDistance = 6;
 	private float wanderTimer = Utils.getRandom(8, 12);
-
+	private FarmArea area;
 	
 	public Animal() {
 		super();
@@ -46,15 +45,17 @@ public abstract class Animal extends TaskableObject {
 			wanderTimer = Utils.getRandom(8, 12);
 
 			if(!agent.moving) {
-				if(inHerd) {
+				if (inHerd) {
 					Cell cell = herd.newPath();
 					CellGraph c = Main.inst.world.cellGraph;
 					int s = c.getConnections(cell).size;
-					if(s == 0) {
+					if (s == 0) {
 						return;
 					}
 
 					tree.addLast(new MoveTask(cell));
+				} else if (captured && area != null) {
+					tree.addLast(new MoveTask(area.getArea().get(Utils.RANDOM.nextInt(area.getArea().size()))));
 				} else {
 					Cell currentCell = Main.inst.world.getCell(x, y);
 
@@ -124,7 +125,15 @@ public abstract class Animal extends TaskableObject {
 	public Herd getHerd() {
 		return herd;
 	}
-	
+
+	public FarmArea getArea() {
+		return area;
+	}
+
+	public void setArea(FarmArea area) {
+		this.area = area;
+	}
+
 	public void setIsInHerd(boolean herd) {
 		this.inHerd = herd;
 	}
