@@ -1,5 +1,8 @@
 package dev.codewizz.input.console;
 
+import com.badlogic.gdx.graphics.Color;
+import dev.codewizz.gfx.gui.elements.UILabel;
+import dev.codewizz.gfx.gui.menus.ConsoleMenu;
 import dev.codewizz.input.console.commands.*;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
@@ -12,9 +15,7 @@ import java.util.Arrays;
 
 public class Console {
 
-    private BufferedReader reader;
-    private Thread consoleThread;
-    private volatile boolean running;
+    public static ConsoleMenu menu;
 
     public void register() {
         Registers.registerCommand("time", new TimeCommand());
@@ -24,5 +25,18 @@ public class Console {
         Registers.registerCommand("registers", new RegistersCommand());
         Registers.registerCommand("removeobject", new RemoveObjectCommand());
         Registers.registerCommand("additem", new AddItemCommand());
+    }
+
+    public static void printLine(String text) {
+        printLine(text, Color.WHITE);
+    }
+
+    public static void printLine(String text, Color color) {
+        if (menu == null) return;
+        UILabel l = UILabel.create(text, UILabel.mediumStyle);
+        l.setColor(color);
+
+        menu.lines.add(l);
+        menu.refresh();
     }
 }

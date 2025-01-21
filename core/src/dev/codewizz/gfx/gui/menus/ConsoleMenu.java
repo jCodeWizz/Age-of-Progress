@@ -1,19 +1,24 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import dev.codewizz.gfx.gui.elements.UILabel;
 import dev.codewizz.gfx.gui.elements.UITextField;
 import dev.codewizz.gfx.gui.layers.GameLayer;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ConsoleMenu extends Menu {
 
@@ -21,18 +26,38 @@ public class ConsoleMenu extends Menu {
     private InputListener clickListener;
     private InputListener escapeKeyListener;
 
+    public List<UILabel> lines = new ArrayList<>();
+
+    Table outputTable;
+
     public ConsoleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
     }
 
+    public void refresh() {
+        outputTable.clear();
+
+        for (UILabel line : lines) {
+            outputTable.add(line);
+            outputTable.row();
+        }
+    }
+
     @Override
     protected void setup() {
+        Console.menu = this;
+
         Table main = new Table();
         main.setBackground(createBackground(0.5f));
         base.add(main).expand().center().top().padTop(10);
 
         input = UITextField.create("command. . .");
         main.add(input);
+        main.row();
+
+        outputTable = new Table();
+        main.add(outputTable).expand().fill();
+
 
         clickListener = new InputListener() {
             @Override
@@ -76,15 +101,13 @@ public class ConsoleMenu extends Menu {
         } else {
             Logger.error("couldn't find command '" + cmd + "'!");
         }
-
-        System.out.println(Arrays.toString(command.split(" ")));
-
         if (success) {
-            Logger.log("Command successfully executed!");
+            Logger.log("Command successfully executed: " + command);
         } else {
-            Logger.error("Command could not be executed!");
+            Logger.error("Command could not be executed: " + command);
+            Console.printLine("Command could not be executed: " + command, Color.RED);
             if (Registers.commands.containsKey(command)) {
-                Logger.log("Usage: " + Registers.commands.get(command).getUsage());
+                Console.printLine("Usage: " + Registers.commands.get(command).getUsage());
             }
         }
     }
