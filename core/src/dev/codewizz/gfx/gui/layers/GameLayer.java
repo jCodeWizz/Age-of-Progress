@@ -38,6 +38,7 @@ public class GameLayer extends Layer {
     public FarmMenu farmMenu;
     private NotificationMenu notificationMenu;
     private ResourceMenu resourceMenu;
+    public ConsoleMenu consoleMenu;
 
     private final Timer updateTimer;
 
@@ -82,6 +83,7 @@ public class GameLayer extends Layer {
         farmMenu = new FarmMenu(Main.inst.renderer.uiStage, this);
         notificationMenu = new NotificationMenu(Main.inst.renderer.uiStage, this);
         resourceMenu = new ResourceMenu(Main.inst.renderer.uiStage, this);
+        consoleMenu = new ConsoleMenu(Main.inst.renderer.uiStage, this);
 
         constructionMenu = new ConstructionMenu(Main.inst.renderer.uiStage, this, constructionMenuButton);
         toolMenu = new ToolMenu(Main.inst.renderer.uiStage, this, toolMenuButton);
@@ -102,6 +104,7 @@ public class GameLayer extends Layer {
         menus.add(farmMenu);
         menus.add(notificationMenu);
         menus.add(resourceMenu);
+        menus.add(consoleMenu);
 
         notificationMenu.open();
         resourceMenu.open();

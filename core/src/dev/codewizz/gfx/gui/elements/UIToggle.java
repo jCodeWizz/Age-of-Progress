@@ -20,14 +20,14 @@ public class UIToggle extends CheckBox {
     }
 
     public static void reload() {
-        Drawable speed3Button = new SpriteDrawable(Assets.getSprite("speed-3"));
-        Drawable speed2Button = new SpriteDrawable(Assets.getSprite("speed-2"));
-        Drawable speed1Button = new SpriteDrawable(Assets.getSprite("speed-1"));
-        Drawable speed0Button = new SpriteDrawable(Assets.getSprite("speed-0"));
-        Drawable speed3ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-3-pressed"));
-        Drawable speed2ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-2-pressed"));
-        Drawable speed1ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-1-pressed"));
-        Drawable speed0ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-0-pressed"));
+        Drawable speed3Button = new SpriteDrawable(Assets.getSprite("speed-3-pressed"));
+        Drawable speed2Button = new SpriteDrawable(Assets.getSprite("speed-2-pressed"));
+        Drawable speed1Button = new SpriteDrawable(Assets.getSprite("speed-1-pressed"));
+        Drawable speed0Button = new SpriteDrawable(Assets.getSprite("speed-0-pressed"));
+        Drawable speed3ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-3"));
+        Drawable speed2ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-2"));
+        Drawable speed1ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-1"));
+        Drawable speed0ButtonPressed = new SpriteDrawable(Assets.getSprite("speed-0"));
 
         speed3Style.checkboxOff = speed3Button;
         speed2Style.checkboxOff = speed2Button;

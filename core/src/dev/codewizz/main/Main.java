@@ -70,7 +70,6 @@ public class Main extends ApplicationAdapter {
                 "Start time: " + (float) (System.currentTimeMillis() - start) / 1000.0f + " Seconds");
 
         console = new Console();
-        console.start();
         console.register();
     }
 
@@ -152,7 +151,6 @@ public class Main extends ApplicationAdapter {
         if (Main.inst.world != null) {
             Main.inst.world.stop();
         }
-        Main.inst.console.stop();
         Main.inst.client.stop();
         Main.inst.handler.stop();
 

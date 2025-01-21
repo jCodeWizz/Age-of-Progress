@@ -83,6 +83,11 @@ public class KeyInput implements InputProcessor {
 			World.gameSpeed = 40;
 		}
 
+		if(key == Input.Keys.GRAVE) {
+			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
+			layer.openMenu(layer.consoleMenu);
+		}
+
 		if(key == Input.Keys.H) {
 			MouseInput.area = AreaSelector.harvest();
 		}
