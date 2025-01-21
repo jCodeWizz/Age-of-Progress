@@ -25,6 +25,7 @@ public class Console {
         Registers.registerCommand("registers", new RegistersCommand());
         Registers.registerCommand("removeobject", new RemoveObjectCommand());
         Registers.registerCommand("additem", new AddItemCommand());
+        Registers.registerCommand("fillinv", new FillInvCommand());
     }
 
     public static void printLine(String text) {

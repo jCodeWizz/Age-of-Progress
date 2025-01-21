@@ -1,6 +1,6 @@
 
 items.png
-size: 128, 32
+size: 256, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
@@ -18,23 +18,44 @@ item-carrot
   orig: 16, 16
   offset: 0, 0
   index: -1
-item-plank
+item-milk
   rotate: false
   xy: 38, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-item-stone
+item-plank
   rotate: false
   xy: 56, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
-item-wood
+item-potato
   rotate: false
   xy: 74, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+item-reeds
+  rotate: false
+  xy: 92, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+item-stone
+  rotate: false
+  xy: 110, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+item-wood
+  rotate: false
+  xy: 128, 2
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
