@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import dev.codewizz.gfx.gui.elements.UILabel;
@@ -36,9 +37,10 @@ public class ConsoleMenu extends Menu {
 
     public void refresh() {
         outputTable.clear();
+        outputTable.top();
 
         for (UILabel line : lines) {
-            outputTable.add(line);
+            outputTable.add(line).expandX().fillX().left().top();
             outputTable.row();
         }
     }
@@ -49,15 +51,28 @@ public class ConsoleMenu extends Menu {
 
         Table main = new Table();
         main.setBackground(createBackground(0.5f));
-        base.add(main).expand().center().top().padTop(10);
+        base.add(main).expand().center().top().padTop(10).size(800, 500);
 
         input = UITextField.create("command. . .");
-        main.add(input);
+        main.add(input).expandX().fillX().left().pad(10, 10, 0 , 10).top();
         main.row();
 
         outputTable = new Table();
-        main.add(outputTable).expand().fill();
+        ScrollPane pane  = new ScrollPane(outputTable);
+        pane.setScrollingDisabled(false, false);
+        main.add(pane).expand().fill().pad(10).top();
 
+        pane.addListener(new InputListener() {
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                stage.setScrollFocus(pane);
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                stage.setScrollFocus(null);
+            }
+        });
+        pane.setFadeScrollBars(false);
 
         clickListener = new InputListener() {
             @Override
@@ -77,7 +92,7 @@ public class ConsoleMenu extends Menu {
                     stage.setKeyboardFocus(null);
                     stage.setScrollFocus(null);
                     close();
-                    return false;
+                    return true;
                 }
 
                 if (keycode == Input.Keys.ENTER) {

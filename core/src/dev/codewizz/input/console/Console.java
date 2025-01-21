@@ -33,7 +33,7 @@ public class Console {
 
     public static void printLine(String text, Color color) {
         if (menu == null) return;
-        UILabel l = UILabel.create(text, UILabel.mediumStyle);
+        UILabel l = UILabel.create(text, UILabel.smallStyle);
         l.setColor(color);
 
         menu.lines.add(l);
