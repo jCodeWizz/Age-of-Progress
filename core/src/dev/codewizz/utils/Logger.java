@@ -54,13 +54,16 @@ public class Logger {
 			}
 		} catch(Exception e) { }
 	}
+
+	public static String time() {
+		LocalDateTime now = LocalDateTime.now();
+		return TIME_FORMAT.format(now);
+	}
 	
 	private static String prefix() {
 		Thread t = Thread.currentThread();
-		LocalTime now = LocalTime.now();
 		String s = t.getStackTrace()[3].getFileName().substring(0, t.getStackTrace()[3].getFileName().length()-5);
-		String time = TIME_FORMAT.format(now);
-		return "[" + time + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[3].getLineNumber() + "] ";
+		return "[" + time() + "] [" + t.getName() + ":" + s + ":" + t.getStackTrace()[3].getLineNumber() + "] ";
 	}
 	
 	public static void error(Object message) {

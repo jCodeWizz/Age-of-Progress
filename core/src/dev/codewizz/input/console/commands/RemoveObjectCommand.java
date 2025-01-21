@@ -1,6 +1,7 @@
 package dev.codewizz.input.console.commands;
 
 import dev.codewizz.input.console.CommandExecutor;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
@@ -25,7 +26,7 @@ public class RemoveObjectCommand implements CommandExecutor {
                 }
             }
 
-            Logger.log("Removed " + counter + " objects!");
+            Console.printLine("Removed " + counter + " objects!");
             return true;
         }
 

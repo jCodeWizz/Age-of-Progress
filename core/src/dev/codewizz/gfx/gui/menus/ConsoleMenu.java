@@ -118,6 +118,7 @@ public class ConsoleMenu extends Menu {
         }
         if (success) {
             Logger.log("Command successfully executed: " + command);
+            Console.printLine("Command successfully executed!", Color.LIME);
         } else {
             Logger.error("Command could not be executed: " + command);
             Console.printLine("Command could not be executed: " + command, Color.RED);

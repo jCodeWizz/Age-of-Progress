@@ -1,8 +1,8 @@
 package dev.codewizz.input.console.commands;
 
 import dev.codewizz.input.console.CommandExecutor;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.modding.Registers;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.World;
 
 public class RegistersCommand implements CommandExecutor {
@@ -18,45 +18,45 @@ public class RegistersCommand implements CommandExecutor {
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("list")) {
                 if (args[1].equalsIgnoreCase("mods")) {
-                    Logger.log("Mod list: ");
+                    Console.printLine("Mod list: ");
                     for (String value : Registers.mods.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("tiles")) {
-                    Logger.log("Tile list: ");
+                    Console.printLine("Tile list: ");
                     for (String value : Registers.tiles.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("objects")) {
-                    Logger.log("Object list: ");
+                    Console.printLine("Object list: ");
                     for (String value : Registers.objects.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("commands")) {
-                    Logger.log("Command list: ");
+                    Console.printLine("Command list: ");
                     for (String value : Registers.commands.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("tiles")) {
-                    Logger.log("Tile list: ");
+                    Console.printLine("Tile list: ");
                     for (String value : Registers.tiles.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("events")) {
-                    Logger.log("Event subscriber list: ");
+                    Console.printLine("Event subscriber list: ");
                     for (String value : Registers.events.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 } else if (args[1].equalsIgnoreCase("recipes")) {
-                    Logger.log("Recipe list: ");
+                    Console.printLine("Recipe list: ");
                     for (String value : Registers.recipes.keySet()) {
-                        Logger.log(value);
+                        Console.printLine(value);
                     }
                     return true;
                 }

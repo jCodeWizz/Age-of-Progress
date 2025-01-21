@@ -1,11 +1,13 @@
 package dev.codewizz.input.console.commands;
 
 import dev.codewizz.input.console.CommandExecutor;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.modding.Registers;
 import dev.codewizz.modding.events.Reason;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.World;
+
+import com.badlogic.gdx.graphics.Color;
 
 public class CreateObjectCommand implements CommandExecutor {
 
@@ -32,14 +34,14 @@ public class CreateObjectCommand implements CommandExecutor {
                     x = Integer.parseInt(args[1]);
                     y = Integer.parseInt(args[2]);
                 } catch (NumberFormatException e) {
-                    Logger.error("Could not parse x or y '" + args[1] + "', '" + args[2] + "', using default values!");
+                    Console.printLine("Could not parse x or y '" + args[1] + "', '" + args[2] + "', using default values!", Color.RED);
                 }
 
                 if (args.length > 3) {
                     try {
                         amount = Integer.parseInt(args[3]);
                     } catch (NumberFormatException e) {
-                        Logger.error("Couldn't parse amount '" + args[3] + "', using default amount 1!");
+                        Console.printLine("Couldn't parse amount '" + args[3] + "', using default amount 1!", Color.RED);
                     }
                 }
             }
@@ -49,7 +51,7 @@ public class CreateObjectCommand implements CommandExecutor {
                 if(object != null) {
                     world.addObject(object, Reason.COMMAND);
                 } else {
-                    Logger.error("Something went wrong during command execution.");
+                    Console.printLine("Something went wrong during command execution.", Color.RED);
                     return false;
                 }
             }

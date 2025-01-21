@@ -1,6 +1,8 @@
 package dev.codewizz.input.console.commands;
 
+import com.badlogic.gdx.graphics.Color;
 import dev.codewizz.input.console.CommandExecutor;
+import dev.codewizz.input.console.Console;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.world.World;
 import dev.codewizz.world.items.Item;
@@ -23,12 +25,12 @@ public class AddItemCommand implements CommandExecutor {
                 try {
                     amount = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
-                    Logger.error("Couldn't parse " + args[1] + " to a number!");
+                    Console.printLine("Couldn't parse " + args[1] + " to a number!", Color.RED);
                 }
             }
 
             if (!ItemType.types.containsKey(id)) {
-                Logger.error("Couldn't find " + id + " as an item!");
+                Console.printLine("Couldn't find " + id + " as an item!", Color.RED);
                 return false;
             }
 
