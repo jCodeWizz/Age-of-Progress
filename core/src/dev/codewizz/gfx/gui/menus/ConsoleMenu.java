@@ -29,6 +29,8 @@ public class ConsoleMenu extends Menu {
 
     public List<UILabel> lines = new ArrayList<>();
 
+    private String history = "";
+
     Table outputTable;
 
     public ConsoleMenu(Stage stage, GameLayer layer) {
@@ -100,6 +102,10 @@ public class ConsoleMenu extends Menu {
                     input.setText("");
                     return true;
                 }
+
+                if (keycode == Input.Keys.UP) {
+                    input.setText(history);
+                }
                 return false;
             }
         };
@@ -126,6 +132,8 @@ public class ConsoleMenu extends Menu {
                 Console.printLine("Usage: " + Registers.commands.get(command).getUsage());
             }
         }
+
+        history = command;
     }
 
     @Override

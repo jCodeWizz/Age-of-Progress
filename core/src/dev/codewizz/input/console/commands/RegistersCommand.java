@@ -41,12 +41,6 @@ public class RegistersCommand implements CommandExecutor {
                         Console.printLine(value);
                     }
                     return true;
-                } else if (args[1].equalsIgnoreCase("tiles")) {
-                    Console.printLine("Tile list: ");
-                    for (String value : Registers.tiles.keySet()) {
-                        Console.printLine(value);
-                    }
-                    return true;
                 } else if (args[1].equalsIgnoreCase("events")) {
                     Console.printLine("Event subscriber list: ");
                     for (String value : Registers.events.keySet()) {
