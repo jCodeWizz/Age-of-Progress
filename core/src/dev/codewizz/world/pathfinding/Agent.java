@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Queue;
 import dev.codewizz.main.Main;
+import dev.codewizz.utils.Logger;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
@@ -104,7 +105,15 @@ public class Agent {
         this.goal = goal;
 
         previousCell = Main.inst.world.getCell(object.getX(), object.getY());
-        GraphPath<Cell> graphPath = graph.findPath(previousCell, goal);
+        GraphPath<Cell> graphPath = null;
+        try {
+            graphPath = graph.findPath(previousCell, goal);
+        } catch (Exception e) {
+            Logger.error("Error during pathfinding: ");
+            e.printStackTrace();
+            stop();
+            return false;
+        }
         for (int i = 1; i < graphPath.getCount(); i++) {
 
             if (object instanceof Animal) {
