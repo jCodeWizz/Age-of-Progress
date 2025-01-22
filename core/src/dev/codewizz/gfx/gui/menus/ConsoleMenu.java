@@ -140,6 +140,8 @@ public class ConsoleMenu extends Menu {
     public void onOpen() {
         stage.addListener(clickListener);
         stage.addListener(escapeKeyListener);
+
+        stage.setKeyboardFocus(input);
     }
 
     @Override
