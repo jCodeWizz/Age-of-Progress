@@ -138,13 +138,27 @@ public class Registers {
 
         for (int i = 0; i < costs.size; i++) {
             JsonValue cost = costs.get(i);
-            Item item = new Item(ItemType.types.get(cost.getString("id")) , cost.getInt("count", 1));
+
+            ItemType costType = ItemType.types.get(cost.getString("id"));
+
+            if (costType == null) {
+                Logger.error("Couldn't find cost type: " + cost.getString("id"));
+            }
+
+            Item item = new Item(costType , cost.getInt("count", 1));
             itemCosts[i] = item;
         }
 
         for (int i = 0; i < results.size; i++) {
             JsonValue result = results.get(i);
-            Item item = new Item(ItemType.types.get(result.getString("id")) , result.getInt("count", 1));
+
+            ItemType resultType = ItemType.types.get(result.getString("id"));
+
+            if (resultType == null) {
+                Logger.error("Couldn't find result type: " + result.getString("id"));
+            }
+
+            Item item = new Item(resultType , result.getInt("count", 1));
             itemResults[i] = item;
         }
 

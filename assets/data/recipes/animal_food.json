@@ -1,0 +1,20 @@
+{
+  "type": "farmer",
+  "time": 3,
+  "cost": [
+    {
+      "id": "aop:carrot",
+      "count": 2
+    },
+    {
+      "id": "aop:potato",
+      "count": 2
+    }
+  ],
+  "result": [
+    {
+      "id": "aop:animal_food",
+      "count": 3
+    }
+  ]
+}
