@@ -76,6 +76,10 @@ public class CaptureAnimalTask extends Task {
             if (Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
                 reachedAnimal = true;
 
+                if (animal.getCurrentTask() != null) {
+                    animal.getCurrentTask().stop();
+                }
+
                 hermit.getAgent().setGoal(area.getEntrances().get(0));
                 if (hermit.getAgent().path.isEmpty()) {
                     reach();
