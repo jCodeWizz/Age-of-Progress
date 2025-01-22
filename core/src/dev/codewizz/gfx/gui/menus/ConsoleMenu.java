@@ -90,7 +90,7 @@ public class ConsoleMenu extends Menu {
         escapeKeyListener = new InputListener() {
             @Override
             public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.GRAVE) {
+                if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.F1) {
                     stage.setKeyboardFocus(null);
                     stage.setScrollFocus(null);
                     close();
