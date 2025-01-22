@@ -30,7 +30,7 @@ public class FarmMenu extends Menu {
     @Override
     protected void setup() {
         main = new Table();
-        UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, Assets.getSprite("cow-idle-2"));
+        UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, Assets.getSprite("cow-idle"));
         button.addListener(new ClickListener() {
 
             @Override
