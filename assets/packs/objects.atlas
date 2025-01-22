@@ -13,7 +13,7 @@ bush
   index: -1
 bush-berries
   rotate: false
-  xy: 279, 157
+  xy: 213, 112
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -30,6 +30,13 @@ crude-home-flipped
   xy: 218, 175
   size: 81, 65
   orig: 81, 65
+  offset: 0, 0
+  index: -1
+feeding-tub
+  rotate: false
+  xy: 80, 68
+  size: 46, 44
+  orig: 46, 44
   offset: 0, 0
   index: -1
 fence
@@ -62,21 +69,21 @@ fence-gate-flipped
   index: -1
 fence-post
   rotate: false
-  xy: 226, 47
+  xy: 367, 160
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 flag
   rotate: false
-  xy: 260, 96
+  xy: 401, 160
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mushrooms
   rotate: false
-  xy: 260, 78
+  xy: 194, 93
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -90,56 +97,56 @@ pine-tree
   index: -1
 pole
   rotate: false
-  xy: 114, 48
+  xy: 279, 109
   size: 8, 64
   orig: 8, 64
   offset: 0, 0
   index: -1
 rock
   rotate: false
-  xy: 301, 160
+  xy: 128, 77
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 rock-broken
   rotate: false
-  xy: 367, 160
+  xy: 301, 160
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 stone-wall
   rotate: false
-  xy: 80, 15
+  xy: 80, 19
   size: 32, 47
   orig: 32, 47
   offset: 0, 0
   index: -1
 stone-wall-door
   rotate: false
-  xy: 433, 148
+  xy: 435, 148
   size: 32, 47
   orig: 32, 47
   offset: 0, 0
   index: -1
 stone-wall-door-flipped
   rotate: false
-  xy: 467, 148
+  xy: 469, 148
   size: 32, 47
   orig: 32, 47
   offset: 0, 0
   index: -1
 stone-wall-flipped
   rotate: false
-  xy: 226, 81
+  xy: 114, 19
   size: 32, 47
   orig: 32, 47
   offset: 0, 0
   index: -1
 stump
   rotate: false
-  xy: 20, 2
+  xy: 357, 142
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
@@ -160,28 +167,28 @@ tree
   index: -1
 wall
   rotate: false
-  xy: 80, 64
+  xy: 148, 27
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 wall-door
   rotate: false
-  xy: 124, 61
+  xy: 182, 27
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 wall-door-flipped
   rotate: false
-  xy: 158, 61
+  xy: 289, 110
   size: 32, 48
   orig: 32, 48
   offset: 0, 0
   index: -1
 wall-flipped
   rotate: false
-  xy: 192, 61
+  xy: 323, 110
   size: 32, 48
   orig: 32, 48
   offset: 0, 0

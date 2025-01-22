@@ -19,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FeedingTub extends GameObject implements SerializableObject, IBuy {
 
-	private static final Sprite texture = Assets.getSprite("stump");
+	private static final Sprite texture = Assets.getSprite("feeding-tub");
 	private final List<Item> costs = new CopyOnWriteArrayList<>();
 
 	public FeedingTub() {
