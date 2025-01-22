@@ -83,7 +83,7 @@ public class KeyInput implements InputProcessor {
 			World.gameSpeed = 40;
 		}
 
-		if(key == Input.Keys.GRAVE) {
+		if(key == Input.Keys.F1) {
 			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
 			layer.openMenu(layer.consoleMenu);
 		}
