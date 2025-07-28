@@ -13,7 +13,8 @@ import dev.codewizz.world.objects.hermits.Jobs;
 public abstract class Task {
 	
 	protected List<Jobs> jobs = new CopyOnWriteArrayList<>();
-	
+
+	protected float nutritionMultiplier = 1f;
 	protected boolean tasking = false;
 	protected boolean started = false;
 	protected boolean shouldRestart = true;
@@ -101,6 +102,10 @@ public abstract class Task {
 	
 	public boolean shouldRestart() {
 		return shouldRestart;
+	}
+
+	public float getNutritionMultiplier() {
+		return nutritionMultiplier;
 	}
 	
 }

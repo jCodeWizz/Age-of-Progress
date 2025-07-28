@@ -23,6 +23,7 @@ public class SleepTask extends Task {
     public void finish() {
         hermit.finishCurrentTask();
         hermit.setSleepNeed(Nature.DAY_TIME + Nature.TRANSITION_TIME);
+        hermit.addTask(new ConsumeTask(), true);
     }
 
     @Override
@@ -33,6 +34,7 @@ public class SleepTask extends Task {
 
     @Override
     public void start(TaskableObject object) {
+        this.nutritionMultiplier = 0f;
         hermit = (Hermit) object;
 
         Building b = hermit.getHome();

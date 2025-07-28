@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import dev.codewizz.gfx.Animation;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Direction;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
@@ -20,6 +19,7 @@ import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.buildings.Building;
 import dev.codewizz.world.objects.tasks.ClearInventoryTask;
+import dev.codewizz.world.objects.tasks.ConsumeTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
     private Animation currentAnimation;
     private Sprite currentDirection;
 
-    private Settlement s;
+    private Settlement settlement;
     private Building home;
     private Job job;
     private Inventory inventory;
@@ -43,6 +43,9 @@ public class Hermit extends TaskableObject implements SerializableObject {
     private float body = Utils.RANDOM.nextFloat();
 
     private float sleepNeed = Nature.DAY_TIME + Nature.TRANSITION_TIME;
+    private float foodNeed = 0f;
+    private float drinkNeed = 0f;
+    private int daysWithoutFood = 0;
 
     private int age = 101;
 
@@ -79,13 +82,13 @@ public class Hermit extends TaskableObject implements SerializableObject {
     public void update(float d) {
         super.update(d);
 
-        if (this.currentTask == null && s.getTasks().notEmpty()) {
+        if (this.currentTask == null && settlement.getTasks().notEmpty()) {
 
-            for (Task task : s.getTasks()) {
+            for (Task task : settlement.getTasks()) {
 
                 if (task.canTake(this)) {
                     this.addTask(task, false);
-                    s.getTasks().removeValue(task, false);
+                    settlement.getTasks().removeValue(task, false);
                     break;
                 }
             }
@@ -93,6 +96,14 @@ public class Hermit extends TaskableObject implements SerializableObject {
 
         if (this.currentTask == null && !this.getInventory().getItems().isEmpty()) {
             this.addTask(new ClearInventoryTask(), true);
+        }
+
+        if (this.currentTask != null) {
+            foodNeed += d * this.currentTask.getNutritionMultiplier();
+            drinkNeed += d * this.currentTask.getNutritionMultiplier() * 0.5f;
+        } else {
+            foodNeed += d * 0.01f;
+            drinkNeed += d * 0.005f;
         }
 
         if (currentAnimation != null) {
@@ -143,11 +154,11 @@ public class Hermit extends TaskableObject implements SerializableObject {
     }
 
     public Settlement getSettlement() {
-        return s;
+        return settlement;
     }
 
     public void setSettlement(Settlement s) {
-        this.s = s;
+        this.settlement = s;
     }
 
     @Override
@@ -183,7 +194,7 @@ public class Hermit extends TaskableObject implements SerializableObject {
 
         if (this.home == null) {
 
-            for (GameObject object : s.objects) {
+            for (GameObject object : settlement.objects) {
                 if (object instanceof Building) {
                     Building b = (Building) object;
                     if (!b.isFull()) {
@@ -246,5 +257,27 @@ public class Hermit extends TaskableObject implements SerializableObject {
         return this.inventory;
     }
 
+    public float getFoodNeed() {
+        return foodNeed;
+    }
 
+    public void setFoodNeed(float foodNeed) {
+        this.foodNeed = foodNeed;
+    }
+
+    public float getDrinkNeed() {
+        return drinkNeed;
+    }
+
+    public void setDrinkNeed(float drinkNeed) {
+        this.drinkNeed = drinkNeed;
+    }
+
+    public int getDaysWithoutFood() {
+        return daysWithoutFood;
+    }
+
+    public void setDaysWithoutFood(int daysWithoutFood) {
+        this.daysWithoutFood = daysWithoutFood;
+    }
 }

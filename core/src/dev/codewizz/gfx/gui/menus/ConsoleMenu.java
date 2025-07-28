@@ -56,6 +56,7 @@ public class ConsoleMenu extends Menu {
         base.add(main).expand().center().top().padTop(10).size(800, 500);
 
         input = UITextField.create("command. . .");
+        input.setColor(Color.WHITE);
         main.add(input).expandX().fillX().left().pad(10, 10, 0 , 10).top();
         main.row();
 

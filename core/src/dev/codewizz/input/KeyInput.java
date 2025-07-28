@@ -18,6 +18,7 @@ import dev.codewizz.world.building.BuildingObject;
 import dev.codewizz.world.building.Wall;
 import dev.codewizz.world.building.WallDoor;
 import dev.codewizz.world.objects.hermits.Hermit;
+import dev.codewizz.world.objects.tasks.ConsumeTask;
 import dev.codewizz.world.objects.tasks.MoveTask;
 import dev.codewizz.world.objects.tasks.Task;
 import dev.codewizz.world.settlement.Settlement;
@@ -54,7 +55,7 @@ public class KeyInput implements InputProcessor {
 			
 			return true;
 		}
-		
+
 		if(key == Input.Keys.R) {
 			MouseInput.rotate = !MouseInput.rotate;
 		}

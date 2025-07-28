@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class FoodItemType extends ItemType {
 
-    private int foodPoints = 1;
+    private int drinkNutrition = 0;
+    private int foodNutrition = 0;
 
     public FoodItemType(String name, String id) {
         super(name, id);
@@ -14,19 +15,37 @@ public class FoodItemType extends ItemType {
         super(name, id, sprite);
     }
 
-    public FoodItemType(String name, String id, int foodPoints) {
+    public FoodItemType(String name, String id, int foodNutrition) {
         super(name, id);
 
-        this.foodPoints = foodPoints;
+        this.foodNutrition = foodNutrition;
     }
 
-    public FoodItemType(String name, String id, Sprite sprite, int foodPoints) {
+    public FoodItemType(String name, String id, Sprite sprite, int foodNutrition) {
         super(name, id, sprite);
 
-        this.foodPoints = foodPoints;
+        this.foodNutrition = foodNutrition;
     }
 
-    public int getFoodPoints() {
-        return foodPoints;
+    public FoodItemType(String name, String id, int foodNutrition, int drinkNutrition) {
+        super(name, id);
+
+        this.foodNutrition = foodNutrition;
+        this.drinkNutrition = drinkNutrition;
+    }
+
+    public FoodItemType(String name, String id, Sprite sprite, int foodNutrition, int drinkNutrition) {
+        super(name, id, sprite);
+
+        this.foodNutrition = foodNutrition;
+        this.drinkNutrition = drinkNutrition;
+    }
+
+    public int getFoodNutrition() {
+        return foodNutrition;
+    }
+
+    public int getDrinkNutrition() {
+        return drinkNutrition;
     }
 }

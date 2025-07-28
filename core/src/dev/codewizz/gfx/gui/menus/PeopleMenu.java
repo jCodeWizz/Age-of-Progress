@@ -29,6 +29,8 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
     private Hermit show;
     private UILabel showName;
     private UILabel showTask;
+    private UILabel showFood;
+    private UILabel showDrink;
 
     public PeopleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -101,6 +103,14 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
 
         showTask = UILabel.create("", UILabel.smallStyle);
         right.add(showTask).center().top();
+        right.row();
+
+        showFood = UILabel.create("", UILabel.smallStyle);
+        right.add(showFood).center().top();
+        right.row();
+
+        showDrink = UILabel.create("", UILabel.smallStyle);
+        right.add(showDrink).center().top();
         right.row();
 
         UIIconButton job = UIIconButton.create("work-icon");
@@ -234,6 +244,8 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         if (show != null) {
             showName.setText(show.getName());
             showTask.setText(show.getCurrentTaskText());
+            showFood.setText(show.getFoodNeed() + "");
+            showDrink.setText(show.getDrinkNeed() + "");
         }
     }
 

@@ -40,6 +40,7 @@ public class ClearInventoryTask extends Task {
 
     @Override
     public void start(TaskableObject object) {
+        this.nutritionMultiplier = 0.1f;
         this.hermit = (Hermit) object;
 
         object.getAgent().setGoal(hermit.getSettlement().getCell());
