@@ -63,7 +63,7 @@ public class ConsumeTask extends Task {
             hermit.setDaysWithoutFood(hermit.getDaysWithoutFood() + 1);
 
             if (hermit.getDaysWithoutFood() > 3) {
-                hermit.damage(50f);
+                hermit.damage((float)Math.ceil(hermit.getMaxHealth() / 10f));
             }
         } else {
             hermit.setDaysWithoutFood(0);
