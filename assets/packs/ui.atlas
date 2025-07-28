@@ -1,0 +1,370 @@
+
+ui.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+area-icon
+  rotate: false
+  xy: 1084, 823
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+build-icon
+  rotate: false
+  xy: 1137, 876
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 1006, 746
+  size: 66, 24
+  orig: 66, 24
+  offset: 0, 0
+  index: -1
+button-pressed
+  rotate: false
+  xy: 1342, 1432
+  size: 66, 24
+  orig: 66, 24
+  offset: 0, 0
+  index: -1
+button-unavailable
+  rotate: false
+  xy: 1494, 1484
+  size: 66, 24
+  orig: 66, 24
+  offset: 0, 0
+  index: -1
+buyslot
+  rotate: false
+  xy: 1598, 1768
+  size: 250, 84
+  orig: 250, 84
+  offset: 0, 0
+  index: -1
+buyslot-pressed
+  rotate: false
+  xy: 1084, 902
+  size: 250, 84
+  orig: 250, 84
+  offset: 0, 0
+  index: -1
+close-icon
+  rotate: false
+  xy: 2, 2
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+construction-icon
+  rotate: false
+  xy: 55, 55
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+craftsman-icon
+  rotate: false
+  xy: 1664, 1734
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+discord-icon
+  rotate: false
+  xy: 854, 641
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+done-icon
+  rotate: false
+  xy: 907, 694
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+door-icon
+  rotate: false
+  xy: 1006, 720
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+farmer-icon
+  rotate: false
+  xy: 1850, 1770
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon
+  rotate: false
+  xy: 1342, 1406
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+icon-board
+  rotate: false
+  xy: 260, 260
+  size: 146, 30
+  orig: 146, 30
+  offset: 0, 0
+  index: -1
+icon-board-extension
+  rotate: false
+  xy: 1336, 956
+  size: 1, 30
+  orig: 1, 30
+  offset: 0, 0
+  index: -1
+icon-pressed
+  rotate: false
+  xy: 1410, 1432
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+icon-unavailable
+  rotate: false
+  xy: 1494, 1458
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+info-menu
+  rotate: false
+  xy: 1084, 1510
+  size: 512, 342
+  orig: 512, 342
+  offset: 0, 0
+  index: -1
+main-menu
+  rotate: false
+  xy: 2, 772
+  size: 1080, 1080
+  orig: 1080, 1080
+  offset: 0, 0
+  index: -1
+manage-icon
+  rotate: false
+  xy: 1562, 1484
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+new-build-icon
+  rotate: false
+  xy: 260, 215
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+notification
+  rotate: false
+  xy: 2, 81
+  size: 256, 36
+  orig: 256, 36
+  offset: 0, 0
+  index: -1
+path-icon
+  rotate: false
+  xy: 1598, 1673
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+path-menu
+  rotate: false
+  xy: 1084, 988
+  size: 256, 520
+  orig: 256, 520
+  offset: 0, 0
+  index: -1
+people-icon
+  rotate: false
+  xy: 1698, 1742
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+plus-icon
+  rotate: false
+  xy: 1884, 1778
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+resource-menu-background
+  rotate: false
+  xy: 854, 720
+  size: 150, 50
+  orig: 150, 50
+  offset: 0, 0
+  index: -1
+select-menu-background
+  rotate: false
+  xy: 1342, 1458
+  size: 150, 50
+  orig: 150, 50
+  offset: 0, 0
+  index: -1
+selected-background
+  rotate: false
+  xy: 2, 119
+  size: 256, 171
+  orig: 256, 171
+  offset: 0, 0
+  index: -1
+settlement-menu
+  rotate: false
+  xy: 2, 292
+  size: 850, 478
+  orig: 850, 478
+  offset: 0, 0
+  index: -1
+slider
+  rotate: false
+  xy: 1074, 769
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+slot-background
+  rotate: false
+  xy: 1084, 849
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+slot-background-hovering
+  rotate: false
+  xy: 2, 28
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+slot-background-pressed
+  rotate: false
+  xy: 854, 667
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+speed-0
+  rotate: false
+  xy: 1916, 1808
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-0-pressed
+  rotate: false
+  xy: 1137, 864
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-1
+  rotate: false
+  xy: 1108, 837
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-1-pressed
+  rotate: false
+  xy: 1161, 890
+  size: 9, 10
+  orig: 9, 10
+  offset: 0, 0
+  index: -1
+speed-2
+  rotate: false
+  xy: 465, 280
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+speed-2-pressed
+  rotate: false
+  xy: 1664, 1722
+  size: 15, 10
+  orig: 15, 10
+  offset: 0, 0
+  index: -1
+speed-3
+  rotate: false
+  xy: 317, 248
+  size: 21, 10
+  orig: 21, 10
+  offset: 0, 0
+  index: -1
+speed-3-pressed
+  rotate: false
+  xy: 408, 261
+  size: 21, 10
+  orig: 21, 10
+  offset: 0, 0
+  index: -1
+tab-button
+  rotate: false
+  xy: 260, 241
+  size: 55, 17
+  orig: 55, 17
+  offset: 0, 0
+  index: -1
+tab-button-pressed
+  rotate: false
+  xy: 408, 273
+  size: 55, 17
+  orig: 55, 17
+  offset: 0, 0
+  index: -1
+tab-button-unavailable
+  rotate: false
+  xy: 1598, 1699
+  size: 55, 17
+  orig: 55, 17
+  offset: 0, 0
+  index: -1
+tile-highlight
+  rotate: false
+  xy: 1598, 1718
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tile-highlight2
+  rotate: false
+  xy: 1850, 1804
+  size: 64, 48
+  orig: 64, 48
+  offset: 0, 0
+  index: -1
+tool-icon
+  rotate: false
+  xy: 1950, 1828
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+work-icon
+  rotate: false
+  xy: 1084, 797
+  size: 22, 24
+  orig: 22, 24
+  offset: 0, 0
+  index: -1
+worker-icon
+  rotate: false
+  xy: 1916, 1820
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

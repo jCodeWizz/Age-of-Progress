@@ -218,7 +218,7 @@ public class World {
         if (!Main.PAUSED) {
             if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || (MouseInput.tileArea.start == null || MouseInput.tileArea.cells.size() == 0))) {
                 if (MouseInput.clear) {
-                    b.draw(Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
+                    b.draw( Assets.getSprite("tile-highlight"), MouseInput.hoveringOverCell.x,
                            MouseInput.hoveringOverCell.y);
                 } else {
                     b.draw(Assets.getSprite("tile-highlight2"), MouseInput.hoveringOverCell.x,
@@ -263,6 +263,10 @@ public class World {
             if (object instanceof GameObject) {
                 if (((GameObject) object).isSelected()) {
                     b.setShader(Shaders.outlineShader);
+                    object.render(b);
+                    b.setShader(Shaders.defaultShader);
+                } else if (((GameObject) object).isHovering()) {
+                    b.setShader(Shaders.hoveringShader);
                     object.render(b);
                     b.setShader(Shaders.defaultShader);
                 } else {

@@ -27,6 +27,7 @@ public abstract class GameObject extends Renderable implements SerializableObjec
     protected Cell cell;
 
     protected boolean selected = false;
+    protected boolean hovering = false;
     protected String name = "Object";
 
     public GameObject() {
@@ -182,6 +183,14 @@ public abstract class GameObject extends Renderable implements SerializableObjec
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isHovering() {
+        return hovering;
+    }
+
+    public void setHovering(boolean hovering) {
+        this.hovering = hovering;
     }
 
     public String getName() {

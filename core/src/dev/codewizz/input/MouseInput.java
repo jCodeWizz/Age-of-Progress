@@ -30,6 +30,7 @@ public class MouseInput implements InputProcessor {
     public static boolean[] dragging = new boolean[5];
     public static Vector3 coords = new Vector3();
     public static Cell hoveringOverCell;
+    public static GameObject hoveringOverObject;
     public static String currentlyDrawingTileId = "aop:base-tile";
     public static GameObject currentlyDrawingObject = null;
     public static AreaSelector area = null;
@@ -75,6 +76,20 @@ public class MouseInput implements InputProcessor {
                     }
                 }
             }
+
+            boolean found = false;
+            for (Renderable o : Main.inst.world.getObjects()) {
+                if (o instanceof GameObject) {
+                    GameObject obj = (GameObject) o;
+                    if(obj.isHovering()) obj.setHovering(false);
+                    if (obj.getHitBox().contains(coords.x, coords.y) && !found) {
+                        found = true;
+                        obj.setHovering(true);
+                        hoveringOverObject = obj;
+                    }
+                }
+            }
+            if(!found) hoveringOverObject = null;
 
             /*
              *
