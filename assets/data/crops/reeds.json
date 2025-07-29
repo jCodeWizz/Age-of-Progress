@@ -1,0 +1,30 @@
+{
+  "id": "aop:reeds",
+  "stageCount": 4,
+  "stages": [
+    {
+      "texture": "farm-tile",
+      "time": 1
+    },
+    {
+      "texture": "reeds-farm-tile",
+      "time": 2
+    },
+    {
+      "texture": "reeds2-farm-tile",
+      "time": 2
+    },
+    {
+      "texture": "reeds3-farm-tile",
+      "time": 2
+    }
+  ],
+  "resultCount": 1,
+  "result": [
+    {
+      "id": "aop:reeds",
+      "min": 5,
+      "max": 10
+    }
+  ]
+}

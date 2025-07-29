@@ -4,11 +4,11 @@
   "cost": [
     {
       "id": "aop:carrot",
-      "count": 2
+      "count": 1
     },
     {
       "id": "aop:potato",
-      "count": 2
+      "count": 3
     }
   ],
   "result": [
