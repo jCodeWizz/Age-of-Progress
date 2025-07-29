@@ -11,5 +11,4 @@ public class FlowerTile extends Tile {
 		this.id = "aop:flower-tile";
 		this.cost = 5;
 	}
-
 }

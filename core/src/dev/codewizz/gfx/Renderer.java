@@ -30,6 +30,8 @@ public class Renderer {
     public Stage uiStage;
     public Layer uiLayer;
 
+    private float time = 0;
+
     private com.badlogic.gdx.physics.box2d.World world = new com.badlogic.gdx.physics.box2d.World(
             new Vector2(0, 0), false);
     private RayHandler rayHandler = new RayHandler(world);
@@ -50,6 +52,17 @@ public class Renderer {
 
     public void render(World world, OrthographicCamera cam) {
         tileBatch.begin();
+        tileBatch.setShader(Shaders.tileShader);
+
+        time += Gdx.graphics.getDeltaTime() * World.gameSpeed;
+
+        Shaders.tileShader.setUniformf("u_time", time);
+        Shaders.tileShader.setUniformf("u_worldUVScale", 0.02f, 0.02f); // tweak to taste
+        Shaders.tileShader.setUniformf("u_waveAmp", 0.015f);            // tweak
+        Shaders.tileShader.setUniformf("u_waveFreq", 6.0f);             // tweak
+        Shaders.tileShader.setUniformf("u_tintStrength", 0.5f);
+
+
         tileBatch.setProjectionMatrix(cam.combined);
         world.renderTiles(tileBatch);
         tileBatch.end();

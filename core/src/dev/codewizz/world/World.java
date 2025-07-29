@@ -163,7 +163,6 @@ public class World {
     }
 
     public void renderTiles(SpriteBatch b) {
-        b.setShader(Shaders.tileShader);
         timer += Gdx.graphics.getDeltaTime();
 
         float border = Gdx.graphics.getHeight() / 8f;

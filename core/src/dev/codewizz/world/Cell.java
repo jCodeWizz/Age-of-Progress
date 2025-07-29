@@ -2,6 +2,7 @@ package dev.codewizz.world;
 
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.codewizz.gfx.Renderer;
@@ -156,7 +157,15 @@ public class Cell {
 	}
 
 	public void render(SpriteBatch b) {
-		b.setColor(1f, 1f, 1f, tile.getShaderId());
+		if (tile.getShaderId() == 0.1f) {
+			float flowAngle01 = 0.5f / (MathUtils.PI2); // 0..1
+			float depthFactor = MathUtils.clamp(0.5f, 0f, 1f);
+
+			// alpha = effect code: 0.05 for water in your scheme
+			b.setColor(0, flowAngle01, depthFactor, 0.1f);
+		} else {
+			b.setColor(1f, 1f, 1f, tile.getShaderId());
+		}
 		tile.render(b);
 	}
 
