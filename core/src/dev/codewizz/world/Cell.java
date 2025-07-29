@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import dev.codewizz.gfx.Renderer;
+import dev.codewizz.gfx.Shaders;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.Reason;
@@ -155,6 +156,7 @@ public class Cell {
 	}
 
 	public void render(SpriteBatch b) {
+		b.setColor(1f, 1f, 1f, tile.getShaderId());
 		tile.render(b);
 	}
 

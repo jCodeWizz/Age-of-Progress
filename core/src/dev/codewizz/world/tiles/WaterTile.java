@@ -18,14 +18,7 @@ public class WaterTile extends Tile {
 	}
 
 	@Override
-	public void render(SpriteBatch b) {
-		//b.setShader(Shaders.waterShader);
-
-		Shaders.waterShader.setUniformf("time", cell.world.timer);
-		Shaders.waterShader.setUniformf("index", new Vector2(cell.getWorldIndexX(), cell.getWorldIndexY()));
-
-		super.render(b);
-
-		b.setShader(Shaders.defaultShader);
+	public float getShaderId() {
+		return 0.1f;
 	}
 }

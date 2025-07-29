@@ -12,4 +12,8 @@ public class GrassTile extends Tile {
 		this.cost = 10;
 	}
 
+	@Override
+	public float getShaderId() {
+		return 0.2f;
+	}
 }

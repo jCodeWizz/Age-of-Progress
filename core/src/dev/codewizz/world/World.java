@@ -163,7 +163,7 @@ public class World {
     }
 
     public void renderTiles(SpriteBatch b) {
-
+        b.setShader(Shaders.tileShader);
         timer += Gdx.graphics.getDeltaTime();
 
         float border = Gdx.graphics.getHeight() / 8f;
@@ -214,6 +214,8 @@ public class World {
                 chunk.unload();
             }
         }
+        b.setColor(Color.WHITE);
+        b.setShader(Shaders.defaultShader);
 
         if (!Main.PAUSED) {
             if (MouseInput.hoveringOverCell != null && (MouseInput.tileArea == null || (MouseInput.tileArea.start == null || MouseInput.tileArea.cells.size() == 0))) {

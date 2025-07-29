@@ -154,6 +154,10 @@ public abstract class Tile implements SerializableTile {
         this.cost = cost;
     }
 
+    public float getShaderId() {
+        return 0;
+    }
+
     public void setCell(Cell cell) {
         this.cell = cell;
     }

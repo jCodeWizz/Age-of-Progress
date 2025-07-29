@@ -16,17 +16,8 @@ public class DeepWaterTile extends Tile {
 		this.cost = -1;
 	}
 
-	float time = 0;
-
 	@Override
-	public void render(SpriteBatch b) {
-		//b.setShader(Shaders.waterShader);
-
-		Shaders.waterShader.setUniformf("time", cell.world.timer);
-		Shaders.waterShader.setUniformf("index", new Vector2(cell.getWorldIndexX(), cell.getWorldIndexY()));
-
-		super.render(b);
-
-		b.setShader(Shaders.defaultShader);
+	public float getShaderId() {
+		return 0.1f;
 	}
 }
