@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import dev.codewizz.gfx.gui.elements.UIIconButton;
 import dev.codewizz.gfx.gui.elements.UIIconMenu;
+import dev.codewizz.gfx.gui.elements.UITextTooltip;
 import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.input.AreaSelector;
 import dev.codewizz.input.MouseInput;
@@ -20,6 +21,7 @@ public class ToolMenu extends UIIconMenu {
                 MouseInput.area = AreaSelector.harvest();
             }
         });
+        harvest.addListener(UITextTooltip.create("Gather (H)"));
 
         addIcon(harvest);
     }

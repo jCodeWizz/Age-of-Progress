@@ -11,10 +11,12 @@ public class UILabel extends Label {
 
     public final static LabelStyle defaultStyle = new LabelStyle();
     public final static LabelStyle smallStyle = new LabelStyle();
+    public final static LabelStyle toolTipStyle = new LabelStyle();
     public final static LabelStyle mediumStyle = new LabelStyle();
 
     public static BitmapFont buttonFont;
     public static BitmapFont smallFont;
+    public static BitmapFont toolTipFont;
     public static BitmapFont mediumFont;
 
     static {
@@ -30,6 +32,12 @@ public class UILabel extends Label {
         smallFont = generator.generateFont(parameter);
         parameter.size = (int) (8 * Layer.scale);
         mediumFont = generator.generateFont(parameter);
+
+        parameter.borderColor = Color.BLACK;
+        parameter.borderWidth = 2;
+        parameter.size = (int) (6 * Layer.scale);
+        toolTipFont = generator.generateFont(parameter);
+
         generator.dispose();
     }
 
@@ -41,6 +49,9 @@ public class UILabel extends Label {
 
         smallStyle.font = smallFont;
         smallStyle.fontColor = Color.WHITE;
+
+        toolTipStyle.font = toolTipFont;
+        toolTipStyle.fontColor = Color.WHITE;
 
         mediumStyle.font = mediumFont;
         mediumStyle.fontColor = Color.WHITE;

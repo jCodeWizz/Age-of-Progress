@@ -51,9 +51,23 @@ public class KeyInput implements InputProcessor {
 					((GameLayer)Main.inst.renderer.uiLayer).closeMenus();
 				}
 			}
-			
-			
 			return true;
+		}
+
+		if (key == Input.Keys.Y) {
+			((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).settlementMenu);
+		}
+
+		if (key == Input.Keys.C) {
+			((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).peopleMenu);
+		}
+
+		if (key == Input.Keys.B) {
+			((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).structureMenu);
+		}
+
+		if (key == Input.Keys.G) {
+			((GameLayer)Main.inst.renderer.uiLayer).openMenu(((GameLayer)Main.inst.renderer.uiLayer).objectMenu);
 		}
 
 		if(key == Input.Keys.R) {
@@ -91,21 +105,6 @@ public class KeyInput implements InputProcessor {
 
 		if(key == Input.Keys.H) {
 			MouseInput.area = AreaSelector.harvest();
-		}
-
-		if(key == Input.Keys.T) {
-			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
-			layer.openMenu(layer.tileMenu);
-		}
-
-		if(key == Input.Keys.Y) {
-			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
-			layer.openMenu(layer.objectMenu);
-		}
-
-		if(key == Input.Keys.B) {
-			GameLayer layer = (GameLayer) Main.inst.renderer.uiLayer;
-			layer.openMenu(layer.structureMenu);
 		}
 
 		if(key == Input.Keys.F2) {

@@ -156,6 +156,7 @@ public class GameLayer extends Layer {
                 openMenu(settlementMenu);
             }
         });
+        settlementIcon.addListener(UITextTooltip.create("Settlement (Y)"));
 
         areaMenuButton = UIIconButton.create("area-icon");
         areaMenuButton.addListener(new ClickListener() {
@@ -164,6 +165,8 @@ public class GameLayer extends Layer {
                 openMenu(areaMenu);
             }
         });
+        areaMenuButton.addListener(UITextTooltip.create("Areas"));
+
 
         constructionMenuButton = UIIconButton.create("build-icon");
         constructionMenuButton.addListener(new ClickListener() {
@@ -172,6 +175,7 @@ public class GameLayer extends Layer {
                 openMenu(constructionMenu);
             }
         });
+        constructionMenuButton.addListener(UITextTooltip.create("Construction"));
 
         UIIconButton peopleIcon = UIIconButton.create("people-icon");
         peopleIcon.addListener(new ClickListener() {
@@ -180,6 +184,7 @@ public class GameLayer extends Layer {
                 openMenu(peopleMenu);
             }
         });
+        peopleIcon.addListener(UITextTooltip.create("Hermits (C)"));
 
         toolMenuButton = UIIconButton.create("tool-icon");
         toolMenuButton.addListener(new ClickListener() {
@@ -188,6 +193,7 @@ public class GameLayer extends Layer {
                 openMenu(toolMenu);
             }
         });
+        toolMenuButton.addListener(UITextTooltip.create("Tools"));
 
         board.add(settlementIcon).size(22 * Layer.scale, 24 * Layer.scale)
                 .pad(0, 0, 0, 3 * Layer.scale);
@@ -212,6 +218,7 @@ public class GameLayer extends Layer {
                 World.gameSpeed = 0;
             }
         });
+        speed0.addListener(UITextTooltip.create("Pause (0)"));
 
         speed1 = UIToggle.create(UIToggle.speed1Style);
         speed1.addListener(new ClickListener() {
@@ -220,6 +227,7 @@ public class GameLayer extends Layer {
                 World.gameSpeed = 1;
             }
         });
+        speed1.addListener(UITextTooltip.create("x1 (1)"));
 
         speed2 = UIToggle.create(UIToggle.speed2Style);
         speed2.addListener(new ClickListener() {
@@ -228,6 +236,7 @@ public class GameLayer extends Layer {
                 World.gameSpeed = 3;
             }
         });
+        speed2.addListener(UITextTooltip.create("x3 (2)"));
 
         speed3 = UIToggle.create(UIToggle.speed3Style);
         speed3.addListener(new ClickListener() {
@@ -236,6 +245,8 @@ public class GameLayer extends Layer {
                 World.gameSpeed = 5;
             }
         });
+        speed3.addListener(UITextTooltip.create("x5 (3)"));
+
 
         ButtonGroup<UIToggle> buttonGroup = new ButtonGroup<>();
         buttonGroup.add(speed1);
