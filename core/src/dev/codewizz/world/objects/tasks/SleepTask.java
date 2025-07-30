@@ -69,8 +69,7 @@ public class SleepTask extends Task {
 
     @Override
     public String getName() {
-        //return "Getting sleep " + (int) ((1f - (hermit.getSleepNeed() / sleepNeedStart)) * 100f) + "%";
-        return "Sleep: " + (int)hermit.getSleepNeed();
+        return "Sleeping (" + (100 - (int)((hermit.getSleepNeed() / (Nature.DAY_TIME + Nature.TRANSITION_TIME)) * 100f)) + "%)";
     }
 
     @Override
