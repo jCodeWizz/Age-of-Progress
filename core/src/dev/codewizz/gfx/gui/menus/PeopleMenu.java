@@ -1,6 +1,7 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -29,8 +30,7 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
     private Hermit show;
     private UILabel showName;
     private UILabel showTask;
-    private UILabel showFood;
-    private UILabel showDrink;
+    private Table needsTable;
 
     public PeopleMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -105,12 +105,12 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         right.add(showTask).center().top();
         right.row();
 
-        showFood = UILabel.create("", UILabel.smallStyle);
-        right.add(showFood).center().top();
+        UILabel needs = UILabel.create("Needs:", UILabel.mediumStyle);
+        right.add(needs).center().top();
         right.row();
 
-        showDrink = UILabel.create("", UILabel.smallStyle);
-        right.add(showDrink).center().top();
+        needsTable = new Table();
+        right.add(needsTable).expandX().fillX().top().left();
         right.row();
 
         UIIconButton job = UIIconButton.create("work-icon");
@@ -238,20 +238,31 @@ public class PeopleMenu extends Menu implements IUpdateDataMenu {
         }
     }
 
-
-
     private void showHermit() {
         if (show != null) {
             showName.setText(show.getName());
             showTask.setText(show.getCurrentTaskText());
-            showFood.setText(show.getFoodNeed() + "");
-            showDrink.setText(show.getDrinkNeed() + "");
+
+            needsTable.clear();
+            UILabel food = UILabel.create("Food: ", UILabel.smallStyle);
+            needsTable.add(food).left();
+            food.setColor(show.getDaysWithoutFood() > 0 ? Color.RED : Color.WHITE);
+            for (int i = 0; i < (int)Math.ceil(show.getFoodNeed() / 150f); i++) {
+                needsTable.add(new Image(Assets.getSprite("item-carrot"))).size(8 * Layer.scale);
+            }
+            needsTable.row();
+            UILabel drink = UILabel.create("Drink:  ", UILabel.smallStyle);
+            needsTable.add(drink).left();
+            drink.setColor(show.getDaysWithoutFood() > 0 ? Color.RED : Color.WHITE);
+            for (int i = 0; i < (int)Math.ceil(show.getDrinkNeed() / 300); i++) {
+                needsTable.add(new Image(Assets.getSprite("item-milk"))).size(8 * Layer.scale);
+            }
+            needsTable.row();
         }
     }
 
     private void showJob() {
         list.clear();
-
 
         UITextButton farmer = UITextButton.create("Farmer");
         farmer.addListener(new ClickListener() {
