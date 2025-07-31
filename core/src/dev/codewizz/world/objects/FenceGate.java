@@ -2,9 +2,13 @@ package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.dongbat.jbump.util.MathUtils;
+import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
+import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
@@ -13,6 +17,7 @@ import dev.codewizz.world.Cell;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
+import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.FarmArea;
 import java.awt.*;
@@ -21,11 +26,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FenceGate extends GameObject implements SerializableObject, IBuy {
 
+    private static final int OPEN_DISTANCE = 800;
+
     private static final Sprite texture = Assets.getSprite("fence-gate");
     private static final Sprite texture2 = Assets.getSprite("fence-gate-flipped");
 
-    private final List<Item> costs = new CopyOnWriteArrayList<>();
+    private boolean open = false;
 
+    private final List<Item> costs = new CopyOnWriteArrayList<>();
     private int previousCost = 5;
 
     public FenceGate() {
@@ -56,14 +64,25 @@ public class FenceGate extends GameObject implements SerializableObject, IBuy {
 
     @Override
     public void update(float d) {
+        open = false;
+        for (Hermit h : Main.inst.world.settlement.members) {
+            if (Utils.distance2(h.getX() + (h.getW()/2f), h.getY(), x + 32, y + 32) <= OPEN_DISTANCE) {
+                open = true;
+                break;
+            }
+        }
     }
 
     @Override
     public void render(SpriteBatch b) {
-        if (flip) {
-            b.draw(texture2, x + 2, y + 17);
+
+        if (open) {
         } else {
-            b.draw(texture, x, y + 19);
+            if (flip) {
+                b.draw(texture2, x + 2, y + 17);
+            } else {
+                b.draw(texture, x, y + 19);
+            }
         }
     }
 
