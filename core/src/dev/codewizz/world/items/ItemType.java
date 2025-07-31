@@ -10,7 +10,7 @@ public class ItemType {
 
     public final static FoodItemType CARROT = new FoodItemType("Carrot", "aop:carrot", Assets.getSprite("item-carrot"), 3);
     public final static FoodItemType POTATO = new FoodItemType("Potato", "aop:potato", Assets.getSprite("item-potato"), 2);
-    public final static FoodItemType MILK = new FoodItemType("Milk", "aop:milk", Assets.getSprite("item-milk"), 1, 6);
+    public final static FoodItemType MILK = new FoodItemType("Milk", "aop:milk", Assets.getSprite("item-milk"), 0, 6);
 
     public final static ItemType MUSHROOMS = new ItemType("Mushrooms", "aop:mushrooms", Assets.getSprite("mushrooms"));
     public final static ItemType PLANKS = new ItemType("Planks", "aop:planks", Assets.getSprite("item-plank"));

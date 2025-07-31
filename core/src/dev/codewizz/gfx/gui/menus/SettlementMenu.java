@@ -1,6 +1,7 @@
 package dev.codewizz.gfx.gui.menus;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,6 +13,7 @@ import dev.codewizz.gfx.gui.layers.GameLayer;
 import dev.codewizz.gfx.gui.layers.Layer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.world.items.FoodItemType;
 import dev.codewizz.world.items.Item;
 
 public class SettlementMenu extends Menu implements IUpdateDataMenu {
@@ -27,6 +29,7 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
     private Item show;
     private UILabel showName;
     private UILabel showAmount;
+    private Table needsTable;
 
     public SettlementMenu(Stage stage, GameLayer layer) {
         super(stage, layer);
@@ -70,14 +73,14 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
 
         // Create a ScrollPane and add the list table to it
         ScrollPane scrollPane = new ScrollPane(list);
-        scrollPane.setScrollingDisabled(true,
-                false); // Disable horizontal scrolling, enable vertical scrolling
-        scrollPane.setFadeScrollBars(false); // Optional: disable fade effect on scrollbars
+        scrollPane.setScrollingDisabled(true, false);
+        scrollPane.setFadeScrollBars(false);
         scrollPane.addListener(new InputListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 stage.setScrollFocus(scrollPane);
             }
+
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 stage.setScrollFocus(null);
@@ -99,6 +102,10 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
 
         showAmount = UILabel.create("", UILabel.smallStyle);
         right.add(showAmount).center().top();
+        right.row();
+
+        needsTable = new Table();
+        right.add(needsTable).expandX().fillX().top().left();
         right.row();
 
         clickListener = new InputListener() {
@@ -155,13 +162,15 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
         int i = 0;
 
         for (Item item : Main.inst.world.settlement.inventory.getItems().values()) {
-            if (searchField.getText().isBlank() || item.item.getName().toLowerCase().contains(searchField.getText().toLowerCase())) {
+            if (searchField.getText().isBlank() || item.item.getName().toLowerCase()
+                    .contains(searchField.getText().toLowerCase())) {
                 i++;
 
                 Table card = new Table();
                 list.add(card).size(size, size / 2).left().top();
 
-                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, item.item.getSprite());
+                ImageButton button = UIImageButton.create(UIImageButton.buySlotStyle,
+                                                          item.item.getSprite());
                 button.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -201,11 +210,27 @@ public class SettlementMenu extends Menu implements IUpdateDataMenu {
     }
 
 
-
     private void showItem() {
         if (show != null) {
             showName.setText(show.item.getName());
             showAmount.setText("" + show.size);
+
+            needsTable.clear();
+            if (show.item instanceof FoodItemType) {
+                FoodItemType f = (FoodItemType) show.item;
+                UILabel food = UILabel.create("Food (" + f.getFoodNutrition() + "): ", UILabel.smallStyle);
+                needsTable.add(food).left();
+                for (int i = 0; i < Math.ceil(f.getFoodNutrition() / 3f); i++) {
+                    needsTable.add(new Image(Assets.getSprite("item-carrot"))).size(8 * Layer.scale);
+                }
+                needsTable.row();
+                UILabel drink = UILabel.create("Drink (" + f.getDrinkNutrition() + "):  ", UILabel.smallStyle);
+                needsTable.add(drink).left();
+                for (int i = 0; i < (int)Math.ceil(f.getDrinkNutrition() / 6f); i++) {
+                    needsTable.add(new Image(Assets.getSprite("item-milk"))).size(8 * Layer.scale);
+                }
+                needsTable.row();
+            }
         }
     }
 
