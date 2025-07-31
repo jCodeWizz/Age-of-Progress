@@ -4,34 +4,35 @@ import com.badlogic.gdx.math.Vector2;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.Timer;
+import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.Animal;
+import dev.codewizz.world.objects.Cow;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.hermits.Jobs;
 import dev.codewizz.world.settlement.FarmArea;
 
-public class CaptureAnimalTask extends Task {
+public class MilkCowTask extends Task {
 
-    private final float REACH = 1000f;
+    private static final float REACH = 1000f;
 
     private Hermit hermit;
-    private final Animal animal;
-    private FarmArea area;
+    private final Cow animal;
 
     private boolean reachedAnimal = false;
     private final Timer timer;
 
 
-    public CaptureAnimalTask(Animal animal, FarmArea area) {
+    public MilkCowTask(Cow animal) {
         this.animal = animal;
-        this.area = area;
         this.jobs.add(Jobs.Farmer);
         animal.setTasked(true);
 
-        timer = new Timer(2f) {
+        timer = new Timer(10f) {
             @Override
             public void timer() {
-                hermit.setSpeed(animal.getSpeed());
+                finish();
             }
         };
     }
@@ -41,9 +42,16 @@ public class CaptureAnimalTask extends Task {
         hermit.setTaskAnimation(null);
         hermit.finishCurrentTask();
 
+        Item item = new Item(animal.getX() + animal.getW()/2f, animal.getY(), ItemType.MILK).size(4);
+
+        if (hermit.getInventory().roomFor(item)) {
+            hermit.getInventory().addItem(item);
+        } else {
+            Main.inst.world.addItem(item);
+        }
+
+        animal.milk();
         animal.setTasked(false);
-        animal.setCaptured(true);
-        animal.setArea(area);
     }
 
     @Override
@@ -57,16 +65,10 @@ public class CaptureAnimalTask extends Task {
     @Override
     public void start(TaskableObject object) {
         this.hermit = (Hermit) object;
-
-        if (area == null) {
-            stop();
-        }
-
         hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
         if (hermit.getAgent().path.isEmpty()) {
             reach();
         }
-
         started = true;
     }
 
@@ -75,63 +77,16 @@ public class CaptureAnimalTask extends Task {
         if (!reachedAnimal) {
             if (Vector2.dst2(animal.getX(), animal.getY(), hermit.getX(), hermit.getY()) < REACH) {
                 reachedAnimal = true;
-
                 if (animal.getCurrentTask() != null) {
                     animal.getCurrentTask().stop();
                 }
-
-                hermit.getAgent().setGoal(area.getEntrances().get(0));
-                if (hermit.getAgent().path.isEmpty()) {
-                    reach();
-                }
-
                 animal.getAgent().stop();
-                animal.getAgent().setGoal(area.getEntrances().get(0));
-                if (animal.getAgent().path.isEmpty()) {
-                    reach();
-                }
             } else {
-
                 hermit.getAgent().setGoal(Main.inst.world.getCell(animal.getX(), animal.getY()));
                 if (hermit.getAgent().path.isEmpty()) {
-                    Logger.log("Couldn't path: " + Vector2.dst2(animal.getX(), animal.getY(),
-                            hermit.getX(),
-                            hermit.getY()) + "/" + REACH);
                     reachedAnimal = true;
-                    reach();
-                }
-
-            }
-        } else {
-            if (area == null) { area = FarmArea.findArea(animal); }
-            if (area == null) { stop(); }
-            boolean s = area.join(animal);
-            if (!s) {
-                if (FarmArea.anyAvailable()) {
-                    area = FarmArea.findArea(animal);
-                    if (area != null) {
-                        s = area.join(animal);
-                    } else {
-                        stop();
-                    }
                 }
             }
-
-            if (!s) {
-                stop();
-            } else {
-                animal.setX(area.getArea().get(0).getMiddlePoint().x);
-                animal.setY(area.getArea().get(0).getMiddlePoint().y);
-
-                if (animal.isInHerd()) {
-                    animal.getHerd().removeMember(animal);
-                    animal.setIsInHerd(false);
-                }
-
-                finish();
-            }
-            animal.getAgent().stop();
-            hermit.setSpeed(20f);
         }
     }
 
@@ -142,14 +97,14 @@ public class CaptureAnimalTask extends Task {
 
     @Override
     public void update(float d) {
-
         if (reachedAnimal) {
+            animal.preventWandering();
             timer.update(d);
         }
     }
 
     @Override
     public String getName() {
-        return "capturing " + animal.getName() + " for pen";
+        return "Milking " + animal.getName();
     }
 }

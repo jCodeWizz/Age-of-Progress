@@ -7,9 +7,12 @@ import dev.codewizz.gfx.Animation;
 import dev.codewizz.gfx.Particle;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
+import dev.codewizz.utils.Timer;
+import dev.codewizz.utils.Utils;
 import dev.codewizz.utils.saving.GameObjectData;
 import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.SerializableObject;
+import dev.codewizz.world.Nature;
 import dev.codewizz.world.objects.tasks.CaptureAnimalTask;
 import dev.codewizz.world.settlement.FarmArea;
 
@@ -26,6 +29,8 @@ public class Cow extends Animal implements SerializableObject {
 
     private Animation walkAnim;
     private boolean moving = false;
+
+    private float milkCounter = 0f;
 
     public Cow() {
         super();
@@ -47,6 +52,7 @@ public class Cow extends Animal implements SerializableObject {
 
         this.speed = 10f;
         this.health = 10f;
+        this.milkCounter = newMilkMaximum();
 
         createAnim();
     }
@@ -60,12 +66,17 @@ public class Cow extends Animal implements SerializableObject {
         this.w = 32;
         this.h = 32;
         this.wanderDistance = 6;
+        this.sortHeight = 3f;
 
         this.speed = 10f;
         this.health = 10f;
-        this.sortHeight = 3f;
+        this.milkCounter = newMilkMaximum();
 
         createAnim();
+    }
+
+    private float newMilkMaximum() {
+        return Utils.getRandom(2.5f * (Nature.TRANSITION_TIME + Nature.DAY_TIME), 4 * (Nature.TRANSITION_TIME + Nature.DAY_TIME));
     }
 
     private void createAnim() {
@@ -85,6 +96,7 @@ public class Cow extends Animal implements SerializableObject {
         moving = vel.x != 0 || vel.y != 0;
 
         if (moving) { walkAnim.tick(d); }
+        if (milkCounter > 0) milkCounter -= d;
     }
 
     @Override
@@ -116,5 +128,13 @@ public class Cow extends Animal implements SerializableObject {
     @Override
     public boolean load(GameObjectDataLoader loader, GameObjectData object, boolean success) {
         return super.load(loader, object, success);
+    }
+
+    public boolean canMilk() {
+        return milkCounter < 0;
+    }
+
+    public void milk() {
+        milkCounter = newMilkMaximum();
     }
 }

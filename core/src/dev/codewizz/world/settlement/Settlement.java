@@ -13,9 +13,12 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.building.Building;
 import dev.codewizz.world.items.Inventory;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.objects.Animal;
+import dev.codewizz.world.objects.Cow;
 import dev.codewizz.world.objects.hermits.Hermit;
 import dev.codewizz.world.objects.tasks.GrowCropTask;
 import dev.codewizz.world.objects.tasks.HaulTask;
+import dev.codewizz.world.objects.tasks.MilkCowTask;
 import dev.codewizz.world.objects.tasks.Task;
 
 import java.util.List;
@@ -58,6 +61,15 @@ public class Settlement {
         if (timer < max_timer) { timer += dt; } else {
             timer = 0f;
             checkHaulTask();
+        }
+
+        for (FarmArea area : areas) {
+            for (Animal a : area.getAnimals()) {
+                if (!a.isTasked() && a instanceof Cow && ((Cow) a).canMilk()) {
+                    MilkCowTask t = new MilkCowTask((Cow)a);
+                    addTask(t, true);
+                }
+            }
         }
 
         if (Main.inst.world.nature.day) {

@@ -106,6 +106,10 @@ public abstract class Animal extends TaskableObject {
 		return success;
 	}
 
+	public void preventWandering() {
+		wanderTimer = 1f;
+	}
+
 	public boolean isCaptured() {
 		return captured;
 	}
