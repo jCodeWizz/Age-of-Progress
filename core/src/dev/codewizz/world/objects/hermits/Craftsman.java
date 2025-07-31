@@ -11,13 +11,14 @@ import dev.codewizz.utils.Direction;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.tasks.CraftTask;
+import dev.codewizz.world.objects.tasks.Task;
 
 public class Craftsman extends Job {
 
     public static int PLANKS_LIMIT = 30;
+    public static int amountOfTasks = 0;
 
     private static final Sprite icon = Assets.getSprite("craftsman-icon");
-    public static final Queue<CraftTask> CRAFT_QUEUE = new Queue<>();
 
     public Craftsman() {
         this.job = Jobs.Craftsman;
@@ -27,23 +28,10 @@ public class Craftsman extends Job {
 
     @Override
     public void update(float dt) {
-
-        if (!Main.inst.world.settlement.inventory.containsItem(new Item(ItemType.PLANKS), PLANKS_LIMIT)) {
-
-            boolean found = false;
-
-            for (CraftTask task : CRAFT_QUEUE) {
-                if (task.getRecipe().getResult()[0].getType().getId().equals("aop:planks")) {
-                    found = true;
-                }
-            }
-
-            if (!found) {
-                CraftTask task = new CraftTask(Registers.recipes.get("aop:planks"));
-                CRAFT_QUEUE.addLast(task);
-                Main.inst.world.settlement.addTask(task, true);
-
-            }
+        if (Main.inst.world.settlement.inventory.getSizeOf(ItemType.PLANKS) < PLANKS_LIMIT && amountOfTasks == 0) {
+            CraftTask task = new CraftTask(Registers.recipes.get("aop:planks"));
+            Main.inst.world.settlement.addTask(task, true);
+            amountOfTasks++;
         }
     }
 

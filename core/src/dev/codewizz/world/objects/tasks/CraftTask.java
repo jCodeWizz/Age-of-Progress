@@ -1,9 +1,11 @@
 package dev.codewizz.world.objects.tasks;
 
 import dev.codewizz.main.Main;
+import dev.codewizz.modding.Registers;
 import dev.codewizz.utils.Timer;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
+import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.items.Recipe;
 import dev.codewizz.world.objects.TaskableObject;
 import dev.codewizz.world.objects.hermits.Craftsman;
@@ -50,11 +52,19 @@ public class CraftTask extends Task {
 		}
 		hermit.getInventory().addItem(new Item(recipe.getResult()[0].getType(), recipe.getResult()[0].getSize()));
 
+		if (recipe.getResult()[0].getType().getId().equals("aop:planks") && Main.inst.world.settlement.inventory.getSizeOf(ItemType.PLANKS) + 2 < Craftsman.PLANKS_LIMIT && Craftsman.amountOfTasks == 0) {
+			CraftTask t = new CraftTask(Registers.recipes.get("aop:planks"));
+			Main.inst.world.settlement.addTask(t, true);
+			Craftsman.PLANKS_LIMIT++;
+		}
+
 		hermit.finishCurrentTask();
+		Craftsman.amountOfTasks--;
 	}
 
 	@Override
 	public void stop() {
+		Craftsman.amountOfTasks--;
 		hermit.getAgent().stop();
 		hermit.finishCurrentTask();
 
@@ -71,7 +81,6 @@ public class CraftTask extends Task {
 
 	@Override
 	public void start(TaskableObject object) {
-		Craftsman.CRAFT_QUEUE.removeValue(this, false);
 		this.hermit = (Hermit) object;
 
 		hermit.getAgent().setGoal(hermit.getSettlement().getCell());
@@ -90,6 +99,7 @@ public class CraftTask extends Task {
 				if (!hermit.getSettlement().getInventory().containsItem(recipe.getCosts()[i],
 						recipe.getCosts()[i].getSize())) {
 					hermit.getSettlement().addTask(new CraftTask(this.recipe), true);
+					Craftsman.amountOfTasks++;
 					stop();
 				}
 			}
