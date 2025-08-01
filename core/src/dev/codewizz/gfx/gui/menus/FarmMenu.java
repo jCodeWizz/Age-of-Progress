@@ -14,7 +14,9 @@ import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.world.GameObject;
 import dev.codewizz.world.objects.Animal;
+import dev.codewizz.world.objects.Cow;
 import dev.codewizz.world.objects.tasks.CaptureAnimalTask;
+import dev.codewizz.world.objects.tasks.KillCowTask;
 import dev.codewizz.world.settlement.FarmArea;
 
 public class FarmMenu extends Menu {
@@ -30,8 +32,8 @@ public class FarmMenu extends Menu {
     @Override
     protected void setup() {
         main = new Table();
-        UIImageButton button = UIImageButton.create(UIImageButton.buySlotStyle, Assets.getSprite("cow-idle"));
-        button.addListener(new ClickListener() {
+        UIImageButton capture = UIImageButton.create(UIImageButton.buySlotStyle, Assets.getSprite("cow-idle"));
+        capture.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -55,8 +57,28 @@ public class FarmMenu extends Menu {
             }
 
         });
-        main.add(button).size(64, 64);
-        button.addListener(UITextTooltip.create("Try to capture Cow"));
+        main.add(capture).size(64, 64);
+        capture.addListener(UITextTooltip.create("Try to capture Cow"));
+
+        UIImageButton kill = UIImageButton.create(UIImageButton.buySlotStyle, Assets.getSprite("tool-icon"));
+        kill.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                for (FarmArea area : Main.inst.world.settlement.areas) {
+                    for (Animal a : area.getAnimals()) {
+                        if (a instanceof Cow) {
+                            KillCowTask t = new KillCowTask( (Cow) a);
+                            Main.inst.world.settlement.addTask(t, true);
+                            break;
+                        }
+                    }
+                }
+            }
+
+        });
+        main.add(kill).size(64, 64);
+        kill.addListener(UITextTooltip.create("Kill a cow"));
 
         base.add(main).expand().size(64, 64);
     }

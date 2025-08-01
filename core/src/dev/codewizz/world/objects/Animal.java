@@ -110,6 +110,14 @@ public abstract class Animal extends TaskableObject {
 		wanderTimer = 1f;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		Main.inst.world.nature.animals.remove(this);
+		area.getAnimals().remove(this);
+	}
+
 	public boolean isCaptured() {
 		return captured;
 	}
