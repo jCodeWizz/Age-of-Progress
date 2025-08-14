@@ -1,19 +1,15 @@
 package dev.codewizz.world;
 
-import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import dev.codewizz.gfx.Renderer;
-import dev.codewizz.gfx.Shaders;
 import dev.codewizz.main.Main;
 import dev.codewizz.modding.events.Event;
 import dev.codewizz.modding.events.Reason;
 import dev.codewizz.modding.events.SetTileEvent;
 import dev.codewizz.utils.Direction;
 import dev.codewizz.utils.quadtree.Point;
-import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.objects.behaviour.pathfinding.CellGraph;
 import dev.codewizz.world.tiles.GrassTile;
 
 import java.awt.*;

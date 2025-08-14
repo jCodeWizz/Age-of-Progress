@@ -20,7 +20,7 @@ import dev.codewizz.utils.quadtree.Point;
 import dev.codewizz.utils.quadtree.QuadTree;
 import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.world.items.Item;
-import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.objects.behaviour.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.Settlement;
 import java.awt.*;
 import java.util.ArrayList;

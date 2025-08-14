@@ -16,7 +16,7 @@ import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.tasks.Task;
-import dev.codewizz.world.pathfinding.Agent;
+import dev.codewizz.world.objects.behaviour.pathfinding.Agent;
 
 public abstract class TaskableObject extends Entity {
 

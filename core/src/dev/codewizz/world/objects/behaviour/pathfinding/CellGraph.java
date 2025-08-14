@@ -1,4 +1,4 @@
-package dev.codewizz.world.pathfinding;
+package dev.codewizz.world.objects.behaviour.pathfinding;
 
 import java.util.HashMap;
 

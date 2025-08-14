@@ -15,7 +15,7 @@ import dev.codewizz.utils.Assets;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.Nature;
 import dev.codewizz.world.World;
-import dev.codewizz.world.pathfinding.Link;
+import dev.codewizz.world.objects.behaviour.pathfinding.Link;
 
 
 public class DebugMenu extends Menu implements IUpdateDataMenu {

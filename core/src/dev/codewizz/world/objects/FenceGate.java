@@ -2,9 +2,6 @@ package dev.codewizz.world.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.dongbat.jbump.util.MathUtils;
-import dev.codewizz.gfx.Renderer;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
 import dev.codewizz.utils.Direction;
@@ -18,7 +15,7 @@ import dev.codewizz.world.GameObject;
 import dev.codewizz.world.items.Item;
 import dev.codewizz.world.items.ItemType;
 import dev.codewizz.world.objects.hermits.Hermit;
-import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.objects.behaviour.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.FarmArea;
 import java.awt.*;
 import java.util.List;

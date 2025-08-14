@@ -1,4 +1,4 @@
-package dev.codewizz.world.pathfinding;
+package dev.codewizz.world.objects.behaviour.pathfinding;
 import com.badlogic.gdx.ai.pfa.Connection;
 
 import dev.codewizz.world.Cell;

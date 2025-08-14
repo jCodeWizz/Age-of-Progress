@@ -7,7 +7,7 @@ import dev.codewizz.utils.saving.GameObjectDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.world.Cell;
 import dev.codewizz.world.objects.tasks.MoveTask;
-import dev.codewizz.world.pathfinding.CellGraph;
+import dev.codewizz.world.objects.behaviour.pathfinding.CellGraph;
 import dev.codewizz.world.settlement.FarmArea;
 
 public abstract class Animal extends TaskableObject {

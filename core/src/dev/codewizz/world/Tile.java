@@ -4,16 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dev.codewizz.main.Main;
 import dev.codewizz.utils.Assets;
-import dev.codewizz.utils.Logger;
 import dev.codewizz.utils.saving.ChunkData;
 import dev.codewizz.utils.saving.WorldDataLoader;
 import dev.codewizz.utils.serialization.ByteUtils;
 import dev.codewizz.utils.serialization.SerializableTile;
-import dev.codewizz.world.pathfinding.CellGraph;
-import dev.codewizz.world.pathfinding.Link;
+import dev.codewizz.world.objects.behaviour.pathfinding.CellGraph;
+import dev.codewizz.world.objects.behaviour.pathfinding.Link;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.UUID;
 
 public abstract class Tile implements SerializableTile {
